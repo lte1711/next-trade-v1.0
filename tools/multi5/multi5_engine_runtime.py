@@ -5,6 +5,7 @@ import os
 import re
 import socket
 import subprocess
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -99,7 +100,12 @@ def append_jsonl(path: Path, row: dict[str, Any]) -> None:
 
 def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    with tempfile.NamedTemporaryFile(mode='w', dir=path.parent, delete=False, suffix='.tmp') as tmp:
+        tmp.write(json.dumps(payload, ensure_ascii=False, indent=2))
+        tmp.flush()
+        os.fsync(tmp.fileno())
+        tmp_path = tmp.name
+    os.replace(tmp_path, path)
 
 
 def find_running_workers() -> list[dict[str, Any]]:
