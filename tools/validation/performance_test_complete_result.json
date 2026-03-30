@@ -1,0 +1,483 @@
+{
+  "test_metadata": {
+    "timestamp": "2026-03-30T17:08:58.001508",
+    "python_path": "C:\\next-trade-ver1.0\\.venv\\Scripts\\python.exe",
+    "project_root": "C:\\next-trade-ver1.0",
+    "total_requested_writes": 50,
+    "thread_count": 10,
+    "test_count_per_thread": 5,
+    "total_execution_time_ms": 111.63210868835449
+  },
+  "performance_metrics": {
+    "success_count": 50,
+    "fail_count": 0,
+    "success_rate_percent": 100.0,
+    "avg_ms": 7.087836265563965,
+    "min_ms": 0.9932518005371094,
+    "max_ms": 33.29157829284668,
+    "median_ms": 4.063606262207031
+  },
+  "memory_metrics": {
+    "rss_before_bytes": 17481728,
+    "rss_after_bytes": 17801216,
+    "rss_delta_bytes": 319488
+  },
+  "integrity_metrics": {
+    "json_parse_success_count": 50,
+    "json_parse_error_count": 0,
+    "payload_match_count": 50,
+    "payload_mismatch_count": 0
+  },
+  "detailed_results": [
+    {
+      "thread_id": 0,
+      "iteration": 0,
+      "write_time_ms": 5.227088928222656,
+      "file_size": 191,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 3,
+      "iteration": 0,
+      "write_time_ms": 3.986835479736328,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 5,
+      "iteration": 0,
+      "write_time_ms": 3.986835479736328,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 8,
+      "iteration": 0,
+      "write_time_ms": 3.9861202239990234,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 0,
+      "iteration": 1,
+      "write_time_ms": 0.9932518005371094,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 7,
+      "iteration": 0,
+      "write_time_ms": 12.936830520629883,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 5,
+      "iteration": 1,
+      "write_time_ms": 1.8818378448486328,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 3,
+      "iteration": 1,
+      "write_time_ms": 1.8818378448486328,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 1,
+      "iteration": 0,
+      "write_time_ms": 4.98509407043457,
+      "file_size": 191,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 2,
+      "iteration": 0,
+      "write_time_ms": 4.98509407043457,
+      "file_size": 191,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 9,
+      "iteration": 0,
+      "write_time_ms": 9.95016098022461,
+      "file_size": 191,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 8,
+      "iteration": 1,
+      "write_time_ms": 1.8818378448486328,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 4,
+      "iteration": 0,
+      "write_time_ms": 4.983186721801758,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 6,
+      "iteration": 0,
+      "write_time_ms": 22.794723510742188,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 0,
+      "iteration": 2,
+      "write_time_ms": 3.988027572631836,
+      "file_size": 191,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 5,
+      "iteration": 2,
+      "write_time_ms": 2.9914379119873047,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 8,
+      "iteration": 2,
+      "write_time_ms": 1.9931793212890625,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 7,
+      "iteration": 1,
+      "write_time_ms": 12.816190719604492,
+      "file_size": 191,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 9,
+      "iteration": 1,
+      "write_time_ms": 2.9888153076171875,
+      "file_size": 191,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 2,
+      "iteration": 1,
+      "write_time_ms": 8.828163146972656,
+      "file_size": 191,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 4,
+      "iteration": 1,
+      "write_time_ms": 8.831262588500977,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 1,
+      "iteration": 1,
+      "write_time_ms": 4.981517791748047,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 8,
+      "iteration": 3,
+      "write_time_ms": 2.4445056915283203,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 3,
+      "iteration": 2,
+      "write_time_ms": 16.750335693359375,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 0,
+      "iteration": 3,
+      "write_time_ms": 6.056308746337891,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 7,
+      "iteration": 2,
+      "write_time_ms": 4.063606262207031,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 4,
+      "iteration": 2,
+      "write_time_ms": 3.066539764404297,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 3,
+      "iteration": 3,
+      "write_time_ms": 10.546445846557617,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 1,
+      "iteration": 2,
+      "write_time_ms": 12.612581253051758,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 5,
+      "iteration": 3,
+      "write_time_ms": 15.061378479003906,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 6,
+      "iteration": 1,
+      "write_time_ms": 25.033235549926758,
+      "file_size": 191,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 0,
+      "iteration": 4,
+      "write_time_ms": 1.9869804382324219,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 9,
+      "iteration": 2,
+      "write_time_ms": 13.612985610961914,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 4,
+      "iteration": 3,
+      "write_time_ms": 1.992940902709961,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 2,
+      "iteration": 2,
+      "write_time_ms": 13.612985610961914,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 1,
+      "iteration": 3,
+      "write_time_ms": 2.9916763305664062,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 3,
+      "iteration": 4,
+      "write_time_ms": 2.9916763305664062,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 6,
+      "iteration": 2,
+      "write_time_ms": 3.988504409790039,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 4,
+      "iteration": 4,
+      "write_time_ms": 2.9935836791992188,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 9,
+      "iteration": 3,
+      "write_time_ms": 4.987001419067383,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 1,
+      "iteration": 4,
+      "write_time_ms": 2.992391586303711,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 8,
+      "iteration": 4,
+      "write_time_ms": 33.29157829284668,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 2,
+      "iteration": 3,
+      "write_time_ms": 2.990245819091797,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 7,
+      "iteration": 3,
+      "write_time_ms": 13.951301574707031,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 6,
+      "iteration": 3,
+      "write_time_ms": 7.975578308105469,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 9,
+      "iteration": 4,
+      "write_time_ms": 2.683401107788086,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 2,
+      "iteration": 4,
+      "write_time_ms": 1.5041828155517578,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 5,
+      "iteration": 4,
+      "write_time_ms": 7.975339889526367,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 6,
+      "iteration": 4,
+      "write_time_ms": 1.9948482513427734,
+      "file_size": 192,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    },
+    {
+      "thread_id": 7,
+      "iteration": 4,
+      "write_time_ms": 2.3603439331054688,
+      "file_size": 191,
+      "success": true,
+      "json_parse_success": true,
+      "payload_match": true
+    }
+  ]
+}
