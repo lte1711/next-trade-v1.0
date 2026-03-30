@@ -1,0 +1,258 @@
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import subprocess
+import time
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from typing import Any
+
+try:
+    from .multi5_config import EDGE_SCORE_THRESHOLD, MAX_OPEN_POSITION, SCAN_INTERVAL_SEC
+    from .multi5_symbol_ranker import select_top_one, sort_by_edge
+    from .multi5_symbol_scanner import fetch_universe_data
+except ImportError:
+    from multi5_config import EDGE_SCORE_THRESHOLD, MAX_OPEN_POSITION, SCAN_INTERVAL_SEC
+    from multi5_symbol_ranker import select_top_one, sort_by_edge
+    from multi5_symbol_scanner import fetch_universe_data
+
+
+def utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def project_root() -> Path:
+    return Path(__file__).resolve().parents[2]
+
+
+def scan_log_path() -> Path:
+    return project_root() / "logs/runtime/multi5_symbol_scan.jsonl"
+
+
+def runtime_log_path() -> Path:
+    return project_root() / "logs/runtime/multi5_runtime_events.jsonl"
+
+
+def append_jsonl(path: Path, row: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def find_running_workers() -> list[dict[str, Any]]:
+    cmd = [
+        "powershell",
+        "-NoProfile",
+        "-Command",
+        (
+            "Get-CimInstance Win32_Process | "
+            "Where-Object { $_.Name -eq 'python.exe' -and $_.CommandLine -like '*profitmax_v1_runner.py*' } | "
+            "Select-Object ProcessId,CommandLine | ConvertTo-Json -Compress"
+        ),
+    ]
+    try:
+        out = subprocess.check_output(cmd, text=True).strip()
+        if not out:
+            return []
+        data = json.loads(out)
+        if isinstance(data, dict):
+            return [data] if data.get("ProcessId") else []
+        if isinstance(data, list):
+            return [row for row in data if isinstance(row, dict) and row.get("ProcessId")]
+        return []
+    except Exception:
+        return []
+
+
+def fetch_open_position_symbols() -> set[str]:
+    try:
+        with subprocess.Popen(
+            [
+                "powershell",
+                "-NoProfile",
+                "-Command",
+                "Invoke-RestMethod -Uri 'http://127.0.0.1:8100/api/v1/investor/positions' -TimeoutSec 10 | ConvertTo-Json -Compress -Depth 5",
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        ) as proc:
+            stdout, _ = proc.communicate(timeout=12)
+        if not stdout:
+            return set()
+        payload = json.loads(stdout)
+        rows = payload.get("positions", []) if isinstance(payload, dict) else []
+        open_symbols: set[str] = set()
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            symbol = str(row.get("symbol", "")).upper().strip()
+            if not symbol:
+                continue
+            try:
+                qty = float(row.get("positionAmt", "0") or 0.0)
+            except Exception:
+                qty = 0.0
+            if abs(qty) > 0.0:
+                open_symbols.add(symbol)
+        return open_symbols
+    except Exception:
+        return set()
+
+
+def parse_worker_symbols(workers: list[dict[str, Any]]) -> set[str]:
+    symbols: set[str] = set()
+    for row in workers:
+        cmd = str(row.get("CommandLine", ""))
+        match = re.search(r"--symbol\\s+([A-Za-z0-9_]+)", cmd)
+        if match:
+            symbols.add(match.group(1).upper())
+    return symbols
+
+
+def write_scan_log(ranked_rows: list[dict[str, Any]], selected_symbol: str | None) -> None:
+    path = scan_log_path()
+    for idx, row in enumerate(ranked_rows, start=1):
+        append_jsonl(
+            path,
+            {
+                "ts": utc_now().isoformat(),
+                "symbol": row.get("symbol"),
+                "edge_score": row.get("edge_score", 0.0),
+                "rank": idx,
+                "selected": row.get("symbol") == selected_symbol,
+            },
+        )
+
+
+def run_engine(symbol: str, session_hours: float, max_positions: int) -> subprocess.Popen:
+    root = project_root()
+    python_exe = root / "venv/Scripts/python.exe"
+    engine_script = root / "tools/ops/profitmax_v1_runner.py"
+    cmd = [
+        str(python_exe),
+        str(engine_script),
+        "--profile",
+        "TESTNET_INTRADAY_SCALP",
+        "--session-hours",
+        str(session_hours),
+        "--max-positions",
+        str(max_positions),
+        "--symbol",
+        symbol,
+    ]
+    return subprocess.Popen(cmd, cwd=str(root))
+
+
+def run_loop(
+    runtime_minutes: int,
+    scan_interval_sec: int,
+    engine_session_hours: float,
+    max_open_positions: int,
+    max_position_per_symbol: int,
+    launch_cooldown_sec: int,
+) -> dict[str, Any]:
+    end_at = utc_now() + timedelta(minutes=runtime_minutes)
+    scan_events_count = 0
+    engine_entry_attempts = 0
+    selected_history: list[str] = []
+    last_selected: str | None = None
+    last_launch_at: dict[str, datetime] = {}
+
+    while utc_now() < end_at:
+        states = fetch_universe_data()
+        ranked = sort_by_edge(states)
+        top = select_top_one(states)
+        selected_symbol = top.get("SELECTED_SYMBOL") if top else None
+        edge_score = float(top.get("EDGE_SCORE", 0.0)) if top else 0.0
+
+        write_scan_log(ranked, selected_symbol)
+        scan_events_count += len(ranked)
+
+        if selected_symbol:
+            selected_history.append(selected_symbol)
+            if selected_symbol != last_selected:
+                last_selected = selected_symbol
+
+        worker_rows = find_running_workers()
+        worker_symbols = parse_worker_symbols(worker_rows)
+        open_position_symbols = fetch_open_position_symbols()
+        active_symbols = set(worker_symbols) | set(open_position_symbols)
+        can_launch_total = len(active_symbols) < max_open_positions
+        symbol_active = selected_symbol in active_symbols if selected_symbol else False
+        can_launch_symbol = (not symbol_active) or (max_position_per_symbol > 1)
+        cooldown_ready = True
+        if selected_symbol:
+            prev = last_launch_at.get(selected_symbol)
+            if prev is not None:
+                cooldown_ready = (utc_now() - prev).total_seconds() >= launch_cooldown_sec
+        entry_attempted = False
+        if (
+            selected_symbol
+            and edge_score >= EDGE_SCORE_THRESHOLD
+            and can_launch_total
+            and can_launch_symbol
+            and cooldown_ready
+        ):
+            run_engine(
+                selected_symbol,
+                session_hours=engine_session_hours,
+                max_positions=max_open_positions,
+            )
+            last_launch_at[selected_symbol] = utc_now()
+            engine_entry_attempts += 1
+            entry_attempted = True
+
+        append_jsonl(
+            runtime_log_path(),
+            {
+                "ts": utc_now().isoformat(),
+                "selected_symbol": selected_symbol,
+                "edge_score": edge_score,
+                "engine_running": bool(worker_rows),
+                "engine_entry_attempted": entry_attempted,
+                "active_symbol_count": len(active_symbols),
+                "active_symbols": sorted(active_symbols),
+            },
+        )
+        time.sleep(scan_interval_sec)
+
+    selected_symbol_changes = 0
+    for i in range(1, len(selected_history)):
+        if selected_history[i] != selected_history[i - 1]:
+            selected_symbol_changes += 1
+
+    return {
+        "scan_events_count": scan_events_count,
+        "selected_symbol_changes": selected_symbol_changes,
+        "engine_entry_attempts": engine_entry_attempts,
+        "last_selected_symbol": last_selected or "",
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="MULTI5 wrapper runtime entry")
+    parser.add_argument("--runtime-minutes", type=int, default=5)
+    parser.add_argument("--scan-interval-sec", type=int, default=SCAN_INTERVAL_SEC)
+    parser.add_argument("--engine-session-hours", type=float, default=2.0)
+    parser.add_argument("--max-open-positions", type=int, default=MAX_OPEN_POSITION)
+    parser.add_argument("--max-position-per-symbol", type=int, default=1)
+    parser.add_argument("--launch-cooldown-sec", type=int, default=120)
+    args = parser.parse_args()
+
+    result = run_loop(
+        runtime_minutes=max(1, args.runtime_minutes),
+        scan_interval_sec=max(1, args.scan_interval_sec),
+        engine_session_hours=max(0.05, args.engine_session_hours),
+        max_open_positions=max(1, args.max_open_positions),
+        max_position_per_symbol=max(1, args.max_position_per_symbol),
+        launch_cooldown_sec=max(1, args.launch_cooldown_sec),
+    )
+    print(json.dumps(result, ensure_ascii=False))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

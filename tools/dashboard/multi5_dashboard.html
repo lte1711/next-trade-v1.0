@@ -1,0 +1,1100 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NEXT-TRADE PHASE5 Dashboard</title>
+  <style>
+    :root {
+      --bg:#09111f;
+      --bg2:#101b2e;
+      --card:#13233c;
+      --line:#274164;
+      --text:#ecf3ff;
+      --muted:#9bb0cf;
+      --ok:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --accent:#38bdf8;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      font-family:"Malgun Gothic","Segoe UI",sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1000px 500px at 10% -10%, #17325f 0%, transparent 60%),
+        linear-gradient(135deg, var(--bg), var(--bg2));
+      min-height:100vh;
+    }
+    .wrap {
+      max-width:1280px;
+      margin:0 auto;
+      padding:24px 16px 40px;
+    }
+    .hero {
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    h1 {
+      margin:0;
+      font-size:32px;
+      line-height:1.15;
+    }
+    .sub {
+      margin-top:8px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .statusbox {
+      min-width:260px;
+      padding:14px 16px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(19,35,60,.82);
+    }
+    .statusline {
+      font-size:14px;
+      color:var(--muted);
+      margin-top:6px;
+    }
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+      margin-bottom:16px;
+    }
+    .card {
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:linear-gradient(180deg, rgba(19,35,60,.96), rgba(13,24,42,.96));
+      padding:14px;
+      box-shadow:0 10px 30px rgba(0,0,0,.18);
+    }
+    .label {
+      color:var(--muted);
+      font-size:12px;
+    }
+    .value {
+      margin-top:6px;
+      font-size:24px;
+      font-weight:800;
+      line-height:1.15;
+      word-break:break-word;
+    }
+    .value.small {
+      font-size:16px;
+      font-weight:700;
+    }
+    .section {
+      margin-top:12px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(16,27,46,.9);
+      overflow:hidden;
+    }
+    .section h2 {
+      margin:0;
+      padding:14px 16px;
+      font-size:16px;
+      background:rgba(10,20,35,.45);
+      border-bottom:1px solid var(--line);
+    }
+    .rows {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:0;
+    }
+    .row {
+      padding:14px 16px;
+      border-bottom:1px solid rgba(39,65,100,.5);
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+    }
+    .row:nth-child(odd) {
+      border-right:1px solid rgba(39,65,100,.5);
+    }
+    .name {
+      color:var(--muted);
+      font-size:13px;
+      min-width:0;
+    }
+    .data {
+      text-align:right;
+      font-weight:700;
+      max-width:58%;
+      word-break:break-word;
+    }
+    .symbol-list {
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      gap:8px;
+    }
+    .symbol-chip {
+      display:inline-flex;
+      align-items:center;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      font-size:12px;
+      line-height:1.2;
+      font-weight:800;
+      letter-spacing:.01em;
+      background:rgba(255,255,255,.03);
+    }
+    .symbol-chip.open {
+      color:#93c5fd;
+      border-color:#2563eb;
+      background:rgba(37,99,235,.16);
+      box-shadow:inset 0 0 0 1px rgba(147,197,253,.08);
+    }
+    .symbol-chip.waiting {
+      color:#fdba74;
+      border-color:#f59e0b;
+      background:rgba(245,158,11,.14);
+      box-shadow:inset 0 0 0 1px rgba(253,186,116,.08);
+    }
+    .ok { color:var(--ok); }
+    .warn { color:var(--warn); }
+    .bad { color:var(--bad); }
+    .banner {
+      margin-bottom:14px;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(19,35,60,.82);
+      color:var(--text);
+      font-size:14px;
+    }
+    .warning-panel {
+      margin:0 0 14px;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid rgba(245,158,11,.35);
+      background:rgba(245,158,11,.09);
+      display:none;
+    }
+    .warning-panel.show {
+      display:block;
+    }
+    .warning-title {
+      font-size:13px;
+      font-weight:800;
+      color:#fbbf24;
+      margin-bottom:8px;
+    }
+    .warning-list {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .warning-chip {
+      display:inline-flex;
+      align-items:center;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid rgba(245,158,11,.4);
+      background:rgba(255,255,255,.03);
+      color:#fde68a;
+      font-size:12px;
+    }
+    .chart-grid {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+      margin:0 0 16px;
+    }
+    .chart-card {
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(16,27,46,.9);
+      overflow:hidden;
+    }
+    .chart-head {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:14px 16px 10px;
+      border-bottom:1px solid rgba(39,65,100,.4);
+    }
+    .chart-title {
+      font-size:16px;
+      font-weight:800;
+    }
+    .chart-sub {
+      color:var(--muted);
+      font-size:12px;
+    }
+    .chart-body {
+      padding:14px 16px 16px;
+    }
+    .chart-empty {
+      min-height:240px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .chart-svg {
+      width:100%;
+      height:240px;
+      display:block;
+    }
+    .chart-legend {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
+    }
+    .legend-chip {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size:12px;
+    }
+    .legend-swatch {
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      display:inline-block;
+    }
+    .bars {
+      display:grid;
+      gap:10px;
+      min-height:240px;
+    }
+    .bar-row {
+      display:grid;
+      grid-template-columns:86px 1fr 64px;
+      gap:10px;
+      align-items:center;
+      font-size:12px;
+    }
+    .bar-label {
+      color:var(--text);
+      font-weight:700;
+    }
+    .bar-track {
+      height:10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      overflow:hidden;
+      border:1px solid rgba(39,65,100,.35);
+    }
+    .bar-fill {
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg, #38bdf8, #2563eb);
+    }
+    .bar-value {
+      text-align:right;
+      color:var(--muted);
+      font-variant-numeric:tabular-nums;
+    }
+    .process-grid {
+      display:grid;
+      gap:10px;
+    }
+    .process-row {
+      display:grid;
+      grid-template-columns:160px 120px 90px 1fr;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
+      border:1px solid rgba(39,65,100,.35);
+      border-radius:12px;
+      background:rgba(255,255,255,.02);
+      font-size:12px;
+    }
+    .process-label {
+      font-weight:800;
+      color:var(--text);
+    }
+    .process-role {
+      color:var(--muted);
+    }
+    .process-pids {
+      color:var(--muted);
+      word-break:break-word;
+    }
+    .daily-table {
+      display:grid;
+      gap:8px;
+    }
+    .daily-table-head,
+    .daily-table-row {
+      display:grid;
+      grid-template-columns:120px 1fr 1fr 110px 120px;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
+      border-radius:12px;
+    }
+    .daily-table-head {
+      border:1px solid rgba(39,65,100,.45);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:12px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.03em;
+    }
+    .daily-table-row {
+      border:1px solid rgba(39,65,100,.35);
+      background:rgba(255,255,255,.02);
+      font-size:13px;
+    }
+    .daily-table-row .symbol {
+      font-weight:800;
+      color:var(--text);
+    }
+    .daily-table-row .num,
+    .daily-table-head .num {
+      text-align:right;
+      font-variant-numeric:tabular-nums;
+    }
+    .daily-table-row .pnl-pos { color: var(--ok); }
+    .daily-table-row .pnl-neg { color: var(--bad); }
+    @media (max-width: 980px) {
+      .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .rows { grid-template-columns:1fr; }
+      .row:nth-child(odd) { border-right:none; }
+      .chart-grid { grid-template-columns:1fr; }
+      .daily-table-head,
+      .daily-table-row { grid-template-columns:100px 1fr 1fr 90px 100px; }
+    }
+    @media (max-width: 640px) {
+      .grid { grid-template-columns:1fr; }
+      h1 { font-size:26px; }
+      .value { font-size:20px; }
+      .row { flex-direction:column; }
+      .data { max-width:none; text-align:left; }
+      .daily-table-head { display:none; }
+      .daily-table-row {
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <h1>NEXT-TRADE PHASE5 Dashboard</h1>
+        <div class="sub">BOOT 기반 런타임, API, 대시보드 상태를 한 화면에서 확인합니다.</div>
+      </div>
+      <div class="statusbox">
+        <div class="label">마지막 갱신</div>
+        <div class="value small" id="last_update">-</div>
+        <div class="statusline">자동 갱신: 3초</div>
+      </div>
+    </div>
+
+    <div class="banner" id="banner">상태 확인 중...</div>
+
+    <div class="warning-panel" id="warning_panel">
+      <div class="warning-title">운영 경고</div>
+      <div class="warning-list" id="warning_list"></div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-head">
+          <div>
+            <div class="chart-title">계좌 자산 추이</div>
+            <div class="chart-sub">마지막 시점 기준 최근 1시간 account_equity</div>
+          </div>
+          <div class="chart-sub" id="equity_chart_meta">-</div>
+        </div>
+        <div class="chart-body">
+          <div id="equity_chart" class="chart-empty">그래프 데이터 수집 중</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head">
+          <div>
+            <div class="chart-title">상위 심볼 투자 비중</div>
+            <div class="chart-sub">성과 기반 allocation 상위 심볼</div>
+          </div>
+          <div class="chart-sub" id="allocation_chart_meta">-</div>
+        </div>
+        <div class="chart-body">
+          <div id="allocation_chart" class="chart-empty">그래프 데이터 수집 중</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>한국시간 일일 심볼 성과</h2>
+      <div class="chart-body">
+        <div class="chart-sub" id="kst_daily_symbol_meta">한국시간 00:00~현재 기준 종료 거래 집계</div>
+        <div id="kst_daily_symbol_table" class="chart-empty">한국시간 일일 심볼 성과를 불러오는 중...</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>핵심 지표 요약</h2>
+      <div class="rows">
+        <div class="row"><div class="name">kpi_total_trades</div><div class="data" id="kpi_total_trades">-</div></div>
+        <div class="row"><div class="name">kpi_realized_pnl</div><div class="data" id="kpi_realized_pnl">-</div></div>
+        <div class="row"><div class="name">kpi_win_rate</div><div class="data" id="kpi_win_rate">-</div></div>
+        <div class="row"><div class="name">kpi_drawdown</div><div class="data" id="kpi_drawdown">-</div></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="label">엔진 상태</div>
+        <div class="value" id="engine_status">-</div>
+      </div>
+      <div class="card">
+        <div class="label">운영 상태</div>
+        <div class="value small" id="current_operation_status">-</div>
+      </div>
+      <div class="card">
+        <div class="label">선택 심볼</div>
+        <div class="value" id="selected_symbol">-</div>
+      </div>
+      <div class="card">
+        <div class="label">활성 슬롯 수</div>
+        <div class="value" id="active_symbol_count">-</div>
+      </div>
+      <div class="card">
+        <div class="label">계정 자산</div>
+        <div class="value small" id="account_equity">-</div>
+      </div>
+      <div class="card">
+        <div class="label">투자 금액</div>
+        <div class="value small" id="invested_margin">-</div>
+      </div>
+      <div class="card">
+        <div class="label">평가 손익</div>
+        <div class="value small" id="unrealized_pnl_live">-</div>
+      </div>
+      <div class="card">
+        <div class="label">투자 대비 수익률</div>
+        <div class="value small" id="invested_return_pct">-</div>
+      </div>
+      <div class="card">
+        <div class="label">오픈 포지션 수</div>
+        <div class="value" id="exchange_open_position_count">-</div>
+      </div>
+      <div class="card">
+        <div class="label">API 상태</div>
+        <div class="value" id="ops_health_status">-</div>
+      </div>
+      <div class="card">
+        <div class="label">Binance Testnet 링크</div>
+        <div class="value small" id="binance_link_status">-</div>
+      </div>
+      <div class="card">
+        <div class="label">Testnet 사용 설정</div>
+        <div class="value" id="binance_testnet_enabled">-</div>
+      </div>
+      <div class="card">
+        <div class="label">API 자격증명</div>
+        <div class="value" id="binance_credentials_present">-</div>
+      </div>
+      <div class="card">
+        <div class="label">실시간 연동 판정</div>
+        <div class="value" id="binance_realtime_link_ok">-</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>런타임 핵심 정보</h2>
+      <div class="rows">
+        <div class="row"><div class="name">engine_alive</div><div class="data" id="engine_alive">-</div></div>
+        <div class="row"><div class="name">runtime_alive</div><div class="data" id="runtime_alive">-</div></div>
+        <div class="row"><div class="name">selected_symbol</div><div class="data" id="selected_symbol_dup">-</div></div>
+        <div class="row"><div class="name">scan_symbol_count</div><div class="data" id="scan_symbol_count">-</div></div>
+        <div class="row"><div class="name">target_scan_symbols</div><div class="data" id="target_scan_symbols">-</div></div>
+        <div class="row"><div class="name">universe_symbol_count</div><div class="data" id="universe_symbol_count">-</div></div>
+        <div class="row"><div class="name">edge_score</div><div class="data" id="edge_score">-</div></div>
+        <div class="row"><div class="name">exchange_open_position_count</div><div class="data" id="exchange_open_position_count_dup">-</div></div>
+        <div class="row"><div class="name">total_exposure</div><div class="data" id="total_exposure">-</div></div>
+        <div class="row"><div class="name">last runtime ts</div><div class="data" id="runtime_last_ts">-</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Binance Testnet 연동 확인</h2>
+      <div class="rows">
+        <div class="row"><div class="name">binance_execution_mode</div><div class="data" id="binance_execution_mode">-</div></div>
+        <div class="row"><div class="name">binance_probe_mode</div><div class="data" id="binance_probe_mode">-</div></div>
+        <div class="row"><div class="name">binance_testnet_api_base</div><div class="data" id="binance_testnet_api_base">-</div></div>
+        <div class="row"><div class="name">api_base_is_testnet</div><div class="data" id="binance_api_base_is_testnet">-</div></div>
+        <div class="row"><div class="name">exchange_api_ok</div><div class="data" id="exchange_api_ok">-</div></div>
+        <div class="row"><div class="name">position_sync_ok</div><div class="data" id="position_sync_ok">-</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>심볼 상태</h2>
+      <div class="rows">
+        <div class="row"><div class="name">active_symbols</div><div class="data" id="active_symbols">-</div></div>
+        <div class="row"><div class="name">universe_symbols_sample</div><div class="data" id="universe_symbols_sample">-</div></div>
+      </div>
+    </div>
+    <div class="section">
+      <h2>프로세스 역할</h2>
+      <div class="rows">
+        <div class="row"><div class="name">effective_role_count</div><div class="data" id="effective_role_count">-</div></div>
+        <div class="row"><div class="name">raw_runtime_process_count</div><div class="data" id="raw_runtime_process_count">-</div></div>
+        <div class="row"><div class="name">api_process_count</div><div class="data" id="api_process_count">-</div></div>
+        <div class="row"><div class="name">api_python_process_count</div><div class="data" id="api_python_process_count">-</div></div>
+      </div>
+      <div class="chart-body">
+        <div class="chart-sub" style="margin-bottom:10px;">원시 개수에는 부모 및 자식 래퍼 프로세스가 포함됩니다. 역할 개수는 실제 유효한 런타임 체인을 뜻합니다.</div>
+        <div id="process_roles" class="chart-empty">런타임 프로세스 역할을 불러오는 중...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ids = [
+      "kpi_total_trades","kpi_realized_pnl","kpi_win_rate","kpi_drawdown",
+      "engine_status","current_operation_status","selected_symbol","active_symbol_count",
+      "account_equity","invested_margin","unrealized_pnl_live","invested_return_pct","exchange_open_position_count","ops_health_status",
+      "engine_alive","runtime_alive","scan_symbol_count","target_scan_symbols","edge_score",
+      "universe_symbol_count","total_exposure","runtime_last_ts","active_symbols",
+      "universe_symbols_sample","binance_link_status","binance_testnet_enabled",
+      "binance_credentials_present","binance_realtime_link_ok","binance_execution_mode",
+      "binance_probe_mode","binance_testnet_api_base","binance_api_base_is_testnet",
+      "exchange_api_ok","position_sync_ok","effective_role_count","raw_runtime_process_count",
+      "api_process_count","api_python_process_count"
+    ];
+
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.innerHTML = "";
+      if (Array.isArray(value)) {
+        el.textContent = value.join(", ");
+      } else {
+        el.textContent = value ?? "-";
+      }
+    }
+
+    function formatNumber(value, digits = 2) {
+      const n = Number(value);
+      if (!Number.isFinite(n)) return "-";
+      return n.toLocaleString("en-US", {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits,
+      });
+    }
+
+    function formatUsd(value, digits = 2) {
+      const n = Number(value);
+      if (!Number.isFinite(n)) return "-";
+      return `$${formatNumber(n, digits)}`;
+    }
+
+    function formatPercent(value, digits = 2) {
+      const n = Number(value);
+      if (!Number.isFinite(n)) return "-";
+      return `${formatNumber(n, digits)}%`;
+    }
+
+    function translateDisplayValue(id, value) {
+      const text = String(value ?? "");
+      const commonMap = {
+        RUNNING: "실행 중",
+        STOPPED: "중지",
+        OK: "정상",
+        true: "예",
+        false: "아니오",
+        LIVE_RUNTIME_ACTIVE: "실시간 운용 중",
+        SAFE_START_RUNTIME_ACTIVE: "안전 시작 운용 중",
+        TESTNET_REALTIME_LINKED: "테스트넷 실시간 연결",
+        TESTNET_LINK_UNVERIFIED: "테스트넷 연결 미검증",
+        INACTIVE_LEGACY: "비활성(레거시)",
+        SNAPSHOT: "스냅샷",
+        RUNTIME_ONLY: "런타임 전용",
+        KST: "한국시간",
+        session: "세션",
+        portfolio_metrics_snapshot: "포트폴리오 스냅샷",
+        summary_json: "요약 JSON",
+        probe_only: "조회 전용",
+        TESTNET_EXECUTION: "테스트넷 실행",
+        TESTNET_INTRADAY_SCALP: "테스트넷 인트라데이 스캘프",
+        MULTI5: "멀티5",
+      };
+      if (Object.prototype.hasOwnProperty.call(commonMap, text)) {
+        return commonMap[text];
+      }
+      return value;
+    }
+
+    function formatKst(value) {
+      if (value === null || value === undefined) return "-";
+      const text = String(value).trim();
+      if (!text || text === "-") return "-";
+      const dt = new Date(text);
+      if (Number.isNaN(dt.getTime())) return text;
+      return dt.toLocaleString("ko-KR", {
+        timeZone: "Asia/Seoul",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      });
+    }
+
+    function setDisplayValue(id, value) {
+      const timestampIds = new Set([
+        "last_update",
+        "runtime_last_ts",
+        "market_regime_last_ts",
+        "pnl_last_update_ts",
+        "kst_daily_pnl_last_ts",
+        "kst_daily_pnl_last_ts_kpi",
+        "recent_entry_last_ts",
+        "binance_latest_partial_fill_ts",
+        "auto_boot_checked_at",
+      ]);
+      if (timestampIds.has(id)) {
+        setText(id, formatKst(value));
+        return;
+      }
+      const usdIds = new Set([
+        "kpi_realized_pnl",
+        "account_equity",
+        "invested_margin",
+        "unrealized_pnl_live",
+        "total_exposure",
+      ]);
+      const percentIds = new Set([
+        "kpi_win_rate",
+        "kpi_drawdown",
+        "invested_return_pct",
+        "capital_usage_ratio",
+      ]);
+      const integerIds = new Set([
+        "kpi_total_trades",
+        "active_symbol_count",
+        "exchange_open_position_count",
+        "scan_symbol_count",
+        "target_scan_symbols",
+        "universe_symbol_count",
+        "effective_role_count",
+        "raw_runtime_process_count",
+        "api_process_count",
+        "api_python_process_count",
+      ]);
+      if (usdIds.has(id)) {
+        setText(id, formatUsd(value, 2));
+        return;
+      }
+      if (percentIds.has(id)) {
+        const percentValue = id === "kpi_win_rate" || id === "kpi_drawdown"
+          ? Number(value) * 100
+          : Number(value);
+        setText(id, formatPercent(percentValue, 2));
+        return;
+      }
+      if (integerIds.has(id)) {
+        const n = Number(value);
+        setText(id, Number.isFinite(n) ? n.toLocaleString("en-US", { maximumFractionDigits: 0 }) : value);
+        return;
+      }
+      setText(id, translateDisplayValue(id, value));
+    }
+
+    function renderSymbolList(id, symbols, openSymbolsCsv) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.innerHTML = "";
+      const values = Array.isArray(symbols)
+        ? symbols.map(x => String(x).trim()).filter(Boolean)
+        : String(symbols ?? "").split(",").map(x => x.trim()).filter(Boolean);
+      if (!values.length) {
+        el.textContent = "-";
+        return;
+      }
+      const openSet = new Set(
+        String(openSymbolsCsv ?? "")
+          .split(",")
+          .map(x => x.trim())
+          .filter(Boolean)
+      );
+      const wrap = document.createElement("div");
+      wrap.className = "symbol-list";
+      for (const symbol of values) {
+        const chip = document.createElement("span");
+        chip.className = `symbol-chip ${openSet.has(symbol) ? "open" : "waiting"}`;
+        chip.textContent = symbol;
+        wrap.appendChild(chip);
+      }
+      el.appendChild(wrap);
+    }
+
+    function applyKoreanLabels() {
+      const nameMap = {
+        kpi_total_trades: "누적 거래 수",
+        kpi_realized_pnl: "누적 실현 손익",
+        kpi_win_rate: "누적 승률",
+        kpi_drawdown: "누적 낙폭",
+        engine_alive: "엔진 활성",
+        runtime_alive: "런타임 활성",
+        selected_symbol: "선택 심볼",
+        scan_symbol_count: "스캔 심볼 수",
+        target_scan_symbols: "목표 스캔 수",
+        universe_symbol_count: "유니버스 심볼 수",
+        edge_score: "엣지 점수",
+        exchange_open_position_count: "오픈 포지션 수",
+        total_exposure: "총 노출 금액",
+        active_symbols: "관리 심볼",
+        universe_symbols_sample: "유니버스 예시",
+        effective_role_count: "유효 역할 수",
+        raw_runtime_process_count: "원시 프로세스 수",
+        api_process_count: "API 프로세스 수",
+        api_python_process_count: "API 파이썬 프로세스 수",
+      };
+      for (const [id, label] of Object.entries(nameMap)) {
+        const row = document.getElementById(id)?.closest(".row");
+        const name = row?.querySelector(".name");
+        if (name) name.textContent = label;
+      }
+    }
+
+function applyUiClarifications() {
+      const kpiSection = document.getElementById("kpi_total_trades")?.closest(".section");
+      if (kpiSection) {
+        const title = kpiSection.querySelector("h2");
+        if (title) title.textContent = "누적 KPI Snapshot";
+      }
+
+      const renameMap = [
+        ["kpi_total_trades", "cumulative_total_trades"],
+        ["kpi_realized_pnl", "cumulative_realized_pnl"],
+        ["kpi_win_rate", "cumulative_win_rate"],
+        ["kpi_drawdown", "cumulative_drawdown"],
+      ];
+      for (const [id, text] of renameMap) {
+        const row = document.getElementById(id)?.closest(".row");
+        const name = row?.querySelector(".name");
+        if (name) name.textContent = text;
+      }
+
+      const cardLabelMap = [
+        ["active_symbol_count", "관리 심볼 수"],
+        ["exchange_open_position_count", "오픈 포지션 수"],
+        ["account_equity", "현재 계좌 자산"],
+        ["invested_margin", "현재 투자 노출"],
+        ["unrealized_pnl_live", "현재 평가 손익"],
+        ["invested_return_pct", "현재 노출 수익률"],
+      ];
+      for (const [id, text] of cardLabelMap) {
+        const label = document.getElementById(id)?.closest(".card")?.querySelector(".label");
+        if (label) label.textContent = text;
+      }
+
+      const activeRow = document.getElementById("active_symbols");
+      if (activeRow) {
+        const row = activeRow.closest(".row");
+        const name = row?.querySelector(".name");
+        if (name) name.textContent = "관리 심볼(활성 + 워커)";
+        const section = activeRow.closest(".section");
+        const title = section?.querySelector("h2");
+        if (title) title.textContent = "심볼 상태";
+        if (section && !section.querySelector(".symbol-legend")) {
+          const legend = document.createElement("div");
+          legend.className = "symbol-legend";
+          legend.style.marginTop = "10px";
+          legend.style.fontSize = "13px";
+          legend.style.color = "#9fb2d9";
+          legend.textContent = "파랑 = 실제 오픈 포지션, 오렌지 = 관리 중이지만 현재 미오픈 심볼";
+          section.appendChild(legend);
+        }
+      }
+    }
+
+    function setStatusColor(id, value) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove("ok", "warn", "bad");
+      const text = String(value ?? "");
+      if (text === "RUNNING" || text === "OK" || text === "true") el.classList.add("ok");
+      if (text === "STOPPED" || text === "false") el.classList.add("bad");
+      if (text.includes("SAFE_START")) el.classList.add("warn");
+      if (text.includes("TESTNET_REALTIME_LINKED")) el.classList.add("ok");
+      if (text.includes("UNVERIFIED")) el.classList.add("warn");
+    }
+
+    function renderWarnings(data) {
+      const panel = document.getElementById("warning_panel");
+      const list = document.getElementById("warning_list");
+      if (!panel || !list) return;
+      const warnings = Array.isArray(data.health_warnings) ? [...data.health_warnings] : [];
+      if (String(data.worker_status || "") === "WARN") {
+        warnings.unshift(`워커 상태 경고: ${data.worker_lag_sec || 0}초 지연`);
+      }
+      if (!warnings.length) {
+        panel.classList.remove("show");
+        list.innerHTML = "";
+        return;
+      }
+      panel.classList.add("show");
+      list.innerHTML = warnings.map(item => `<span class="warning-chip">${item}</span>`).join("");
+    }
+
+    function formatShortTime(value) {
+      const dt = new Date(value);
+      if (Number.isNaN(dt.getTime())) return "-";
+      return dt.toLocaleTimeString("ko-KR", {
+        timeZone: "Asia/Seoul",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      });
+    }
+
+    function renderEquityChart(points) {
+      const root = document.getElementById("equity_chart");
+      const meta = document.getElementById("equity_chart_meta");
+      if (!root || !meta) return;
+      const values = Array.isArray(points) ? points : [];
+      if (!values.length) {
+        root.className = "chart-empty";
+        root.textContent = "표시할 자산 추이 데이터가 없습니다.";
+        meta.textContent = "-";
+        return;
+      }
+
+      const width = 640;
+      const height = 240;
+      const pad = { top: 16, right: 18, bottom: 28, left: 18 };
+      const latestTs = new Date(values[values.length - 1].ts);
+      const endMs = latestTs.getTime();
+      const startMs = endMs - (60 * 60 * 1000);
+      const equities = values
+        .map(p => Number(p.equity || 0))
+        .filter(value => Number.isFinite(value) && value > 0);
+      if (!equities.length) {
+        root.className = "chart-empty";
+        root.textContent = "표시 가능한 자산 추이 데이터가 없습니다.";
+        meta.textContent = "-";
+        return;
+      }
+      const rawMin = Math.min(...equities);
+      const rawMax = Math.max(...equities);
+      const rawSpan = Math.max(rawMax - rawMin, 0.000001);
+      const padAmount = Math.max(rawSpan * 0.12, rawMax * 0.0002, 0.5);
+      const min = Math.max(0, rawMin - padAmount);
+      const max = rawMax + padAmount;
+      const span = Math.max(max - min, 0.000001);
+      const innerW = width - pad.left - pad.right;
+      const innerH = height - pad.top - pad.bottom;
+      const coords = values.map((point, index) => {
+        const ts = new Date(point.ts).getTime();
+        const ratio = Math.max(0, Math.min(1, (ts - startMs) / Math.max(endMs - startMs, 1)));
+        const x = pad.left + ratio * innerW;
+        const y = pad.top + (1 - ((Number(point.equity || 0) - min) / span)) * innerH;
+        return { x, y, ts: point.ts, equity: Number(point.equity || 0) };
+      });
+      const current = coords[coords.length - 1];
+      const currentText = `${current.equity.toFixed(2)} USDT`;
+      const labelWidth = 116;
+      const labelHeight = 22;
+      const labelX = Math.max(pad.left, Math.min(width - labelWidth - 8, current.x - labelWidth - 10));
+      const labelY = Math.max(pad.top + 4, Math.min(height - pad.bottom - labelHeight - 4, current.y - labelHeight - 8));
+      const path = coords.map((p, index) => `${index === 0 ? "M" : "L"} ${p.x.toFixed(2)} ${p.y.toFixed(2)}`).join(" ");
+      const areaPath = `${path} L ${coords[coords.length - 1].x.toFixed(2)} ${(height - pad.bottom).toFixed(2)} L ${coords[0].x.toFixed(2)} ${(height - pad.bottom).toFixed(2)} Z`;
+      const tickTimes = [startMs, startMs + (30 * 60 * 1000), endMs];
+
+      root.className = "";
+      root.innerHTML = `
+        <svg class="chart-svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" aria-label="account equity trend">
+          <defs>
+            <linearGradient id="equityFill" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"></stop>
+              <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.02"></stop>
+            </linearGradient>
+          </defs>
+          <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="rgba(155,176,207,.35)" />
+          <path d="${areaPath}" fill="url(#equityFill)"></path>
+          <path d="${path}" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+          <line x1="${labelX + labelWidth}" y1="${labelY + (labelHeight / 2)}" x2="${current.x - 6}" y2="${current.y}" stroke="rgba(34,197,94,.6)" stroke-width="1.5"></line>
+          <rect x="${labelX}" y="${labelY}" width="${labelWidth}" height="${labelHeight}" rx="10" fill="rgba(9,17,31,.92)" stroke="rgba(34,197,94,.55)"></rect>
+          <text x="${labelX + 10}" y="${labelY + 15}" font-size="11" fill="#86efac">현재 ${currentText}</text>
+          ${coords.map((p, index) => index === coords.length - 1 ? `<circle cx="${p.x}" cy="${p.y}" r="4" fill="#22c55e"></circle>` : "").join("")}
+          ${tickTimes.map(ts => {
+            const ratio = Math.max(0, Math.min(1, (ts - startMs) / Math.max(endMs - startMs, 1)));
+            const x = pad.left + ratio * innerW;
+            return `<text x="${x}" y="${height - 8}" text-anchor="middle" font-size="11" fill="#9bb0cf">${formatShortTime(new Date(ts).toISOString())}</text>`;
+          }).join("")}
+          <text x="${pad.left}" y="14" font-size="11" fill="#9bb0cf">${max.toFixed(2)} USDT</text>
+          <text x="${pad.left}" y="${height - pad.bottom - 6}" font-size="11" fill="#9bb0cf">${min.toFixed(2)} USDT</text>
+        </svg>
+        <div class="chart-legend">
+          <span class="legend-chip"><span class="legend-swatch" style="background:#38bdf8"></span>최근 1시간 ${values.length}포인트</span>
+          <span class="legend-chip"><span class="legend-swatch" style="background:#22c55e"></span>현재 ${currentText}</span>
+        </div>
+      `;
+      meta.textContent = `${formatShortTime(new Date(startMs).toISOString())} ~ ${formatShortTime(new Date(endMs).toISOString())}`;
+    }
+
+    function renderAllocationChart(rows) {
+      const root = document.getElementById("allocation_chart");
+      const meta = document.getElementById("allocation_chart_meta");
+      if (!root || !meta) return;
+      const values = Array.isArray(rows) ? rows : [];
+      if (!values.length) {
+        root.className = "chart-empty";
+        root.textContent = "표시할 비중 데이터가 없습니다.";
+        meta.textContent = "-";
+        return;
+      }
+
+      const maxWeight = Math.max(...values.map(row => Number(row.weight || 0)), 0.000001);
+      root.className = "bars";
+      root.innerHTML = values.map(row => {
+        const weight = Number(row.weight || 0);
+        const widthPct = Math.max(6, (weight / maxWeight) * 100);
+        return `
+          <div class="bar-row">
+            <div class="bar-label">${row.symbol}</div>
+            <div class="bar-track"><div class="bar-fill" style="width:${widthPct}%"></div></div>
+            <div class="bar-value">${(weight * 100).toFixed(3)}%</div>
+          </div>
+        `;
+      }).join("");
+      meta.textContent = `TOP ${values.length}`;
+    }
+
+    function renderProcessRoles(rows) {
+      const root = document.getElementById("process_roles");
+      if (!root) return;
+      const values = Array.isArray(rows) ? rows : [];
+      if (!values.length) {
+        root.className = "chart-empty";
+        root.textContent = "런타임 프로세스 역할 데이터가 없습니다.";
+        return;
+      }
+
+      root.className = "process-grid";
+      root.innerHTML = values.map(row => {
+        const label = String(row.label || "-");
+        const role = String(row.role || "-");
+        const rootPid = String(row.root_pid || "-");
+        const pidCount = Number(row.pid_count || 0);
+        const pids = Array.isArray(row.pids) ? row.pids.join(", ") : "-";
+        return `
+          <div class="process-row">
+            <div class="process-label">${label}</div>
+            <div class="process-role">${role}</div>
+            <div class="process-role">root ${rootPid} / ${pidCount} pid</div>
+            <div class="process-pids">${pids}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderKstDailySymbolTable(rows, summary) {
+      const root = document.getElementById("kst_daily_symbol_table");
+      const meta = document.getElementById("kst_daily_symbol_meta");
+      if (!root || !meta) return;
+      const values = Array.isArray(rows) ? rows : [];
+      const stats = summary && typeof summary === "object" ? summary : {};
+
+      const tradeCount = Number(stats.total_trade_count || 0);
+      const symbolCount = Number(stats.symbol_count || 0);
+      const totalInvested = Number(stats.total_invested_amount || 0);
+      const totalPnl = Number(stats.total_realized_pnl || 0);
+      meta.textContent = `한국시간 00:00~현재 | 심볼 ${symbolCount.toLocaleString("en-US")}개 | 거래 ${tradeCount.toLocaleString("en-US")}건 | 투자금 ${formatUsd(totalInvested, 2)} | 손익 ${formatUsd(totalPnl, 2)}`;
+
+      if (!values.length) {
+        root.className = "chart-empty";
+        root.textContent = "오늘 한국시간 기준 종료 거래 집계가 아직 없습니다.";
+        return;
+      }
+
+      root.className = "daily-table";
+      root.innerHTML = `
+        <div class="daily-table-head">
+          <div>심볼</div>
+          <div class="num">투자금</div>
+          <div class="num">손익</div>
+          <div class="num">거래 수</div>
+          <div class="num">수익률</div>
+        </div>
+        ${values.map(row => {
+          const pnl = Number(row.realized_pnl || 0);
+          const pnlClass = pnl >= 0 ? "pnl-pos" : "pnl-neg";
+          return `
+            <div class="daily-table-row">
+              <div class="symbol">${row.symbol || "-"}</div>
+              <div class="num">${formatUsd(row.invested_amount, 2)}</div>
+              <div class="num ${pnlClass}">${formatUsd(row.realized_pnl, 2)}</div>
+              <div class="num">${formatNumber(row.trade_count, 0)}</div>
+              <div class="num ${pnlClass}">${formatPercent(row.return_pct, 2)}</div>
+            </div>
+          `;
+        }).join("")}
+      `;
+    }
+
+    async function refresh() {
+      try {
+        const res = await fetch(`/api/runtime?t=${Date.now()}`, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        for (const id of ids) setDisplayValue(id, data[id]);
+        setDisplayValue("selected_symbol_dup", data.selected_symbol);
+        setDisplayValue("exchange_open_position_count_dup", data.exchange_open_position_count);
+        setDisplayValue("last_update", data.last_update);
+        renderSymbolList("active_symbols", data.active_symbols, data.open_position_symbols);
+        renderSymbolList("universe_symbols_sample", data.universe_symbols_sample, data.open_position_symbols);
+        applyUiClarifications();
+        applyKoreanLabels();
+
+        setStatusColor("engine_status", data.engine_status);
+        setStatusColor("ops_health_status", data.ops_health_status);
+        setStatusColor("engine_alive", data.engine_alive);
+        setStatusColor("runtime_alive", data.runtime_alive);
+        setStatusColor("binance_link_status", data.binance_link_status);
+        setStatusColor("binance_testnet_enabled", data.binance_testnet_enabled);
+        setStatusColor("binance_credentials_present", data.binance_credentials_present);
+        setStatusColor("binance_realtime_link_ok", data.binance_realtime_link_ok);
+        setStatusColor("exchange_api_ok", data.exchange_api_ok);
+        setStatusColor("position_sync_ok", data.position_sync_ok);
+        renderWarnings(data);
+        renderEquityChart(data.equity_history);
+        renderAllocationChart(data.allocation_top);
+        renderProcessRoles(data.process_roles);
+        renderKstDailySymbolTable(data.kst_daily_symbol_stats, data.kst_daily_symbol_summary);
+
+const banner = document.getElementById("banner");
+        banner.textContent = `상태: ${data.current_operation_status} | API: ${data.ops_health_status} | 엔진: ${data.engine_status} | Binance: ${data.binance_link_status} | 현재자산소스: ${data.current_equity_source_label || data.current_equity_source || "-"}`;
+      } catch (err) {
+        const banner = document.getElementById("banner");
+        banner.textContent = `대시보드 데이터 조회 실패: ${err.message}`;
+        banner.classList.add("bad");
+      }
+    }
+
+    refresh();
+    setInterval(refresh, 3000);
+  </script>
+</body>
+</html>
