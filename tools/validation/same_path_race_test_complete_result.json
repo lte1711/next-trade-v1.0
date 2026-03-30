@@ -1,0 +1,293 @@
+{
+  "test_metadata": {
+    "timestamp": "2026-03-30T17:30:01.968455",
+    "python_path": "C:\\next-trade-ver1.0\\.venv\\Scripts\\python.exe",
+    "project_root": "C:\\next-trade-ver1.0",
+    "target_file": "tools/validation/same_path_race_target.json",
+    "total_attempts": 50,
+    "thread_count": 10,
+    "test_count_per_thread": 5,
+    "total_execution_time_ms": 33.5688591003418
+  },
+  "race_test_metrics": {
+    "total_attempts": 50,
+    "success_call_count": 26,
+    "exception_count": 7,
+    "success_rate_percent": 52.0
+  },
+  "final_file_analysis": {
+    "file_exists": true,
+    "file_size": 179,
+    "json_parse_success": true,
+    "json_parse_error": null,
+    "payload_is_whole_object": true,
+    "partial_write_detected": false,
+    "corrupted_json_detected": false,
+    "payload_match_found": true,
+    "matching_payload": {
+      "thread_id": 8,
+      "iteration": 4,
+      "timestamp": 1774859401.927364,
+      "unique_data": "thread_8_iter_4_unique_string_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    }
+  },
+  "detailed_results": [
+    {
+      "thread_id": 0,
+      "iteration": 0,
+      "write_time_ms": 4.947900772094727,
+      "success": true,
+      "exception": null,
+      "payload_hash": -6787187838144975863
+    },
+    {
+      "thread_id": 1,
+      "iteration": 0,
+      "write_time_ms": 4.947900772094727,
+      "success": true,
+      "exception": null,
+      "payload_hash": 4607977197967972791
+    },
+    {
+      "thread_id": 4,
+      "iteration": 0,
+      "write_time_ms": 4.983663558959961,
+      "success": true,
+      "exception": null,
+      "payload_hash": -8166103483149336514
+    },
+    {
+      "thread_id": 5,
+      "iteration": 0,
+      "write_time_ms": 6.258964538574219,
+      "success": true,
+      "exception": null,
+      "payload_hash": -4427231550153175201
+    },
+    {
+      "thread_id": 1,
+      "iteration": 1,
+      "write_time_ms": 5.258321762084961,
+      "success": true,
+      "exception": null,
+      "payload_hash": -380855396091211702
+    },
+    {
+      "thread_id": 0,
+      "iteration": 1,
+      "write_time_ms": 5.258321762084961,
+      "success": true,
+      "exception": null,
+      "payload_hash": -5661993455085570731
+    },
+    {
+      "thread_id": 3,
+      "success": false,
+      "exception": "[WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\next-trade-ver1.0\\\\tools\\\\validation\\\\tmp5ckx44fq.tmp' -> 'tools\\\\validation\\\\same_path_race_target.json'",
+      "exception_type": "PermissionError",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\tools\\validation\\candy_write_json_same_path_race_test.py\", line 40, in same_path_race_test\n    write_json(Path(target_file), test_payload)\n  File \"C:\\next-trade-ver1.0\\tools\\multi5\\multi5_engine_runtime.py\", line 108, in write_json\n    os.replace(tmp_path, path)\nPermissionError: [WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\next-trade-ver1.0\\\\tools\\\\validation\\\\tmp5ckx44fq.tmp' -> 'tools\\\\validation\\\\same_path_race_target.json'\n"
+    },
+    {
+      "thread_id": 4,
+      "iteration": 1,
+      "write_time_ms": 7.251739501953125,
+      "success": true,
+      "exception": null,
+      "payload_hash": -1462435904139795840
+    },
+    {
+      "thread_id": 2,
+      "success": false,
+      "exception": "[WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\next-trade-ver1.0\\\\tools\\\\validation\\\\tmp_a_ofdi9.tmp' -> 'tools\\\\validation\\\\same_path_race_target.json'",
+      "exception_type": "PermissionError",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\tools\\validation\\candy_write_json_same_path_race_test.py\", line 40, in same_path_race_test\n    write_json(Path(target_file), test_payload)\n  File \"C:\\next-trade-ver1.0\\tools\\multi5\\multi5_engine_runtime.py\", line 108, in write_json\n    os.replace(tmp_path, path)\nPermissionError: [WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\next-trade-ver1.0\\\\tools\\\\validation\\\\tmp_a_ofdi9.tmp' -> 'tools\\\\validation\\\\same_path_race_target.json'\n"
+    },
+    {
+      "thread_id": 5,
+      "iteration": 1,
+      "write_time_ms": 5.977630615234375,
+      "success": true,
+      "exception": null,
+      "payload_hash": 1489561450513998139
+    },
+    {
+      "thread_id": 6,
+      "success": false,
+      "exception": "[WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\next-trade-ver1.0\\\\tools\\\\validation\\\\tmpx1rf84t6.tmp' -> 'tools\\\\validation\\\\same_path_race_target.json'",
+      "exception_type": "PermissionError",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\tools\\validation\\candy_write_json_same_path_race_test.py\", line 40, in same_path_race_test\n    write_json(Path(target_file), test_payload)\n  File \"C:\\next-trade-ver1.0\\tools\\multi5\\multi5_engine_runtime.py\", line 108, in write_json\n    os.replace(tmp_path, path)\nPermissionError: [WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\next-trade-ver1.0\\\\tools\\\\validation\\\\tmpx1rf84t6.tmp' -> 'tools\\\\validation\\\\same_path_race_target.json'\n"
+    },
+    {
+      "thread_id": 7,
+      "iteration": 0,
+      "write_time_ms": 6.973981857299805,
+      "success": true,
+      "exception": null,
+      "payload_hash": 6055028942283962847
+    },
+    {
+      "thread_id": 0,
+      "iteration": 2,
+      "write_time_ms": 6.977081298828125,
+      "success": true,
+      "exception": null,
+      "payload_hash": -4104995087559030707
+    },
+    {
+      "thread_id": 8,
+      "iteration": 0,
+      "write_time_ms": 7.973670959472656,
+      "success": true,
+      "exception": null,
+      "payload_hash": 8697355833480832392
+    },
+    {
+      "thread_id": 9,
+      "iteration": 0,
+      "write_time_ms": 6.976604461669922,
+      "success": true,
+      "exception": null,
+      "payload_hash": -6711362938054917548
+    },
+    {
+      "thread_id": 5,
+      "iteration": 2,
+      "write_time_ms": 2.9888153076171875,
+      "success": true,
+      "exception": null,
+      "payload_hash": -3521862593959415116
+    },
+    {
+      "thread_id": 1,
+      "iteration": 2,
+      "write_time_ms": 8.971452713012695,
+      "success": true,
+      "exception": null,
+      "payload_hash": 8700553638783887941
+    },
+    {
+      "thread_id": 4,
+      "success": false,
+      "exception": "[WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\next-trade-ver1.0\\\\tools\\\\validation\\\\tmpqhao8k17.tmp' -> 'tools\\\\validation\\\\same_path_race_target.json'",
+      "exception_type": "PermissionError",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\tools\\validation\\candy_write_json_same_path_race_test.py\", line 40, in same_path_race_test\n    write_json(Path(target_file), test_payload)\n  File \"C:\\next-trade-ver1.0\\tools\\multi5\\multi5_engine_runtime.py\", line 108, in write_json\n    os.replace(tmp_path, path)\nPermissionError: [WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\next-trade-ver1.0\\\\tools\\\\validation\\\\tmpqhao8k17.tmp' -> 'tools\\\\validation\\\\same_path_race_target.json'\n"
+    },
+    {
+      "thread_id": 7,
+      "iteration": 1,
+      "write_time_ms": 3.986358642578125,
+      "success": true,
+      "exception": null,
+      "payload_hash": 7554547005515655834
+    },
+    {
+      "thread_id": 0,
+      "iteration": 3,
+      "write_time_ms": 2.9904842376708984,
+      "success": true,
+      "exception": null,
+      "payload_hash": -7170198252634242417
+    },
+    {
+      "thread_id": 8,
+      "iteration": 1,
+      "write_time_ms": 4.985570907592773,
+      "success": true,
+      "exception": null,
+      "payload_hash": 4959807781637618447
+    },
+    {
+      "thread_id": 9,
+      "iteration": 1,
+      "write_time_ms": 4.985570907592773,
+      "success": true,
+      "exception": null,
+      "payload_hash": -7841645638428240911
+    },
+    {
+      "thread_id": 5,
+      "success": false,
+      "exception": "[WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\next-trade-ver1.0\\\\tools\\\\validation\\\\tmp3ice3uvq.tmp' -> 'tools\\\\validation\\\\same_path_race_target.json'",
+      "exception_type": "PermissionError",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\tools\\validation\\candy_write_json_same_path_race_test.py\", line 40, in same_path_race_test\n    write_json(Path(target_file), test_payload)\n  File \"C:\\next-trade-ver1.0\\tools\\multi5\\multi5_engine_runtime.py\", line 108, in write_json\n    os.replace(tmp_path, path)\nPermissionError: [WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\next-trade-ver1.0\\\\tools\\\\validation\\\\tmp3ice3uvq.tmp' -> 'tools\\\\validation\\\\same_path_race_target.json'\n"
+    },
+    {
+      "thread_id": 0,
+      "iteration": 4,
+      "write_time_ms": 3.9887428283691406,
+      "success": true,
+      "exception": null,
+      "payload_hash": 789706867285247894
+    },
+    {
+      "thread_id": 1,
+      "iteration": 3,
+      "write_time_ms": 4.984855651855469,
+      "success": true,
+      "exception": null,
+      "payload_hash": -6086746547405340853
+    },
+    {
+      "thread_id": 7,
+      "success": false,
+      "exception": "[WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\next-trade-ver1.0\\\\tools\\\\validation\\\\tmp2evh8i2l.tmp' -> 'tools\\\\validation\\\\same_path_race_target.json'",
+      "exception_type": "PermissionError",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\tools\\validation\\candy_write_json_same_path_race_test.py\", line 40, in same_path_race_test\n    write_json(Path(target_file), test_payload)\n  File \"C:\\next-trade-ver1.0\\tools\\multi5\\multi5_engine_runtime.py\", line 108, in write_json\n    os.replace(tmp_path, path)\nPermissionError: [WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\next-trade-ver1.0\\\\tools\\\\validation\\\\tmp2evh8i2l.tmp' -> 'tools\\\\validation\\\\same_path_race_target.json'\n"
+    },
+    {
+      "thread_id": 9,
+      "iteration": 2,
+      "write_time_ms": 3.9849281311035156,
+      "success": true,
+      "exception": null,
+      "payload_hash": -9213529484456062153
+    },
+    {
+      "thread_id": 8,
+      "iteration": 2,
+      "write_time_ms": 3.9849281311035156,
+      "success": true,
+      "exception": null,
+      "payload_hash": 842504197293356626
+    },
+    {
+      "thread_id": 1,
+      "success": false,
+      "exception": "[WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\next-trade-ver1.0\\\\tools\\\\validation\\\\tmpn8z8ghh6.tmp' -> 'tools\\\\validation\\\\same_path_race_target.json'",
+      "exception_type": "PermissionError",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\tools\\validation\\candy_write_json_same_path_race_test.py\", line 40, in same_path_race_test\n    write_json(Path(target_file), test_payload)\n  File \"C:\\next-trade-ver1.0\\tools\\multi5\\multi5_engine_runtime.py\", line 108, in write_json\n    os.replace(tmp_path, path)\nPermissionError: [WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\next-trade-ver1.0\\\\tools\\\\validation\\\\tmpn8z8ghh6.tmp' -> 'tools\\\\validation\\\\same_path_race_target.json'\n"
+    },
+    {
+      "thread_id": 9,
+      "iteration": 3,
+      "write_time_ms": 2.0182132720947266,
+      "success": true,
+      "exception": null,
+      "payload_hash": 1978545863961857904
+    },
+    {
+      "thread_id": 8,
+      "iteration": 3,
+      "write_time_ms": 2.0182132720947266,
+      "success": true,
+      "exception": null,
+      "payload_hash": -326800751951363382
+    },
+    {
+      "thread_id": 9,
+      "iteration": 4,
+      "write_time_ms": 2.3729801177978516,
+      "success": true,
+      "exception": null,
+      "payload_hash": -935915268822935626
+    },
+    {
+      "thread_id": 8,
+      "iteration": 4,
+      "write_time_ms": 2.3729801177978516,
+      "success": true,
+      "exception": null,
+      "payload_hash": -4926001332168317913
+    }
+  ]
+}

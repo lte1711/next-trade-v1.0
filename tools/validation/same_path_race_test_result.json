@@ -1,0 +1,12 @@
+{
+  "total_attempts": 50,
+  "success_call_count": 26,
+  "exception_count": 7,
+  "success_rate_percent": 52.0,
+  "final_json_parse_success": true,
+  "final_json_parse_error": null,
+  "final_payload_is_whole_object": true,
+  "partial_write_detected": false,
+  "corrupted_json_detected": false,
+  "payload_match_found": true
+}

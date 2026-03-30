@@ -86,6 +86,9 @@ def strategy_signal_dir() -> Path:
     return project_root() / "logs/runtime/strategy_signals"
 
 
+# STANDARD_LOCK: DO NOT MODIFY (DENNIS APPROVED 2026-03-30)
+# This function implements the official project path isolation standard
+# Any modification requires explicit Dennis approval and constitutional amendment
 def strategy_signal_path(symbol: str, strategy_id: str) -> Path:
     safe_symbol = re.sub(r"[^A-Za-z0-9_]+", "_", symbol.upper())
     safe_strategy = re.sub(r"[^A-Za-z0-9_]+", "_", strategy_id.lower())
@@ -98,6 +101,9 @@ def append_jsonl(path: Path, row: dict[str, Any]) -> None:
         f.write(json.dumps(row, ensure_ascii=False) + "\n")
 
 
+# STANDARD_LOCK: DO NOT MODIFY (DENNIS APPROVED 2026-03-30)
+# This function is the official project standard for atomic JSON writes
+# Any modification requires explicit Dennis approval and constitutional amendment
 def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(mode='w', dir=path.parent, delete=False, suffix='.tmp') as tmp:

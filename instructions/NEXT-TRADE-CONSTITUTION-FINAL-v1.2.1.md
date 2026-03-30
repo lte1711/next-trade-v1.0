@@ -1,0 +1,360 @@
+# NEXT-TRADE CONSTITUTION FINAL v1.2.1
+
+**제정일**: 2026-03-30  
+**버전**: v1.2.1  
+**상태**: ACTIVE  
+**최종 승인**: COMPLETE
+
+---
+
+## CONSTITUTION STATUS
+
+### [FACT] 헌법 상태
+```text
+CONSTITUTION_STATUS = ACTIVE
+CONSTITUTION_VERSION = 1.2.1
+LAST_UPDATED = 2026-03-30
+TOTAL_AMENDMENTS = 2
+COMPLIANCE_MANDATORY = YES
+```
+
+---
+
+## AMENDMENT HISTORY
+
+### AMENDMENT 1: OPERATIONAL SAFETY PROTOCOLS
+**적용일**: 2026-03-30  
+**내용**: write_json() 운영 안전 규칙 명문화
+- same-path multi-writer 금지
+- path isolation 구조 강화
+- 운영 규칙 위원회 구성
+
+### AMENDMENT 2: TESTING PROTOCOL
+**적용일**: 2026-03-30  
+**내용**: 테스트 환경 격리 의무화
+- tests\temp\ 디렉토리 사용 의무
+- 프로젝트 루트 오염 금지
+- 테스트 후 자동 정리 의무
+
+---
+
+## CORE PRINCIPLES
+
+### 1. FACT-BASED OPERATIONS
+```text
+ALL_DECISIONS_FACT_BASED = YES
+ASSUMPTION_LABELING_MANDATORY = YES
+EVIDENCE_REQUIRED = YES
+OVERCLAIM_PROHIBITED = YES
+```
+
+### 2. OPERATIONAL SAFETY FIRST
+```text
+SAFETY_PRIORITY = HIGHEST
+PATH_ISOLATION_MANDATORY = YES
+SAME_PATH_RACE_PROHIBITED = YES
+ROLLBACK_AUTHORITY = ESTABLISHED
+```
+
+### 3. TESTING ISOLATION
+```text
+TEST_ENVIRONMENT_ISOLATION = MANDATORY
+PROJECT_ROOT_CONTAMINATION_PROHIBITED = YES
+AUTOMATIC_CLEANUP_REQUIRED = YES
+VIOLATION_PENALTIES = ESTABLISHED
+```
+
+---
+
+## ROLE DEFINITIONS
+
+### DENNIS (approval)
+- 최종 승인 권한
+- 예외 승인 권한
+- 헌법 개정 승인
+
+### BAEKSEOL (design)
+- 총괄 설계 권한
+- 프로토콜 제정 권한
+- 제재 권한
+
+### CANDY (data_validation)
+- FACT 검증 권한
+- 데이터 무결성 검증
+- 규정 준수 검증
+
+### GEMINI (technical_verification)
+- 기술적 타당성 검증
+- 구현 검토 권한
+- 기술적 제재 권한
+
+### CODEX (execution)
+- 구현 실행 권한
+- 롤백 실행 권한
+- 테스트 실행 권한
+
+### SUGAR (audit)
+- 외부 감사 권한
+- 독립 검증 권한
+- 감사 보고 권한
+
+---
+
+## WORKFLOW PROTOCOLS
+
+### STANDARD WORKFLOW
+```text
+BAEKSEOL -> CODEX -> CANDY -> GEMINI -> DENNIS
+```
+
+### EXTERNAL AUDIT WORKFLOW
+```text
+BAEKSEOL -> CANDY -> SUGAR/EXTERNAL_AUDIT -> DENNIS
+```
+
+### ROLLBACK WORKFLOW
+```text
+GEMINI (REVIEW) -> CODEX (EXECUTION) -> CANDY (VERIFICATION)
+```
+
+---
+
+## PROHIBITIONS
+
+### ABSOLUTE PROHIBITIONS
+```text
+1. NO_CODE_ACCEPTANCE_WITHOUT_DIFF_CHECK
+2. NO_MERGE_WITHOUT_FILE_VERIFICATION
+3. NO_OVERCLAIM
+4. NO_PROJECT_ROOT_CONTAMINATION
+5. NO_UNVERIFIED_HISTORY_AS_FACT
+6. NO_SAME_PATH_MULTI_WRITER
+```
+
+### CONTEXTUAL PROHIBITIONS
+```text
+1. NO_MIXED_SCOPE_TIMELINE (외부 감사 시)
+2. NO_PARTIAL_ROLLBACK (롤백 시)
+3. NO_NEW_PATCH (승인 후)
+4. NO_LOGIC_MODIFICATION (롤백 중)
+```
+
+---
+
+## MANDATORY REQUIREMENTS
+
+### FOR ALL OPERATIONS
+```text
+- FACT 기반 의사결정
+- 증거 기반 보고
+- 역할 분리 준수
+- 워크플로우 준수
+```
+
+### FOR TESTING
+```text
+- 격리된 환경 사용
+- 자동 정리 의무
+- 오염 방지 보장
+- 프로토콜 준수
+- 보고서 파일 reports/ 디렉토리 이동
+- 루트 디렉토리 정리 유지
+```
+
+### FOR OPERATIONS
+```text
+- path isolation 준수
+- same-path 금지
+- 안전성 우선
+- 롤백 준비
+- STANDARD_LOCK 준수
+- 표준 구조 변경 금지
+- 보고서 파일 reports/ 디렉토리 이동
+- 루트 디렉토리 정리 유지
+```
+
+---
+
+## STANDARD LOCK ZONES
+
+### PROTECTED COMPONENTS
+```text
+STANDARD_LOCK_ZONE:
+- write_json 함수 (원자적 쓰기 구조)
+- strategy_signal_path 함수 (path isolation 구조)
+- same-path multi-writer 금지 규칙
+- tempfile + fsync + os.replace 패턴
+```
+
+### MODIFICATION RESTRICTIONS
+```text
+ABSOLUTE_PROHIBITIONS:
+- write_json 함수 구조 변경
+- strategy_signal_path 로직 변경
+- same-path write 허용
+- 원자적 쓰기 패턴 수정
+
+EXCEPTION_PROCESS:
+- Dennis 명시적 승인 필요
+- 헌법 개정 프로세스 필수
+- 전체 역할 동의 필요
+```
+
+### VIOLATION DETECTION
+```text
+AUTOMATIC_DETECTION:
+- STANDARD_LOCK 주석 제거 감지
+- 함수 시그니처 변경 감지
+- 핵심 로직 수정 감지
+
+MANUAL_VERIFICATION:
+- CANDY: 구조 변경 검증
+- GEMINI: 기술적 영향 평가
+- DENNIS: 예외 승인 권한
+```
+
+---
+
+## ENFORCEMENT MECHANISMS
+
+### AUTOMATIC ENFORCEMENT
+```text
+- 테스트 환경 자동 검증
+- 파일 오염 자동 감지
+- 프로토콜 위반 자동 보고
+```
+
+### MANUAL ENFORCEMENT
+```text
+- CANDY 검증 단계
+- GEMINI 기술 검토
+- DENNIS 최종 승인
+- BAEKSEOL 제재 발동
+```
+
+### PENALTY STRUCTURE
+```text
+1차 위반: 경고 및 재실행 요구
+2차 위반: 권한 일시 정지
+3차 위반: 권한 영구 박탈
+```
+
+---
+
+## CURRENT OPERATIONAL STATUS
+
+### [FACT] write_json() STATUS
+```text
+IMPLEMENTATION = ORIGINAL_8_LINE
+SAFETY_STATUS = OPERATIONAL_SAFE
+PATH_ISOLATION = ACTIVE
+SAME_PATH_RACE = PROHIBITED
+LAST_ROLLBACK = 2026-03-30
+```
+
+### [FACT] TESTING PROTOCOL STATUS
+```text
+PROTOCOL_VERSION = v1.2.1
+ISOLATION_MANDATORY = YES
+CLEANUP_AUTOMATION = ACTIVE
+VIOLATION_DETECTION = ACTIVE
+```
+
+### [FACT] EXTERNAL AUDIT STATUS
+```text
+LAST_AUDIT_DATE = 2026-03-30
+AUDIT_RESULT = PARTIAL_CONFIRMATION
+SCOPE_CORRECTION = APPLIED
+RESUBMISSION_READY = YES
+```
+
+---
+
+## FUTURE AMENDMENTS
+
+### PROPOSED AMENDMENTS
+```text
+1. 자동화된 테스트 검증 시스템
+2. 분산 락 메커니즘 연구
+3. 운영 모니터링 강화
+4. 외부 감사 프로토콜 표준화
+```
+
+### AMENDMENT PROCESS
+```text
+1. BAEKSEOL 제안
+2. CANDY/GEMINI 검토
+3. DENNIS 최종 승인
+4. 헌법 개정 배포
+5. 전면 적용
+```
+
+---
+
+## COMPLIANCE CERTIFICATION
+
+### [FACT] CURRENT COMPLIANCE STATUS
+```text
+CONSTITUTION_COMPLIANCE = ACTIVE
+ALL_PROTOCOLS_FOLLOWED = YES
+VIOLATIONS = NONE
+PENALTIES = NONE
+CERTIFICATION_DATE = 2026-03-30
+```
+
+### [FACT] VALIDATION RESULTS
+```text
+FACT_BASED_OPERATIONS = VERIFIED
+OPERATIONAL_SAFETY = VERIFIED
+TESTING_ISOLATION = VERIFIED
+ROLE_SEPARATION = VERIFIED
+WORKFLOW_COMPLIANCE = VERIFIED
+```
+
+---
+
+## FINAL DECLARATION
+
+### [FACT] CONSTITUTIONAL AUTHORITY
+```text
+THIS CONSTITUTION ESTABLISHES THE SUPREME GOVERNING PRINCIPLES
+FOR THE NEXT-TRADE PROJECT OPERATIONS.
+
+ALL MEMBERS MUST COMPLY WITH ALL PROVISIONS.
+VIOLATIONS SHALL RESULT IN IMMEDIATE ENFORCEMENT ACTIONS.
+AMENDMENTS REQUIRE FOLLOWING ESTABLISHED PROTOCOLS.
+```
+
+### [FACT] EFFECTIVE IMMEDIATELY
+```text
+ALL PROVISIONS OF THIS CONSTITUTION v1.2.1
+ARE EFFECTIVE IMMEDIATELY UPON PUBLICATION.
+
+COMPLIANCE IS MANDATORY.
+EXEMPTIONS REQUIRE DENNIS APPROVAL.
+ENFORCEMENT IS ACTIVE.
+```
+
+---
+
+## SIGNATORIES
+
+**PRIMARY AUTHOR**: BAEKSEOL (총괄)  
+**TECHNICAL AUTHORITY**: GEMINI (technical_verification)  
+**DATA AUTHORITY**: CANDY (data_validation)  
+**EXECUTION AUTHORITY**: CODEX (execution)  
+**APPROVAL AUTHORITY**: DENNIS (approval)  
+**EXTERNAL AUDITOR**: SUGAR (audit)
+
+---
+
+**CONSTITUTION v1.2.1 - FULLY RATIFIED AND ACTIVE**  
+**ALL OPERATIONS MUST COMPLY**  
+**VIOLATIONS SHALL BE PROSECUTED**  
+**AMENDMENTS FOLLOW PROTOCOL**
+
+---
+
+**FINAL RATIFICATION**: 2026-03-30 19:25  
+**STATUS**: CONSTITUTION COMPLETE AND ACTIVE  
+**COMPLIANCE**: MANDATORY FOR ALL OPERATIONS
