@@ -133,7 +133,11 @@ def tail_jsonl_rows(path: Path, limit: int = 400) -> list[dict[str, Any]]:
             block = 65536
             data = b""
             line_count = 0
-            while end > 0 and line_count <= limit + 1:
+            # Add safety check to prevent infinite loop
+            max_iterations = 1000
+            iteration_count = 0
+            while end > 0 and line_count <= limit + 1 and iteration_count < max_iterations:
+                iteration_count += 1
                 size = min(block, end)
                 end -= size
                 f.seek(end)
