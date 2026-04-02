@@ -1,0 +1,28 @@
+{
+  "test_environment": "isolated",
+  "test_mode": "multi_strategy",
+  "strategies": {
+    "trend_following_v1": {
+      "enabled": true,
+      "weight": 0.4
+    },
+    "volatility_breakout_v1": {
+      "enabled": true,
+      "weight": 0.3
+    },
+    "mean_reversion_v1": {
+      "enabled": true,
+      "weight": 0.3
+    }
+  },
+  "risk_management": {
+    "max_drawdown": 0.05,
+    "position_size_limit": 0.1,
+    "correlation_limit": 0.7
+  },
+  "test_parameters": {
+    "test_period_days": 30,
+    "initial_capital": 10000.0,
+    "commission_rate": 0.001
+  }
+}
