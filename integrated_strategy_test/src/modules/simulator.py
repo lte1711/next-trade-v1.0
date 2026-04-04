@@ -2,9 +2,11 @@
 Main simulator orchestration for the modular trading workflow.
 """
 
+import io
 import time
+from contextlib import redirect_stdout
 from datetime import datetime, timedelta
-from typing import Any, Dict, List
+from typing import Any, Callable, Dict, List
 
 from .market_analyzer import MarketAnalyzer
 from .portfolio_manager import PortfolioManager
@@ -59,36 +61,23 @@ class ModularTradingSimulator:
     def evaluate_profitability_potential(self, symbols: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Keep only symbols whose bullish and profit potential clear the regime threshold."""
         current_threshold = self.market_regime_thresholds.get(self.market_regime, 80.0)
-        print(
-            f"FACT: profitability evaluation started "
-            f"(regime: {self.market_regime}, threshold: {current_threshold}%)"
-        )
 
         profitable_symbols: List[Dict[str, Any]] = []
         for symbol_data in symbols:
             bullish_score = symbol_data.get("bullish_score", 0)
             if bullish_score < current_threshold:
-                print(f"  {symbol_data['symbol']}: bullish score {bullish_score:.1f}% (below threshold)")
                 continue
 
             profit_potential = self.realtime_fetcher._calculate_profit_potential(symbol_data)
             if profit_potential >= current_threshold:
                 symbol_data["profit_potential"] = profit_potential
                 profitable_symbols.append(symbol_data)
-                print(f"  {symbol_data['symbol']}: profit potential {profit_potential:.1f}%")
-            else:
-                print(f"  {symbol_data['symbol']}: profit potential {profit_potential:.1f}% (below threshold)")
 
         profitable_symbols.sort(key=lambda item: item["profit_potential"], reverse=True)
-        print(f"  regime-qualified symbols: {len(profitable_symbols)}")
         return profitable_symbols
 
     def select_optimal_symbols(self, profitable_symbols: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Select the best symbols allowed by the current regime."""
-        current_threshold = self.market_regime_thresholds.get(self.market_regime, 80.0)
-        print(f"FACT: optimal symbol selection started (threshold: {current_threshold}%)")
-        print(f"  input symbols: {len(profitable_symbols)}")
-
         if self.market_regime == "EXTREME":
             max_symbols = min(self.symbol_count, 5)
         elif self.market_regime == "HIGH_VOLATILITY":
@@ -96,19 +85,10 @@ class ModularTradingSimulator:
         else:
             max_symbols = self.symbol_count
 
-        selected_symbols = profitable_symbols[:max_symbols]
-        print(f"  market regime: {self.market_regime}")
-        print(f"  max symbols: {max_symbols}")
-        print(f"  selected symbols: {len(selected_symbols)}")
-
-        for index, symbol in enumerate(selected_symbols, 1):
-            print(f"    {index}. {symbol['symbol']}: {symbol['profit_potential']:.1f}%")
-
-        return selected_symbols
+        return profitable_symbols[:max_symbols]
 
     def dynamic_portfolio_rebalancing(self) -> bool:
         """Remove weak positions and add strong candidates."""
-        print("FACT: dynamic portfolio rebalancing started")
         current_threshold = self.market_regime_thresholds.get(self.market_regime, 80.0)
 
         current_portfolio = self.portfolio_manager.get_current_portfolio()
@@ -116,7 +96,7 @@ class ModularTradingSimulator:
 
         symbols_to_remove: List[str] = []
         for symbol, investment in current_investments.items():
-            real_time_data = self.realtime_fetcher.get_real_time_symbol_data([symbol])
+            real_time_data = self._run_quietly(self.realtime_fetcher.get_real_time_symbol_data, [symbol])
             if not real_time_data:
                 continue
 
@@ -129,23 +109,16 @@ class ModularTradingSimulator:
 
             if current_pnl_percent <= self.replacement_threshold:
                 symbols_to_remove.append(symbol)
-                print(
-                    f"  remove {symbol}: pnl {current_pnl_percent:.1f}% "
-                    f"(replacement threshold {self.replacement_threshold}%)"
-                )
             elif current_potential < current_threshold:
                 symbols_to_remove.append(symbol)
-                print(
-                    f"  remove {symbol}: profit potential {current_potential:.1f}% "
-                    f"(below regime threshold)"
-                )
 
         available_symbols: List[Dict[str, Any]] = []
-        top_volume_symbols = self.market_analyzer.get_top_volume_symbols(80)
+        top_volume_symbols = self._run_quietly(self.market_analyzer.get_top_volume_symbols, 80)
         if top_volume_symbols:
             candidate_symbols = [item["symbol"] for item in top_volume_symbols]
-            real_time_candidates = self.realtime_fetcher.get_real_time_symbol_data(candidate_symbols)
-            high_potential_symbols = self.realtime_fetcher.find_high_potential_symbols(
+            real_time_candidates = self._run_quietly(self.realtime_fetcher.get_real_time_symbol_data, candidate_symbols)
+            high_potential_symbols = self._run_quietly(
+                self.realtime_fetcher.find_high_potential_symbols,
                 real_time_candidates, current_threshold
             )
 
@@ -153,15 +126,11 @@ class ModularTradingSimulator:
                 if symbol_data["symbol"] not in current_investments:
                     available_symbols.append(symbol_data)
 
-        print(f"  candidate universe: {len(top_volume_symbols) if top_volume_symbols else 0}")
-        print(f"  high-potential replacements: {len(available_symbols)}")
-
         rebalancing_made = False
         for symbol in symbols_to_remove:
-            removal_result = self.portfolio_manager.remove_investment(symbol)
+            removal_result = self._run_quietly(self.portfolio_manager.remove_investment, symbol)
             if removal_result:
                 rebalancing_made = True
-                print(f"  removal completed: {symbol}")
 
         if available_symbols:
             open_slots = max(self.symbol_count - len(self.portfolio_manager.investments), 0)
@@ -170,82 +139,61 @@ class ModularTradingSimulator:
             new_symbols = available_symbols[:max_new_symbols]
 
             for symbol_data in new_symbols:
-                if self.portfolio_manager.add_investment(symbol_data["symbol"], symbol_data, amount=100.0):
+                if self._run_quietly(
+                    self.portfolio_manager.add_investment,
+                    symbol_data["symbol"],
+                    symbol_data,
+                    amount=100.0,
+                ):
                     rebalancing_made = True
-                    print(f"  added {symbol_data['symbol']}")
 
         return rebalancing_made
 
     def run_simulation(self, duration_minutes: int = 30, update_interval: int = 3) -> Dict[str, Any]:
         """Run the modular simulation for the requested duration."""
-        print("Starting modular trading simulator")
-        print(f"  duration: {duration_minutes} minutes")
-        print(f"  update interval: {update_interval} minutes")
-
         self.simulation_start_time = datetime.now()
         self.simulation_end_time = self.simulation_start_time + timedelta(minutes=duration_minutes)
 
-        print("\nStage 1: initial market scan")
-        top_volume_symbols = self.market_analyzer.get_top_volume_symbols(80)
+        top_volume_symbols = self._run_quietly(self.market_analyzer.get_top_volume_symbols, 80)
         if not top_volume_symbols:
             return {"error": "Failed to fetch top volume symbols"}
 
-        evaluated_symbols = self.market_analyzer.evaluate_bullish_potential_advanced(top_volume_symbols)
+        evaluated_symbols = self._run_quietly(
+            self.market_analyzer.evaluate_bullish_potential_advanced,
+            top_volume_symbols,
+        )
         if not evaluated_symbols:
             return {"error": "Failed to evaluate bullish potential"}
 
         profitable_symbols = self.evaluate_profitability_potential(evaluated_symbols)
         if not profitable_symbols:
-            print("  no symbols met entry criteria, switching to continuous analysis")
             return self._continuous_market_analysis(duration_minutes, update_interval)
 
         selected_symbols = self.select_optimal_symbols(profitable_symbols)
         if not selected_symbols:
-            print("  no symbols selected, switching to continuous analysis")
             return self._continuous_market_analysis(duration_minutes, update_interval)
 
-        print("\nStage 2: initial investment")
-        allocations = self.portfolio_manager.allocate_capital_fixed_amount(selected_symbols)
-        self.portfolio_manager.initialize_investments(allocations)
-
-        print("\nStage 3: main simulation loop")
-        print("=" * 80)
+        allocations = self._run_quietly(self.portfolio_manager.allocate_capital_fixed_amount, selected_symbols)
+        self._run_quietly(self.portfolio_manager.initialize_investments, allocations)
+        self._print_position_snapshot("초기 진입")
 
         iteration = 0
         max_iterations = duration_minutes // update_interval
         while datetime.now() < self.simulation_end_time and iteration < max_iterations:
             iteration += 1
-            current_time = datetime.now()
-            elapsed = current_time - self.simulation_start_time
-            print(f"\nRound {iteration}/{max_iterations} - elapsed {elapsed.total_seconds():.0f}s")
-
-            self.market_regime = self.analyze_market_regime()
-            print(f"  market regime: {self.market_regime}")
+            self.market_regime = self._run_quietly(self.analyze_market_regime)
 
             current_prices = self._fetch_portfolio_prices()
             performance = self.portfolio_manager.update_investment_performance(current_prices=current_prices)
-            print(f"  total value: ${performance['total_value']:.2f}")
-            print(f"  cash balance: ${performance['cash_balance']:.2f}")
-            print(f"  total pnl: ${performance['total_pnl']:+.2f} ({performance['pnl_percent']:+.2f}%)")
-            print(f"  total fees: ${performance['total_fees_paid']:.2f}")
-            print(f"  net pnl: ${performance['net_pnl']:+.2f} ({performance['net_pnl_percent']:+.2f}%)")
+            self.dynamic_portfolio_rebalancing()
+            self._print_position_snapshot(f"진행 {iteration}/{max_iterations}")
 
-            rebalancing_made = self.dynamic_portfolio_rebalancing()
-            if rebalancing_made:
-                print("  portfolio rebalanced")
-            elif not self.portfolio_manager.investments:
-                print("  portfolio is empty, next round will reassess candidates")
-
-            print(f"  sleeping {update_interval} minutes until next round...")
             time.sleep(update_interval * 60)
 
-        print("\nStage 4: final report generation")
         return self._generate_final_report()
 
     def _continuous_market_analysis(self, duration_minutes: int, update_interval: int) -> Dict[str, Any]:
         """Continue scanning until a valid entry is found or time expires."""
-        print("Starting continuous market analysis")
-
         analysis_count = 0
         max_attempts = duration_minutes // update_interval
         start_time = datetime.now()
@@ -253,27 +201,22 @@ class ModularTradingSimulator:
 
         while datetime.now() < end_time and analysis_count < max_attempts:
             analysis_count += 1
-            elapsed = datetime.now() - start_time
-            print(f"\nContinuous analysis round {analysis_count} - elapsed {elapsed.total_seconds():.0f}s")
-
-            self.market_regime = self.analyze_market_regime()
-            print(f"  market regime: {self.market_regime}")
-
-            top_volume_symbols = self.market_analyzer.get_top_volume_symbols(80)
+            self.market_regime = self._run_quietly(self.analyze_market_regime)
+            top_volume_symbols = self._run_quietly(self.market_analyzer.get_top_volume_symbols, 80)
             if top_volume_symbols:
-                evaluated_symbols = self.market_analyzer.evaluate_bullish_potential_advanced(top_volume_symbols)
+                evaluated_symbols = self._run_quietly(
+                    self.market_analyzer.evaluate_bullish_potential_advanced,
+                    top_volume_symbols,
+                )
                 if evaluated_symbols:
                     profitable_symbols = self.evaluate_profitability_potential(evaluated_symbols)
                     if profitable_symbols:
                         selected_symbols = self.select_optimal_symbols(profitable_symbols)
                         if selected_symbols:
-                            print(f"  entry candidates found: {len(selected_symbols)}")
-                            print("  switching from waiting mode to simulation mode")
                             return self._start_simulation_with_symbols(
                                 selected_symbols, duration_minutes, update_interval, end_time
                             )
 
-            print(f"  sleeping {update_interval} minutes until next analysis...")
             time.sleep(update_interval * 60)
 
         return {
@@ -290,46 +233,27 @@ class ModularTradingSimulator:
         end_time: datetime,
     ) -> Dict[str, Any]:
         """Start the main loop immediately after a delayed entry signal appears."""
-        print(f"\nImmediate investment with {len(selected_symbols)} symbols")
-
-        allocations = self.portfolio_manager.allocate_capital_fixed_amount(selected_symbols)
-        self.portfolio_manager.initialize_investments(allocations)
+        allocations = self._run_quietly(self.portfolio_manager.allocate_capital_fixed_amount, selected_symbols)
+        self._run_quietly(self.portfolio_manager.initialize_investments, allocations)
+        self._print_position_snapshot("초기 진입")
 
         remaining_time = (end_time - datetime.now()).total_seconds() / 60
         if remaining_time <= 0:
             remaining_time = 1
 
-        print(f"\nStarting main simulation loop with {remaining_time:.1f} minutes remaining")
-        print("=" * 80)
-
         iteration = 0
         max_iterations = int(remaining_time // update_interval)
         while datetime.now() < end_time and iteration < max_iterations:
             iteration += 1
-            elapsed = datetime.now() - self.simulation_start_time
-            print(f"\nRound {iteration}/{max_iterations} - elapsed {elapsed.total_seconds():.0f}s")
-
-            self.market_regime = self.analyze_market_regime()
-            print(f"  market regime: {self.market_regime}")
+            self.market_regime = self._run_quietly(self.analyze_market_regime)
 
             current_prices = self._fetch_portfolio_prices()
             performance = self.portfolio_manager.update_investment_performance(current_prices=current_prices)
-            print(f"  total value: ${performance['total_value']:.2f}")
-            print(f"  cash balance: ${performance['cash_balance']:.2f}")
-            print(f"  total pnl: ${performance['total_pnl']:+.2f} ({performance['pnl_percent']:+.2f}%)")
-            print(f"  total fees: ${performance['total_fees_paid']:.2f}")
-            print(f"  net pnl: ${performance['net_pnl']:+.2f} ({performance['net_pnl_percent']:+.2f}%)")
+            self.dynamic_portfolio_rebalancing()
+            self._print_position_snapshot(f"진행 {iteration}/{max_iterations}")
 
-            rebalancing_made = self.dynamic_portfolio_rebalancing()
-            if rebalancing_made:
-                print("  portfolio rebalanced")
-            elif not self.portfolio_manager.investments:
-                print("  portfolio is empty, next round will reassess candidates")
-
-            print(f"  sleeping {update_interval} minutes until next round...")
             time.sleep(update_interval * 60)
 
-        print("\nGenerating final report")
         return self._generate_final_report()
 
     def _fetch_portfolio_prices(self) -> Dict[str, float]:
@@ -338,12 +262,11 @@ class ModularTradingSimulator:
         if not symbols:
             return {}
 
-        real_time_data = self.realtime_fetcher.get_real_time_symbol_data(symbols)
+        real_time_data = self._run_quietly(self.realtime_fetcher.get_real_time_symbol_data, symbols)
         return {item["symbol"]: item["price"] for item in real_time_data}
 
     def _generate_final_report(self) -> Dict[str, Any]:
         """Build the final simulation output structure."""
-        print("\nGenerating modular simulator final report")
         portfolio_summary = self.portfolio_manager.get_performance_summary()
         if "error" in portfolio_summary:
             return {"error": portfolio_summary["error"]}
@@ -372,3 +295,30 @@ class ModularTradingSimulator:
             "individual_performance": portfolio_summary["individual_performance"],
             "performance_history": self.portfolio_manager.performance_history,
         }
+
+    def _run_quietly(self, func: Callable[..., Any], *args: Any, **kwargs: Any) -> Any:
+        """Run a noisy helper while suppressing stdout."""
+        buffer = io.StringIO()
+        with redirect_stdout(buffer):
+            return func(*args, **kwargs)
+
+    def _print_position_snapshot(self, label: str) -> None:
+        """Print only the active symbol summary requested by the user."""
+        print(f"\n[{label}]")
+        if not self.portfolio_manager.investments:
+            print("진행중 심볼 없음")
+            return
+
+        print("심볼 | 초기진입액 | 변화액 | 변화 % | 상승평가율")
+        for symbol, investment in self.portfolio_manager.investments.items():
+            initial_amount = investment["initial_investment"]
+            change_amount = investment["pnl"]
+            change_percent = investment["pnl_percent"]
+            profit_potential = investment.get("profit_potential", 0.0)
+            print(
+                f"{symbol} | "
+                f"${initial_amount:.2f} | "
+                f"${change_amount:+.2f} | "
+                f"{change_percent:+.2f}% | "
+                f"{profit_potential:.1f}%"
+            )
