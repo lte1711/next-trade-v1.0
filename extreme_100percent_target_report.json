@@ -1,0 +1,166 @@
+{
+  "report_metadata": {
+    "report_type": "연 100% 수익률 목표 초극단 전략 보고서",
+    "generation_time": "2026-04-02T22:59:45.137706",
+    "simulation_period": "2025-04-02 ~ 2026-04-02 (1년)",
+    "report_standard": "FACT ONLY"
+  },
+  "simulation_summary": {
+    "total_days": 366,
+    "strategies_tested": 10,
+    "total_investment": 4300.0,
+    "strategy_focus": "연 100% 수익률 달성"
+  },
+  "extreme_performance": {
+    "total_investment": 4300.0,
+    "total_final_amount": 12492.17,
+    "total_pnl": 8192.17,
+    "target_return_rate": 100.0,
+    "actual_return_rate": 190.0,
+    "target_achieved": true,
+    "max_pnl": 8192.17,
+    "min_pnl": 22.07,
+    "avg_pnl": 675.27,
+    "volatility": 1.78
+  },
+  "strategy_type_analysis": {
+    "extreme_leverage": {
+      "count": 2,
+      "total_pnl": 1523.96,
+      "avg_pnl": 761.98
+    },
+    "pump_scalping": {
+      "count": 2,
+      "total_pnl": 1811.23,
+      "avg_pnl": 905.62
+    },
+    "meme_explosion": {
+      "count": 2,
+      "total_pnl": 2408.28,
+      "avg_pnl": 1204.14
+    },
+    "ultra_scalping": {
+      "count": 2,
+      "total_pnl": 1098.15,
+      "avg_pnl": 549.07
+    },
+    "extreme_momentum": {
+      "count": 2,
+      "total_pnl": 1350.54,
+      "avg_pnl": 675.27
+    }
+  },
+  "risk_reward_optimization": {
+    "stop_loss_events": 127,
+    "profit_taken_events": 3520,
+    "risk_reward_ratio": "3520/127",
+    "optimization_focus": "초극단 레버리지와 폭발적 수익"
+  },
+  "individual_strategies": {
+    "extreme_leverage_1": {
+      "total_pnl": 744.53,
+      "days_active": 366,
+      "avg_daily_pnl": 2.03,
+      "stop_loss_count": 21,
+      "profit_taken_count": 343
+    },
+    "extreme_leverage_2": {
+      "total_pnl": 779.43,
+      "days_active": 366,
+      "avg_daily_pnl": 2.13,
+      "stop_loss_count": 6,
+      "profit_taken_count": 355
+    },
+    "pump_scalp_1": {
+      "total_pnl": 821.5,
+      "days_active": 366,
+      "avg_daily_pnl": 2.24,
+      "stop_loss_count": 29,
+      "profit_taken_count": 335
+    },
+    "pump_scalp_2": {
+      "total_pnl": 989.73,
+      "days_active": 366,
+      "avg_daily_pnl": 2.7,
+      "stop_loss_count": 4,
+      "profit_taken_count": 361
+    },
+    "meme_explosion_1": {
+      "total_pnl": 1204.14,
+      "days_active": 366,
+      "avg_daily_pnl": 3.29,
+      "stop_loss_count": 0,
+      "profit_taken_count": 366
+    },
+    "meme_explosion_2": {
+      "total_pnl": 1204.14,
+      "days_active": 366,
+      "avg_daily_pnl": 3.29,
+      "stop_loss_count": 0,
+      "profit_taken_count": 366
+    },
+    "ultra_scalp_1": {
+      "total_pnl": 520.65,
+      "days_active": 366,
+      "avg_daily_pnl": 1.42,
+      "stop_loss_count": 55,
+      "profit_taken_count": 309
+    },
+    "ultra_scalp_2": {
+      "total_pnl": 577.5,
+      "days_active": 366,
+      "avg_daily_pnl": 1.58,
+      "stop_loss_count": 12,
+      "profit_taken_count": 353
+    },
+    "extreme_momentum_1": {
+      "total_pnl": 750.3,
+      "days_active": 366,
+      "avg_daily_pnl": 2.05,
+      "stop_loss_count": 0,
+      "profit_taken_count": 366
+    },
+    "extreme_momentum_2": {
+      "total_pnl": 600.24,
+      "days_active": 366,
+      "avg_daily_pnl": 1.64,
+      "stop_loss_count": 0,
+      "profit_taken_count": 366
+    }
+  },
+  "target_achievement_analysis": {
+    "target_vs_actual": {
+      "target": "100.0%",
+      "actual": "190.0%",
+      "difference": "90.0%",
+      "achieved": true
+    },
+    "performance_factors": [
+      "초극단 레버리지 (10-40배)",
+      "펨코인 폭등 전략",
+      "초단기 스캘핑",
+      "극단적 모멘텀",
+      "높은 변동성 활용"
+    ]
+  },
+  "key_findings": [
+    "1년간 366일 초극단 전략 시뮬레이션 완료",
+    "초기 투자 4,300.00 USDT에서 최종 12,492.17 USDT 달성",
+    "총 손익 8192.17 USDT (190.00%)",
+    "목표 수익률 100% 대비 90.00%p 초과/미달",
+    "초극단 레버리지와 폭발적 수익 전략 적용"
+  ],
+  "conclusions": [
+    "연 100% 수익률 목표 달성을 위한 초극단 전략 설계",
+    "최대 40배 레버리지와 펨코인 폭등 전략으로 수익 극대화",
+    "높은 리스크를 감수하고 초단기 스캘핑으로 빈번한 수익 실현",
+    "변동성 극대화를 통한 폭발적 수익 창출"
+  ],
+  "extreme_strategy_features": [
+    "초극단 레버리지 (10-40배)",
+    "펨코인 폭등 전략 (500-1200% 목표)",
+    "초단기 스캘핑 (빈번한 거래)",
+    "극단적 모멘텀 (최대 수익 추구)",
+    "높은 변동성 활용 (폭발적 상승)"
+  ]
+}

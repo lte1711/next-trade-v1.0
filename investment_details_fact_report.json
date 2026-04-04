@@ -1,0 +1,115 @@
+{
+  "report_metadata": {
+    "report_type": "투자금, 이익, 최종 금액 상세 보고서",
+    "generation_time": "2026-04-02T22:43:28.345369",
+    "analysis_period": "2025-04-02 ~ 2026-04-02 (1년)",
+    "report_standard": "FACT ONLY"
+  },
+  "investment_summary": {
+    "total_initial_investment": 5300.0,
+    "total_final_amount": -43821.77,
+    "total_profit_loss": -49121.77,
+    "total_return_rate": -926.83,
+    "investment_period": "1년"
+  },
+  "strategy_breakdown": {
+    "loss_strategy_1": {
+      "initial_investment": 1000.0,
+      "final_amount": -16345.26,
+      "profit_loss": -17345.26,
+      "return_rate": -1734.53,
+      "days_active": 184,
+      "avg_daily_pnl": -94.27,
+      "daily_return_rate": -9.427
+    },
+    "loss_strategy_2": {
+      "initial_investment": 2000.0,
+      "final_amount": -32396.54,
+      "profit_loss": -34396.54,
+      "return_rate": -1719.83,
+      "days_active": 184,
+      "avg_daily_pnl": -186.94,
+      "daily_return_rate": -9.347
+    },
+    "profit_strategy_1": {
+      "initial_investment": 1500.0,
+      "final_amount": 3176.1,
+      "profit_loss": 1676.1,
+      "return_rate": 111.74,
+      "days_active": 183,
+      "avg_daily_pnl": 9.16,
+      "daily_return_rate": 0.611
+    },
+    "profit_strategy_2": {
+      "initial_investment": 800.0,
+      "final_amount": 1743.93,
+      "profit_loss": 943.93,
+      "return_rate": 117.99,
+      "days_active": 183,
+      "avg_daily_pnl": 5.16,
+      "daily_return_rate": 0.645
+    }
+  },
+  "period_comparison": {
+    "loss_strategy_period": {
+      "duration": "6개월",
+      "investment": 3000.0,
+      "final_amount": -48741.8,
+      "profit_loss": -51741.8,
+      "return_rate": -1724.73
+    },
+    "profit_strategy_period": {
+      "duration": "6개월",
+      "investment": 2300.0,
+      "final_amount": 4920.03,
+      "profit_loss": 2620.03,
+      "return_rate": 113.91
+    },
+    "conversion_effect": {
+      "value": 54361.83,
+      "description": "손실 전략 중지 후 수익 전략 시작으로 인한 순 효과"
+    }
+  },
+  "detailed_calculations": {
+    "initial_investment_breakdown": {
+      "loss_strategy_1": 1000.0,
+      "loss_strategy_2": 2000.0,
+      "profit_strategy_1": 1500.0,
+      "profit_strategy_2": 800.0
+    },
+    "final_amount_breakdown": {
+      "loss_strategy_1": -16345.26,
+      "loss_strategy_2": -32396.54,
+      "profit_strategy_1": 3176.1,
+      "profit_strategy_2": 1743.93
+    },
+    "profit_loss_breakdown": {
+      "loss_strategy_1": -17345.26,
+      "loss_strategy_2": -34396.54,
+      "profit_strategy_1": 1676.1,
+      "profit_strategy_2": 943.93
+    },
+    "return_rate_breakdown": {
+      "loss_strategy_1": -1734.53,
+      "loss_strategy_2": -1719.83,
+      "profit_strategy_1": 111.74,
+      "profit_strategy_2": 117.99
+    }
+  },
+  "key_financial_metrics": [
+    "초기 투자금: 5,300.00 USDT",
+    "최종 금액: -43,821.77 USDT",
+    "총 이익/손실: -49,121.77 USDT",
+    "총 수익률: -926.83%",
+    "손실 기간 손실: 51,741.80 USDT",
+    "수익 기간 이익: 2,620.03 USDT",
+    "전환 효과: 54,361.83 USDT"
+  ],
+  "conclusions": [
+    "총 5,300.00 USDT 투자로 -43,821.77 USDT 최종 달성",
+    "전체 수익률 -926.83% 기록",
+    "손실 전략 중지로 51,741.80 USDT 추가 손실 방지",
+    "수익 전략으로 2,620.03 USDT 이익 창출",
+    "전략 전환의 순 효과 54,361.83 USDT 달성"
+  ]
+}

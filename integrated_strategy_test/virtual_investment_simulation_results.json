@@ -1,0 +1,636 @@
+{
+  "simulation_metadata": {
+    "initial_capital": 500.0,
+    "final_capital": 500.1888069530125,
+    "total_pnl": 0.1888069530125449,
+    "pnl_percent": 0.03776139060250898,
+    "start_time": "2026-04-03T02:45:53.820704",
+    "end_time": "2026-04-03T02:54:20.476131",
+    "total_rounds": 5,
+    "invested_symbols": 20
+  },
+  "individual_performance": [
+    {
+      "symbol": "RESOLVUSDT",
+      "initial_investment": 62.89198606271777,
+      "final_investment": 63.83445152149702,
+      "pnl": 0.9424654587792531,
+      "pnl_percent": 1.498546186535433,
+      "rank": 2,
+      "bullish_score": 83.17834822397037
+    },
+    {
+      "symbol": "VANRYUSDT",
+      "initial_investment": 29.44250871080139,
+      "final_investment": 29.60577585707201,
+      "pnl": 0.1632671462706199,
+      "pnl_percent": 0.5545286506469576,
+      "rank": 8,
+      "bullish_score": 60.66544414869316
+    },
+    {
+      "symbol": "SYNUSDT",
+      "initial_investment": 56.44599303135889,
+      "final_investment": 56.71829530929911,
+      "pnl": 0.27230227794022,
+      "pnl_percent": 0.4824120603015008,
+      "rank": 3,
+      "bullish_score": 80.71343358219863
+    },
+    {
+      "symbol": "GRIFFAINUSDT",
+      "initial_investment": 39.198606271777,
+      "final_investment": 39.299720475401536,
+      "pnl": 0.10111420362453316,
+      "pnl_percent": 0.25795356835769795,
+      "rank": 6,
+      "bullish_score": 66.60543357320621
+    },
+    {
+      "symbol": "MUSDT",
+      "initial_investment": 44.599303135888505,
+      "final_investment": 44.698683913009134,
+      "pnl": 0.0993807771206292,
+      "pnl_percent": 0.2228303362001608,
+      "rank": 5,
+      "bullish_score": 68.96527900410453
+    },
+    {
+      "symbol": "ALPINEUSDT",
+      "initial_investment": 6.2717770034843205,
+      "final_investment": 6.273317602109593,
+      "pnl": 0.001540598625272338,
+      "pnl_percent": 0.024563989191842276,
+      "rank": 15,
+      "bullish_score": 49.47211988358502
+    },
+    {
+      "symbol": "ALCHUSDT",
+      "initial_investment": 5.0,
+      "final_investment": 5.000802568218298,
+      "pnl": 0.0008025682182983829,
+      "pnl_percent": 0.016051364365967657,
+      "rank": 18,
+      "bullish_score": 42.230781817927536
+    },
+    {
+      "symbol": "FISUSDT",
+      "initial_investment": 21.0801393728223,
+      "final_investment": 21.0801393728223,
+      "pnl": 0.0,
+      "pnl_percent": 0.0,
+      "rank": 10,
+      "bullish_score": 55.38269674435116
+    },
+    {
+      "symbol": "PUMPBTCUSDT",
+      "initial_investment": 5.0,
+      "final_investment": 4.996859296482412,
+      "pnl": -0.003140703517588328,
+      "pnl_percent": -0.06281407035176656,
+      "rank": 16,
+      "bullish_score": 49.434898516796295
+    },
+    {
+      "symbol": "DIAUSDT",
+      "initial_investment": 5.0,
+      "final_investment": 4.994165694282381,
+      "pnl": -0.005834305717619337,
+      "pnl_percent": -0.11668611435238674,
+      "rank": 17,
+      "bullish_score": 43.26483793321569
+    },
+    {
+      "symbol": "CUDISUSDT",
+      "initial_investment": 25.087108013937282,
+      "final_investment": 25.057313348837596,
+      "pnl": -0.029794665099686313,
+      "pnl_percent": -0.11876484560569406,
+      "rank": 9,
+      "bullish_score": 55.66519340366467
+    },
+    {
+      "symbol": "SPORTFUNUSDT",
+      "initial_investment": 5.0,
+      "final_investment": 4.993988578298768,
+      "pnl": -0.006011421701232145,
+      "pnl_percent": -0.1202284340246429,
+      "rank": 19,
+      "bullish_score": 41.848754407941826
+    },
+    {
+      "symbol": "1000RATSUSDT",
+      "initial_investment": 14.111498257839722,
+      "final_investment": 14.076586089957884,
+      "pnl": -0.034912167881838485,
+      "pnl_percent": -0.2474022761009295,
+      "rank": 12,
+      "bullish_score": 51.67437571405195
+    },
+    {
+      "symbol": "BMTUSDT",
+      "initial_investment": 50.34843205574913,
+      "final_investment": 50.217826525124615,
+      "pnl": -0.1306055306245142,
+      "pnl_percent": -0.2594033722438448,
+      "rank": 4,
+      "bullish_score": 69.59493465766678
+    },
+    {
+      "symbol": "PORT3USDT",
+      "initial_investment": 17.421602787456447,
+      "final_investment": 17.374644289377052,
+      "pnl": -0.04695849807939467,
+      "pnl_percent": -0.2695417789757254,
+      "rank": 11,
+      "bullish_score": 54.75852484723996
+    },
+    {
+      "symbol": "TRUUSDT",
+      "initial_investment": 11.149825783972126,
+      "final_investment": 11.101766190075695,
+      "pnl": -0.048059593896431,
+      "pnl_percent": -0.4310344827586155,
+      "rank": 13,
+      "bullish_score": 51.50020275232896
+    },
+    {
+      "symbol": "1000000BOBUSDT",
+      "initial_investment": -10.418118466898989,
+      "final_investment": -10.371567446045999,
+      "pnl": 0.046551020852989566,
+      "pnl_percent": -0.4468275245755171,
+      "rank": 20,
+      "bullish_score": 38.301432691155576
+    },
+    {
+      "symbol": "KMNOUSDT",
+      "initial_investment": 8.536585365853659,
+      "final_investment": 8.49416169479199,
+      "pnl": -0.042423671061669666,
+      "pnl_percent": -0.4969630038652732,
+      "rank": 14,
+      "bullish_score": 50.427494279685995
+    },
+    {
+      "symbol": "SAPIENUSDT",
+      "initial_investment": 34.146341463414636,
+      "final_investment": 33.855691653482424,
+      "pnl": -0.2906498099322121,
+      "pnl_percent": -0.8511887290871927,
+      "rank": 7,
+      "bullish_score": 64.196888944443
+    },
+    {
+      "symbol": "FIDAUSDT",
+      "initial_investment": 69.68641114982579,
+      "final_investment": 68.8861844189187,
+      "pnl": -0.8002267309070845,
+      "pnl_percent": -1.1483253588516662,
+      "rank": 1,
+      "bullish_score": 99.80295355847862
+    }
+  ],
+  "performance_history": [
+    {
+      "timestamp": "2026-04-03T02:45:53.820704",
+      "total_value": 500.53058546347756,
+      "total_pnl": 0.5305854634774905,
+      "pnl_percent": 0.1061170926954981,
+      "individual_performance": {
+        "FIDAUSDT": {
+          "pnl": 0.10002834136338379,
+          "pnl_percent": 0.14354066985645572
+        },
+        "RESOLVUSDT": {
+          "pnl": -7.105427357601002e-15,
+          "pnl_percent": -1.1297826324828185e-14
+        },
+        "SYNUSDT": {
+          "pnl": 0.24961042144519752,
+          "pnl_percent": 0.4422110552763684
+        },
+        "BMTUSDT": {
+          "pnl": 0.13060553062450708,
+          "pnl_percent": 0.25940337224383064
+        },
+        "MUSDT": {
+          "pnl": 0.02615283608437835,
+          "pnl_percent": 0.05863956215794208
+        },
+        "GRIFFAINUSDT": {
+          "pnl": 0.06740946908302448,
+          "pnl_percent": 0.17196904557180467
+        },
+        "SAPIENUSDT": {
+          "pnl": -0.040089628956174295,
+          "pnl_percent": -0.11740534194308186
+        },
+        "VANRYUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "CUDISUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "FISUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "PORT3USDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "1000RATSUSDT": {
+          "pnl": -0.013964867152736815,
+          "pnl_percent": -0.09896091044038187
+        },
+        "TRUUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "KMNOUSDT": {
+          "pnl": 0.004713741229075197,
+          "pnl_percent": 0.05521811154059516
+        },
+        "ALPINEUSDT": {
+          "pnl": 0.003081197250544676,
+          "pnl_percent": 0.04912797838368455
+        },
+        "PUMPBTCUSDT": {
+          "pnl": 0.00314070351758744,
+          "pnl_percent": 0.0628140703517488
+        },
+        "DIAUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "ALCHUSDT": {
+          "pnl": -0.0016051364365967657,
+          "pnl_percent": -0.032102728731935315
+        },
+        "SPORTFUNUSDT": {
+          "pnl": 0.001502855425306926,
+          "pnl_percent": 0.03005710850613852
+        },
+        "1000000BOBUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": -0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T02:48:00.537352",
+      "total_value": 501.2306111311603,
+      "total_pnl": 1.2306111311603125,
+      "pnl_percent": 0.2461222262320625,
+      "individual_performance": {
+        "FIDAUSDT": {
+          "pnl": 0.9002550722704825,
+          "pnl_percent": 1.2918660287081423
+        },
+        "RESOLVUSDT": {
+          "pnl": 0.028133297276987435,
+          "pnl_percent": 0.04473272198612407
+        },
+        "SYNUSDT": {
+          "pnl": 0.2836482061877277,
+          "pnl_percent": 0.5025125628140608
+        },
+        "BMTUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "MUSDT": {
+          "pnl": 0.10984191155437628,
+          "pnl_percent": 0.24628616106332807
+        },
+        "GRIFFAINUSDT": {
+          "pnl": 0.10111420362453316,
+          "pnl_percent": 0.25795356835769795
+        },
+        "SAPIENUSDT": {
+          "pnl": -0.15033610858562696,
+          "pnl_percent": -0.44027003228647893
+        },
+        "VANRYUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "CUDISUSDT": {
+          "pnl": -0.029794665099686313,
+          "pnl_percent": -0.11876484560569406
+        },
+        "FISUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "PORT3USDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "1000RATSUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "TRUUSDT": {
+          "pnl": -0.024029796948216386,
+          "pnl_percent": -0.21551724137931572
+        },
+        "KMNOUSDT": {
+          "pnl": -0.00471374122907342,
+          "pnl_percent": -0.05521811154057434
+        },
+        "ALPINEUSDT": {
+          "pnl": 0.003081197250544676,
+          "pnl_percent": 0.04912797838368455
+        },
+        "PUMPBTCUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "DIAUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "ALCHUSDT": {
+          "pnl": 0.0008025682182983829,
+          "pnl_percent": 0.016051364365967657
+        },
+        "SPORTFUNUSDT": {
+          "pnl": -0.006011421701232145,
+          "pnl_percent": -0.1202284340246429
+        },
+        "1000000BOBUSDT": {
+          "pnl": 0.018620408341197603,
+          "pnl_percent": -0.1787310098302239
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T02:50:07.171611",
+      "total_value": 502.040323568846,
+      "total_pnl": 2.0403235688459915,
+      "pnl_percent": 0.40806471376919834,
+      "individual_performance": {
+        "FIDAUSDT": {
+          "pnl": 1.4003967790874015,
+          "pnl_percent": 2.0095693779904207
+        },
+        "RESOLVUSDT": {
+          "pnl": 0.12659983774646122,
+          "pnl_percent": 0.20129724893758655
+        },
+        "SYNUSDT": {
+          "pnl": 0.5899882688704849,
+          "pnl_percent": 1.0452261306532664
+        },
+        "BMTUSDT": {
+          "pnl": -0.03265138265612677,
+          "pnl_percent": -0.06485084306095766
+        },
+        "MUSDT": {
+          "pnl": 0.14296883726125742,
+          "pnl_percent": 0.3205629397967256
+        },
+        "GRIFFAINUSDT": {
+          "pnl": 0.06740946908302448,
+          "pnl_percent": 0.17196904557180467
+        },
+        "SAPIENUSDT": {
+          "pnl": -0.2154817556393951,
+          "pnl_percent": -0.6310537129439427
+        },
+        "VANRYUSDT": {
+          "pnl": 0.054422382090209,
+          "pnl_percent": 0.1848428835489939
+        },
+        "CUDISUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "FISUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "PORT3USDT": {
+          "pnl": -0.04695849807939467,
+          "pnl_percent": -0.2695417789757254
+        },
+        "1000RATSUSDT": {
+          "pnl": -0.0069824335763684076,
+          "pnl_percent": -0.049480455220190935
+        },
+        "TRUUSDT": {
+          "pnl": -0.0720893908446456,
+          "pnl_percent": -0.6465517241379153
+        },
+        "KMNOUSDT": {
+          "pnl": -0.009427482458150394,
+          "pnl_percent": -0.11043622308119032
+        },
+        "ALPINEUSDT": {
+          "pnl": 0.007702993126362578,
+          "pnl_percent": 0.12281994595922556
+        },
+        "PUMPBTCUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "DIAUSDT": {
+          "pnl": -0.0029171528588092244,
+          "pnl_percent": -0.058343057176184494
+        },
+        "ALCHUSDT": {
+          "pnl": 0.001605136436597654,
+          "pnl_percent": 0.03210272873195308
+        },
+        "SPORTFUNUSDT": {
+          "pnl": -0.0015028554253087023,
+          "pnl_percent": -0.030057108506174043
+        },
+        "1000000BOBUSDT": {
+          "pnl": 0.03724081668239165,
+          "pnl_percent": -0.35746201966041374
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T02:52:13.740472",
+      "total_value": 501.60990013117873,
+      "total_pnl": 1.6099001311788195,
+      "pnl_percent": 0.3219800262357639,
+      "individual_performance": {
+        "FIDAUSDT": {
+          "pnl": 1.0002834136338663,
+          "pnl_percent": 1.4354066985645981
+        },
+        "RESOLVUSDT": {
+          "pnl": 0.43606610779338695,
+          "pnl_percent": 0.693357190785053
+        },
+        "SYNUSDT": {
+          "pnl": 0.4197993451578341,
+          "pnl_percent": 0.7437185929648048
+        },
+        "BMTUSDT": {
+          "pnl": -0.1306055306245142,
+          "pnl_percent": -0.2594033722438448
+        },
+        "MUSDT": {
+          "pnl": 0.17260871815688006,
+          "pnl_percent": 0.3870211102423795
+        },
+        "GRIFFAINUSDT": {
+          "pnl": 0.033704734541508685,
+          "pnl_percent": 0.08598452278589327
+        },
+        "SAPIENUSDT": {
+          "pnl": -0.2505601809760378,
+          "pnl_percent": -0.7337833871441107
+        },
+        "VANRYUSDT": {
+          "pnl": 0.054422382090209,
+          "pnl_percent": 0.1848428835489939
+        },
+        "CUDISUSDT": {
+          "pnl": -0.029794665099686313,
+          "pnl_percent": -0.11876484560569406
+        },
+        "FISUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "PORT3USDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "1000RATSUSDT": {
+          "pnl": -0.034912167881838485,
+          "pnl_percent": -0.2474022761009295
+        },
+        "TRUUSDT": {
+          "pnl": -0.09611918779286377,
+          "pnl_percent": -0.8620689655172469
+        },
+        "KMNOUSDT": {
+          "pnl": -0.018854964916297234,
+          "pnl_percent": -0.220872446162339
+        },
+        "ALPINEUSDT": {
+          "pnl": 0.010784190376907254,
+          "pnl_percent": 0.17194792434291012
+        },
+        "PUMPBTCUSDT": {
+          "pnl": -0.003140703517588328,
+          "pnl_percent": -0.06281407035176656
+        },
+        "DIAUSDT": {
+          "pnl": -0.005834305717619337,
+          "pnl_percent": -0.11668611435238674
+        },
+        "ALCHUSDT": {
+          "pnl": -0.0008025682182983829,
+          "pnl_percent": -0.016051364365967657
+        },
+        "SPORTFUNUSDT": {
+          "pnl": -0.0030057108506165164,
+          "pnl_percent": -0.06011421701233033
+        },
+        "1000000BOBUSDT": {
+          "pnl": 0.05586122502358748,
+          "pnl_percent": -0.5361930294906205
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T02:54:20.476131",
+      "total_value": 500.1888069530125,
+      "total_pnl": 0.1888069530125449,
+      "pnl_percent": 0.03776139060250898,
+      "individual_performance": {
+        "FIDAUSDT": {
+          "pnl": -0.8002267309070845,
+          "pnl_percent": -1.1483253588516662
+        },
+        "RESOLVUSDT": {
+          "pnl": 0.9424654587792531,
+          "pnl_percent": 1.498546186535433
+        },
+        "SYNUSDT": {
+          "pnl": 0.27230227794022,
+          "pnl_percent": 0.4824120603015008
+        },
+        "BMTUSDT": {
+          "pnl": -0.1306055306245142,
+          "pnl_percent": -0.2594033722438448
+        },
+        "MUSDT": {
+          "pnl": 0.0993807771206292,
+          "pnl_percent": 0.2228303362001608
+        },
+        "GRIFFAINUSDT": {
+          "pnl": 0.10111420362453316,
+          "pnl_percent": 0.25795356835769795
+        },
+        "SAPIENUSDT": {
+          "pnl": -0.2906498099322121,
+          "pnl_percent": -0.8511887290871927
+        },
+        "VANRYUSDT": {
+          "pnl": 0.1632671462706199,
+          "pnl_percent": 0.5545286506469576
+        },
+        "CUDISUSDT": {
+          "pnl": -0.029794665099686313,
+          "pnl_percent": -0.11876484560569406
+        },
+        "FISUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "PORT3USDT": {
+          "pnl": -0.04695849807939467,
+          "pnl_percent": -0.2695417789757254
+        },
+        "1000RATSUSDT": {
+          "pnl": -0.034912167881838485,
+          "pnl_percent": -0.2474022761009295
+        },
+        "TRUUSDT": {
+          "pnl": -0.048059593896431,
+          "pnl_percent": -0.4310344827586155
+        },
+        "KMNOUSDT": {
+          "pnl": -0.042423671061669666,
+          "pnl_percent": -0.4969630038652732
+        },
+        "ALPINEUSDT": {
+          "pnl": 0.001540598625272338,
+          "pnl_percent": 0.024563989191842276
+        },
+        "PUMPBTCUSDT": {
+          "pnl": -0.003140703517588328,
+          "pnl_percent": -0.06281407035176656
+        },
+        "DIAUSDT": {
+          "pnl": -0.005834305717619337,
+          "pnl_percent": -0.11668611435238674
+        },
+        "ALCHUSDT": {
+          "pnl": 0.0008025682182983829,
+          "pnl_percent": 0.016051364365967657
+        },
+        "SPORTFUNUSDT": {
+          "pnl": -0.006011421701232145,
+          "pnl_percent": -0.1202284340246429
+        },
+        "1000000BOBUSDT": {
+          "pnl": 0.046551020852989566,
+          "pnl_percent": -0.4468275245755171
+        }
+      }
+    }
+  ]
+}

@@ -4,5 +4,7 @@
     "api_secret": "ll6wie0zfs8uNcL1Ch4lHGiuGlTo54koEqoAZPlmUxkmLgRZIFZcsPUE1vY2jVTU",
     "base_url": "https://demo-fapi.binance.com"
   },
-  "testnet_initial_equity": 10119.13907373
+  "testnet_initial_equity": 10119.13907373,
+  "binance_execution_mode": "testnet",
+  "binance_probe_mode": "enabled"
 }

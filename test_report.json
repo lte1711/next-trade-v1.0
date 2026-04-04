@@ -1,0 +1,46 @@
+{
+  "test_summary": {
+    "timestamp": "2026-04-02T21:54:33.843866",
+    "test_type": "손실을 수익으로 전환 테스트",
+    "test_environment": "isolated_simulation",
+    "test_duration": "30초"
+  },
+  "execution_results": {
+    "loss_strategies_stopped": 2,
+    "profit_strategies_started": 2,
+    "overall_success": true
+  },
+  "financial_analysis": {
+    "initial_loss": -1.811,
+    "expected_profit": 8.987,
+    "final_effect": 10.798,
+    "net_change": 12.609,
+    "conversion_ratio": "손실 → 수익 전환"
+  },
+  "strategy_analysis": {
+    "stopped_strategies": [
+      "BCHUSDT",
+      "BTCUSDT"
+    ],
+    "started_strategies": [
+      "QUICKUSDT",
+      "LRCUSDT"
+    ],
+    "expected_performance": {
+      "QUICKUSDT": {
+        "pnl": 7.418,
+        "weight": 0.4
+      },
+      "LRCUSDT": {
+        "pnl": 1.569,
+        "weight": 0.197
+      }
+    }
+  },
+  "conclusions": [
+    "손실 전략 중지로 추가 손실 방지",
+    "수익 전략 시작으로 수익 창출",
+    "리스크 관리 강화로 안정성 확보",
+    "테스트 환경에서 안전하게 검증 완료"
+  ]
+}

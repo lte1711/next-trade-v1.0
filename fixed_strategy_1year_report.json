@@ -1,0 +1,110 @@
+{
+  "report_metadata": {
+    "report_type": "수정된 전략 1년치 데이터 재시뮬레이션 보고서",
+    "generation_time": "2026-04-02T22:49:35.790606",
+    "simulation_period": "2025-04-02 ~ 2026-04-02 (1년)",
+    "report_standard": "FACT ONLY"
+  },
+  "simulation_summary": {
+    "total_days": 366,
+    "strategies_tested": 5,
+    "total_investment": 5300.0
+  },
+  "overall_performance": {
+    "total_investment": 5300.0,
+    "total_final_amount": 6459.97,
+    "total_pnl": 1159.97,
+    "return_percentage": 21.89,
+    "max_pnl": 1159.97,
+    "min_pnl": 0.75,
+    "avg_pnl": 585.81,
+    "volatility": 2.63
+  },
+  "risk_management_analysis": {
+    "stop_loss_events": 484,
+    "max_drawdown": 0.75,
+    "volatility": 2.63,
+    "risk_effectiveness": "손절 라인으로 손실 제어 확인"
+  },
+  "individual_strategies": {
+    "conservative_1": {
+      "total_pnl": 190.05,
+      "days_active": 366,
+      "avg_daily_pnl": 0.52,
+      "stop_loss_count": 80
+    },
+    "conservative_2": {
+      "total_pnl": 188.17,
+      "days_active": 366,
+      "avg_daily_pnl": 0.51,
+      "stop_loss_count": 87
+    },
+    "aggressive_1": {
+      "total_pnl": 553.74,
+      "days_active": 366,
+      "avg_daily_pnl": 1.51,
+      "stop_loss_count": 130
+    },
+    "balanced_1": {
+      "total_pnl": 160.64,
+      "days_active": 366,
+      "avg_daily_pnl": 0.44,
+      "stop_loss_count": 103
+    },
+    "diversified_1": {
+      "total_pnl": 67.36,
+      "days_active": 366,
+      "avg_daily_pnl": 0.18,
+      "stop_loss_count": 84
+    }
+  },
+  "problem_resolution": {
+    "original_issues": [
+      "손실 전략 과도한 손실 (-1,700%)",
+      "손절 라인 부재",
+      "레버리지 과도 사용",
+      "수익 전익률 부족"
+    ],
+    "applied_fixes": [
+      "손절 라인 -10% 도입",
+      "레버리지 최대 2배 제한",
+      "보수적/공격적 전략 분리",
+      "다각화 전략 적용"
+    ],
+    "resolution_results": [
+      "최대 손실 -10%로 제한",
+      "레버리지 효과적으로 제어",
+      "안정적 수익률 달성",
+      "리스크 분산 성공"
+    ]
+  },
+  "key_findings": [
+    "1년간 366일 시뮬레이션 완료",
+    "초기 투자 5,300.00 USDT에서 최종 6,459.97 USDT 달성",
+    "총 손익 1159.97 USDT (21.89%)",
+    "손절 이벤트 484회로 리스크 관리",
+    "최대 낙폭 0.75 USDT로 통제"
+  ],
+  "conclusions": [
+    "손절 라인 도입으로 과도한 손실 방지 성공",
+    "레버리지 제한으로 손실 증폭 통제",
+    "다각화 전략으로 안정적 성과 달성",
+    "수정된 전략이 원본 문제점 완전히 해결"
+  ],
+  "comparison_with_original": {
+    "original_strategy": {
+      "final_amount": -43821.77,
+      "pnl": -49121.77,
+      "return_rate": -926.83
+    },
+    "fixed_strategy": {
+      "final_amount": 6459.97,
+      "pnl": 1159.97,
+      "return_rate": 21.89
+    },
+    "improvement": {
+      "pnl_difference": 50281.74,
+      "return_rate_difference": 948.72
+    }
+  }
+}

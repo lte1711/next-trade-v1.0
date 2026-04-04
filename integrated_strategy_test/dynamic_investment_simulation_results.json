@@ -1,0 +1,1081 @@
+{
+  "simulation_metadata": {
+    "initial_capital": 500.0,
+    "final_capital": 537.4411019861489,
+    "total_pnl": 40.014368605162545,
+    "pnl_percent": 8.00287372103251,
+    "start_time": "2026-04-03T03:13:11.660255",
+    "end_time": "2026-04-03T09:04:08.582565",
+    "total_rounds": 36,
+    "invested_symbols": 5,
+    "max_symbols": 5,
+    "total_replacements": 1
+  },
+  "individual_performance": [
+    {
+      "symbol": "TAGUSDT",
+      "initial_investment": 100.0,
+      "final_investment": 126.10484406104842,
+      "pnl": 26.104844061048425,
+      "pnl_percent": 26.104844061048425,
+      "rank": 2,
+      "bullish_score": 80.0787682269379
+    },
+    {
+      "symbol": "SYNUSDT",
+      "initial_investment": 100.0,
+      "final_investment": 112.81746031746032,
+      "pnl": 12.817460317460316,
+      "pnl_percent": 12.817460317460316,
+      "rank": 3,
+      "bullish_score": 73.19463516941488
+    },
+    {
+      "symbol": "XNYUSDT",
+      "initial_investment": 100.0,
+      "final_investment": 101.1283497884344,
+      "pnl": 1.1283497884344058,
+      "pnl_percent": 1.1283497884344058,
+      "rank": 5,
+      "bullish_score": 67.99378705147262
+    },
+    {
+      "symbol": "NTRNUSDT",
+      "initial_investment": 100.0,
+      "final_investment": 100.00000000000001,
+      "pnl": 1.4210854715202004e-14,
+      "pnl_percent": 1.4210854715202004e-14,
+      "rank": 1,
+      "bullish_score": 89.34734590110627
+    },
+    {
+      "symbol": "BOBUSDT",
+      "initial_investment": 97.4267333809864,
+      "final_investment": 97.39044781920579,
+      "pnl": -0.03628556178061615,
+      "pnl_percent": -0.037243947858460746,
+      "rank": 6,
+      "bullish_score": 59.75053136678177
+    }
+  ],
+  "replacement_history": [
+    {
+      "timestamp": "2026-04-03T06:13:41.483922",
+      "old_symbol": "HFTUSDT",
+      "new_symbol": "BOBUSDT",
+      "old_performance": -2.5732666190135944,
+      "new_bullish_score": 59.75053136678177,
+      "transferred_amount": 97.4267333809864
+    }
+  ],
+  "performance_history": [
+    {
+      "timestamp": "2026-04-03T03:13:11.660255",
+      "total_value": 498.79311808977343,
+      "total_pnl": -1.2068819102265564,
+      "pnl_percent": -0.24137638204531128,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": -0.23148148148148096,
+          "pnl_percent": -0.23148148148148096
+        },
+        "TAGUSDT": {
+          "pnl": 0.1327140013271162,
+          "pnl_percent": 0.1327140013271162
+        },
+        "SYNUSDT": {
+          "pnl": -0.15873015873016527,
+          "pnl_percent": -0.15873015873016527
+        },
+        "HFTUSDT": {
+          "pnl": -0.9292351679771258,
+          "pnl_percent": -0.9292351679771258
+        },
+        "XNYUSDT": {
+          "pnl": -0.02014910336490061,
+          "pnl_percent": -0.02014910336490061
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T03:23:13.376181",
+      "total_value": 500.8400445052746,
+      "total_pnl": 0.8400445052746051,
+      "pnl_percent": 0.16800890105492103,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 2.4684804246847847,
+          "pnl_percent": 2.4684804246847847
+        },
+        "SYNUSDT": {
+          "pnl": -0.5753968253968225,
+          "pnl_percent": -0.5753968253968225
+        },
+        "HFTUSDT": {
+          "pnl": 0.3573981415296572,
+          "pnl_percent": 0.3573981415296572
+        },
+        "XNYUSDT": {
+          "pnl": -1.4104372355430286,
+          "pnl_percent": -1.4104372355430286
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T03:33:15.002852",
+      "total_value": 501.65457891608,
+      "total_pnl": 1.6545789160799984,
+      "pnl_percent": 0.3309157832159997,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 2.6011944260119293,
+          "pnl_percent": 2.6011944260119293
+        },
+        "SYNUSDT": {
+          "pnl": -0.1190476190476204,
+          "pnl_percent": -0.1190476190476204
+        },
+        "HFTUSDT": {
+          "pnl": 0.6433166547533915,
+          "pnl_percent": 0.6433166547533915
+        },
+        "XNYUSDT": {
+          "pnl": -1.4708845456377162,
+          "pnl_percent": -1.4708845456377162
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T03:43:16.698024",
+      "total_value": 505.50645977244494,
+      "total_pnl": 5.506459772444941,
+      "pnl_percent": 1.1012919544889883,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 3.171864631718634,
+          "pnl_percent": 3.171864631718634
+        },
+        "SYNUSDT": {
+          "pnl": 1.4087301587301653,
+          "pnl_percent": 1.4087301587301653
+        },
+        "HFTUSDT": {
+          "pnl": 1.429592566118643,
+          "pnl_percent": 1.429592566118643
+        },
+        "XNYUSDT": {
+          "pnl": -0.5037275841225153,
+          "pnl_percent": -0.5037275841225153
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T03:53:18.398222",
+      "total_value": 507.3019719990793,
+      "total_pnl": 7.301971999079257,
+      "pnl_percent": 1.4603943998158513,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 4.074319840743186,
+          "pnl_percent": 4.074319840743186
+        },
+        "SYNUSDT": {
+          "pnl": 0.5555555555555571,
+          "pnl_percent": 0.5555555555555571
+        },
+        "HFTUSDT": {
+          "pnl": 2.430307362401706,
+          "pnl_percent": 2.430307362401706
+        },
+        "XNYUSDT": {
+          "pnl": 0.24178924037879312,
+          "pnl_percent": 0.2417892403787931
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T04:03:20.083485",
+      "total_value": 509.05315534555467,
+      "total_pnl": 9.053155345554671,
+      "pnl_percent": 1.8106310691109344,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 4.963503649635015,
+          "pnl_percent": 4.963503649635015
+        },
+        "SYNUSDT": {
+          "pnl": 1.2103174603174551,
+          "pnl_percent": 1.2103174603174551
+        },
+        "HFTUSDT": {
+          "pnl": 2.8591851322373003,
+          "pnl_percent": 2.8591851322373003
+        },
+        "XNYUSDT": {
+          "pnl": 0.0201491033648864,
+          "pnl_percent": 0.0201491033648864
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T04:13:21.702819",
+      "total_value": 506.8258109029584,
+      "total_pnl": 6.825810902958423,
+      "pnl_percent": 1.3651621805916847,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": -0.23148148148148096,
+          "pnl_percent": -0.23148148148148096
+        },
+        "TAGUSDT": {
+          "pnl": 3.556735235567345,
+          "pnl_percent": 3.5567352355673454
+        },
+        "SYNUSDT": {
+          "pnl": 1.4880952380952408,
+          "pnl_percent": 1.4880952380952408
+        },
+        "HFTUSDT": {
+          "pnl": 2.0729092208720346,
+          "pnl_percent": 2.0729092208720346
+        },
+        "XNYUSDT": {
+          "pnl": -0.060447310094716045,
+          "pnl_percent": -0.060447310094716045
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T04:23:23.457329",
+      "total_value": 505.4980512469474,
+      "total_pnl": 5.498051246947412,
+      "pnl_percent": 1.0996102493894826,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 3.357664233576628,
+          "pnl_percent": 3.357664233576628
+        },
+        "SYNUSDT": {
+          "pnl": 0.25793650793650613,
+          "pnl_percent": 0.25793650793650613
+        },
+        "HFTUSDT": {
+          "pnl": 2.1443888491779717,
+          "pnl_percent": 2.1443888491779717
+        },
+        "XNYUSDT": {
+          "pnl": -0.26193834374370795,
+          "pnl_percent": -0.26193834374370795
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T04:33:25.164632",
+      "total_value": 506.46459481959516,
+      "total_pnl": 6.464594819595149,
+      "pnl_percent": 1.29291896391903,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 4.007962840079614,
+          "pnl_percent": 4.007962840079614
+        },
+        "SYNUSDT": {
+          "pnl": 0.43650793650793673,
+          "pnl_percent": 0.4365079365079367
+        },
+        "HFTUSDT": {
+          "pnl": 2.644746247319503,
+          "pnl_percent": 2.644746247319503
+        },
+        "XNYUSDT": {
+          "pnl": -0.624622204311919,
+          "pnl_percent": -0.624622204311919
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T04:43:26.868835",
+      "total_value": 509.2231182825661,
+      "total_pnl": 9.22311828256612,
+      "pnl_percent": 1.8446236565132237,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 4.990046449900447,
+          "pnl_percent": 4.990046449900447
+        },
+        "SYNUSDT": {
+          "pnl": 1.2103174603174551,
+          "pnl_percent": 1.2103174603174551
+        },
+        "HFTUSDT": {
+          "pnl": 3.788420300214426,
+          "pnl_percent": 3.788420300214426
+        },
+        "XNYUSDT": {
+          "pnl": -0.7656659278662232,
+          "pnl_percent": -0.7656659278662232
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T04:53:28.437525",
+      "total_value": 510.6073122498841,
+      "total_pnl": 10.607312249884131,
+      "pnl_percent": 2.121462449976826,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 5.573988055739861,
+          "pnl_percent": 5.573988055739861
+        },
+        "SYNUSDT": {
+          "pnl": 1.8253968253968225,
+          "pnl_percent": 1.8253968253968225
+        },
+        "HFTUSDT": {
+          "pnl": 4.07433881343816,
+          "pnl_percent": 4.07433881343816
+        },
+        "XNYUSDT": {
+          "pnl": -0.8664114446907263,
+          "pnl_percent": -0.8664114446907264
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T05:03:30.127394",
+      "total_value": 510.6452327940478,
+      "total_pnl": 10.645232794047743,
+      "pnl_percent": 2.1290465588095486,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 5.985401459854003,
+          "pnl_percent": 5.985401459854003
+        },
+        "SYNUSDT": {
+          "pnl": 1.9047619047619122,
+          "pnl_percent": 1.9047619047619122
+        },
+        "HFTUSDT": {
+          "pnl": 3.3595425303788318,
+          "pnl_percent": 3.3595425303788318
+        },
+        "XNYUSDT": {
+          "pnl": -0.6044731009470183,
+          "pnl_percent": -0.6044731009470183
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T05:13:31.875866",
+      "total_value": 513.2167444725712,
+      "total_pnl": 13.216744472571293,
+      "pnl_percent": 2.6433488945142583,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 8.095554080955523,
+          "pnl_percent": 8.095554080955523
+        },
+        "SYNUSDT": {
+          "pnl": 1.9444444444444429,
+          "pnl_percent": 1.9444444444444426
+        },
+        "HFTUSDT": {
+          "pnl": 4.002859185132223,
+          "pnl_percent": 4.002859185132223
+        },
+        "XNYUSDT": {
+          "pnl": -0.8261132379609109,
+          "pnl_percent": -0.8261132379609109
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T05:23:33.533926",
+      "total_value": 514.7560082583268,
+      "total_pnl": 14.756008258326816,
+      "pnl_percent": 2.951201651665363,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 7.89648307896482,
+          "pnl_percent": 7.89648307896482
+        },
+        "SYNUSDT": {
+          "pnl": 3.0753968253968367,
+          "pnl_percent": 3.0753968253968367
+        },
+        "HFTUSDT": {
+          "pnl": 2.7162258756254403,
+          "pnl_percent": 2.7162258756254403
+        },
+        "XNYUSDT": {
+          "pnl": 1.067902478339704,
+          "pnl_percent": 1.067902478339704
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T05:33:35.113943",
+      "total_value": 517.5784127962316,
+      "total_pnl": 17.578412796231618,
+      "pnl_percent": 3.5156825592463234,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 9.22362309223621,
+          "pnl_percent": 9.22362309223621
+        },
+        "SYNUSDT": {
+          "pnl": 5.0,
+          "pnl_percent": 5.0
+        },
+        "HFTUSDT": {
+          "pnl": 1.5010721944245802,
+          "pnl_percent": 1.5010721944245802
+        },
+        "XNYUSDT": {
+          "pnl": 1.8537175095708136,
+          "pnl_percent": 1.8537175095708136
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T05:43:36.710701",
+      "total_value": 522.4183667411924,
+      "total_pnl": 22.418366741192344,
+      "pnl_percent": 4.483673348238469,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 11.068347710683469,
+          "pnl_percent": 11.068347710683469
+        },
+        "SYNUSDT": {
+          "pnl": 8.51190476190476,
+          "pnl_percent": 8.51190476190476
+        },
+        "HFTUSDT": {
+          "pnl": 1.286633309506783,
+          "pnl_percent": 1.286633309506783
+        },
+        "XNYUSDT": {
+          "pnl": 1.5514809590973186,
+          "pnl_percent": 1.5514809590973186
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T05:53:38.316206",
+      "total_value": 528.087938939696,
+      "total_pnl": 28.08793893969593,
+      "pnl_percent": 5.617587787939186,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 11.824817518248153,
+          "pnl_percent": 11.824817518248153
+        },
+        "SYNUSDT": {
+          "pnl": 11.626984126984127,
+          "pnl_percent": 11.626984126984127
+        },
+        "HFTUSDT": {
+          "pnl": 3.1451036454610346,
+          "pnl_percent": 3.1451036454610346
+        },
+        "XNYUSDT": {
+          "pnl": 1.4910336490026026,
+          "pnl_percent": 1.4910336490026026
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T06:03:39.907908",
+      "total_value": 527.6786547423009,
+      "total_pnl": 27.67865474230088,
+      "pnl_percent": 5.535730948460175,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 11.599203715992019,
+          "pnl_percent": 11.599203715992019
+        },
+        "SYNUSDT": {
+          "pnl": 10.972222222222229,
+          "pnl_percent": 10.972222222222229
+        },
+        "HFTUSDT": {
+          "pnl": 3.716940671908503,
+          "pnl_percent": 3.716940671908503
+        },
+        "XNYUSDT": {
+          "pnl": 1.3902881321781138,
+          "pnl_percent": 1.3902881321781138
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T06:13:41.483922",
+      "total_value": 518.1615054283401,
+      "total_pnl": 18.16150542834015,
+      "pnl_percent": 3.63230108566803,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 10.285335102853338,
+          "pnl_percent": 10.285335102853338
+        },
+        "SYNUSDT": {
+          "pnl": 9.603174603174594,
+          "pnl_percent": 9.603174603174594
+        },
+        "HFTUSDT": {
+          "pnl": -2.5732666190135944,
+          "pnl_percent": -2.5732666190135944
+        },
+        "XNYUSDT": {
+          "pnl": 0.8462623413257973,
+          "pnl_percent": 0.8462623413257973
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T06:23:43.052132",
+      "total_value": 517.1342800516684,
+      "total_pnl": 19.70754667068195,
+      "pnl_percent": 3.94150933413639,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 9.781021897810206,
+          "pnl_percent": 9.781021897810206
+        },
+        "SYNUSDT": {
+          "pnl": 8.888888888888886,
+          "pnl_percent": 8.888888888888886
+        },
+        "XNYUSDT": {
+          "pnl": 1.1283497884344058,
+          "pnl_percent": 1.1283497884344058
+        },
+        "BOBUSDT": {
+          "pnl": -0.09071390445156169,
+          "pnl_percent": -0.09310986964617375
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T06:33:44.636186",
+      "total_value": 522.856301544397,
+      "total_pnl": 25.429568163410565,
+      "pnl_percent": 5.0859136326821135,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": -0.23148148148148096,
+          "pnl_percent": -0.23148148148148096
+        },
+        "TAGUSDT": {
+          "pnl": 11.745189117451872,
+          "pnl_percent": 11.745189117451872
+        },
+        "SYNUSDT": {
+          "pnl": 13.432539682539684,
+          "pnl_percent": 13.432539682539685
+        },
+        "XNYUSDT": {
+          "pnl": 1.0276042716099028,
+          "pnl_percent": 1.0276042716099028
+        },
+        "BOBUSDT": {
+          "pnl": -0.5442834267094128,
+          "pnl_percent": -0.5586592178770863
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T06:43:46.236109",
+      "total_value": 521.5672641989904,
+      "total_pnl": 24.14053081800401,
+      "pnl_percent": 4.828106163600801,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 14.200398142003976,
+          "pnl_percent": 14.200398142003975
+        },
+        "SYNUSDT": {
+          "pnl": 9.94047619047619,
+          "pnl_percent": 9.94047619047619
+        },
+        "XNYUSDT": {
+          "pnl": 0.7253677211363936,
+          "pnl_percent": 0.7253677211363936
+        },
+        "BOBUSDT": {
+          "pnl": -0.7257112356125646,
+          "pnl_percent": -0.744878957169463
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T06:53:47.818305",
+      "total_value": 518.9391660609554,
+      "total_pnl": 21.512432679968953,
+      "pnl_percent": 4.302486535993791,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": -0.23148148148148096,
+          "pnl_percent": -0.23148148148148096
+        },
+        "TAGUSDT": {
+          "pnl": 14.333112143331107,
+          "pnl_percent": 14.333112143331107
+        },
+        "SYNUSDT": {
+          "pnl": 7.261904761904759,
+          "pnl_percent": 7.26190476190476
+        },
+        "XNYUSDT": {
+          "pnl": 0.5843239975821035,
+          "pnl_percent": 0.5843239975821035
+        },
+        "BOBUSDT": {
+          "pnl": -0.4354267413675359,
+          "pnl_percent": -0.44692737430167484
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T07:03:49.406681",
+      "total_value": 521.6413426200919,
+      "total_pnl": 24.214609239105485,
+      "pnl_percent": 4.8429218478210965,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": -0.23148148148148096,
+          "pnl_percent": -0.23148148148148096
+        },
+        "TAGUSDT": {
+          "pnl": 15.965494359654926,
+          "pnl_percent": 15.965494359654924
+        },
+        "SYNUSDT": {
+          "pnl": 7.797619047619051,
+          "pnl_percent": 7.79761904761905
+        },
+        "XNYUSDT": {
+          "pnl": 0.8462623413257973,
+          "pnl_percent": 0.8462623413257973
+        },
+        "BOBUSDT": {
+          "pnl": -0.1632850280128082,
+          "pnl_percent": -0.16759776536310983
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T07:13:50.957344",
+      "total_value": 526.5493118242755,
+      "total_pnl": 29.122578443289015,
+      "pnl_percent": 5.824515688657804,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": -0.23148148148148096,
+          "pnl_percent": -0.23148148148148096
+        },
+        "TAGUSDT": {
+          "pnl": 17.7438619774386,
+          "pnl_percent": 17.7438619774386
+        },
+        "SYNUSDT": {
+          "pnl": 11.269841269841265,
+          "pnl_percent": 11.269841269841265
+        },
+        "XNYUSDT": {
+          "pnl": 0.6850695144065924,
+          "pnl_percent": 0.6850695144065924
+        },
+        "BOBUSDT": {
+          "pnl": -0.34471283691596,
+          "pnl_percent": -0.3538175046554865
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T07:23:52.564455",
+      "total_value": 529.8920159908048,
+      "total_pnl": 32.46528260981846,
+      "pnl_percent": 6.493056521963691,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": -0.23148148148148096,
+          "pnl_percent": -0.23148148148148096
+        },
+        "TAGUSDT": {
+          "pnl": 18.022561380225596,
+          "pnl_percent": 18.022561380225596
+        },
+        "SYNUSDT": {
+          "pnl": 13.392857142857139,
+          "pnl_percent": 13.392857142857139
+        },
+        "XNYUSDT": {
+          "pnl": 1.5716300624622193,
+          "pnl_percent": 1.5716300624622193
+        },
+        "BOBUSDT": {
+          "pnl": -0.29028449424501446,
+          "pnl_percent": -0.29795158286777346
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T07:33:54.183653",
+      "total_value": 530.4721525063536,
+      "total_pnl": 33.04541912536715,
+      "pnl_percent": 6.609083825073429,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": -0.23148148148148096,
+          "pnl_percent": -0.23148148148148096
+        },
+        "TAGUSDT": {
+          "pnl": 19.668214996682124,
+          "pnl_percent": 19.668214996682124
+        },
+        "SYNUSDT": {
+          "pnl": 11.805555555555543,
+          "pnl_percent": 11.805555555555543
+        },
+        "XNYUSDT": {
+          "pnl": 2.2566995768688116,
+          "pnl_percent": 2.2566995768688116
+        },
+        "BOBUSDT": {
+          "pnl": -0.4535695222578511,
+          "pnl_percent": -0.4655493482309125
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T07:43:55.776332",
+      "total_value": 533.0738103002691,
+      "total_pnl": 35.647076919282625,
+      "pnl_percent": 7.129415383856524,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": -0.23148148148148096,
+          "pnl_percent": -0.23148148148148096
+        },
+        "TAGUSDT": {
+          "pnl": 19.641672196416707,
+          "pnl_percent": 19.641672196416707
+        },
+        "SYNUSDT": {
+          "pnl": 15.138888888888886,
+          "pnl_percent": 15.138888888888886
+        },
+        "XNYUSDT": {
+          "pnl": 1.3701390288132131,
+          "pnl_percent": 1.3701390288132131
+        },
+        "BOBUSDT": {
+          "pnl": -0.2721417133546993,
+          "pnl_percent": -0.2793296089385358
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T07:53:57.372954",
+      "total_value": 533.9363165013037,
+      "total_pnl": 36.50958312031737,
+      "pnl_percent": 7.301916624063474,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": -0.23148148148148096,
+          "pnl_percent": -0.23148148148148096
+        },
+        "TAGUSDT": {
+          "pnl": 19.854014598540132,
+          "pnl_percent": 19.854014598540132
+        },
+        "SYNUSDT": {
+          "pnl": 14.920634920634924,
+          "pnl_percent": 14.920634920634923
+        },
+        "XNYUSDT": {
+          "pnl": 2.2566995768688116,
+          "pnl_percent": 2.2566995768688116
+        },
+        "BOBUSDT": {
+          "pnl": -0.29028449424501446,
+          "pnl_percent": -0.29795158286777346
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T08:03:58.949518",
+      "total_value": 535.9347701125697,
+      "total_pnl": 38.508036731583246,
+      "pnl_percent": 7.701607346316649,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": -0.23148148148148096,
+          "pnl_percent": -0.23148148148148096
+        },
+        "TAGUSDT": {
+          "pnl": 21.393497013934947,
+          "pnl_percent": 21.393497013934947
+        },
+        "SYNUSDT": {
+          "pnl": 15.337301587301582,
+          "pnl_percent": 15.337301587301583
+        },
+        "XNYUSDT": {
+          "pnl": 2.3171468869635277,
+          "pnl_percent": 2.3171468869635277
+        },
+        "BOBUSDT": {
+          "pnl": -0.30842727513532964,
+          "pnl_percent": -0.31657355679701116
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T08:14:00.520019",
+      "total_value": 536.1820647087122,
+      "total_pnl": 38.75533132772581,
+      "pnl_percent": 7.751066265545163,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 22.840079628400773,
+          "pnl_percent": 22.840079628400773
+        },
+        "SYNUSDT": {
+          "pnl": 13.015873015873012,
+          "pnl_percent": 13.01587301587301
+        },
+        "XNYUSDT": {
+          "pnl": 3.062663711464822,
+          "pnl_percent": 3.062663711464822
+        },
+        "BOBUSDT": {
+          "pnl": -0.1632850280128082,
+          "pnl_percent": -0.16759776536310983
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T08:24:02.183743",
+      "total_value": 537.8925594975609,
+      "total_pnl": 40.465826116574576,
+      "pnl_percent": 8.093165223314914,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 23.570006635700054,
+          "pnl_percent": 23.570006635700054
+        },
+        "SYNUSDT": {
+          "pnl": 13.849206349206355,
+          "pnl_percent": 13.849206349206355
+        },
+        "XNYUSDT": {
+          "pnl": 2.901470884545631,
+          "pnl_percent": 2.901470884545631
+        },
+        "BOBUSDT": {
+          "pnl": 0.14514224712252144,
+          "pnl_percent": 0.14897579143390133
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T08:34:03.757671",
+      "total_value": 537.3843727764307,
+      "total_pnl": 39.95763939544433,
+      "pnl_percent": 7.991527879088867,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 24.6582614465826,
+          "pnl_percent": 24.6582614465826
+        },
+        "SYNUSDT": {
+          "pnl": 13.492063492063494,
+          "pnl_percent": 13.492063492063494
+        },
+        "XNYUSDT": {
+          "pnl": 1.934313923030416,
+          "pnl_percent": 1.934313923030416
+        },
+        "BOBUSDT": {
+          "pnl": -0.12699946623219205,
+          "pnl_percent": -0.13035381750464908
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T08:44:05.366561",
+      "total_value": 537.0838504807682,
+      "total_pnl": 39.657117099781786,
+      "pnl_percent": 7.931423419956357,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 23.503649635036467,
+          "pnl_percent": 23.503649635036467
+        },
+        "SYNUSDT": {
+          "pnl": 15.714285714285708,
+          "pnl_percent": 15.714285714285708
+        },
+        "XNYUSDT": {
+          "pnl": 0.5843239975821035,
+          "pnl_percent": 0.5843239975821035
+        },
+        "BOBUSDT": {
+          "pnl": -0.14514224712250723,
+          "pnl_percent": -0.14897579143388673
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T08:54:06.959106",
+      "total_value": 539.1164930371511,
+      "total_pnl": 41.68975965616471,
+      "pnl_percent": 8.337951931232942,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 25.082946250829437,
+          "pnl_percent": 25.082946250829437
+        },
+        "SYNUSDT": {
+          "pnl": 16.111111111111114,
+          "pnl_percent": 16.111111111111114
+        },
+        "XNYUSDT": {
+          "pnl": 0.4231311706628844,
+          "pnl_percent": 0.42313117066288436
+        },
+        "BOBUSDT": {
+          "pnl": 0.07257112356126072,
+          "pnl_percent": 0.07448789571695066
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T09:04:08.582565",
+      "total_value": 537.4411019861489,
+      "total_pnl": 40.014368605162545,
+      "pnl_percent": 8.00287372103251,
+      "individual_performance": {
+        "NTRNUSDT": {
+          "pnl": 1.4210854715202004e-14,
+          "pnl_percent": 1.4210854715202004e-14
+        },
+        "TAGUSDT": {
+          "pnl": 26.104844061048425,
+          "pnl_percent": 26.104844061048425
+        },
+        "SYNUSDT": {
+          "pnl": 12.817460317460316,
+          "pnl_percent": 12.817460317460316
+        },
+        "XNYUSDT": {
+          "pnl": 1.1283497884344058,
+          "pnl_percent": 1.1283497884344058
+        },
+        "BOBUSDT": {
+          "pnl": -0.03628556178061615,
+          "pnl_percent": -0.037243947858460746
+        }
+      }
+    }
+  ]
+}

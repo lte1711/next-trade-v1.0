@@ -1,0 +1,2381 @@
+{
+  "test_metadata": {
+    "test_type": "동적 심볼 교체 상승장 백테스팅",
+    "start_time": "2026-04-03T01:55:51.298927",
+    "end_time": "2026-04-03T02:25:27.403329",
+    "total_rounds": 27,
+    "symbol_check_interval": 5,
+    "performance_threshold": 0.5
+  },
+  "final_performance": {
+    "CTSIUSDT": {
+      "initial_price": 0.0391,
+      "final_price": 0.0406,
+      "total_change": 0.0014999999999999944,
+      "total_change_percent": 3.8363171355498578,
+      "performance_rating": "Good"
+    },
+    "FIGHTUSDT": {
+      "initial_price": 0.00279,
+      "final_price": 0.002805,
+      "total_change": 1.5000000000000256e-05,
+      "total_change_percent": 0.5376344086021597,
+      "performance_rating": "Poor"
+    },
+    "BLESSUSDT": {
+      "initial_price": 0.00581,
+      "final_price": 0.00581,
+      "total_change": 0.0,
+      "total_change_percent": 0.0,
+      "performance_rating": "Very Poor"
+    },
+    "APRUSDT": {
+      "initial_price": 0.17919,
+      "final_price": 0.17901,
+      "total_change": -0.00017999999999998573,
+      "total_change_percent": -0.10045203415368366,
+      "performance_rating": "Very Poor"
+    },
+    "HEIUSDT": {
+      "initial_price": 0.0815,
+      "final_price": 0.0914,
+      "total_change": 0.009899999999999992,
+      "total_change_percent": 12.147239263803671,
+      "performance_rating": "Excellent"
+    },
+    "TSTUSDT": {
+      "initial_price": 0.00884,
+      "final_price": 0.00871,
+      "total_change": -0.0001299999999999999,
+      "total_change_percent": -1.4705882352941164,
+      "performance_rating": "Very Poor"
+    },
+    "PHAUSDT": {
+      "initial_price": 0.03701,
+      "final_price": 0.03702,
+      "total_change": 9.999999999996123e-06,
+      "total_change_percent": 0.027019724398800658,
+      "performance_rating": "Poor"
+    }
+  },
+  "symbol_replacement_history": [
+    {
+      "timestamp": "2026-04-03T02:00:59.601680",
+      "old_symbol": "CTSIUSDT",
+      "new_symbol": "TSTUSDT",
+      "old_performance": -4.794520547945201,
+      "new_potential_score": 71.45052303060343,
+      "reason": "Low performance"
+    },
+    {
+      "timestamp": "2026-04-03T02:00:59.601680",
+      "old_symbol": "FIGHTUSDT",
+      "new_symbol": "CTSIUSDT",
+      "old_performance": -0.625869262865098,
+      "new_potential_score": 333.4710655737705,
+      "reason": "Low performance"
+    },
+    {
+      "timestamp": "2026-04-03T02:00:59.601680",
+      "old_symbol": "BLESSUSDT",
+      "new_symbol": "FIGHTUSDT",
+      "old_performance": 0.3448275862068975,
+      "new_potential_score": 129.86588235294118,
+      "reason": "Low performance"
+    },
+    {
+      "timestamp": "2026-04-03T02:00:59.601680",
+      "old_symbol": "APRUSDT",
+      "new_symbol": "BLESSUSDT",
+      "old_performance": -0.10045203415368366,
+      "new_potential_score": 90.84914486391571,
+      "reason": "Low performance"
+    },
+    {
+      "timestamp": "2026-04-03T02:06:42.405329",
+      "old_symbol": "TSTUSDT",
+      "new_symbol": "PHAUSDT",
+      "old_performance": 0.34168564920273936,
+      "new_potential_score": 67.56824539877302,
+      "reason": "Low performance"
+    },
+    {
+      "timestamp": "2026-04-03T02:06:42.405329",
+      "old_symbol": "CTSIUSDT",
+      "new_symbol": "TSTUSDT",
+      "old_performance": -3.4567901234567864,
+      "new_potential_score": 75.28351045510453,
+      "reason": "Low performance"
+    },
+    {
+      "timestamp": "2026-04-03T02:06:42.405329",
+      "old_symbol": "FIGHTUSDT",
+      "new_symbol": "CTSIUSDT",
+      "old_performance": -2.3076923076923106,
+      "new_potential_score": 290.5361967213115,
+      "reason": "Low performance"
+    },
+    {
+      "timestamp": "2026-04-03T02:06:42.405329",
+      "old_symbol": "BLESSUSDT",
+      "new_symbol": "FIGHTUSDT",
+      "old_performance": -0.5163511187607512,
+      "new_potential_score": 120.6269411764706,
+      "reason": "Low performance"
+    },
+    {
+      "timestamp": "2026-04-03T02:12:26.068952",
+      "old_symbol": "PHAUSDT",
+      "new_symbol": "BLESSUSDT",
+      "old_performance": 0.3537414965986534,
+      "new_potential_score": 86.46197392923654,
+      "reason": "Low performance"
+    },
+    {
+      "timestamp": "2026-04-03T02:18:08.265239",
+      "old_symbol": "TSTUSDT",
+      "new_symbol": "PHAUSDT",
+      "old_performance": 0.11325028312572286,
+      "new_potential_score": 73.74439263803681,
+      "reason": "Low performance"
+    },
+    {
+      "timestamp": "2026-04-03T02:18:08.265239",
+      "old_symbol": "BLESSUSDT",
+      "new_symbol": "TSTUSDT",
+      "old_performance": 0.0,
+      "new_potential_score": 75.71272727272726,
+      "reason": "Low performance"
+    },
+    {
+      "timestamp": "2026-04-03T02:23:51.125573",
+      "old_symbol": "PHAUSDT",
+      "new_symbol": "BLESSUSDT",
+      "old_performance": 0.08114687584526727,
+      "new_potential_score": 88.79397392923651,
+      "reason": "Low performance"
+    },
+    {
+      "timestamp": "2026-04-03T02:23:51.125573",
+      "old_symbol": "TSTUSDT",
+      "new_symbol": "PHAUSDT",
+      "old_performance": -1.4705882352941164,
+      "new_potential_score": 74.68709202453988,
+      "reason": "Low performance"
+    }
+  ],
+  "all_results": [
+    {
+      "timestamp": "2026-04-03T01:55:51.298927",
+      "iteration": 1,
+      "elapsed_seconds": 0.0,
+      "current_symbols": [
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT",
+        "APRUSDT",
+        "HEIUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0438,
+          "current_price": 0.0438,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T01:55:51.620166"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.002876,
+          "current_price": 0.002876,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T01:55:51.944709"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.0058,
+          "current_price": 0.0058,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T01:55:52.254823"
+        },
+        "APRUSDT": {
+          "initial_price": 0.17919,
+          "current_price": 0.17919,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T01:55:52.585332"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0813,
+          "price_change": -0.00020000000000000573,
+          "price_change_percent": -0.24539877300614202,
+          "update_time": "2026-04-03T01:55:52.907732"
+        }
+      },
+      "replacement_history": []
+    },
+    {
+      "timestamp": "2026-04-03T01:56:52.914201",
+      "iteration": 2,
+      "elapsed_seconds": 61.615274,
+      "current_symbols": [
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT",
+        "APRUSDT",
+        "HEIUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0438,
+          "current_price": 0.0434,
+          "price_change": -0.0003999999999999976,
+          "price_change_percent": -0.9132420091324147,
+          "update_time": "2026-04-03T01:56:53.295642"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.002876,
+          "current_price": 0.002856,
+          "price_change": -2.0000000000000052e-05,
+          "price_change_percent": -0.6954102920723244,
+          "update_time": "2026-04-03T01:56:53.626402"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.0058,
+          "current_price": 0.0058,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T01:56:53.985151"
+        },
+        "APRUSDT": {
+          "initial_price": 0.17919,
+          "current_price": 0.17915,
+          "price_change": -3.999999999998449e-05,
+          "price_change_percent": -0.02232267425636726,
+          "update_time": "2026-04-03T01:56:54.307567"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0828,
+          "price_change": 0.0012999999999999956,
+          "price_change_percent": 1.5950920245398719,
+          "update_time": "2026-04-03T01:56:54.619938"
+        }
+      },
+      "replacement_history": []
+    },
+    {
+      "timestamp": "2026-04-03T01:57:54.637247",
+      "iteration": 3,
+      "elapsed_seconds": 123.33832,
+      "current_symbols": [
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT",
+        "APRUSDT",
+        "HEIUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0438,
+          "current_price": 0.0432,
+          "price_change": -0.0005999999999999964,
+          "price_change_percent": -1.3698630136986218,
+          "update_time": "2026-04-03T01:57:55.001380"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.002876,
+          "current_price": 0.002861,
+          "price_change": -1.5000000000000256e-05,
+          "price_change_percent": -0.5215577190542509,
+          "update_time": "2026-04-03T01:57:55.318865"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.0058,
+          "current_price": 0.00581,
+          "price_change": 1.000000000000046e-05,
+          "price_change_percent": 0.1724137931034562,
+          "update_time": "2026-04-03T01:57:55.638005"
+        },
+        "APRUSDT": {
+          "initial_price": 0.17919,
+          "current_price": 0.17911,
+          "price_change": -7.999999999999674e-05,
+          "price_change_percent": -0.04464534851275001,
+          "update_time": "2026-04-03T01:57:55.943644"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0838,
+          "price_change": 0.0022999999999999965,
+          "price_change_percent": 2.822085889570548,
+          "update_time": "2026-04-03T01:57:56.260807"
+        }
+      },
+      "replacement_history": []
+    },
+    {
+      "timestamp": "2026-04-03T01:58:56.261596",
+      "iteration": 4,
+      "elapsed_seconds": 184.962669,
+      "current_symbols": [
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT",
+        "APRUSDT",
+        "HEIUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0438,
+          "current_price": 0.0426,
+          "price_change": -0.0011999999999999997,
+          "price_change_percent": -2.7397260273972597,
+          "update_time": "2026-04-03T01:58:56.572275"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.002876,
+          "current_price": 0.002855,
+          "price_change": -2.1000000000000185e-05,
+          "price_change_percent": -0.7301808066759452,
+          "update_time": "2026-04-03T01:58:56.876518"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.0058,
+          "current_price": 0.00581,
+          "price_change": 1.000000000000046e-05,
+          "price_change_percent": 0.1724137931034562,
+          "update_time": "2026-04-03T01:58:57.213774"
+        },
+        "APRUSDT": {
+          "initial_price": 0.17919,
+          "current_price": 0.17907,
+          "price_change": -0.00011999999999998123,
+          "price_change_percent": -0.06696802276911727,
+          "update_time": "2026-04-03T01:58:57.558349"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0857,
+          "price_change": 0.004199999999999995,
+          "price_change_percent": 5.153374233128829,
+          "update_time": "2026-04-03T01:58:57.868606"
+        }
+      },
+      "replacement_history": []
+    },
+    {
+      "timestamp": "2026-04-03T01:59:57.869469",
+      "iteration": 5,
+      "elapsed_seconds": 246.570542,
+      "current_symbols": [
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT",
+        "APRUSDT",
+        "HEIUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0438,
+          "current_price": 0.0394,
+          "price_change": -0.004400000000000001,
+          "price_change_percent": -10.045662100456623,
+          "update_time": "2026-04-03T01:59:58.213585"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.002876,
+          "current_price": 0.002862,
+          "price_change": -1.4000000000000123e-05,
+          "price_change_percent": -0.4867872044506301,
+          "update_time": "2026-04-03T01:59:58.563711"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.0058,
+          "current_price": 0.00581,
+          "price_change": 1.000000000000046e-05,
+          "price_change_percent": 0.1724137931034562,
+          "update_time": "2026-04-03T01:59:58.907982"
+        },
+        "APRUSDT": {
+          "initial_price": 0.17919,
+          "current_price": 0.17903,
+          "price_change": -0.00015999999999999348,
+          "price_change_percent": -0.08929069702550002,
+          "update_time": "2026-04-03T01:59:59.274200"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0864,
+          "price_change": 0.004900000000000002,
+          "price_change_percent": 6.0122699386503085,
+          "update_time": "2026-04-03T01:59:59.598183"
+        }
+      },
+      "replacement_history": []
+    },
+    {
+      "timestamp": "2026-04-03T02:00:59.601680",
+      "iteration": 6,
+      "elapsed_seconds": 308.302753,
+      "current_symbols": [
+        "HEIUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0405,
+          "current_price": 0.0405,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:01:35.080558"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00286,
+          "current_price": 0.00286,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:01:35.400112"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.00581,
+          "current_price": 0.00581,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:01:35.718549"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0872,
+          "price_change": 0.005699999999999997,
+          "price_change_percent": 6.993865030674843,
+          "update_time": "2026-04-03T02:01:01.383792"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00878,
+          "current_price": 0.00878,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:01:34.733890"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -4.794520547945201,
+          "new_potential_score": 71.45052303060343,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -0.625869262865098,
+          "new_potential_score": 333.4710655737705,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": 0.3448275862068975,
+          "new_potential_score": 129.86588235294118,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "APRUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": -0.10045203415368366,
+          "new_potential_score": 90.84914486391571,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:02:35.723474",
+      "iteration": 7,
+      "elapsed_seconds": 404.424547,
+      "current_symbols": [
+        "HEIUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0405,
+          "current_price": 0.0395,
+          "price_change": -0.0010000000000000009,
+          "price_change_percent": -2.469135802469138,
+          "update_time": "2026-04-03T02:02:36.733531"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00286,
+          "current_price": 0.002882,
+          "price_change": 2.1999999999999884e-05,
+          "price_change_percent": 0.7692307692307652,
+          "update_time": "2026-04-03T02:02:37.083486"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.00581,
+          "current_price": 0.00582,
+          "price_change": 9.999999999999593e-06,
+          "price_change_percent": 0.17211703958691207,
+          "update_time": "2026-04-03T02:02:37.423511"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0861,
+          "price_change": 0.004599999999999993,
+          "price_change_percent": 5.644171779141096,
+          "update_time": "2026-04-03T02:02:36.058505"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00878,
+          "current_price": 0.00879,
+          "price_change": 9.999999999999593e-06,
+          "price_change_percent": 0.11389521640090651,
+          "update_time": "2026-04-03T02:02:36.404058"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -4.794520547945201,
+          "new_potential_score": 71.45052303060343,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -0.625869262865098,
+          "new_potential_score": 333.4710655737705,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": 0.3448275862068975,
+          "new_potential_score": 129.86588235294118,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "APRUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": -0.10045203415368366,
+          "new_potential_score": 90.84914486391571,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:03:37.424570",
+      "iteration": 8,
+      "elapsed_seconds": 466.125643,
+      "current_symbols": [
+        "HEIUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0405,
+          "current_price": 0.0404,
+          "price_change": -0.00010000000000000286,
+          "price_change_percent": -0.24691358024692064,
+          "update_time": "2026-04-03T02:03:38.389377"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00286,
+          "current_price": 0.002868,
+          "price_change": 7.99999999999976e-06,
+          "price_change_percent": 0.27972027972027136,
+          "update_time": "2026-04-03T02:03:38.698363"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.00581,
+          "current_price": 0.00581,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:03:39.007646"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0844,
+          "price_change": 0.0029,
+          "price_change_percent": 3.5582822085889565,
+          "update_time": "2026-04-03T02:03:37.755227"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00878,
+          "current_price": 0.00883,
+          "price_change": 4.99999999999997e-05,
+          "price_change_percent": 0.5694760820045524,
+          "update_time": "2026-04-03T02:03:38.068247"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -4.794520547945201,
+          "new_potential_score": 71.45052303060343,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -0.625869262865098,
+          "new_potential_score": 333.4710655737705,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": 0.3448275862068975,
+          "new_potential_score": 129.86588235294118,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "APRUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": -0.10045203415368366,
+          "new_potential_score": 90.84914486391571,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:04:39.009517",
+      "iteration": 9,
+      "elapsed_seconds": 527.71059,
+      "current_symbols": [
+        "HEIUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0405,
+          "current_price": 0.0405,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:04:40.033852"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00286,
+          "current_price": 0.002843,
+          "price_change": -1.7000000000000088e-05,
+          "price_change_percent": -0.5944055944055974,
+          "update_time": "2026-04-03T02:04:40.361978"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.00581,
+          "current_price": 0.0058,
+          "price_change": -1.000000000000046e-05,
+          "price_change_percent": -0.17211703958692703,
+          "update_time": "2026-04-03T02:04:40.725982"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0845,
+          "price_change": 0.0030000000000000027,
+          "price_change_percent": 3.6809815950920277,
+          "update_time": "2026-04-03T02:04:39.356696"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00878,
+          "current_price": 0.00881,
+          "price_change": 3.0000000000000512e-05,
+          "price_change_percent": 0.34168564920273936,
+          "update_time": "2026-04-03T02:04:39.698838"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -4.794520547945201,
+          "new_potential_score": 71.45052303060343,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -0.625869262865098,
+          "new_potential_score": 333.4710655737705,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": 0.3448275862068975,
+          "new_potential_score": 129.86588235294118,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "APRUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": -0.10045203415368366,
+          "new_potential_score": 90.84914486391571,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:05:40.731305",
+      "iteration": 10,
+      "elapsed_seconds": 589.432378,
+      "current_symbols": [
+        "HEIUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0405,
+          "current_price": 0.0399,
+          "price_change": -0.0006000000000000033,
+          "price_change_percent": -1.4814814814814896,
+          "update_time": "2026-04-03T02:05:41.733936"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00286,
+          "current_price": 0.002829,
+          "price_change": -3.100000000000021e-05,
+          "price_change_percent": -1.0839160839160913,
+          "update_time": "2026-04-03T02:05:42.068728"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.00581,
+          "current_price": 0.00579,
+          "price_change": -2.0000000000000052e-05,
+          "price_change_percent": -0.3442340791738391,
+          "update_time": "2026-04-03T02:05:42.403972"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.085,
+          "price_change": 0.003500000000000003,
+          "price_change_percent": 4.294478527607366,
+          "update_time": "2026-04-03T02:05:41.073221"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00878,
+          "current_price": 0.0088,
+          "price_change": 2.000000000000092e-05,
+          "price_change_percent": 0.2277904328018328,
+          "update_time": "2026-04-03T02:05:41.407860"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -4.794520547945201,
+          "new_potential_score": 71.45052303060343,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -0.625869262865098,
+          "new_potential_score": 333.4710655737705,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": 0.3448275862068975,
+          "new_potential_score": 129.86588235294118,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "APRUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": -0.10045203415368366,
+          "new_potential_score": 90.84914486391571,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:06:42.405329",
+      "iteration": 11,
+      "elapsed_seconds": 651.106402,
+      "current_symbols": [
+        "HEIUSDT",
+        "PHAUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0391,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:07:19.133659"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.00279,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:07:19.466763"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0853,
+          "price_change": 0.003799999999999998,
+          "price_change_percent": 4.6625766871165615,
+          "update_time": "2026-04-03T02:06:42.739711"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00883,
+          "current_price": 0.00883,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:07:18.788613"
+        },
+        "PHAUSDT": {
+          "initial_price": 0.03675,
+          "current_price": 0.03675,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:07:18.441010"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "APRUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": -0.10045203415368366,
+          "new_potential_score": 90.84914486391571,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.34168564920273936,
+          "new_potential_score": 67.56824539877302,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -3.4567901234567864,
+          "new_potential_score": 75.28351045510453,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:08:19.478591",
+      "iteration": 12,
+      "elapsed_seconds": 748.179664,
+      "current_symbols": [
+        "HEIUSDT",
+        "PHAUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0403,
+          "price_change": 0.0011999999999999997,
+          "price_change_percent": 3.0690537084398968,
+          "update_time": "2026-04-03T02:08:20.803591"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.002781,
+          "price_change": -8.999999999999894e-06,
+          "price_change_percent": -0.3225806451612865,
+          "update_time": "2026-04-03T02:08:21.125183"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0865,
+          "price_change": 0.0049999999999999906,
+          "price_change_percent": 6.134969325153363,
+          "update_time": "2026-04-03T02:08:19.807718"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00883,
+          "current_price": 0.00888,
+          "price_change": 5.000000000000143e-05,
+          "price_change_percent": 0.5662514156285553,
+          "update_time": "2026-04-03T02:08:20.480583"
+        },
+        "PHAUSDT": {
+          "initial_price": 0.03675,
+          "current_price": 0.03677,
+          "price_change": 1.9999999999999185e-05,
+          "price_change_percent": 0.05442176870748078,
+          "update_time": "2026-04-03T02:08:20.150431"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "APRUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": -0.10045203415368366,
+          "new_potential_score": 90.84914486391571,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.34168564920273936,
+          "new_potential_score": 67.56824539877302,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -3.4567901234567864,
+          "new_potential_score": 75.28351045510453,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:09:21.126828",
+      "iteration": 13,
+      "elapsed_seconds": 809.827901,
+      "current_symbols": [
+        "HEIUSDT",
+        "PHAUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0412,
+          "price_change": 0.0020999999999999977,
+          "price_change_percent": 5.370843989769815,
+          "update_time": "2026-04-03T02:09:22.397137"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.00281,
+          "price_change": 2.0000000000000052e-05,
+          "price_change_percent": 0.7168458781362026,
+          "update_time": "2026-04-03T02:09:22.730902"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0879,
+          "price_change": 0.006400000000000003,
+          "price_change_percent": 7.8527607361963225,
+          "update_time": "2026-04-03T02:09:21.459099"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00883,
+          "current_price": 0.00892,
+          "price_change": 9.000000000000154e-05,
+          "price_change_percent": 1.0192525481313879,
+          "update_time": "2026-04-03T02:09:22.090138"
+        },
+        "PHAUSDT": {
+          "initial_price": 0.03675,
+          "current_price": 0.03684,
+          "price_change": 8.99999999999998e-05,
+          "price_change_percent": 0.24489795918367294,
+          "update_time": "2026-04-03T02:09:21.769930"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "APRUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": -0.10045203415368366,
+          "new_potential_score": 90.84914486391571,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.34168564920273936,
+          "new_potential_score": 67.56824539877302,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -3.4567901234567864,
+          "new_potential_score": 75.28351045510453,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:10:22.731676",
+      "iteration": 14,
+      "elapsed_seconds": 871.432749,
+      "current_symbols": [
+        "HEIUSDT",
+        "PHAUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0409,
+          "price_change": 0.001799999999999996,
+          "price_change_percent": 4.603580562659836,
+          "update_time": "2026-04-03T02:10:24.063478"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.00283,
+          "price_change": 4.0000000000000105e-05,
+          "price_change_percent": 1.4336917562724052,
+          "update_time": "2026-04-03T02:10:24.392354"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0927,
+          "price_change": 0.011200000000000002,
+          "price_change_percent": 13.742331288343559,
+          "update_time": "2026-04-03T02:10:23.057459"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00883,
+          "current_price": 0.00901,
+          "price_change": 0.00018000000000000134,
+          "price_change_percent": 2.038505096262756,
+          "update_time": "2026-04-03T02:10:23.726409"
+        },
+        "PHAUSDT": {
+          "initial_price": 0.03675,
+          "current_price": 0.03687,
+          "price_change": 0.00012000000000000205,
+          "price_change_percent": 0.32653061224490354,
+          "update_time": "2026-04-03T02:10:23.406504"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "APRUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": -0.10045203415368366,
+          "new_potential_score": 90.84914486391571,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.34168564920273936,
+          "new_potential_score": 67.56824539877302,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -3.4567901234567864,
+          "new_potential_score": 75.28351045510453,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:11:24.394092",
+      "iteration": 15,
+      "elapsed_seconds": 933.095165,
+      "current_symbols": [
+        "HEIUSDT",
+        "PHAUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.04,
+          "price_change": 0.000899999999999998,
+          "price_change_percent": 2.301790281329918,
+          "update_time": "2026-04-03T02:11:25.735683"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.002855,
+          "price_change": 6.499999999999995e-05,
+          "price_change_percent": 2.3297491039426506,
+          "update_time": "2026-04-03T02:11:26.067811"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0921,
+          "price_change": 0.010599999999999998,
+          "price_change_percent": 13.006134969325151,
+          "update_time": "2026-04-03T02:11:24.705946"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00883,
+          "current_price": 0.00899,
+          "price_change": 0.00016000000000000042,
+          "price_change_percent": 1.81200453001133,
+          "update_time": "2026-04-03T02:11:25.370802"
+        },
+        "PHAUSDT": {
+          "initial_price": 0.03675,
+          "current_price": 0.03687,
+          "price_change": 0.00012000000000000205,
+          "price_change_percent": 0.32653061224490354,
+          "update_time": "2026-04-03T02:11:25.027272"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:00:59.601680",
+          "old_symbol": "APRUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": -0.10045203415368366,
+          "new_potential_score": 90.84914486391571,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.34168564920273936,
+          "new_potential_score": 67.56824539877302,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -3.4567901234567864,
+          "new_potential_score": 75.28351045510453,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:12:26.068952",
+      "iteration": 16,
+      "elapsed_seconds": 994.770025,
+      "current_symbols": [
+        "HEIUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0404,
+          "price_change": 0.0012999999999999956,
+          "price_change_percent": 3.324808184143211,
+          "update_time": "2026-04-03T02:12:27.363679"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.002886,
+          "price_change": 9.600000000000017e-05,
+          "price_change_percent": 3.4408602150537697,
+          "update_time": "2026-04-03T02:12:27.698013"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.00578,
+          "current_price": 0.00578,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:13:01.492285"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0937,
+          "price_change": 0.012200000000000003,
+          "price_change_percent": 14.969325153374236,
+          "update_time": "2026-04-03T02:12:26.408257"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00883,
+          "current_price": 0.00895,
+          "price_change": 0.00012000000000000031,
+          "price_change_percent": 1.3590033975084974,
+          "update_time": "2026-04-03T02:12:27.037650"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.34168564920273936,
+          "new_potential_score": 67.56824539877302,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -3.4567901234567864,
+          "new_potential_score": 75.28351045510453,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:12:26.068952",
+          "old_symbol": "PHAUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": 0.3537414965986534,
+          "new_potential_score": 86.46197392923654,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:14:01.494215",
+      "iteration": 17,
+      "elapsed_seconds": 1090.195288,
+      "current_symbols": [
+        "HEIUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0406,
+          "price_change": 0.0014999999999999944,
+          "price_change_percent": 3.8363171355498578,
+          "update_time": "2026-04-03T02:14:02.573248"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.002923,
+          "price_change": 0.00013299999999999987,
+          "price_change_percent": 4.76702508960573,
+          "update_time": "2026-04-03T02:14:02.916083"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.00578,
+          "current_price": 0.00577,
+          "price_change": -1.000000000000046e-05,
+          "price_change_percent": -0.17301038062284532,
+          "update_time": "2026-04-03T02:14:03.277520"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0954,
+          "price_change": 0.013899999999999996,
+          "price_change_percent": 17.055214723926372,
+          "update_time": "2026-04-03T02:14:01.862245"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00883,
+          "current_price": 0.00893,
+          "price_change": 0.00010000000000000113,
+          "price_change_percent": 1.132502831257091,
+          "update_time": "2026-04-03T02:14:02.212506"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.34168564920273936,
+          "new_potential_score": 67.56824539877302,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -3.4567901234567864,
+          "new_potential_score": 75.28351045510453,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:12:26.068952",
+          "old_symbol": "PHAUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": 0.3537414965986534,
+          "new_potential_score": 86.46197392923654,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:15:03.278789",
+      "iteration": 18,
+      "elapsed_seconds": 1151.979862,
+      "current_symbols": [
+        "HEIUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0407,
+          "price_change": 0.0015999999999999973,
+          "price_change_percent": 4.092071611253189,
+          "update_time": "2026-04-03T02:15:04.255756"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.002913,
+          "price_change": 0.00012299999999999985,
+          "price_change_percent": 4.40860215053763,
+          "update_time": "2026-04-03T02:15:04.596699"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.00578,
+          "current_price": 0.00577,
+          "price_change": -1.000000000000046e-05,
+          "price_change_percent": -0.17301038062284532,
+          "update_time": "2026-04-03T02:15:04.950835"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.096,
+          "price_change": 0.014499999999999999,
+          "price_change_percent": 17.791411042944784,
+          "update_time": "2026-04-03T02:15:03.599735"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00883,
+          "current_price": 0.00888,
+          "price_change": 5.000000000000143e-05,
+          "price_change_percent": 0.5662514156285553,
+          "update_time": "2026-04-03T02:15:03.916349"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.34168564920273936,
+          "new_potential_score": 67.56824539877302,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -3.4567901234567864,
+          "new_potential_score": 75.28351045510453,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:12:26.068952",
+          "old_symbol": "PHAUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": 0.3537414965986534,
+          "new_potential_score": 86.46197392923654,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:16:04.953397",
+      "iteration": 19,
+      "elapsed_seconds": 1213.65447,
+      "current_symbols": [
+        "HEIUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0411,
+          "price_change": 0.001999999999999995,
+          "price_change_percent": 5.115089514066483,
+          "update_time": "2026-04-03T02:16:05.944870"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.002889,
+          "price_change": 9.900000000000013e-05,
+          "price_change_percent": 3.5483870967741984,
+          "update_time": "2026-04-03T02:16:06.252170"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.00578,
+          "current_price": 0.00578,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:16:06.566493"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0955,
+          "price_change": 0.013999999999999999,
+          "price_change_percent": 17.177914110429445,
+          "update_time": "2026-04-03T02:16:05.298303"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00883,
+          "current_price": 0.0089,
+          "price_change": 7.000000000000062e-05,
+          "price_change_percent": 0.7927519818799618,
+          "update_time": "2026-04-03T02:16:05.628166"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.34168564920273936,
+          "new_potential_score": 67.56824539877302,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -3.4567901234567864,
+          "new_potential_score": 75.28351045510453,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:12:26.068952",
+          "old_symbol": "PHAUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": 0.3537414965986534,
+          "new_potential_score": 86.46197392923654,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:17:06.568368",
+      "iteration": 20,
+      "elapsed_seconds": 1275.269441,
+      "current_symbols": [
+        "HEIUSDT",
+        "TSTUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.041,
+          "price_change": 0.001899999999999999,
+          "price_change_percent": 4.859335038363168,
+          "update_time": "2026-04-03T02:17:07.567426"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.002881,
+          "price_change": 9.099999999999994e-05,
+          "price_change_percent": 3.261648745519711,
+          "update_time": "2026-04-03T02:17:07.908764"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.00578,
+          "current_price": 0.00578,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:17:08.259023"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0908,
+          "price_change": 0.009300000000000003,
+          "price_change_percent": 11.41104294478528,
+          "update_time": "2026-04-03T02:17:06.910557"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00883,
+          "current_price": 0.0089,
+          "price_change": 7.000000000000062e-05,
+          "price_change_percent": 0.7927519818799618,
+          "update_time": "2026-04-03T02:17:07.242694"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.34168564920273936,
+          "new_potential_score": 67.56824539877302,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "CTSIUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": -3.4567901234567864,
+          "new_potential_score": 75.28351045510453,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:12:26.068952",
+          "old_symbol": "PHAUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": 0.3537414965986534,
+          "new_potential_score": 86.46197392923654,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:18:08.265239",
+      "iteration": 21,
+      "elapsed_seconds": 1336.966312,
+      "current_symbols": [
+        "HEIUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "PHAUSDT",
+        "TSTUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0413,
+          "price_change": 0.0022000000000000006,
+          "price_change_percent": 5.626598465473147,
+          "update_time": "2026-04-03T02:18:09.251943"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.002859,
+          "price_change": 6.900000000000005e-05,
+          "price_change_percent": 2.4731182795698947,
+          "update_time": "2026-04-03T02:18:09.573450"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0894,
+          "price_change": 0.00789999999999999,
+          "price_change_percent": 9.69325153374232,
+          "update_time": "2026-04-03T02:18:08.629092"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00884,
+          "current_price": 0.00884,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:18:44.298625"
+        },
+        "PHAUSDT": {
+          "initial_price": 0.03697,
+          "current_price": 0.03697,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:18:43.968263"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:12:26.068952",
+          "old_symbol": "PHAUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": 0.3537414965986534,
+          "new_potential_score": 86.46197392923654,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:18:08.265239",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.11325028312572286,
+          "new_potential_score": 73.74439263803681,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:18:08.265239",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": 0.0,
+          "new_potential_score": 75.71272727272726,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:19:44.305157",
+      "iteration": 22,
+      "elapsed_seconds": 1433.00623,
+      "current_symbols": [
+        "HEIUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "PHAUSDT",
+        "TSTUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0413,
+          "price_change": 0.0022000000000000006,
+          "price_change_percent": 5.626598465473147,
+          "update_time": "2026-04-03T02:19:45.058366"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.002862,
+          "price_change": 7.200000000000002e-05,
+          "price_change_percent": 2.5806451612903234,
+          "update_time": "2026-04-03T02:19:45.416061"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0929,
+          "price_change": 0.011399999999999993,
+          "price_change_percent": 13.987730061349685,
+          "update_time": "2026-04-03T02:19:44.677260"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00884,
+          "current_price": 0.00883,
+          "price_change": -1.0000000000001327e-05,
+          "price_change_percent": -0.11312217194571637,
+          "update_time": "2026-04-03T02:19:46.109303"
+        },
+        "PHAUSDT": {
+          "initial_price": 0.03697,
+          "current_price": 0.03698,
+          "price_change": 9.999999999996123e-06,
+          "price_change_percent": 0.02704895861508283,
+          "update_time": "2026-04-03T02:19:45.778080"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:12:26.068952",
+          "old_symbol": "PHAUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": 0.3537414965986534,
+          "new_potential_score": 86.46197392923654,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:18:08.265239",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.11325028312572286,
+          "new_potential_score": 73.74439263803681,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:18:08.265239",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": 0.0,
+          "new_potential_score": 75.71272727272726,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:20:46.110043",
+      "iteration": 23,
+      "elapsed_seconds": 1494.811116,
+      "current_symbols": [
+        "HEIUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "PHAUSDT",
+        "TSTUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0408,
+          "price_change": 0.0017000000000000001,
+          "price_change_percent": 4.3478260869565215,
+          "update_time": "2026-04-03T02:20:46.794924"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.002859,
+          "price_change": 6.900000000000005e-05,
+          "price_change_percent": 2.4731182795698947,
+          "update_time": "2026-04-03T02:20:47.150438"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0925,
+          "price_change": 0.010999999999999996,
+          "price_change_percent": 13.496932515337418,
+          "update_time": "2026-04-03T02:20:46.443093"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00884,
+          "current_price": 0.00878,
+          "price_change": -6.0000000000001025e-05,
+          "price_change_percent": -0.6787330316742197,
+          "update_time": "2026-04-03T02:20:47.818961"
+        },
+        "PHAUSDT": {
+          "initial_price": 0.03697,
+          "current_price": 0.03699,
+          "price_change": 1.9999999999999185e-05,
+          "price_change_percent": 0.05409791723018442,
+          "update_time": "2026-04-03T02:20:47.483562"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:12:26.068952",
+          "old_symbol": "PHAUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": 0.3537414965986534,
+          "new_potential_score": 86.46197392923654,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:18:08.265239",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.11325028312572286,
+          "new_potential_score": 73.74439263803681,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:18:08.265239",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": 0.0,
+          "new_potential_score": 75.71272727272726,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:21:47.822087",
+      "iteration": 24,
+      "elapsed_seconds": 1556.52316,
+      "current_symbols": [
+        "HEIUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "PHAUSDT",
+        "TSTUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0407,
+          "price_change": 0.0015999999999999973,
+          "price_change_percent": 4.092071611253189,
+          "update_time": "2026-04-03T02:21:48.457840"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.002819,
+          "price_change": 2.8999999999999946e-05,
+          "price_change_percent": 1.039426523297489,
+          "update_time": "2026-04-03T02:21:48.799517"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0918,
+          "price_change": 0.010300000000000004,
+          "price_change_percent": 12.638036809815956,
+          "update_time": "2026-04-03T02:21:48.137597"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00884,
+          "current_price": 0.00875,
+          "price_change": -8.99999999999998e-05,
+          "price_change_percent": -1.01809954751131,
+          "update_time": "2026-04-03T02:21:49.456049"
+        },
+        "PHAUSDT": {
+          "initial_price": 0.03697,
+          "current_price": 0.03699,
+          "price_change": 1.9999999999999185e-05,
+          "price_change_percent": 0.05409791723018442,
+          "update_time": "2026-04-03T02:21:49.112911"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:12:26.068952",
+          "old_symbol": "PHAUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": 0.3537414965986534,
+          "new_potential_score": 86.46197392923654,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:18:08.265239",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.11325028312572286,
+          "new_potential_score": 73.74439263803681,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:18:08.265239",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": 0.0,
+          "new_potential_score": 75.71272727272726,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:22:49.458402",
+      "iteration": 25,
+      "elapsed_seconds": 1618.159475,
+      "current_symbols": [
+        "HEIUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "PHAUSDT",
+        "TSTUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0402,
+          "price_change": 0.0010999999999999968,
+          "price_change_percent": 2.8132992327365645,
+          "update_time": "2026-04-03T02:22:50.141944"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.002814,
+          "price_change": 2.400000000000015e-05,
+          "price_change_percent": 0.8602150537634462,
+          "update_time": "2026-04-03T02:22:50.483872"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.092,
+          "price_change": 0.010499999999999995,
+          "price_change_percent": 12.88343558282208,
+          "update_time": "2026-04-03T02:22:49.815514"
+        },
+        "TSTUSDT": {
+          "initial_price": 0.00884,
+          "current_price": 0.00873,
+          "price_change": -0.00011000000000000072,
+          "price_change_percent": -1.244343891402723,
+          "update_time": "2026-04-03T02:22:51.119377"
+        },
+        "PHAUSDT": {
+          "initial_price": 0.03697,
+          "current_price": 0.037,
+          "price_change": 2.9999999999995308e-05,
+          "price_change_percent": 0.08114687584526727,
+          "update_time": "2026-04-03T02:22:50.810295"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "FIGHTUSDT",
+          "new_symbol": "CTSIUSDT",
+          "old_performance": -2.3076923076923106,
+          "new_potential_score": 290.5361967213115,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:06:42.405329",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "FIGHTUSDT",
+          "old_performance": -0.5163511187607512,
+          "new_potential_score": 120.6269411764706,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:12:26.068952",
+          "old_symbol": "PHAUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": 0.3537414965986534,
+          "new_potential_score": 86.46197392923654,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:18:08.265239",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.11325028312572286,
+          "new_potential_score": 73.74439263803681,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:18:08.265239",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": 0.0,
+          "new_potential_score": 75.71272727272726,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:23:51.125573",
+      "iteration": 26,
+      "elapsed_seconds": 1679.826646,
+      "current_symbols": [
+        "HEIUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT",
+        "PHAUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0401,
+          "price_change": 0.000999999999999994,
+          "price_change_percent": 2.5575447570332326,
+          "update_time": "2026-04-03T02:23:51.807532"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.002812,
+          "price_change": 2.1999999999999884e-05,
+          "price_change_percent": 0.7885304659498167,
+          "update_time": "2026-04-03T02:23:52.119165"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.00581,
+          "current_price": 0.00581,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:24:27.083840"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0921,
+          "price_change": 0.010599999999999998,
+          "price_change_percent": 13.006134969325151,
+          "update_time": "2026-04-03T02:23:51.464650"
+        },
+        "PHAUSDT": {
+          "initial_price": 0.03701,
+          "current_price": 0.03701,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:24:27.401554"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:12:26.068952",
+          "old_symbol": "PHAUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": 0.3537414965986534,
+          "new_potential_score": 86.46197392923654,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:18:08.265239",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.11325028312572286,
+          "new_potential_score": 73.74439263803681,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:18:08.265239",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": 0.0,
+          "new_potential_score": 75.71272727272726,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:23:51.125573",
+          "old_symbol": "PHAUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": 0.08114687584526727,
+          "new_potential_score": 88.79397392923651,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:23:51.125573",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": -1.4705882352941164,
+          "new_potential_score": 74.68709202453988,
+          "reason": "Low performance"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-03T02:25:27.403329",
+      "iteration": 27,
+      "elapsed_seconds": 1776.104402,
+      "current_symbols": [
+        "HEIUSDT",
+        "CTSIUSDT",
+        "FIGHTUSDT",
+        "BLESSUSDT",
+        "PHAUSDT"
+      ],
+      "symbol_performance": {
+        "CTSIUSDT": {
+          "initial_price": 0.0391,
+          "current_price": 0.0406,
+          "price_change": 0.0014999999999999944,
+          "price_change_percent": 3.8363171355498578,
+          "update_time": "2026-04-03T02:25:28.070416"
+        },
+        "FIGHTUSDT": {
+          "initial_price": 0.00279,
+          "current_price": 0.002805,
+          "price_change": 1.5000000000000256e-05,
+          "price_change_percent": 0.5376344086021597,
+          "update_time": "2026-04-03T02:25:28.415751"
+        },
+        "BLESSUSDT": {
+          "initial_price": 0.00581,
+          "current_price": 0.00581,
+          "price_change": 0.0,
+          "price_change_percent": 0.0,
+          "update_time": "2026-04-03T02:25:28.783550"
+        },
+        "HEIUSDT": {
+          "initial_price": 0.0815,
+          "current_price": 0.0914,
+          "price_change": 0.009899999999999992,
+          "price_change_percent": 12.147239263803671,
+          "update_time": "2026-04-03T02:25:27.721121"
+        },
+        "PHAUSDT": {
+          "initial_price": 0.03701,
+          "current_price": 0.03702,
+          "price_change": 9.999999999996123e-06,
+          "price_change_percent": 0.027019724398800658,
+          "update_time": "2026-04-03T02:25:29.122856"
+        }
+      },
+      "replacement_history": [
+        {
+          "timestamp": "2026-04-03T02:12:26.068952",
+          "old_symbol": "PHAUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": 0.3537414965986534,
+          "new_potential_score": 86.46197392923654,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:18:08.265239",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": 0.11325028312572286,
+          "new_potential_score": 73.74439263803681,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:18:08.265239",
+          "old_symbol": "BLESSUSDT",
+          "new_symbol": "TSTUSDT",
+          "old_performance": 0.0,
+          "new_potential_score": 75.71272727272726,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:23:51.125573",
+          "old_symbol": "PHAUSDT",
+          "new_symbol": "BLESSUSDT",
+          "old_performance": 0.08114687584526727,
+          "new_potential_score": 88.79397392923651,
+          "reason": "Low performance"
+        },
+        {
+          "timestamp": "2026-04-03T02:23:51.125573",
+          "old_symbol": "TSTUSDT",
+          "new_symbol": "PHAUSDT",
+          "old_performance": -1.4705882352941164,
+          "new_potential_score": 74.68709202453988,
+          "reason": "Low performance"
+        }
+      ]
+    }
+  ]
+}

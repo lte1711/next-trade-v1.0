@@ -1,0 +1,2870 @@
+{
+  "test_metadata": {
+    "test_type": "원본 전략 기반 상승장 백테스팅",
+    "start_time": "2026-04-03T01:06:01.995467",
+    "end_time": "2026-04-03T01:35:42.842868",
+    "total_rounds": 29,
+    "symbols_tested": [
+      "CTSIUSDT",
+      "BANUSDT",
+      "ONUSDT",
+      "A2ZUSDT",
+      "TAKEUSDT"
+    ],
+    "strategies_tested": [
+      "fallback_momentum",
+      "fallback_trend",
+      "fallback_volatility",
+      "fallback_mean_reversion"
+    ]
+  },
+  "strategy_summary": {
+    "fallback_momentum": {
+      "total_signals": 145,
+      "long_signals": 29,
+      "short_signals": 27,
+      "hold_signals": 89,
+      "avg_confidence": 0.5413793103448273,
+      "symbols_tested": 5
+    },
+    "fallback_trend": {
+      "total_signals": 145,
+      "long_signals": 80,
+      "short_signals": 0,
+      "hold_signals": 65,
+      "avg_confidence": 0.7206896551724145,
+      "symbols_tested": 5
+    },
+    "fallback_volatility": {
+      "total_signals": 145,
+      "long_signals": 48,
+      "short_signals": 0,
+      "hold_signals": 97,
+      "avg_confidence": 0.6324137931034485,
+      "symbols_tested": 5
+    },
+    "fallback_mean_reversion": {
+      "total_signals": 145,
+      "long_signals": 23,
+      "short_signals": 49,
+      "hold_signals": 73,
+      "avg_confidence": 0.4799999999999996,
+      "symbols_tested": 5
+    }
+  },
+  "all_results": [
+    {
+      "timestamp": "2026-04-03T01:06:01.995467",
+      "iteration": 1,
+      "elapsed_seconds": 0.0,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:07:08.388384",
+      "iteration": 2,
+      "elapsed_seconds": 66.392917,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:08:11.751954",
+      "iteration": 3,
+      "elapsed_seconds": 129.756487,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:09:15.381893",
+      "iteration": 4,
+      "elapsed_seconds": 193.386426,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:10:18.972010",
+      "iteration": 5,
+      "elapsed_seconds": 256.976543,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:11:22.351773",
+      "iteration": 6,
+      "elapsed_seconds": 320.356306,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:12:25.679027",
+      "iteration": 7,
+      "elapsed_seconds": 383.68356,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:13:29.195429",
+      "iteration": 8,
+      "elapsed_seconds": 447.199962,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:14:32.591389",
+      "iteration": 9,
+      "elapsed_seconds": 510.595922,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:15:36.148989",
+      "iteration": 10,
+      "elapsed_seconds": 574.153522,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:16:39.573571",
+      "iteration": 11,
+      "elapsed_seconds": 637.578104,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:17:43.018857",
+      "iteration": 12,
+      "elapsed_seconds": 701.02339,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:18:46.890473",
+      "iteration": 13,
+      "elapsed_seconds": 764.895006,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:19:50.632146",
+      "iteration": 14,
+      "elapsed_seconds": 828.636679,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:20:53.879780",
+      "iteration": 15,
+      "elapsed_seconds": 891.884313,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:21:57.376562",
+      "iteration": 16,
+      "elapsed_seconds": 955.381095,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:23:01.060678",
+      "iteration": 17,
+      "elapsed_seconds": 1019.065211,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:24:04.541371",
+      "iteration": 18,
+      "elapsed_seconds": 1082.545904,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:25:07.729971",
+      "iteration": 19,
+      "elapsed_seconds": 1145.734504,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:26:11.013619",
+      "iteration": 20,
+      "elapsed_seconds": 1209.018152,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:27:14.261123",
+      "iteration": 21,
+      "elapsed_seconds": 1272.265656,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:28:17.600104",
+      "iteration": 22,
+      "elapsed_seconds": 1335.604637,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:29:21.031755",
+      "iteration": 23,
+      "elapsed_seconds": 1399.036288,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:30:24.422916",
+      "iteration": 24,
+      "elapsed_seconds": 1462.427449,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:31:27.854890",
+      "iteration": 25,
+      "elapsed_seconds": 1525.859423,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:32:31.178085",
+      "iteration": 26,
+      "elapsed_seconds": 1589.182618,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:33:35.714591",
+      "iteration": 27,
+      "elapsed_seconds": 1653.719124,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "SHORT",
+            "confidence": 0.4
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:34:39.193309",
+      "iteration": 28,
+      "elapsed_seconds": 1717.197842,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T01:35:42.842868",
+      "iteration": 29,
+      "elapsed_seconds": 1780.847401,
+      "results": {
+        "CTSIUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "SHORT",
+            "confidence": 0.3
+          }
+        },
+        "BANUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ONUSDT": {
+          "fallback_momentum": {
+            "signal": "LONG",
+            "confidence": 0.8
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "LONG",
+            "confidence": 0.8
+          }
+        },
+        "A2ZUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "LONG",
+            "confidence": 0.9
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "TAKEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    }
+  ]
+}

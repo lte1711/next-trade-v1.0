@@ -1,0 +1,28 @@
+{
+  "simulation": {
+    "start_date": "2025-04-02",
+    "end_date": "2026-04-02",
+    "total_days": 366,
+    "market_phases": 4
+  },
+  "strategies": {
+    "total_count": 29,
+    "groups": 18
+  },
+  "data": {
+    "source": "real_market_conditions",
+    "symbols": [
+      "BTCUSDT", "ETHUSDT", "SOLUSDT", "DOGEUSDT", "SHIBUSDT",
+      "PEPEUSDT", "WIFUSDT", "BONKUSDT", "FLOKIUSDT", "1000PEPEUSDT",
+      "QUICKUSDT", "LRCUSDT", "ADAUSDT", "MATICUSDT", "AVAXUSDT", "DOTUSDT"
+    ]
+  },
+  "reporting": {
+    "standard": "FACT_ONLY",
+    "format": "json"
+  },
+  "integration": {
+    "original_compatible": true,
+    "merge_ready": true
+  }
+}

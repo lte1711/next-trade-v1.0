@@ -1,0 +1,193 @@
+{
+  "integration_analysis": {
+    "timestamp": "2026-04-02T21:59:52.719829",
+    "analysis_type": "원본 프로젝트 전략 통합",
+    "current_status": "2개 손실 전략 실행중",
+    "target_status": "4개 전략 통합 실행"
+  },
+  "identified_problems": {
+    "total_count": 5,
+    "high_severity": 3,
+    "medium_severity": 2,
+    "problems": [
+      {
+        "category": "전략 충돌",
+        "description": "동일 심볼에 대해 여러 전략 실행 시 충돌 가능성",
+        "current_situation": "BCHUSDT, BTCUSDT 실행중",
+        "potential_conflict": "QUICKUSDT, LRCUSDT 추가 시 심볼 중복 가능성",
+        "severity": "높음"
+      },
+      {
+        "category": "리소스 경합",
+        "description": "동시 실행 시 메모리, CPU 사용량 증가",
+        "current_situation": "2개 워커 실행중",
+        "potential_impact": "4개 워커 실행 시 리소스 2배 증가",
+        "severity": "중간"
+      },
+      {
+        "category": "API 호출 제한",
+        "description": "바이낸스 API 호출 빈도 증가로 제한 가능성",
+        "current_situation": "2개 전략 API 호출",
+        "potential_impact": "4개 전략 실행 시 API 호출 2배 증가",
+        "severity": "높음"
+      },
+      {
+        "category": "데이터 일관성",
+        "description": "여러 전략의 데이터 동기화 문제",
+        "current_situation": "별도 데이터 소스 사용",
+        "potential_impact": "데이터 불일치로 인한 잘못된 의사결정",
+        "severity": "중간"
+      },
+      {
+        "category": "포지션 관리",
+        "description": "동일 심볼에 대한 여러 포지션 충돌",
+        "current_situation": "각 전략별 독립 포지션",
+        "potential_conflict": "동일 심볼 다중 진입 시 청산 충돌",
+        "severity": "높음"
+      }
+    ]
+  },
+  "suggested_improvements": {
+    "total_count": 5,
+    "high_complexity": 2,
+    "medium_complexity": 3,
+    "improvements": [
+      {
+        "category": "전략 스케줄러",
+        "description": "전략 실행 시간 및 우선순위 관리",
+        "implementation": "실행 큐 및 우선순위 시스템 구축",
+        "benefit": "리소스 효율화 및 충돌 방지",
+        "complexity": "중간"
+      },
+      {
+        "category": "동적 리소스 관리",
+        "description": "시스템 리소스 상태에 따른 전략 실행 조절",
+        "implementation": "CPU, 메모리 모니터링 및 자동 조절",
+        "benefit": "시스템 안정성 확보",
+        "complexity": "높음"
+      },
+      {
+        "category": "전략 성과 기반 필터링",
+        "description": "성과 저조 전략 자동 중지 및 우수 전략 확장",
+        "implementation": "성과 지표 기반 자동 필터링 시스템",
+        "benefit": "수익률 자동 개선",
+        "complexity": "중간"
+      },
+      {
+        "category": "API 호출 최적화",
+        "description": "API 호출 빈도 제한 및 캐싱 전략",
+        "implementation": "API 호출 큐 및 Rate Limiting",
+        "benefit": "API 제한 회피 및 안정성 확보",
+        "complexity": "중간"
+      },
+      {
+        "category": "포지션 관리 통합",
+        "description": "중앙 포지션 관리 시스템 구축",
+        "implementation": "통합 포지션 트래커 및 충돌 방지",
+        "benefit": "포지션 충돌 방지 및 효율적 자산 관리",
+        "complexity": "높음"
+      }
+    ]
+  },
+  "integration_plan": {
+    "preparation": [
+      {
+        "step": 1,
+        "action": "현재 실행중인 손실 전략 중지",
+        "description": "BCHUSDT, BTCUSDT 워커 프로세스 안전 종료",
+        "command": "kill -TERM 3824 5092",
+        "risk": "중간",
+        "timeline": "즉시"
+      },
+      {
+        "step": 2,
+        "action": "전략 설정 업데이트",
+        "description": "config.json에 수익 전략 추가 및 활성화",
+        "files": [
+          "config.json"
+        ],
+        "risk": "낮음",
+        "timeline": "5분"
+      },
+      {
+        "step": 3,
+        "action": "리소스 사용량 확인",
+        "description": "현재 시스템 리소스 상태 모니터링",
+        "command": "top, htop",
+        "risk": "낮음",
+        "timeline": "2분"
+      }
+    ],
+    "integration": [
+      {
+        "step": 4,
+        "action": "수익 전략 워커 시작",
+        "description": "QUICKUSDT, LRCUSDT 전략 워커 프로세스 시작",
+        "command": "python worker.py --symbol QUICKUSDT",
+        "risk": "중간",
+        "timeline": "10분"
+      },
+      {
+        "step": 5,
+        "action": "멀티 전략 매니저 재시작",
+        "description": "새로운 전략 설정 적용을 위해 매니저 재시작",
+        "command": "kill -HUP $(pgrep -f multi_strategy_manager.py)",
+        "risk": "중간",
+        "timeline": "2분"
+      },
+      {
+        "step": 6,
+        "action": "성과 모니터링 시작",
+        "description": "통합된 전략 성과 실시간 모니터링",
+        "command": "curl http://127.0.0.1:8788/api/runtime",
+        "risk": "낮음",
+        "timeline": "1분"
+      }
+    ],
+    "verification": [
+      {
+        "step": 7,
+        "action": "전략 실행 상태 확인",
+        "description": "모든 전략 워커 정상 실행 확인",
+        "method": "프로세스 목록 및 API 응답 확인",
+        "risk": "낮음",
+        "timeline": "5분"
+      },
+      {
+        "step": 8,
+        "action": "성과 데이터 검증",
+        "description": "각 전략별 성과 데이터 정확성 확인",
+        "method": "대시보드 및 로그 파일 분석",
+        "risk": "낮음",
+        "timeline": "10분"
+      },
+      {
+        "step": 9,
+        "action": "리소스 사용량 모니터링",
+        "description": "통합 후 시스템 리소스 사용량 추적",
+        "method": "CPU, 메모리, 네트워크 사용량 모니터링",
+        "risk": "낮음",
+        "timeline": "지속"
+      }
+    ]
+  },
+  "risk_assessment": {
+    "overall_risk": "중간",
+    "critical_points": [
+      "API 호출 제한",
+      "포지션 관리 충돌",
+      "리소스 경합"
+    ],
+    "mitigation_strategies": [
+      "API 호출 큐 관리",
+      "중앙 포지션 관리",
+      "동적 리소스 할당"
+    ]
+  },
+  "expected_outcomes": [
+    "손실 전략 중지로 추가 손실 방지",
+    "수익 전략 추가로 수익 창출",
+    "시스템 안정성 확보",
+    "자동화된 전략 관리"
+  ]
+}

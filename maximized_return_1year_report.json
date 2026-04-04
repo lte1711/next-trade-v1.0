@@ -1,0 +1,110 @@
+{
+  "report_metadata": {
+    "report_type": "수익률 극대화 수정 전략 1년치 데이터 비교 보고서",
+    "generation_time": "2026-04-02T22:53:23.812263",
+    "simulation_period": "2025-04-02 ~ 2026-04-02 (1년)",
+    "report_standard": "FACT ONLY"
+  },
+  "simulation_summary": {
+    "total_days": 366,
+    "strategies_tested": 5,
+    "total_investment": 5300.0,
+    "strategy_focus": "수익률 극대화"
+  },
+  "maximized_performance": {
+    "total_investment": 5300.0,
+    "total_final_amount": 6791.25,
+    "total_pnl": 1491.25,
+    "return_percentage": 28.14,
+    "max_pnl": 1491.25,
+    "min_pnl": 2.81,
+    "avg_pnl": 743.24,
+    "volatility": 1.92
+  },
+  "risk_reward_optimization": {
+    "stop_loss_events": 301,
+    "profit_taken_events": 1458,
+    "risk_reward_ratio": "1458/301",
+    "optimization_focus": "익절 극대화, 손절 최소화"
+  },
+  "individual_strategies": {
+    "ultra_aggressive_1": {
+      "total_pnl": 404.19,
+      "days_active": 366,
+      "avg_daily_pnl": 1.1,
+      "stop_loss_count": 63,
+      "profit_taken_count": 284
+    },
+    "ultra_aggressive_2": {
+      "total_pnl": 385.23,
+      "days_active": 366,
+      "avg_daily_pnl": 1.05,
+      "stop_loss_count": 53,
+      "profit_taken_count": 295
+    },
+    "high_growth_1": {
+      "total_pnl": 325.19,
+      "days_active": 366,
+      "avg_daily_pnl": 0.89,
+      "stop_loss_count": 64,
+      "profit_taken_count": 290
+    },
+    "moonshot_1": {
+      "total_pnl": 216.95,
+      "days_active": 366,
+      "avg_daily_pnl": 0.59,
+      "stop_loss_count": 45,
+      "profit_taken_count": 310
+    },
+    "momentum_1": {
+      "total_pnl": 159.68,
+      "days_active": 366,
+      "avg_daily_pnl": 0.44,
+      "stop_loss_count": 76,
+      "profit_taken_count": 279
+    }
+  },
+  "strategy_comparison": {
+    "previous_fixed_strategy": {
+      "total_investment": 5300.0,
+      "total_final_amount": 6459.97,
+      "total_pnl": 1159.97,
+      "return_percentage": 21.89,
+      "max_pnl": 1159.97,
+      "min_pnl": 0.75,
+      "avg_pnl": 585.81,
+      "volatility": 2.63
+    },
+    "maximized_return_strategy": {
+      "final_amount": 6791.25,
+      "pnl": 1491.25,
+      "return_rate": 28.14,
+      "volatility": 1.92
+    },
+    "improvement_analysis": {
+      "pnl_improvement": 331.28,
+      "return_rate_improvement": 6.25,
+      "volatility_change": -0.71,
+      "improvement_percentage": 28.56
+    }
+  },
+  "key_findings": [
+    "1년간 366일 수익률 극대화 시뮬레이션 완료",
+    "초기 투자 5,300.00 USDT에서 최종 6,791.25 USDT 달성",
+    "총 손익 1491.25 USDT (28.14%)",
+    "익절 이벤트 1458회로 수익 실현",
+    "리스크/보상 비율 1458/301 달성"
+  ],
+  "conclusions": [
+    "수익률 극대화 전략으로 현저한 성과 개선 달성",
+    "초공격적 레버리지와 익절 전략으로 수익 극대화",
+    "리스크 관리와 수익 실현의 균형 최적화",
+    "변동성 감소와 수익률 증가 동시 달성"
+  ],
+  "optimization_recommendations": [
+    "초공격적 전략 우선 적용 권장",
+    "익절 레벨 동적 조절 필요",
+    "시장 상황에 따른 레버리지 조절",
+    "리스크 관리 강화 지속 필요"
+  ]
+}

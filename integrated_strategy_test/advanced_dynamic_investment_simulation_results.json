@@ -1,0 +1,841 @@
+{
+  "simulation_metadata": {
+    "initial_capital": 500.0,
+    "final_capital": 503.3734138250801,
+    "total_pnl": 11.959576992536263,
+    "pnl_percent": 2.3919153985072525,
+    "start_time": "2026-04-03T14:13:00.586222",
+    "end_time": "2026-04-03T15:08:07.435744",
+    "total_rounds": 12,
+    "invested_symbols": 10,
+    "max_symbols": 10,
+    "total_replacements": 7,
+    "replacement_threshold": -0.8,
+    "min_replacement_interval": 5,
+    "max_replacements_per_hour": 5,
+    "volatility_threshold": 2.5,
+    "extreme_volatility_threshold": 5.0,
+    "final_market_regime": "EXTREME",
+    "simulated_volatility": true
+  },
+  "individual_performance": [
+    {
+      "symbol": "TUTUSDT",
+      "initial_investment": 50.0,
+      "final_investment": 57.258085575920504,
+      "pnl": 7.258085575920504,
+      "pnl_percent": 14.516171151841007,
+      "rank": 1,
+      "bullish_score": 88.0176637987509
+    },
+    {
+      "symbol": "BICOUSDT",
+      "initial_investment": 49.14602363054436,
+      "final_investment": 51.839039574476544,
+      "pnl": 2.6930159439321812,
+      "pnl_percent": 5.479621228722288,
+      "rank": 3,
+      "bullish_score": 81.2117472625641
+    },
+    {
+      "symbol": "RLCUSDT",
+      "initial_investment": 50.0,
+      "final_investment": 52.3975813086331,
+      "pnl": 2.3975813086331,
+      "pnl_percent": 4.7951626172662,
+      "rank": 9,
+      "bullish_score": 75.05411164211579
+    },
+    {
+      "symbol": "DENTUSDT",
+      "initial_investment": 49.022421038259225,
+      "final_investment": 51.30187607621463,
+      "pnl": 2.279455037955408,
+      "pnl_percent": 4.649821427987864,
+      "rank": 11,
+      "bullish_score": 72.71151533141138
+    },
+    {
+      "symbol": "STXUSDT",
+      "initial_investment": 47.814190738859764,
+      "final_investment": 49.891123206083805,
+      "pnl": 2.07693246722404,
+      "pnl_percent": 4.343757439224138,
+      "rank": 63,
+      "bullish_score": 39.987811479241316
+    },
+    {
+      "symbol": "GRIFFAINUSDT",
+      "initial_investment": 49.03202198099148,
+      "final_investment": 50.74302974997404,
+      "pnl": 1.7110077689825616,
+      "pnl_percent": 3.489572120125655,
+      "rank": 10,
+      "bullish_score": 72.75377259539873
+    },
+    {
+      "symbol": "MUBARAKUSDT",
+      "initial_investment": 47.95116568522748,
+      "final_investment": 48.82289854052174,
+      "pnl": 0.8717328552942618,
+      "pnl_percent": 1.817959673841298,
+      "rank": 70,
+      "bullish_score": 33.50129794331628
+    },
+    {
+      "symbol": "ASTERUSDT",
+      "initial_investment": 47.05331701988561,
+      "final_investment": 47.05331701988561,
+      "pnl": 0.0,
+      "pnl_percent": 0.0,
+      "rank": 69,
+      "bullish_score": 34.19504454693172
+    },
+    {
+      "symbol": "ARIAUSDT",
+      "initial_investment": 50.0,
+      "final_investment": 48.02319278733936,
+      "pnl": -1.9768072126606384,
+      "pnl_percent": -3.9536144253212764,
+      "rank": 7,
+      "bullish_score": 77.57651334652749
+    },
+    {
+      "symbol": "SAFEUSDT",
+      "initial_investment": 48.44801375866148,
+      "final_investment": 46.043269986030715,
+      "pnl": -2.4047437726307663,
+      "pnl_percent": -4.963554924273544,
+      "rank": 2,
+      "bullish_score": 83.0477701221673
+    }
+  ],
+  "replacement_history": [
+    {
+      "timestamp": "2026-04-03T14:23:04.072669",
+      "old_symbol": "GRIFFAINUSDT",
+      "new_symbol": "DENTUSDT",
+      "old_performance": -1.9551579234815506,
+      "new_bullish_score": 72.71151533141138,
+      "transferred_amount": 49.022421038259225,
+      "market_regime": "HIGH_VOLATILITY",
+      "test_phase": 2,
+      "replacement_threshold": -0.8,
+      "simulated": true
+    },
+    {
+      "timestamp": "2026-04-03T14:33:07.421461",
+      "old_symbol": "SAFEUSDT",
+      "new_symbol": "GRIFFAINUSDT",
+      "old_performance": -1.9359560380170393,
+      "new_bullish_score": 72.75377259539873,
+      "transferred_amount": 49.03202198099148,
+      "market_regime": "HIGH_VOLATILITY",
+      "test_phase": 3,
+      "replacement_threshold": -0.8,
+      "simulated": true
+    },
+    {
+      "timestamp": "2026-04-03T14:38:07.423486",
+      "old_symbol": "PYTHUSDT",
+      "new_symbol": "SAFEUSDT",
+      "old_performance": -3.1039724826770367,
+      "new_bullish_score": 83.0477701221673,
+      "transferred_amount": 48.44801375866148,
+      "market_regime": "HIGH_VOLATILITY",
+      "test_phase": 4,
+      "replacement_threshold": -0.8,
+      "simulated": true
+    },
+    {
+      "timestamp": "2026-04-03T14:43:07.426738",
+      "old_symbol": "BICOUSDT",
+      "new_symbol": "STXUSDT",
+      "old_performance": -4.371618522280471,
+      "new_bullish_score": 39.987811479241316,
+      "transferred_amount": 47.814190738859764,
+      "market_regime": "EXTREME",
+      "test_phase": 4,
+      "replacement_threshold": -0.8,
+      "simulated": true
+    },
+    {
+      "timestamp": "2026-04-03T14:48:07.428817",
+      "old_symbol": "SKYAIUSDT",
+      "new_symbol": "BICOUSDT",
+      "old_performance": -1.7079527389112739,
+      "new_bullish_score": 81.2117472625641,
+      "transferred_amount": 49.14602363054436,
+      "market_regime": "HIGH_VOLATILITY",
+      "test_phase": 4,
+      "replacement_threshold": -0.8,
+      "simulated": true
+    },
+    {
+      "timestamp": "2026-04-03T15:03:07.433964",
+      "old_symbol": "KMNOUSDT",
+      "new_symbol": "MUBARAKUSDT",
+      "old_performance": -4.097668629545041,
+      "new_bullish_score": 33.50129794331628,
+      "transferred_amount": 47.95116568522748,
+      "market_regime": "EXTREME",
+      "test_phase": 4,
+      "replacement_threshold": -0.8,
+      "simulated": true
+    },
+    {
+      "timestamp": "2026-04-03T15:08:07.435876",
+      "old_symbol": "VINEUSDT",
+      "new_symbol": "ASTERUSDT",
+      "old_performance": -5.893365960228778,
+      "new_bullish_score": 34.19504454693172,
+      "transferred_amount": 47.05331701988561,
+      "market_regime": "EXTREME",
+      "test_phase": 4,
+      "replacement_threshold": -0.8,
+      "simulated": true
+    }
+  ],
+  "performance_history": [
+    {
+      "timestamp": "2026-04-03T14:13:00.586222",
+      "total_value": 500.20103274309884,
+      "total_pnl": 0.20103274309885677,
+      "pnl_percent": 0.040206548619771354,
+      "market_regime": "NORMAL",
+      "test_phase": 1,
+      "simulated_volatility": false,
+      "individual_performance": {
+        "TUTUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "SAFEUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "BICOUSDT": {
+          "pnl": 0.10688328345445797,
+          "pnl_percent": 0.21376656690891593
+        },
+        "PYTHUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "VINEUSDT": {
+          "pnl": 0.08143322475570614,
+          "pnl_percent": 0.16286644951141227
+        },
+        "KMNOUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "ARIAUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "SKYAIUSDT": {
+          "pnl": 0.0076734192756404696,
+          "pnl_percent": 0.015346838551280939
+        },
+        "RLCUSDT": {
+          "pnl": -0.03386769022352354,
+          "pnl_percent": -0.06773538044704708
+        },
+        "GRIFFAINUSDT": {
+          "pnl": 0.03891050583657574,
+          "pnl_percent": 0.07782101167315147
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T14:18:04.066148",
+      "total_value": 499.9957786365103,
+      "total_pnl": -0.004221363489669727,
+      "pnl_percent": -0.0008442726979339454,
+      "market_regime": "NORMAL",
+      "test_phase": 2,
+      "simulated_volatility": true,
+      "individual_performance": {
+        "TUTUSDT": {
+          "pnl": 0.05319148936170137,
+          "pnl_percent": 0.10638297872340274
+        },
+        "SAFEUSDT": {
+          "pnl": 0.045662100456624444,
+          "pnl_percent": 0.09132420091324889
+        },
+        "BICOUSDT": {
+          "pnl": 0.1710132535271427,
+          "pnl_percent": 0.3420265070542854
+        },
+        "PYTHUSDT": {
+          "pnl": 0.09799118079372704,
+          "pnl_percent": 0.19598236158745408
+        },
+        "VINEUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "KMNOUSDT": {
+          "pnl": -0.027762354247649057,
+          "pnl_percent": -0.05552470849529811
+        },
+        "ARIAUSDT": {
+          "pnl": -0.10997541725966897,
+          "pnl_percent": -0.21995083451933792
+        },
+        "SKYAIUSDT": {
+          "pnl": -0.05371393492940513,
+          "pnl_percent": -0.10742786985881027
+        },
+        "RLCUSDT": {
+          "pnl": -0.18062768119214212,
+          "pnl_percent": -0.36125536238428424
+        },
+        "GRIFFAINUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T14:23:04.070677",
+      "total_value": 498.0525847649125,
+      "total_pnl": -1.9474152350875116,
+      "pnl_percent": -0.3894830470175023,
+      "market_regime": "HIGH_VOLATILITY",
+      "test_phase": 2,
+      "simulated_volatility": true,
+      "individual_performance": {
+        "TUTUSDT": {
+          "pnl": -0.5229894282643741,
+          "pnl_percent": -1.0459788565287482
+        },
+        "SAFEUSDT": {
+          "pnl": 0.6539103473923404,
+          "pnl_percent": 1.3078206947846809
+        },
+        "BICOUSDT": {
+          "pnl": 0.7612694273417588,
+          "pnl_percent": 1.5225388546835177
+        },
+        "PYTHUSDT": {
+          "pnl": -0.2732475521560147,
+          "pnl_percent": -0.5464951043120294
+        },
+        "VINEUSDT": {
+          "pnl": -0.49648907129137143,
+          "pnl_percent": -0.992978142582743
+        },
+        "KMNOUSDT": {
+          "pnl": -0.34926528872445317,
+          "pnl_percent": -0.6985305774489063
+        },
+        "ARIAUSDT": {
+          "pnl": 0.1667793111286997,
+          "pnl_percent": 0.3335586222573994
+        },
+        "SKYAIUSDT": {
+          "pnl": -0.8114535146277291,
+          "pnl_percent": -1.6229070292554584
+        },
+        "RLCUSDT": {
+          "pnl": -0.09835050414559277,
+          "pnl_percent": -0.19670100829118553
+        },
+        "GRIFFAINUSDT": {
+          "pnl": -0.9775789617407753,
+          "pnl_percent": -1.9551579234815506
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T14:28:07.407416",
+      "total_value": 499.70047966362876,
+      "total_pnl": 0.6780586253695091,
+      "pnl_percent": 0.13561172507390182,
+      "market_regime": "NORMAL",
+      "test_phase": 3,
+      "simulated_volatility": true,
+      "individual_performance": {
+        "TUTUSDT": {
+          "pnl": -0.10638297872340985,
+          "pnl_percent": -0.2127659574468197
+        },
+        "SAFEUSDT": {
+          "pnl": -0.09132420091324178,
+          "pnl_percent": -0.18264840182648356
+        },
+        "BICOUSDT": {
+          "pnl": 0.44890979050875757,
+          "pnl_percent": 0.897819581017515
+        },
+        "PYTHUSDT": {
+          "pnl": 0.11024007839294825,
+          "pnl_percent": 0.2204801567858965
+        },
+        "VINEUSDT": {
+          "pnl": -0.08143322475569903,
+          "pnl_percent": -0.16286644951139806
+        },
+        "KMNOUSDT": {
+          "pnl": 0.0555247084952768,
+          "pnl_percent": 0.1110494169905536
+        },
+        "ARIAUSDT": {
+          "pnl": 0.5315478500884083,
+          "pnl_percent": 1.0630957001768166
+        },
+        "SKYAIUSDT": {
+          "pnl": -0.3146101903007903,
+          "pnl_percent": -0.6292203806015806
+        },
+        "RLCUSDT": {
+          "pnl": -0.14675999096861858,
+          "pnl_percent": -0.29351998193723716
+        },
+        "DENTUSDT": {
+          "pnl": 0.2723467835458777,
+          "pnl_percent": 0.5555555555555415
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T14:33:07.421461",
+      "total_value": 498.4052861018312,
+      "total_pnl": -0.6171349364279948,
+      "pnl_percent": -0.12342698728559896,
+      "market_regime": "HIGH_VOLATILITY",
+      "test_phase": 3,
+      "simulated_volatility": true,
+      "individual_performance": {
+        "TUTUSDT": {
+          "pnl": 0.22994253611759774,
+          "pnl_percent": 0.4598850722351955
+        },
+        "SAFEUSDT": {
+          "pnl": -0.9679780190085197,
+          "pnl_percent": -1.9359560380170393
+        },
+        "BICOUSDT": {
+          "pnl": 1.1287023083444083,
+          "pnl_percent": 2.2574046166888166
+        },
+        "PYTHUSDT": {
+          "pnl": -0.6126249163644246,
+          "pnl_percent": -1.2252498327288492
+        },
+        "VINEUSDT": {
+          "pnl": 0.7265721383532338,
+          "pnl_percent": 1.4531442767064675
+        },
+        "KMNOUSDT": {
+          "pnl": 0.2405239895006943,
+          "pnl_percent": 0.4810479790013886
+        },
+        "ARIAUSDT": {
+          "pnl": -0.3151831981407085,
+          "pnl_percent": -0.630366396281417
+        },
+        "SKYAIUSDT": {
+          "pnl": -0.829976173464182,
+          "pnl_percent": -1.6599523469283637
+        },
+        "RLCUSDT": {
+          "pnl": -0.0784936721317564,
+          "pnl_percent": -0.1569873442635128
+        },
+        "DENTUSDT": {
+          "pnl": -0.13861992963433778,
+          "pnl_percent": -0.2827684286056635
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T14:38:07.423486",
+      "total_value": 500.79135915340333,
+      "total_pnl": 2.7369161341525654,
+      "pnl_percent": 0.5473832268305131,
+      "market_regime": "HIGH_VOLATILITY",
+      "test_phase": 4,
+      "simulated_volatility": true,
+      "individual_performance": {
+        "TUTUSDT": {
+          "pnl": 1.1932506263584344,
+          "pnl_percent": 2.3865012527168687
+        },
+        "BICOUSDT": {
+          "pnl": 0.30764561906282495,
+          "pnl_percent": 0.6152912381256499
+        },
+        "PYTHUSDT": {
+          "pnl": -1.5519862413385184,
+          "pnl_percent": -3.1039724826770367
+        },
+        "VINEUSDT": {
+          "pnl": -0.21159578014858482,
+          "pnl_percent": -0.42319156029716964
+        },
+        "KMNOUSDT": {
+          "pnl": 0.7693017560961124,
+          "pnl_percent": 1.5386035121922248
+        },
+        "ARIAUSDT": {
+          "pnl": 0.5818939330483701,
+          "pnl_percent": 1.1637878660967402
+        },
+        "SKYAIUSDT": {
+          "pnl": -0.2200088106076592,
+          "pnl_percent": -0.44001762121531846
+        },
+        "RLCUSDT": {
+          "pnl": 0.8087329423901508,
+          "pnl_percent": 1.6174658847803016
+        },
+        "DENTUSDT": {
+          "pnl": 0.649833877245463,
+          "pnl_percent": 1.325585035341899
+        },
+        "GRIFFAINUSDT": {
+          "pnl": 0.4098482120459721,
+          "pnl_percent": 0.8358786676283925
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T14:43:07.425742",
+      "total_value": 504.79991501930675,
+      "total_pnl": 8.297458241394537,
+      "pnl_percent": 1.6594916482789075,
+      "market_regime": "EXTREME",
+      "test_phase": 4,
+      "simulated_volatility": true,
+      "individual_performance": {
+        "TUTUSDT": {
+          "pnl": 2.5659824314615207,
+          "pnl_percent": 5.131964862923041
+        },
+        "BICOUSDT": {
+          "pnl": -2.1858092611402355,
+          "pnl_percent": -4.371618522280471
+        },
+        "VINEUSDT": {
+          "pnl": 1.1912636318090364,
+          "pnl_percent": 2.3825272636180728
+        },
+        "KMNOUSDT": {
+          "pnl": 2.043821263810372,
+          "pnl_percent": 4.087642527620744
+        },
+        "ARIAUSDT": {
+          "pnl": 2.9329569972944753,
+          "pnl_percent": 5.865913994588951
+        },
+        "SKYAIUSDT": {
+          "pnl": -1.139746303519388,
+          "pnl_percent": -2.279492607038776
+        },
+        "RLCUSDT": {
+          "pnl": 2.2139666482559406,
+          "pnl_percent": 4.427933296511881
+        },
+        "DENTUSDT": {
+          "pnl": -0.6338148402156776,
+          "pnl_percent": -1.2929080751051054
+        },
+        "GRIFFAINUSDT": {
+          "pnl": -0.549384127917584,
+          "pnl_percent": -1.1204598662697751
+        },
+        "SAFEUSDT": {
+          "pnl": 1.858221801556077,
+          "pnl_percent": 3.8354963545308736
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T14:48:07.427820",
+      "total_value": 506.17265085262335,
+      "total_pnl": 11.856003335851476,
+      "pnl_percent": 2.371200667170295,
+      "market_regime": "HIGH_VOLATILITY",
+      "test_phase": 4,
+      "simulated_volatility": true,
+      "individual_performance": {
+        "TUTUSDT": {
+          "pnl": 2.1942639198592957,
+          "pnl_percent": 4.388527839718591
+        },
+        "VINEUSDT": {
+          "pnl": 1.8133886222115763,
+          "pnl_percent": 3.6267772444231525
+        },
+        "KMNOUSDT": {
+          "pnl": 1.6148585700054028,
+          "pnl_percent": 3.2297171400108056
+        },
+        "ARIAUSDT": {
+          "pnl": 3.9668451665734636,
+          "pnl_percent": 7.933690333146927
+        },
+        "SKYAIUSDT": {
+          "pnl": -0.853976369455637,
+          "pnl_percent": -1.7079527389112739
+        },
+        "RLCUSDT": {
+          "pnl": 2.8432037021204053,
+          "pnl_percent": 5.686407404240811
+        },
+        "DENTUSDT": {
+          "pnl": -0.7605604564867576,
+          "pnl_percent": -1.551454294542457
+        },
+        "GRIFFAINUSDT": {
+          "pnl": -0.3779204891247474,
+          "pnl_percent": -0.7707626034089681
+        },
+        "SAFEUSDT": {
+          "pnl": 1.8958567039440837,
+          "pnl_percent": 3.9131773562236996
+        },
+        "STXUSDT": {
+          "pnl": -0.47995603379560947,
+          "pnl_percent": -1.0037941171417495
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T14:53:07.429516",
+      "total_value": 497.88449802150564,
+      "total_pnl": 4.421826874189321,
+      "pnl_percent": 0.8843653748378641,
+      "market_regime": "EXTREME",
+      "test_phase": 4,
+      "simulated_volatility": true,
+      "individual_performance": {
+        "TUTUSDT": {
+          "pnl": 4.087926334107728,
+          "pnl_percent": 8.175852668215455
+        },
+        "VINEUSDT": {
+          "pnl": 0.6758027330239855,
+          "pnl_percent": 1.351605466047971
+        },
+        "KMNOUSDT": {
+          "pnl": -0.5995524656137263,
+          "pnl_percent": -1.1991049312274527
+        },
+        "ARIAUSDT": {
+          "pnl": 1.6985082884615181,
+          "pnl_percent": 3.3970165769230363
+        },
+        "RLCUSDT": {
+          "pnl": 1.1630013635134802,
+          "pnl_percent": 2.3260027270269603
+        },
+        "DENTUSDT": {
+          "pnl": -1.2059891129162281,
+          "pnl_percent": -2.460076608568601
+        },
+        "GRIFFAINUSDT": {
+          "pnl": -2.1384838894491836,
+          "pnl_percent": -4.361402616188705
+        },
+        "SAFEUSDT": {
+          "pnl": -0.3808450101366816,
+          "pnl_percent": -0.7860900387657163
+        },
+        "STXUSDT": {
+          "pnl": 0.18763321370786912,
+          "pnl_percent": 0.39242160289324945
+        },
+        "BICOUSDT": {
+          "pnl": 0.9338254194905602,
+          "pnl_percent": 1.9001037123788498
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T14:58:07.430836",
+      "total_value": 499.57847149418075,
+      "total_pnl": 6.115800346864454,
+      "pnl_percent": 1.2231600693728908,
+      "market_regime": "EXTREME",
+      "test_phase": 4,
+      "simulated_volatility": true,
+      "individual_performance": {
+        "TUTUSDT": {
+          "pnl": 5.845374281406059,
+          "pnl_percent": 11.690748562812118
+        },
+        "VINEUSDT": {
+          "pnl": -0.6576475604403171,
+          "pnl_percent": -1.3152951208806343
+        },
+        "KMNOUSDT": {
+          "pnl": -2.918857721407271,
+          "pnl_percent": -5.837715442814542
+        },
+        "ARIAUSDT": {
+          "pnl": 1.2405485887935441,
+          "pnl_percent": 2.4810971775870883
+        },
+        "RLCUSDT": {
+          "pnl": 2.339906813607506,
+          "pnl_percent": 4.679813627215012
+        },
+        "DENTUSDT": {
+          "pnl": 1.1355536227872918,
+          "pnl_percent": 2.316396454391872
+        },
+        "GRIFFAINUSDT": {
+          "pnl": -2.713643175909972,
+          "pnl_percent": -5.534430493121384
+        },
+        "SAFEUSDT": {
+          "pnl": 1.8538375020439517,
+          "pnl_percent": 3.8264468617405907
+        },
+        "STXUSDT": {
+          "pnl": -0.038646367963345085,
+          "pnl_percent": -0.0808261467278923
+        },
+        "BICOUSDT": {
+          "pnl": 0.029374363947006543,
+          "pnl_percent": 0.059769563795900496
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T15:03:07.433383",
+      "total_value": 499.1054467122026,
+      "total_pnl": 5.642775564886321,
+      "pnl_percent": 1.1285551129772642,
+      "market_regime": "EXTREME",
+      "test_phase": 4,
+      "simulated_volatility": true,
+      "individual_performance": {
+        "TUTUSDT": {
+          "pnl": 7.027806183557573,
+          "pnl_percent": 14.055612367115145
+        },
+        "VINEUSDT": {
+          "pnl": -1.1156013732421002,
+          "pnl_percent": -2.2312027464842004
+        },
+        "KMNOUSDT": {
+          "pnl": -2.0488343147725203,
+          "pnl_percent": -4.097668629545041
+        },
+        "ARIAUSDT": {
+          "pnl": -0.9761645948952804,
+          "pnl_percent": -1.9523291897905608
+        },
+        "RLCUSDT": {
+          "pnl": 1.4779225351802978,
+          "pnl_percent": 2.9558450703605956
+        },
+        "DENTUSDT": {
+          "pnl": 1.0754986905333865,
+          "pnl_percent": 2.1938914230572593
+        },
+        "GRIFFAINUSDT": {
+          "pnl": -0.5531094628343212,
+          "pnl_percent": -1.128057625379488
+        },
+        "SAFEUSDT": {
+          "pnl": -0.09086820870744106,
+          "pnl_percent": -0.18755817144556466
+        },
+        "STXUSDT": {
+          "pnl": 0.09775389329505657,
+          "pnl_percent": 0.20444535771596695
+        },
+        "BICOUSDT": {
+          "pnl": 0.7483722167716707,
+          "pnl_percent": 1.5227523235604268
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T15:08:07.435744",
+      "total_value": 503.3734138250801,
+      "total_pnl": 11.959576992536263,
+      "pnl_percent": 2.3919153985072525,
+      "market_regime": "EXTREME",
+      "test_phase": 4,
+      "simulated_volatility": true,
+      "individual_performance": {
+        "TUTUSDT": {
+          "pnl": 7.258085575920504,
+          "pnl_percent": 14.516171151841007
+        },
+        "VINEUSDT": {
+          "pnl": -2.946682980114389,
+          "pnl_percent": -5.893365960228778
+        },
+        "ARIAUSDT": {
+          "pnl": -1.9768072126606384,
+          "pnl_percent": -3.9536144253212764
+        },
+        "RLCUSDT": {
+          "pnl": 2.3975813086331,
+          "pnl_percent": 4.7951626172662
+        },
+        "DENTUSDT": {
+          "pnl": 2.279455037955408,
+          "pnl_percent": 4.649821427987864
+        },
+        "GRIFFAINUSDT": {
+          "pnl": 1.7110077689825616,
+          "pnl_percent": 3.489572120125655
+        },
+        "SAFEUSDT": {
+          "pnl": -2.4047437726307663,
+          "pnl_percent": -4.963554924273544
+        },
+        "STXUSDT": {
+          "pnl": 2.07693246722404,
+          "pnl_percent": 4.343757439224138
+        },
+        "BICOUSDT": {
+          "pnl": 2.6930159439321812,
+          "pnl_percent": 5.479621228722288
+        },
+        "MUBARAKUSDT": {
+          "pnl": 0.8717328552942618,
+          "pnl_percent": 1.817959673841298
+        }
+      }
+    }
+  ],
+  "market_regime_history": [
+    "NORMAL",
+    "NORMAL",
+    "HIGH_VOLATILITY",
+    "NORMAL",
+    "HIGH_VOLATILITY",
+    "HIGH_VOLATILITY",
+    "EXTREME",
+    "HIGH_VOLATILITY",
+    "EXTREME",
+    "EXTREME",
+    "EXTREME",
+    "EXTREME"
+  ],
+  "test_phase_history": [
+    1,
+    2,
+    2,
+    3,
+    3,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4
+  ]
+}

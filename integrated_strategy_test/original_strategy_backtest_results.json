@@ -1,0 +1,2870 @@
+{
+  "test_metadata": {
+    "test_type": "원본 전략 기반 거래소 연동 백테스팅",
+    "start_time": "2026-04-03T00:24:58.374068",
+    "end_time": "2026-04-03T00:54:40.910659",
+    "total_rounds": 29,
+    "symbols_tested": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "DOGEUSDT",
+      "1000SHIBUSDT"
+    ],
+    "strategies_tested": [
+      "fallback_momentum",
+      "fallback_trend",
+      "fallback_volatility",
+      "fallback_mean_reversion"
+    ]
+  },
+  "strategy_summary": {
+    "fallback_momentum": {
+      "total_signals": 145,
+      "long_signals": 0,
+      "short_signals": 0,
+      "hold_signals": 145,
+      "avg_confidence": 0.5,
+      "symbols_tested": 5
+    },
+    "fallback_trend": {
+      "total_signals": 145,
+      "long_signals": 0,
+      "short_signals": 137,
+      "hold_signals": 8,
+      "avg_confidence": 0.6889655172413809,
+      "symbols_tested": 5
+    },
+    "fallback_volatility": {
+      "total_signals": 145,
+      "long_signals": 0,
+      "short_signals": 145,
+      "hold_signals": 0,
+      "avg_confidence": 0.799999999999998,
+      "symbols_tested": 5
+    },
+    "fallback_mean_reversion": {
+      "total_signals": 145,
+      "long_signals": 0,
+      "short_signals": 0,
+      "hold_signals": 145,
+      "avg_confidence": 0.5,
+      "symbols_tested": 5
+    }
+  },
+  "all_results": [
+    {
+      "timestamp": "2026-04-03T00:24:58.374068",
+      "iteration": 1,
+      "elapsed_seconds": 0.0,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:26:02.198002",
+      "iteration": 2,
+      "elapsed_seconds": 63.823934,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:27:05.908944",
+      "iteration": 3,
+      "elapsed_seconds": 127.534876,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:28:09.554514",
+      "iteration": 4,
+      "elapsed_seconds": 191.180446,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:29:13.394980",
+      "iteration": 5,
+      "elapsed_seconds": 255.020912,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:30:17.040962",
+      "iteration": 6,
+      "elapsed_seconds": 318.666894,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:31:20.844944",
+      "iteration": 7,
+      "elapsed_seconds": 382.470876,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:32:24.615124",
+      "iteration": 8,
+      "elapsed_seconds": 446.241056,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:33:28.048448",
+      "iteration": 9,
+      "elapsed_seconds": 509.67438,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:34:31.716309",
+      "iteration": 10,
+      "elapsed_seconds": 573.342241,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:35:35.364610",
+      "iteration": 11,
+      "elapsed_seconds": 636.990542,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:36:39.021518",
+      "iteration": 12,
+      "elapsed_seconds": 700.64745,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:37:42.657741",
+      "iteration": 13,
+      "elapsed_seconds": 764.283673,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:38:46.341299",
+      "iteration": 14,
+      "elapsed_seconds": 827.967231,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:39:53.200957",
+      "iteration": 15,
+      "elapsed_seconds": 894.826889,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:40:56.776571",
+      "iteration": 16,
+      "elapsed_seconds": 958.402503,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:42:00.290337",
+      "iteration": 17,
+      "elapsed_seconds": 1021.916269,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:43:03.797136",
+      "iteration": 18,
+      "elapsed_seconds": 1085.423068,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:44:07.114787",
+      "iteration": 19,
+      "elapsed_seconds": 1148.740719,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:45:10.390620",
+      "iteration": 20,
+      "elapsed_seconds": 1212.016552,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:46:13.733313",
+      "iteration": 21,
+      "elapsed_seconds": 1275.359245,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:47:17.220958",
+      "iteration": 22,
+      "elapsed_seconds": 1338.84689,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:48:20.545969",
+      "iteration": 23,
+      "elapsed_seconds": 1402.171901,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:49:23.883718",
+      "iteration": 24,
+      "elapsed_seconds": 1465.50965,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:50:27.377111",
+      "iteration": 25,
+      "elapsed_seconds": 1529.003043,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:51:30.831118",
+      "iteration": 26,
+      "elapsed_seconds": 1592.45705,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:52:34.124321",
+      "iteration": 27,
+      "elapsed_seconds": 1655.750253,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:53:37.454135",
+      "iteration": 28,
+      "elapsed_seconds": 1719.080067,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T00:54:40.910659",
+      "iteration": 29,
+      "elapsed_seconds": 1782.536591,
+      "results": {
+        "BTCUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "ETHUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "SOLUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "DOGEUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        },
+        "1000SHIBUSDT": {
+          "fallback_momentum": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          },
+          "fallback_trend": {
+            "signal": "SHORT",
+            "confidence": 0.7
+          },
+          "fallback_volatility": {
+            "signal": "SHORT",
+            "confidence": 0.8
+          },
+          "fallback_mean_reversion": {
+            "signal": "HOLD",
+            "confidence": 0.5
+          }
+        }
+      }
+    }
+  ]
+}

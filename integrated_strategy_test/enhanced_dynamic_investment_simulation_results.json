@@ -1,0 +1,371 @@
+{
+  "simulation_metadata": {
+    "initial_capital": 500.0,
+    "final_capital": 500.4695404601246,
+    "total_pnl": 1.9578387062826081,
+    "pnl_percent": 0.39156774125652166,
+    "start_time": "2026-04-03T12:42:34.422716",
+    "end_time": "2026-04-03T13:08:02.505063",
+    "total_rounds": 6,
+    "invested_symbols": 8,
+    "max_symbols": 8,
+    "total_replacements": 2,
+    "replacement_threshold": -1.0,
+    "min_replacement_interval": 8,
+    "max_replacements_per_hour": 4,
+    "volatility_threshold": 3.0,
+    "final_market_regime": "NORMAL"
+  },
+  "individual_performance": [
+    {
+      "symbol": "SYNUSDT",
+      "initial_investment": 62.5,
+      "final_investment": 63.76617296561117,
+      "pnl": 1.2661729656111689,
+      "pnl_percent": 2.0258767449778703,
+      "rank": 4,
+      "bullish_score": 82.21024875487694
+    },
+    {
+      "symbol": "XNYUSDT",
+      "initial_investment": 62.5,
+      "final_investment": 63.10716454159078,
+      "pnl": 0.6071645415907767,
+      "pnl_percent": 0.9714632665452426,
+      "rank": 3,
+      "bullish_score": 82.59316561821444
+    },
+    {
+      "symbol": "SAFEUSDT",
+      "initial_investment": 62.5,
+      "final_investment": 62.95537340619308,
+      "pnl": 0.45537340619308253,
+      "pnl_percent": 0.728597449908932,
+      "rank": 1,
+      "bullish_score": 89.22327732724197
+    },
+    {
+      "symbol": "METUSDT",
+      "initial_investment": 62.5,
+      "final_investment": 62.92040358744394,
+      "pnl": 0.4204035874439427,
+      "pnl_percent": 0.6726457399103083,
+      "rank": 7,
+      "bullish_score": 73.26796102057517
+    },
+    {
+      "symbol": "FILUSDT",
+      "initial_investment": 62.5,
+      "final_investment": 62.876052948255115,
+      "pnl": 0.3760529482551149,
+      "pnl_percent": 0.6016847172081838,
+      "rank": 8,
+      "bullish_score": 72.42968210988856
+    },
+    {
+      "symbol": "ALGOUSDT",
+      "initial_investment": 62.5,
+      "final_investment": 62.77340332458443,
+      "pnl": 0.27340332458442873,
+      "pnl_percent": 0.437445319335086,
+      "rank": 2,
+      "bullish_score": 84.2713464637376
+    },
+    {
+      "symbol": "PYTHUSDT",
+      "initial_investment": 62.5,
+      "final_investment": 62.623670541676965,
+      "pnl": 0.12367054167696523,
+      "pnl_percent": 0.19787286668314438,
+      "rank": 6,
+      "bullish_score": 76.58118765522367
+    },
+    {
+      "symbol": "KERNELUSDT",
+      "initial_investment": 61.01170175384203,
+      "final_investment": 59.44729914476916,
+      "pnl": -1.5644026090728715,
+      "pnl_percent": -2.564102564102562,
+      "rank": 5,
+      "bullish_score": 78.43085636986825
+    }
+  ],
+  "replacement_history": [
+    {
+      "timestamp": "2026-04-03T12:52:45.567168",
+      "old_symbol": "KERNELUSDT",
+      "new_symbol": "LIGHTUSDT",
+      "old_performance": -1.3675213675213627,
+      "new_bullish_score": 70.6513463495324,
+      "transferred_amount": 61.64529914529915,
+      "market_regime": "NORMAL",
+      "replacement_threshold": -1.0
+    },
+    {
+      "timestamp": "2026-04-03T13:02:56.893974",
+      "old_symbol": "LIGHTUSDT",
+      "new_symbol": "KERNELUSDT",
+      "old_performance": -1.0278113663845063,
+      "new_bullish_score": 78.43085636986825,
+      "transferred_amount": 61.01170175384203,
+      "market_regime": "NORMAL",
+      "replacement_threshold": -1.0
+    }
+  ],
+  "performance_history": [
+    {
+      "timestamp": "2026-04-03T12:42:34.422716",
+      "total_value": 500.13957181701113,
+      "total_pnl": 0.13957181701113086,
+      "pnl_percent": 0.02791436340222617,
+      "market_regime": "NORMAL",
+      "individual_performance": {
+        "SAFEUSDT": {
+          "pnl": -0.05692167577412732,
+          "pnl_percent": -0.09107468123860371
+        },
+        "ALGOUSDT": {
+          "pnl": 7.105427357601002e-15,
+          "pnl_percent": 1.1368683772161604e-14
+        },
+        "XNYUSDT": {
+          "pnl": 0.13914187411455003,
+          "pnl_percent": 0.22262699858328008
+        },
+        "SYNUSDT": {
+          "pnl": 0.010640108954717675,
+          "pnl_percent": 0.01702417432754828
+        },
+        "KERNELUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        },
+        "PYTHUSDT": {
+          "pnl": -7.105427357601002e-15,
+          "pnl_percent": -1.1368683772161604e-14
+        },
+        "METUSDT": {
+          "pnl": 0.046711509715990474,
+          "pnl_percent": 0.07473841554558476
+        },
+        "FILUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T12:47:39.976295",
+      "total_value": 499.82267282645796,
+      "total_pnl": -0.17732717354207495,
+      "pnl_percent": -0.03546543470841498,
+      "market_regime": "NORMAL",
+      "individual_performance": {
+        "SAFEUSDT": {
+          "pnl": -0.11384335154826886,
+          "pnl_percent": -0.18214936247723018
+        },
+        "ALGOUSDT": {
+          "pnl": 0.05468066491689427,
+          "pnl_percent": 0.08748906386703084
+        },
+        "XNYUSDT": {
+          "pnl": -0.17708965796397536,
+          "pnl_percent": -0.28334345274236056
+        },
+        "SYNUSDT": {
+          "pnl": -0.117041198501866,
+          "pnl_percent": -0.1872659176029856
+        },
+        "KERNELUSDT": {
+          "pnl": -0.26709401709401703,
+          "pnl_percent": -0.4273504273504272
+        },
+        "PYTHUSDT": {
+          "pnl": 0.07729408854810771,
+          "pnl_percent": 0.12367054167697233
+        },
+        "METUSDT": {
+          "pnl": 0.14013452914797853,
+          "pnl_percent": 0.22421524663676565
+        },
+        "FILUSDT": {
+          "pnl": 0.2256317689530718,
+          "pnl_percent": 0.3610108303249149
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T12:52:45.558403",
+      "total_value": 499.4665575914262,
+      "total_pnl": -0.533442408573805,
+      "pnl_percent": -0.10668848171476099,
+      "market_regime": "NORMAL",
+      "individual_performance": {
+        "SAFEUSDT": {
+          "pnl": -0.05692167577412732,
+          "pnl_percent": -0.09107468123860371
+        },
+        "ALGOUSDT": {
+          "pnl": 0.27340332458442873,
+          "pnl_percent": 0.437445319335086
+        },
+        "XNYUSDT": {
+          "pnl": -0.518619712608789,
+          "pnl_percent": -0.8297915401740624
+        },
+        "SYNUSDT": {
+          "pnl": -0.03192032686414592,
+          "pnl_percent": -0.05107252298263347
+        },
+        "KERNELUSDT": {
+          "pnl": -0.8547008547008517,
+          "pnl_percent": -1.3675213675213627
+        },
+        "PYTHUSDT": {
+          "pnl": 0.13912935938658677,
+          "pnl_percent": 0.22260697501853885
+        },
+        "METUSDT": {
+          "pnl": 0.14013452914797853,
+          "pnl_percent": 0.22421524663676565
+        },
+        "FILUSDT": {
+          "pnl": 0.3760529482551149,
+          "pnl_percent": 0.6016847172081838
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T12:57:51.263245",
+      "total_value": 498.34469457545754,
+      "total_pnl": -0.8006045698416315,
+      "pnl_percent": -0.1601209139683263,
+      "market_regime": "NORMAL",
+      "individual_performance": {
+        "SAFEUSDT": {
+          "pnl": 0.1707650273224104,
+          "pnl_percent": 0.2732240437158566
+        },
+        "ALGOUSDT": {
+          "pnl": 7.105427357601002e-15,
+          "pnl_percent": 1.1368683772161604e-14
+        },
+        "XNYUSDT": {
+          "pnl": -0.6324630641570508,
+          "pnl_percent": -1.0119409026512811
+        },
+        "SYNUSDT": {
+          "pnl": -0.08512087163772719,
+          "pnl_percent": -0.1361933946203635
+        },
+        "PYTHUSDT": {
+          "pnl": -0.15458817709622252,
+          "pnl_percent": -0.24734108335395605
+        },
+        "METUSDT": {
+          "pnl": 0.23355754857997368,
+          "pnl_percent": 0.3736920777279579
+        },
+        "FILUSDT": {
+          "pnl": 0.30084235860409336,
+          "pnl_percent": 0.48134777376654936
+        },
+        "LIGHTUSDT": {
+          "pnl": -0.6335973914571156,
+          "pnl_percent": -1.0278113663845063
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T13:02:56.886626",
+      "total_value": 499.7871447152052,
+      "total_pnl": 0.6418455699060601,
+      "pnl_percent": 0.12836911398121204,
+      "market_regime": "NORMAL",
+      "individual_performance": {
+        "SAFEUSDT": {
+          "pnl": 0.34153005464480657,
+          "pnl_percent": 0.5464480874316905
+        },
+        "ALGOUSDT": {
+          "pnl": -0.1640419947506473,
+          "pnl_percent": -0.2624671916010357
+        },
+        "XNYUSDT": {
+          "pnl": -0.45537340619308253,
+          "pnl_percent": -0.728597449908932
+        },
+        "SYNUSDT": {
+          "pnl": 1.2129724208375947,
+          "pnl_percent": 1.9407558733401515
+        },
+        "PYTHUSDT": {
+          "pnl": -0.06183527083848617,
+          "pnl_percent": -0.09893643334157787
+        },
+        "METUSDT": {
+          "pnl": 0.32698056801196174,
+          "pnl_percent": 0.5231689088191388
+        },
+        "FILUSDT": {
+          "pnl": 0.07521058965102867,
+          "pnl_percent": 0.12033694344164586
+        },
+        "LIGHTUSDT": {
+          "pnl": -0.6335973914571156,
+          "pnl_percent": -1.0278113663845063
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-03T13:08:02.505063",
+      "total_value": 500.4695404601246,
+      "total_pnl": 1.9578387062826081,
+      "pnl_percent": 0.39156774125652166,
+      "market_regime": "NORMAL",
+      "individual_performance": {
+        "SAFEUSDT": {
+          "pnl": 0.45537340619308253,
+          "pnl_percent": 0.728597449908932
+        },
+        "ALGOUSDT": {
+          "pnl": 0.27340332458442873,
+          "pnl_percent": 0.437445319335086
+        },
+        "XNYUSDT": {
+          "pnl": 0.6071645415907767,
+          "pnl_percent": 0.9714632665452426
+        },
+        "SYNUSDT": {
+          "pnl": 1.2661729656111689,
+          "pnl_percent": 2.0258767449778703
+        },
+        "PYTHUSDT": {
+          "pnl": 0.12367054167696523,
+          "pnl_percent": 0.19787286668314438
+        },
+        "METUSDT": {
+          "pnl": 0.4204035874439427,
+          "pnl_percent": 0.6726457399103083
+        },
+        "FILUSDT": {
+          "pnl": 0.3760529482551149,
+          "pnl_percent": 0.6016847172081838
+        },
+        "KERNELUSDT": {
+          "pnl": -1.5644026090728715,
+          "pnl_percent": -2.564102564102562
+        }
+      }
+    }
+  ],
+  "market_regime_history": [
+    "NORMAL",
+    "NORMAL",
+    "NORMAL",
+    "NORMAL",
+    "NORMAL",
+    "NORMAL"
+  ]
+}
