@@ -1,0 +1,235 @@
+{
+  "simulation_metadata": {
+    "initial_capital": 1000.0,
+    "final_capital": 99.21402985074626,
+    "total_pnl": -0.7459701492537363,
+    "pnl_percent": -0.07459701492537363,
+    "total_fees_paid": 0.04,
+    "net_pnl": -0.7859701492537363,
+    "net_pnl_percent": -0.07859701492537363,
+    "start_time": "2026-04-04T14:47:34.533733",
+    "end_time": "2026-04-04T15:12:38.898290",
+    "total_rounds": 6,
+    "invested_symbols": 1,
+    "max_symbols": 8,
+    "total_replacements": 0,
+    "replacement_threshold": -0.8,
+    "trading_fee": 0.0004,
+    "take_profit_threshold": 5.0,
+    "stop_loss_threshold": -3.0,
+    "dynamic_take_profit": true,
+    "dynamic_stop_loss": true,
+    "final_market_regime": "HIGH_VOLATILITY",
+    "final_strategy": "balanced",
+    "min_replacement_interval": 15,
+    "max_replacements_per_hour": 2,
+    "max_replacements_per_day": 20,
+    "profitability_threshold": 80.0,
+    "market_state_changes": 1
+  },
+  "individual_performance": [
+    {
+      "symbol": "KERNELUSDT",
+      "initial_investment": 100.0,
+      "net_investment": 99.96,
+      "final_investment": 99.21402985074626,
+      "pnl": -0.7459701492537363,
+      "pnl_percent": -0.746268656716423,
+      "rank": 1,
+      "bullish_score": 86.20171069991432,
+      "fees_paid": 0.04,
+      "take_profit": 3.75,
+      "stop_loss": -3.75,
+      "profit_potential": 84.36568427996573
+    }
+  ],
+  "replacement_history": [],
+  "performance_history": [
+    {
+      "timestamp": "2026-04-04T14:47:34.533733",
+      "total_value": 99.96,
+      "total_pnl": 0.0,
+      "pnl_percent": 0.0,
+      "market_regime": "HIGH_VOLATILITY",
+      "strategy": "balanced",
+      "total_fees_paid": 0.04,
+      "net_pnl": -0.04,
+      "net_pnl_percent": -0.004,
+      "individual_performance": {
+        "KERNELUSDT": {
+          "pnl": 0.0,
+          "pnl_percent": 0.0,
+          "take_profit": 3.75,
+          "stop_loss": -3.75,
+          "should_close": false,
+          "close_reason": "HIGH_POTENTIAL_CONTINUE"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-04T14:52:35.214549",
+      "total_value": 99.46268656716417,
+      "total_pnl": -0.4973134328358242,
+      "pnl_percent": -0.04973134328358241,
+      "market_regime": "HIGH_VOLATILITY",
+      "strategy": "balanced",
+      "total_fees_paid": 0.04,
+      "net_pnl": -0.5373134328358242,
+      "net_pnl_percent": -0.05373134328358242,
+      "individual_performance": {
+        "KERNELUSDT": {
+          "pnl": -0.4973134328358242,
+          "pnl_percent": -0.49751243781094856,
+          "take_profit": 3.75,
+          "stop_loss": -3.75,
+          "should_close": false,
+          "close_reason": "HIGH_POTENTIAL_CONTINUE"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-04T14:57:36.921281",
+      "total_value": 99.29691542288556,
+      "total_pnl": -0.6630845771144322,
+      "pnl_percent": -0.06630845771144322,
+      "market_regime": "HIGH_VOLATILITY",
+      "strategy": "balanced",
+      "total_fees_paid": 0.04,
+      "net_pnl": -0.7030845771144323,
+      "net_pnl_percent": -0.07030845771144323,
+      "individual_performance": {
+        "KERNELUSDT": {
+          "pnl": -0.6630845771144322,
+          "pnl_percent": -0.6633499170812648,
+          "take_profit": 3.75,
+          "stop_loss": -3.75,
+          "should_close": false,
+          "close_reason": "HIGH_POTENTIAL_CONTINUE"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-04T15:02:37.571494",
+      "total_value": 100.20865671641789,
+      "total_pnl": 0.24865671641789788,
+      "pnl_percent": 0.024865671641789787,
+      "market_regime": "HIGH_VOLATILITY",
+      "strategy": "balanced",
+      "total_fees_paid": 0.04,
+      "net_pnl": 0.20865671641789788,
+      "net_pnl_percent": 0.020865671641789787,
+      "individual_performance": {
+        "KERNELUSDT": {
+          "pnl": 0.24865671641789788,
+          "pnl_percent": 0.2487562189054601,
+          "take_profit": 3.75,
+          "stop_loss": -3.75,
+          "should_close": false,
+          "close_reason": "HIGH_POTENTIAL_CONTINUE"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-04T15:07:38.237531",
+      "total_value": 100.3744278606965,
+      "total_pnl": 0.41442786069650595,
+      "pnl_percent": 0.04144278606965059,
+      "market_regime": "HIGH_VOLATILITY",
+      "strategy": "balanced",
+      "total_fees_paid": 0.04,
+      "net_pnl": 0.37442786069650597,
+      "net_pnl_percent": 0.037442786069650597,
+      "individual_performance": {
+        "KERNELUSDT": {
+          "pnl": 0.41442786069650595,
+          "pnl_percent": 0.4145936981757763,
+          "take_profit": 3.75,
+          "stop_loss": -3.75,
+          "should_close": false,
+          "close_reason": "HIGH_POTENTIAL_CONTINUE"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-04T15:12:38.898290",
+      "total_value": 99.21402985074626,
+      "total_pnl": -0.7459701492537363,
+      "pnl_percent": -0.07459701492537363,
+      "market_regime": "HIGH_VOLATILITY",
+      "strategy": "balanced",
+      "total_fees_paid": 0.04,
+      "net_pnl": -0.7859701492537363,
+      "net_pnl_percent": -0.07859701492537363,
+      "individual_performance": {
+        "KERNELUSDT": {
+          "pnl": -0.7459701492537363,
+          "pnl_percent": -0.746268656716423,
+          "take_profit": 3.75,
+          "stop_loss": -3.75,
+          "should_close": false,
+          "close_reason": "HIGH_POTENTIAL_CONTINUE"
+        }
+      }
+    }
+  ],
+  "market_regime_history": [
+    "HIGH_VOLATILITY",
+    "HIGH_VOLATILITY",
+    "HIGH_VOLATILITY",
+    "HIGH_VOLATILITY",
+    "HIGH_VOLATILITY",
+    "HIGH_VOLATILITY"
+  ],
+  "strategy_history": [
+    "balanced",
+    "balanced",
+    "balanced",
+    "balanced",
+    "balanced",
+    "balanced"
+  ],
+  "market_state_history": [
+    {
+      "timestamp": "2026-04-04T14:47:34.212978",
+      "regime": "HIGH_VOLATILITY",
+      "volatility": 2.781225193370913,
+      "price_change": 11.357340720221613,
+      "volume_change": 42.00426021757318
+    },
+    {
+      "timestamp": "2026-04-04T14:52:34.871939",
+      "regime": "HIGH_VOLATILITY",
+      "volatility": 2.754086753025324,
+      "price_change": 11.634349030470915,
+      "volume_change": 47.72134552920235
+    },
+    {
+      "timestamp": "2026-04-04T14:57:36.598441",
+      "regime": "HIGH_VOLATILITY",
+      "volatility": 2.8376370722655886,
+      "price_change": 10.803324099722994,
+      "volume_change": 63.36991270437892
+    },
+    {
+      "timestamp": "2026-04-04T15:02:37.255461",
+      "regime": "HIGH_VOLATILITY",
+      "volatility": 2.880535207706865,
+      "price_change": 12.014787430683917,
+      "volume_change": -85.3378810993728
+    },
+    {
+      "timestamp": "2026-04-04T15:07:37.923513",
+      "regime": "HIGH_VOLATILITY",
+      "volatility": 2.8817529203052543,
+      "price_change": 12.107208872458411,
+      "volume_change": -48.922156919374466
+    },
+    {
+      "timestamp": "2026-04-04T15:12:38.583904",
+      "regime": "HIGH_VOLATILITY",
+      "volatility": 2.8754026034645257,
+      "price_change": 11.367837338262468,
+      "volume_change": -43.78745470702378
+    }
+  ]
+}
