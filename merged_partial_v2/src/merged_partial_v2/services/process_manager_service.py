@@ -8,6 +8,7 @@ import signal
 import subprocess
 import sys
 import threading
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -17,6 +18,7 @@ from merged_partial_v2.pathing import install_root as resolve_install_root
 
 _AUTONOMOUS_THREAD: threading.Thread | None = None
 _AUTONOMOUS_STOP_EVENT: threading.Event | None = None
+_THREAD_LOCK = threading.Lock()
 
 
 def _runtime_dir() -> Path:
@@ -44,7 +46,8 @@ def _is_pid_running(pid: int) -> bool:
 
 
 def _thread_is_running() -> bool:
-    return _AUTONOMOUS_THREAD is not None and _AUTONOMOUS_THREAD.is_alive()
+    with _THREAD_LOCK:
+        return _AUTONOMOUS_THREAD is not None and _AUTONOMOUS_THREAD.is_alive()
 
 
 def load_process_record() -> dict[str, Any]:
@@ -166,24 +169,33 @@ def start_autonomous_process(
         }
 
     global _AUTONOMOUS_THREAD, _AUTONOMOUS_STOP_EVENT
-    command = _launcher_command(
-        live=live,
-        adopt_active_positions=adopt_active_positions,
-        interval_seconds=interval_seconds,
-    )
-    _AUTONOMOUS_STOP_EVENT = threading.Event()
-    _AUTONOMOUS_THREAD = threading.Thread(
-        target=_run_autonomous_loop_in_background,
-        kwargs={
-            "stop_event": _AUTONOMOUS_STOP_EVENT,
-            "live": live,
-            "adopt_active_positions": adopt_active_positions,
-            "interval_seconds": interval_seconds,
-        },
-        name="merged_partial_v2_autonomous_loop",
-        daemon=True,
-    )
-    _AUTONOMOUS_THREAD.start()
+    with _THREAD_LOCK:
+        if _AUTONOMOUS_THREAD is not None and _AUTONOMOUS_THREAD.is_alive():
+            return {
+                "ok": False,
+                "started": False,
+                "reason": "autonomous_process_already_running",
+                "status": status,
+            }
+        
+        command = _launcher_command(
+            live=live,
+            adopt_active_positions=adopt_active_positions,
+            interval_seconds=interval_seconds,
+        )
+        _AUTONOMOUS_STOP_EVENT = threading.Event()
+        _AUTONOMOUS_THREAD = threading.Thread(
+            target=_run_autonomous_loop_in_background,
+            kwargs={
+                "stop_event": _AUTONOMOUS_STOP_EVENT,
+                "live": live,
+                "adopt_active_positions": adopt_active_positions,
+                "interval_seconds": interval_seconds,
+            },
+            name="merged_partial_v2_autonomous_loop",
+            daemon=True,
+        )
+        _AUTONOMOUS_THREAD.start()
     record = {
         "pid": os.getpid(),
         "mode": "autonomous_loop",
@@ -218,12 +230,13 @@ def stop_autonomous_process() -> dict[str, Any]:
     pid = int(status.get("pid", 0) or 0)
     if pid == os.getpid() and _thread_is_running():
         global _AUTONOMOUS_THREAD, _AUTONOMOUS_STOP_EVENT
-        if _AUTONOMOUS_STOP_EVENT is not None:
-            _AUTONOMOUS_STOP_EVENT.set()
-        if _AUTONOMOUS_THREAD is not None:
-            _AUTONOMOUS_THREAD.join(timeout=10.0)
-        _AUTONOMOUS_THREAD = None
-        _AUTONOMOUS_STOP_EVENT = None
+        with _THREAD_LOCK:
+            if _AUTONOMOUS_STOP_EVENT is not None:
+                _AUTONOMOUS_STOP_EVENT.set()
+            if _AUTONOMOUS_THREAD is not None:
+                _AUTONOMOUS_THREAD.join(timeout=10.0)
+            _AUTONOMOUS_THREAD = None
+            _AUTONOMOUS_STOP_EVENT = None
         clear_process_record()
         return {
             "ok": True,
@@ -236,6 +249,28 @@ def stop_autonomous_process() -> dict[str, Any]:
             os.kill(pid, signal.SIGTERM)
         else:
             os.kill(pid, signal.SIGTERM)
+        
+        # 프로세스가 실제로 종료될 때까지 대기 (최대 5초)
+        max_wait_time = 5.0
+        wait_interval = 0.1
+        elapsed_time = 0.0
+        
+        while elapsed_time < max_wait_time:
+            if not _is_pid_running(pid):
+                break
+            time.sleep(wait_interval)
+            elapsed_time += wait_interval
+        
+        # 여전히 실행 중이면 강제 종료
+        if _is_pid_running(pid):
+            try:
+                if os.name == "nt":
+                    os.kill(pid, signal.SIGKILL)
+                else:
+                    os.kill(pid, signal.SIGKILL)
+            except OSError:
+                pass  # 이미 종료되었을 수 있음
+                
     except OSError as exc:
         return {
             "ok": False,
@@ -338,5 +373,6 @@ def _run_autonomous_loop_in_background(
             pass
     finally:
         global _AUTONOMOUS_THREAD, _AUTONOMOUS_STOP_EVENT
-        _AUTONOMOUS_THREAD = None
-        _AUTONOMOUS_STOP_EVENT = None
+        with _THREAD_LOCK:
+            _AUTONOMOUS_THREAD = None
+            _AUTONOMOUS_STOP_EVENT = None

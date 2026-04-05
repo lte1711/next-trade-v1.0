@@ -69,6 +69,49 @@ def _persist_execution_report(payload: dict) -> dict:
     return report_payload
 
 
+def _validate_autonomous_start_payload(payload: dict) -> tuple[bool, str]:
+    """자동매매 시작 페이로드 검증"""
+    if not isinstance(payload, dict):
+        return False, "payload must be a dictionary"
+    
+    adopt_active_positions = payload.get("adopt_active_positions")
+    if adopt_active_positions is not None and not isinstance(adopt_active_positions, bool):
+        return False, "adopt_active_positions must be a boolean"
+    
+    interval_seconds = payload.get("interval_seconds")
+    if interval_seconds is not None:
+        try:
+            interval = float(interval_seconds)
+            if interval < 1.0 or interval > 3600.0:  # 1초에서 1시간 사이
+                return False, "interval_seconds must be between 1.0 and 3600.0"
+        except (ValueError, TypeError):
+            return False, "interval_seconds must be a valid number"
+    
+    return True, ""
+
+def _validate_health_check_payload(payload: dict) -> tuple[bool, str]:
+    """헬스체크 페이로드 검증"""
+    if not isinstance(payload, dict):
+        return False, "payload must be a dictionary"
+    
+    symbol = payload.get("symbol")
+    if not symbol or not isinstance(symbol, str):
+        return False, "symbol is required and must be a string"
+    
+    side = payload.get("side")
+    if side not in ["BUY", "SELL"]:
+        return False, "side must be either 'BUY' or 'SELL'"
+    
+    quantity = payload.get("quantity")
+    try:
+        qty = float(quantity or 0.001)
+        if qty <= 0 or qty > 1000:  # 합리적인 수량 범위
+            return False, "quantity must be between 0 and 1000"
+    except (ValueError, TypeError):
+        return False, "quantity must be a valid number"
+    
+    return True, ""
+
 def _read_json_body(handler: BaseHTTPRequestHandler) -> dict:
     length = int(handler.headers.get("Content-Length", "0") or 0)
     if length <= 0:
@@ -76,7 +119,10 @@ def _read_json_body(handler: BaseHTTPRequestHandler) -> dict:
     raw = handler.rfile.read(length)
     if not raw:
         return {}
-    return json.loads(raw.decode("utf-8"))
+    try:
+        return json.loads(raw.decode("utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Invalid JSON: {exc}")
 
 
 def build_dashboard_payload() -> dict:
@@ -366,6 +412,15 @@ class DashboardHandler(BaseHTTPRequestHandler):
         try:
             if parsed.path in {"/api/autonomous/start", "/api/autonomous/start-live"}:
                 payload = _read_json_body(self)
+                is_valid, error_msg = _validate_autonomous_start_payload(payload)
+                if not is_valid:
+                    self._send_json({
+                        "ok": False,
+                        "reason": "invalid_payload",
+                        "error": error_msg,
+                    }, status=400)
+                    return
+                
                 result = start_autonomous_process(
                     live=True,
                     adopt_active_positions=bool(payload.get("adopt_active_positions", True)),
@@ -379,6 +434,15 @@ class DashboardHandler(BaseHTTPRequestHandler):
                 return
             if parsed.path == "/api/actions/health-check":
                 payload = _read_json_body(self)
+                is_valid, error_msg = _validate_health_check_payload(payload)
+                if not is_valid:
+                    self._send_json({
+                        "ok": False,
+                        "reason": "invalid_payload",
+                        "error": error_msg,
+                    }, status=400)
+                    return
+                
                 engine = _build_engine()
                 symbol = str(payload.get("symbol", "BTCUSDT"))
                 side = str(payload.get("side", "BUY"))
@@ -447,12 +511,32 @@ class DashboardHandler(BaseHTTPRequestHandler):
                 self._send_json(build_dashboard_payload())
                 return
             self._send_not_found(method="POST", path=parsed.path)
+        except ValueError as exc:
+            self._send_json(
+                {
+                    "ok": False,
+                    "error": "invalid_json",
+                    "reason": str(exc),
+                    "path": parsed.path,
+                },
+                status=400,
+            )
+        except (OSError, IOError) as exc:
+            self._send_json(
+                {
+                    "ok": False,
+                    "error": "io_error",
+                    "reason": str(exc),
+                    "path": parsed.path,
+                },
+                status=500,
+            )
         except Exception as exc:  # pragma: no cover - defensive runtime guard
             self._send_json(
                 {
                     "ok": False,
                     "error": "dashboard_post_failed",
-                    "reason": str(exc),
+                    "reason": f"Unexpected error: {type(exc).__name__}: {exc}",
                     "path": parsed.path,
                 },
                 status=500,

@@ -5,6 +5,22 @@ from __future__ import annotations
 from datetime import datetime, timezone, timedelta
 from typing import Any, Dict, List
 
+from merged_partial_v2.pathing import merged_root
+import json
+
+
+def _load_risk_config() -> Dict[str, Any]:
+    """위험 관리 설정 로드"""
+    try:
+        config_path = merged_root() / "config.json"
+        if config_path.exists():
+            with config_path.open("r", encoding="utf-8") as handle:
+                config = json.load(handle)
+                return config.get("risk_limits", {})
+    except Exception:
+        pass
+    return {}
+
 
 class RiskGateService:
     """Centralize high-level gate checks before creating new entry recommendations."""
@@ -15,8 +31,11 @@ class RiskGateService:
         "invalid_side",
         "invalid_quantity",
     }
-    FAILURE_BLOCK_WINDOW_SECONDS = 900
-    DAILY_LOSS_RESET_HOUR = 0  # 자정 기준
+    
+    def __init__(self):
+        self.risk_config = _load_risk_config()
+        self.FAILURE_BLOCK_WINDOW_SECONDS = int(self.risk_config.get("failure_block_window_seconds", 900))
+        self.DAILY_LOSS_RESET_HOUR = int(self.risk_config.get("daily_loss_reset_hour", 0))
 
     def evaluate(
         self,

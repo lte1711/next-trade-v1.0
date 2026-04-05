@@ -30,6 +30,14 @@ class LeverageManagementService:
                                 symbol_volatility: float,
                                 market_regime: str) -> Dict[str, Any]:
         """Calculate optimal leverage based on market conditions."""
+        # 입력 검증
+        if account_balance < 0:
+            raise ValueError("account_balance cannot be negative")
+        if symbol_volatility < 0:
+            raise ValueError("symbol_volatility cannot be negative")
+        if not isinstance(market_regime, str) or not market_regime.strip():
+            raise ValueError("market_regime must be a non-empty string")
+        
         default_leverage = float(self.leverage_config.get("default_leverage", 3))
         max_leverage = float(self.leverage_config.get("max_leverage", 10))
         adjustment_threshold = float(self.leverage_config.get("leverage_adjustment_threshold", 15.0))
@@ -63,6 +71,14 @@ class LeverageManagementService:
                                    leverage: int,
                                    symbol: str) -> Dict[str, Any]:
         """Calculate maximum position size based on margin and leverage."""
+        # 입력 검증
+        if account_balance < 0:
+            raise ValueError("account_balance cannot be negative")
+        if leverage <= 0:
+            raise ValueError("leverage must be positive")
+        if not isinstance(symbol, str) or not symbol.strip():
+            raise ValueError("symbol must be a non-empty string")
+        
         position_size_factor = float(self.leverage_config.get("position_size_limit_factor", 0.8))
         max_margin_utilization = float(self.margin_config.get("max_margin_utilization_percent", 80.0)) / 100
         
@@ -152,6 +168,16 @@ class LeverageManagementService:
                               leverage: int,
                               symbol: str) -> Dict[str, Any]:
         """Validate if requested position size is within limits."""
+        # 입력 검증
+        if requested_size <= 0:
+            raise ValueError("requested_size must be positive")
+        if account_balance < 0:
+            raise ValueError("account_balance cannot be negative")
+        if leverage <= 0:
+            raise ValueError("leverage must be positive")
+        if not isinstance(symbol, str) or not symbol.strip():
+            raise ValueError("symbol must be a non-empty string")
+        
         limits = self.calculate_position_size_limit(account_balance, leverage, symbol)
         max_size = limits["max_position_value"]
         

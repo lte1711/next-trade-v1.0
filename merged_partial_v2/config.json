@@ -50,7 +50,9 @@
     "daily_loss_limit_percent": 5.0,
     "max_consecutive_failures": 3,
     "max_total_exposure_percent": 95.0,
-    "max_position_size_percent": 20.0
+    "max_position_size_percent": 20.0,
+    "failure_block_window_seconds": 900,
+    "daily_loss_reset_hour": 0
   },
   "leverage_management": {
     "default_leverage": 3,
