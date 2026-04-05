@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-04-06T05:16:47.559302",
+  "positions": {},
+  "trades": {
+    "KOMAUSDT": {
+      "buy_qty": 459090.0,
+      "sell_qty": 459090.0,
+      "buy_amount": 4597.46067,
+      "sell_amount": 4558.53714,
+      "trades": [
+        {
+          "side": "BUY",
+          "qty": 228129.0,
+          "price": 0.01013,
+          "time": 

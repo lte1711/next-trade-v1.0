@@ -1,10 +1,10 @@
 {
-  "mode": "execute_top_recommendation",
-  "dry_run": false,
+  "mode": "paper_decision",
+  "dry_run": true,
   "executed": false,
   "paper_decision": {
     "profile_name": "remote_risk_reference",
-    "market_regime": "NORMAL",
+    "market_regime": "HIGH_VOLATILITY",
     "wallet_balance": 0.0,
     "account_equity": 0.0,
     "current_invested_notional": 0.0,
@@ -18,7 +18,7 @@
     "risk_gate": {
       "ok": false,
       "block_new_entries": true,
-      "market_regime": "NORMAL",
+      "market_regime": "HIGH_VOLATILITY",
       "reason_count": 3,
       "reasons": [
         {
@@ -57,7 +57,7 @@
         "daily_pnl_percent": 0.0,
         "consecutive_failures": 0,
         "total_exposure_percent": 0.0,
-        "max_position_size_percent": 20.0
+        "max_position_size_percent": 16.0
       },
       "decision_line": "risk gate blocked 3 condition(s)"
     },
@@ -65,6 +65,8 @@
     "blocked": [],
     "decision_line": "paper-decision recommends 0 order(s) | wallet $0.00 | invested $0.00 | target invest $0.00 | active positions 0 | blocked 0"
   },
-  "reason": "No executable recommendation is available.",
-  "alert_summary": "waiting or no action | mode=execute_top_recommendation | profile=remote_risk_reference | reason=No executable recommendation is available."
+  "market_regime": "HIGH_VOLATILITY",
+  "profile_name": "remote_risk_reference",
+  "reason": "paper-decision recommends 0 order(s) | wallet $0.00 | invested $0.00 | target invest $0.00 | active positions 0 | blocked 0",
+  "alert_summary": "waiting or no action | mode=paper_decision | profile=remote_risk_reference | reason=paper-decision recommends 0 order(s) | wallet $0.00 | invested $0.00 | target invest $0.00 | active positions 0 | blocked 0"
 }

@@ -1,0 +1,49 @@
+{
+  "start_time": "2026-04-06T04:49:43.296944",
+  "end_time": "2026-04-07T04:49:43.296944",
+  "current_time": null,
+  "elapsed_seconds": 0,
+  "progress_percentage": 0,
+  "strategy_performance": {
+    "bull_momentum_1": {
+      "current_capital": 1792.2036870939999,
+      "total_pnl": 0.0,
+      "return_rate": 0.0,
+      "leverage": 35.0,
+      "trades_count": 1,
+      "strategy_type": "bull_momentum",
+      "market_bias": "bullish"
+    },
+    "bear_momentum_1": {
+      "current_capital": 1792.2036870939999,
+      "total_pnl": 0.0,
+      "return_rate": 0.0,
+      "leverage": 35.0,
+      "trades_count": 2,
+      "strategy_type": "bear_momentum",
+      "market_bias": "bearish"
+    }
+  },
+  "market_data": {
+    "BTCUSDT": 67277.8,
+    "ETHUSDT": 2057.69,
+    "SOLUSDT": 79.56,
+    "DOGEUSDT": 0.09031,
+    "ADAUSDT": 0.2429,
+    "MATICUSDT": 0.9520705982275965,
+    "AVAXUSDT": 8.826,
+    "DOTUSDT": 1.222,
+    "LINKUSDT": 8.598,
+    "LTCUSDT": 53.38
+  },
+  "total_pnl": 0,
+  "total_trades": 0,
+  "winning_trades": 0,
+  "losing_trades": 0,
+  "real_orders": [],
+  "balance_history": [],
+  "initial_capital": 8961.01843547,
+  "current_capital": 8961.01843547,
+  "active_positions": {},
+  "market_regime": "SIDEWAYS_MARKET"
+}

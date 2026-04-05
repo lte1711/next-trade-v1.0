@@ -1,0 +1,112 @@
+{
+  "start_time": "2026-04-06T04:56:29.699013",
+  "end_time": "2026-04-07T04:56:29.699013",
+  "current_time": null,
+  "elapsed_seconds": 0,
+  "progress_percentage": 0,
+  "strategy_performance": {
+    "bull_momentum_1": {
+      "current_capital": 1792.2036870939999,
+      "total_pnl": 0.0,
+      "return_rate": 0.0,
+      "leverage": 35.0,
+      "trades_count": 1,
+      "strategy_type": "bull_momentum",
+      "market_bias": "bullish"
+    },
+    "bear_momentum_1": {
+      "current_capital": 1792.2036870939999,
+      "total_pnl": 0.0,
+      "return_rate": 0.0,
+      "leverage": 35.0,
+      "trades_count": 2,
+      "strategy_type": "bear_momentum",
+      "market_bias": "bearish"
+    },
+    "volatility_scalp_2": {
+      "current_capital": 1792.2036870939999,
+      "total_pnl": 0.0,
+      "return_rate": 0.0,
+      "leverage": 25.0,
+      "trades_count": 2,
+      "strategy_type": "volatility_scalping",
+      "market_bias": "neutral"
+    },
+    "trend_follow_1": {
+      "current_capital": 1792.2036870939999,
+      "total_pnl": 0.0,
+      "return_rate": 0.0,
+      "leverage": 20.0,
+      "trades_count": 2,
+      "strategy_type": "trend_following",
+      "market_bias": "adaptive"
+    },
+    "mean_reversion_1": {
+      "current_capital": 1792.2036870939999,
+      "total_pnl": 0.0,
+      "return_rate": 0.0,
+      "leverage": 15.0,
+      "trades_count": 2,
+      "strategy_type": "mean_reversion",
+      "market_bias": "counter_trend"
+    }
+  },
+  "market_data": {
+    "BTCUSDT": 67290.5,
+    "ETHUSDT": 2059.24,
+    "SOLUSDT": 79.64,
+    "DOGEUSDT": 0.09037,
+    "ADAUSDT": 0.2432,
+    "MATICUSDT": 0.9478816544844594,
+    "AVAXUSDT": 8.835,
+    "DOTUSDT": 1.223,
+    "LINKUSDT": 8.607,
+    "LTCUSDT": 53.42
+  },
+  "total_pnl": 0.0,
+  "total_trades": 2,
+  "winning_trades": 0,
+  "losing_trades": 2,
+  "real_orders": [
+    {
+      "strategy": "mean_reversion_1",
+      "symbol": "LTCUSDT",
+      "side": "BUY",
+      "quantity": 7.54859284,
+      "price": 53.42,
+      "timestamp": "2026-04-06T04:56:33.961806",
+      "status": "FAILED",
+      "order_id": "FAILED_1775418993_4867",
+      "pnl": 0,
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "mean_reversion_1",
+      "symbol": "LTCUSDT",
+      "side": "BUY",
+      "quantity": 7.54859284,
+      "price": 53.42,
+      "timestamp": "2026-04-06T04:56:34.711077",
+      "status": "FAILED",
+      "order_id": "FAILED_1775418994_7851",
+      "pnl": 0,
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    }
+  ],
+  "balance_history": [
+    {
+      "timestamp": "2026-04-06T04:56:34.711077",
+      "total_balance": 8961.01843547,
+      "total_pnl": 0.0,
+      "market_regime": "SIDEWAYS_MARKET"
+    }
+  ],
+  "initial_capital": 8961.01843547,
+  "current_capital": 8961.01843547,
+  "active_positions": {},
+  "market_regime": "SIDEWAYS_MARKET"
+}

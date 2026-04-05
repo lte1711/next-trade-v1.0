@@ -1,0 +1,56 @@
+{
+  "start_time": "2026-04-06T05:20:31.108390",
+  "end_time": "2026-04-07T05:20:31.108390",
+  "strategy_performance": {},
+  "market_data": {
+    "BTCUSDT": 67352.4,
+    "ETHUSDT": 2062.78,
+    "BCHUSDT": 424.02,
+    "XRPUSDT": 1.3005,
+    "LTCUSDT": 53.47,
+    "TRXUSDT": 0.31885,
+    "ETCUSDT": 8.601,
+    "LINKUSDT": 8.624,
+    "XLMUSDT": 0.15851,
+    "ADAUSDT": 0.2433
+  },
+  "total_pnl": -0.05571424000117986,
+  "total_trades": 1,
+  "winning_trades": 0,
+  "losing_trades": 1,
+  "real_orders": [
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "XLMUSDT",
+      "side": "SELL",
+      "quantity": 3392.0,
+      "price": "0.00",
+      "order_id": 341872069,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:21:14.431910",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    }
+  ],
+  "balance_history": [
+    {
+      "timestamp": "2026-04-06T05:20:37.396247",
+      "total_balance": 8952.69960899,
+      "total_pnl": 0.10567009999977017,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-06T05:21:15.809065",
+      "total_balance": 8952.53822465,
+      "total_pnl": -0.05571424000117986,
+      "market_regime": "SIDEWAYS_MARKET"
+    }
+  ],
+  "initial_capital": 8952.59393889,
+  "current_capital": 8952.53822465,
+  "active_positions": {},
+  "market_regime": "SIDEWAYS_MARKET",
+  "sync_status": "SYNCED"
+}

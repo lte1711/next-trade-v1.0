@@ -1,8 +1,8 @@
 {
   "environment": "testnet",
   "exchange_base_url": "https://testnet.binance.vision",
-  "market_type": "spot",
-  "api_base_path": "/api/v3",
+  "market_type": "futures",
+  "api_base_path": "/fapi/v1",
   "recv_window_ms": 5000,
   "default_symbol_count": 5,
   "credential_envs": {
@@ -22,17 +22,17 @@
   "binance_testnet": {
     "api_key": "QBE4BQIwpF2BN7vEJQ0ra6ecR17Ww6D0jT50ztN29wJmeAULNBnN7XxZSVCjeM6t",
     "api_secret": "ugzdDcFdgxja7NaSLIhIEHOiMRyFI4D13VT2UAyolOdPFROn5hUYiLADhCcTYU4B",
-    "base_url": "https://testnet.binance.vision"
+    "base_url": "https://testnet.binancefuture.com"
   },
   "binance_testnet_trading": {
     "api_key": "H3pI3942gDedzZbWFkPfMhEh0UCpuHbC6gE6bVaY1UbbaJ7KcR5rXMiQ5LU3EpJO",
     "api_secret": "iMeKHVSZfCVoAMIXxar4yrpsaNlz8Hcwu3iEeLeCF7TrfqJdvdLPKZ5suOrp8l7E",
-    "base_url": "https://testnet.binance.vision"
+    "base_url": "https://testnet.binancefuture.com"
   },
   "binance_testnet_account": {
     "api_key": "tyc0Nz8Trhl8zRG74u1i3gNLFFAzqVQK6mcOtviDD47Z9TpYBPE7qAILBtGCdlCg",
     "api_secret": "jTuqPonQabOq6Xx19sEWiYsl07Te9L4YsY4j7gJQZ2Lcom0vDxttBuqgK4YME7NI",
-    "base_url": "https://testnet.binance.vision"
+    "base_url": "https://testnet.binancefuture.com"
   },
   "profile_selection": {
     "default_profile_name": "v3_remote_default_capital_preserver",

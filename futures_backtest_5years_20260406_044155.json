@@ -1,0 +1,16 @@
+{
+  "start_time": "2026-04-06T04:41:47.808100",
+  "end_time": "2026-04-06T04:41:55.568398",
+  "total_capital": 8961.01843547,
+  "strategy_performance": {
+    "bull_momentum_1": {
+      "capital": 41310.294987516696,
+      "trades": [
+        {
+          "strategy": "bull_momentum_1",
+          "symbol": "ETHUSDT",
+          "side": "BUY",
+          "quantity": 0.39648393764108747,
+          "entry_price": 3164.17,
+          "exit_price": 3830.95,
+          "entry_time": 
