@@ -1,0 +1,7 @@
+{
+  "exchange_base_url": "https://demo-fapi.binance.com",
+  "api_key_env": "BINANCE_TESTNET_KEY_PLACEHOLDER",
+  "api_secret_env": "BINANCE_TESTNET_SECRET_PLACEHOLDER",
+  "recv_window_ms": 5000,
+  "default_symbol_count": 10
+}
