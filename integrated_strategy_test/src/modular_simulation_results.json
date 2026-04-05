@@ -1,0 +1,120 @@
+{
+  "simulation_metadata": {
+    "simulation_start_time": "2026-04-04T21:19:52.196057",
+    "simulation_end_time": "2026-04-04T21:53:49.410963",
+    "duration_minutes": 33.953581766666666,
+    "total_rounds": 6,
+    "initial_capital": 1000.0,
+    "final_capital": 993.2150091738681,
+    "cash_balance": 595.0146037612877,
+    "total_pnl": -1.6395945874195803,
+    "pnl_percent": -0.16395945874195803,
+    "total_fees_paid": 0.3980530627296069,
+    "net_pnl": -2.037647650149187,
+    "net_pnl_percent": -0.20376476501491872,
+    "invested_symbols": 2,
+    "max_symbols": 10,
+    "final_market_regime": "EXTREME",
+    "replacement_threshold": -0.8
+  },
+  "individual_performance": [
+    {
+      "symbol": "AKEUSDT",
+      "initial_investment": 100.0,
+      "net_investment": 99.96,
+      "final_investment": 100.38044164037855,
+      "pnl": 0.4204416403785558,
+      "pnl_percent": 0.42060988433228874,
+      "rank": 1,
+      "bullish_score": 80.0,
+      "fees_paid": 0.04,
+      "profit_potential": 72.0
+    },
+    {
+      "symbol": "DUSDT",
+      "initial_investment": 100.0,
+      "net_investment": 99.96,
+      "final_investment": 100.164,
+      "pnl": 0.20400000000000773,
+      "pnl_percent": 0.20408163265306897,
+      "rank": 1,
+      "bullish_score": 70.0,
+      "fees_paid": 0.04,
+      "profit_potential": 73.0
+    }
+  ],
+  "performance_history": [
+    {
+      "timestamp": "2026-04-04T21:20:30.260379",
+      "total_value": 999.9053770491803,
+      "cash_balance": 900.0,
+      "invested_value": 99.90537704918032,
+      "total_pnl": -0.054622950819677385,
+      "pnl_percent": -0.005462295081967739,
+      "total_fees_paid": 0.04,
+      "net_pnl": -0.09462295081967739,
+      "net_pnl_percent": -0.009462295081967739,
+      "invested_symbols": 1
+    },
+    {
+      "timestamp": "2026-04-04T21:26:01.607482",
+      "total_value": 996.2013816919434,
+      "cash_balance": 600.0,
+      "invested_value": 396.20138169194337,
+      "total_pnl": -3.6386183080566497,
+      "pnl_percent": -0.363861830805665,
+      "total_fees_paid": 0.16,
+      "net_pnl": -3.79861830805665,
+      "net_pnl_percent": -0.379861830805665,
+      "invested_symbols": 4
+    },
+    {
+      "timestamp": "2026-04-04T21:31:34.885120",
+      "total_value": 995.6163951347817,
+      "cash_balance": 795.9974794721311,
+      "invested_value": 199.61891566265058,
+      "total_pnl": -0.3010843373493941,
+      "pnl_percent": -0.03010843373493941,
+      "total_fees_paid": 0.23843036393442624,
+      "net_pnl": -0.5395147012838204,
+      "net_pnl_percent": -0.053951470128382036,
+      "invested_symbols": 2
+    },
+    {
+      "timestamp": "2026-04-04T21:37:12.779344",
+      "total_value": 996.0051258116475,
+      "cash_balance": 595.9974794721311,
+      "invested_value": 400.0076463395165,
+      "total_pnl": 0.16764633951650865,
+      "pnl_percent": 0.016764633951650867,
+      "total_fees_paid": 0.3184303639344262,
+      "net_pnl": -0.15078402441791755,
+      "net_pnl_percent": -0.015078402441791755,
+      "invested_symbols": 4
+    },
+    {
+      "timestamp": "2026-04-04T21:42:42.807578",
+      "total_value": 997.3517117164413,
+      "cash_balance": 695.0146037612877,
+      "invested_value": 302.3371079551535,
+      "total_pnl": 2.4571079551535036,
+      "pnl_percent": 0.24571079551535036,
+      "total_fees_paid": 0.3580530627296069,
+      "net_pnl": 2.0990548924238968,
+      "net_pnl_percent": 0.2099054892423897,
+      "invested_symbols": 3
+    },
+    {
+      "timestamp": "2026-04-04T21:48:21.470837",
+      "total_value": 993.2150091738681,
+      "cash_balance": 595.0146037612877,
+      "invested_value": 398.2004054125804,
+      "total_pnl": -1.6395945874195803,
+      "pnl_percent": -0.16395945874195803,
+      "total_fees_paid": 0.3980530627296069,
+      "net_pnl": -2.037647650149187,
+      "net_pnl_percent": -0.20376476501491872,
+      "invested_symbols": 4
+    }
+  ]
+}
