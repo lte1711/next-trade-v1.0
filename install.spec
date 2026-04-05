@@ -2,10 +2,10 @@
 
 
 a = Analysis(
-    ['C:\\next-trade-ver1.0\\merged_partial_v2\\installer_assets\\install_from_package.py'],
+    ['merged_partial_v2\\installer_assets\\install_from_package.py'],
     pathex=[],
     binaries=[],
-    datas=[('C:\\next-trade-ver1.0\\merged_partial_v2\\release\\portable', 'package_payload')],
+    datas=[('merged_partial_v2\\release\\portable', 'package_payload')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

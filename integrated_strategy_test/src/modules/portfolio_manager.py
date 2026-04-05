@@ -31,31 +31,27 @@ class PortfolioManager:
         self.recent_replacements: List[Dict[str, Any]] = []
 
     def allocate_capital_fixed_amount(self, selected_symbols: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Allocate a fixed amount per selected symbol."""
-        print("FACT: fixed-amount capital allocation started ($100 per symbol)")
+        """Allocate all available cash across the selected symbols."""
+        print("FACT: dynamic capital allocation started (full cash utilization)")
 
-        fixed_amount = 100.0
         allocations: Dict[str, Any] = {}
+        symbol_count = len(selected_symbols)
+        if symbol_count <= 0 or self.cash_balance <= 0:
+            return allocations
+
+        per_symbol_amount = self.cash_balance / symbol_count
 
         for symbol_data in selected_symbols:
             symbol = symbol_data["symbol"]
-            required_amount = (len(allocations) + 1) * fixed_amount
-            if required_amount > self.cash_balance:
-                print(
-                    f"  capital limit reached: next allocation would require ${required_amount:.2f}, "
-                    f"available cash is ${self.cash_balance:.2f}"
-                )
-                break
-
             allocations[symbol] = {
-                "allocation": fixed_amount,
-                "percentage": (fixed_amount / self.initial_capital) * 100,
+                "allocation": per_symbol_amount,
+                "percentage": (per_symbol_amount / self.initial_capital) * 100,
                 "symbol_data": symbol_data,
                 "profit_potential": symbol_data.get("profit_potential", 0.0),
-                "fixed_amount": True,
+                "fixed_amount": False,
             }
 
-        used_capital = len(allocations) * fixed_amount
+        used_capital = sum(item["allocation"] for item in allocations.values())
         print(f"  allocated ${used_capital:.2f} across {len(allocations)} symbols")
         print(f"  remaining cash after allocation plan: ${self.cash_balance - used_capital:.2f}")
         return allocations
@@ -174,11 +170,14 @@ class PortfolioManager:
             "replacement_history": self.replacement_history,
         }
 
-    def add_investment(self, symbol: str, symbol_data: Dict[str, Any], amount: float = 100.0) -> bool:
+    def add_investment(self, symbol: str, symbol_data: Dict[str, Any], amount: float | None = None) -> bool:
         """Add a new position if cash is available and cooldown allows it."""
         if symbol in self.investments:
             print(f"  {symbol} is already in the portfolio")
             return False
+
+        if amount is None:
+            amount = self.cash_balance
 
         if amount > self.cash_balance:
             print(f"  insufficient cash for {symbol}: need ${amount:.2f}, have ${self.cash_balance:.2f}")

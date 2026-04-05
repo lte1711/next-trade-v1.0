@@ -161,16 +161,18 @@ class ModularTradingSimulator:
 
         if available_symbols:
             open_slots = max(self.symbol_count - len(self.portfolio_manager.investments), 0)
-            affordable_slots = int(self.portfolio_manager.cash_balance // 100.0)
+            affordable_slots = open_slots if self.portfolio_manager.cash_balance > 0 else 0
             max_new_symbols = min(len(available_symbols), open_slots, affordable_slots)
             new_symbols = available_symbols[:max_new_symbols]
 
-            for symbol_data in new_symbols:
+            for index, symbol_data in enumerate(new_symbols, start=1):
+                remaining_slots = max(max_new_symbols - index + 1, 1)
+                dynamic_amount = self.portfolio_manager.cash_balance / remaining_slots
                 added = self._run_quietly(
                     self.portfolio_manager.add_investment,
                     symbol_data["symbol"],
                     symbol_data,
-                    amount=100.0,
+                    amount=dynamic_amount,
                 )
                 if added:
                     rebalancing_made = True

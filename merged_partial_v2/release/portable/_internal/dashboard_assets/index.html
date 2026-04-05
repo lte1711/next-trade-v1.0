@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Merged Partial V2 Dashboard</title>
+  <title>Merged Partial V2 운영 관리창</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -11,70 +11,72 @@
     <header class="hero">
       <div class="hero-copy">
         <p class="eyebrow">Merged Partial V2</p>
-        <h1>Operations Dashboard</h1>
-        <p class="subtitle">Monitor status, start or stop autonomous trading, run health checks, execute the top recommendation, and close all active positions.</p>
+        <h1>운영 관리창</h1>
+        <p class="subtitle">자동매매 상태, 시장 판정, 자금 현황, 자동 진입과 청산 결과를 관리창 기준으로 확인합니다.</p>
       </div>
       <div class="hero-side">
         <section class="mode-panel">
-          <p class="mode-label">Execution Mode</p>
-          <label class="toggle-row">
-            <input id="liveModeToggle" type="checkbox">
-            <span id="liveModeText">Dry Run</span>
-          </label>
-          <p class="mode-hint">Dry run previews orders without sending them. Live mode sends real testnet orders.</p>
+          <p class="mode-label">실행 모드</p>
+          <div class="toggle-row">
+            <span id="liveModeText" class="pill danger">라이브 전용</span>
+          </div>
+          <p class="mode-hint">드라이 런은 제거되었습니다. 자동매매 시작, 헬스체크, 전체 청산은 모두 라이브 주문 기준으로만 동작합니다.</p>
         </section>
         <div class="actions">
-        <button id="refreshBtn">Refresh</button>
-        <button id="startDryBtn">Start Dry</button>
-        <button id="startLiveBtn" class="danger">Start Live</button>
-        <button id="stopBtn">Stop Auto</button>
-        <button id="healthBtn">Health Check</button>
-        <button id="execTopBtn">Execute Top</button>
-        <button id="closeAllBtn" class="danger">Stop and Close All</button>
+          <button id="refreshBtn">새로고침</button>
+          <button id="startLiveBtn" class="danger">라이브 시작</button>
+          <button id="stopBtn">자동 중지</button>
+          <button id="healthBtn">헬스체크</button>
+          <button id="closeAllBtn" class="danger">전체 청산 및 중지</button>
         </div>
       </div>
     </header>
 
+    <section class="card">
+      <h2>진행 상태</h2>
+      <div id="progressStatus"></div>
+    </section>
+
     <section class="grid top-grid">
       <article class="card">
-        <h2>Runtime</h2>
+        <h2>실행 상태</h2>
         <div id="processStatus"></div>
       </article>
       <article class="card">
-        <h2>Market</h2>
+        <h2>시장 상태</h2>
         <div id="operationalSummary"></div>
       </article>
       <article class="card">
-        <h2>Last Action</h2>
+        <h2>최근 실행</h2>
         <div id="lastExecution"></div>
       </article>
       <article class="card">
-        <h2>Auto Cycle</h2>
+        <h2>자동매매 사이클</h2>
         <div id="lastAutonomous"></div>
       </article>
     </section>
 
     <section class="grid">
       <article class="card">
-        <h2>Account Snapshot</h2>
+        <h2>자금 요약</h2>
         <div id="accountSummary"></div>
       </article>
       <article class="card">
-        <h2>Decision Status</h2>
+        <h2>의사결정 상태</h2>
         <div id="paperDecision"></div>
       </article>
     </section>
 
     <section class="grid">
       <article class="card">
-        <h2>Top Recommendation</h2>
+        <h2>최우선 추천</h2>
         <div id="topRecommendation"></div>
       </article>
       <article class="card">
-        <h2>Action Result</h2>
+        <h2>실행 결과</h2>
         <div id="actionResultSummary"></div>
         <details class="details-block">
-          <summary>Raw action payload</summary>
+          <summary>원본 실행 데이터</summary>
           <pre id="actionResult" class="mono scroll small-scroll"></pre>
         </details>
       </article>
@@ -82,21 +84,21 @@
 
     <section class="grid">
       <article class="card wide">
-        <h2>Active Positions</h2>
+        <h2>투자 종목</h2>
         <div id="activePositions"></div>
       </article>
       <article class="card wide">
-        <h2>Risk Gate</h2>
+        <h2>리스크 게이트</h2>
         <div id="riskGateSummary"></div>
         <details class="details-block">
-          <summary>Raw risk gate payload</summary>
+          <summary>원본 리스크 데이터</summary>
           <pre id="riskGate" class="mono scroll"></pre>
         </details>
       </article>
     </section>
 
     <section class="card">
-      <h2>Status Message</h2>
+      <h2>상태 메시지</h2>
       <div id="messageBox" class="message"></div>
     </section>
   </main>

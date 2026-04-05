@@ -71,7 +71,16 @@ class MergedPartialStrategyEngine:
         """Build a merged market snapshot without changing original code paths."""
         top_symbols = self.public_read_client.get_top_quote_volume_symbols(limit=limit)
         market_regime = self.symbol_selection_service.analyze_market_regime(top_symbols[:20])
-        evaluated_symbols = self.market_scoring_service.evaluate_symbols(top_symbols)
+        evaluation_universe_limit = int(self.profile.get("live_evaluation_universe_limit", 40) or 40)
+        evaluation_universe = sorted(
+            top_symbols,
+            key=lambda item: (
+                float(item.get("quote_volume", item.get("quoteVolume", 0.0)) or 0.0),
+                float(item.get("volume", 0.0) or 0.0),
+            ),
+            reverse=True,
+        )[: max(evaluation_universe_limit, 0)]
+        evaluated_symbols = self.market_scoring_service.evaluate_symbols(evaluation_universe)
         profitable_symbols = self.symbol_selection_service.filter_profitable_symbols(evaluated_symbols, market_regime)
         selected_symbols = self.symbol_selection_service.select_symbols(
             profitable_symbols,
@@ -83,6 +92,8 @@ class MergedPartialStrategyEngine:
             "profile_benchmark": self.profile_switcher_service.get_benchmark_metrics(self.profile["name"]),
             "market_regime": market_regime,
             "top_symbols": top_symbols,
+            "evaluation_universe": evaluation_universe,
+            "evaluation_universe_limit": evaluation_universe_limit,
             "evaluated_symbols": evaluated_symbols,
             "profitable_symbols": profitable_symbols,
             "selected_symbols": selected_symbols,

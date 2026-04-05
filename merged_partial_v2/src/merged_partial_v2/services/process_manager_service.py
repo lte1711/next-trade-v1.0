@@ -7,11 +7,16 @@ import os
 import signal
 import subprocess
 import sys
+import threading
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 from merged_partial_v2.pathing import install_root as resolve_install_root
+
+
+_AUTONOMOUS_THREAD: threading.Thread | None = None
+_AUTONOMOUS_STOP_EVENT: threading.Event | None = None
 
 
 def _runtime_dir() -> Path:
@@ -38,6 +43,10 @@ def _is_pid_running(pid: int) -> bool:
     return True
 
 
+def _thread_is_running() -> bool:
+    return _AUTONOMOUS_THREAD is not None and _AUTONOMOUS_THREAD.is_alive()
+
+
 def load_process_record() -> dict[str, Any]:
     path = process_record_path()
     if not path.exists():
@@ -62,6 +71,27 @@ def clear_process_record() -> None:
         path.unlink()
 
 
+def update_process_record(pid: int, **updates: Any) -> dict[str, Any]:
+    record = load_process_record()
+    if not record.get("ok"):
+        return {"ok": False, "reason": record.get("reason"), "path": record.get("path")}
+
+    record_pid = int(record.get("pid", 0) or 0)
+    if record_pid != int(pid):
+        return {
+            "ok": False,
+            "reason": "pid_mismatch",
+            "path": record.get("path"),
+            "record_pid": record_pid,
+            "requested_pid": int(pid),
+        }
+
+    record.update(updates)
+    write_process_record({k: v for k, v in record.items() if k not in {"ok", "path"}})
+    record["ok"] = True
+    return record
+
+
 def get_process_status() -> dict[str, Any]:
     record = load_process_record()
     if not record.get("ok"):
@@ -73,7 +103,7 @@ def get_process_status() -> dict[str, Any]:
         }
 
     pid = int(record.get("pid", 0) or 0)
-    running = _is_pid_running(pid)
+    running = _thread_is_running() if pid == os.getpid() else _is_pid_running(pid)
     return {
         "ok": True,
         "running": running,
@@ -82,6 +112,10 @@ def get_process_status() -> dict[str, Any]:
         "live": record.get("live"),
         "adopt_active_positions": record.get("adopt_active_positions"),
         "started_at": record.get("started_at"),
+        "last_heartbeat_at": record.get("last_heartbeat_at"),
+        "last_cycle_at": record.get("last_cycle_at"),
+        "stopped_at": record.get("stopped_at"),
+        "exit_reason": record.get("exit_reason"),
         "command": record.get("command"),
         "path": record.get("path"),
     }
@@ -96,14 +130,13 @@ def _launcher_command(
     args = [
         "--autonomous-loop",
         "--autonomous-cycles",
-        "1000000",
+        "0",
         "--autonomous-interval-seconds",
         str(max(interval_seconds, 1.0)),
     ]
     if adopt_active_positions:
         args.append("--adopt-active-positions")
-    if live:
-        args.append("--live")
+    args.append("--live")
 
     if getattr(sys, "frozen", False):
         return [str(Path(sys.executable).resolve()), *args]
@@ -127,38 +160,41 @@ def start_autonomous_process(
             "status": status,
         }
 
+    global _AUTONOMOUS_THREAD, _AUTONOMOUS_STOP_EVENT
     command = _launcher_command(
-        live=live,
+        live=True,
         adopt_active_positions=adopt_active_positions,
         interval_seconds=interval_seconds,
     )
-    creationflags = 0
-    if os.name == "nt":
-        creationflags = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS  # type: ignore[attr-defined]
-
-    process = subprocess.Popen(  # noqa: S603
-        command,
-        cwd=str(resolve_install_root()),
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-        stdin=subprocess.DEVNULL,
-        creationflags=creationflags,
-        close_fds=True,
+    _AUTONOMOUS_STOP_EVENT = threading.Event()
+    _AUTONOMOUS_THREAD = threading.Thread(
+        target=_run_autonomous_loop_in_background,
+        kwargs={
+            "stop_event": _AUTONOMOUS_STOP_EVENT,
+            "live": True,
+            "adopt_active_positions": adopt_active_positions,
+            "interval_seconds": interval_seconds,
+        },
+        name="merged_partial_v2_autonomous_loop",
+        daemon=True,
     )
+    _AUTONOMOUS_THREAD.start()
     record = {
-        "pid": process.pid,
+        "pid": os.getpid(),
         "mode": "autonomous_loop",
-        "live": live,
+        "live": True,
         "adopt_active_positions": adopt_active_positions,
         "interval_seconds": interval_seconds,
         "command": command,
         "started_at": _utc_now(),
+        "last_heartbeat_at": _utc_now(),
+        "host": "dashboard_thread",
     }
     write_process_record(record)
     return {
         "ok": True,
         "started": True,
-        "pid": process.pid,
+        "pid": os.getpid(),
         "record": record,
     }
 
@@ -175,6 +211,21 @@ def stop_autonomous_process() -> dict[str, Any]:
         }
 
     pid = int(status.get("pid", 0) or 0)
+    if pid == os.getpid() and _thread_is_running():
+        global _AUTONOMOUS_THREAD, _AUTONOMOUS_STOP_EVENT
+        if _AUTONOMOUS_STOP_EVENT is not None:
+            _AUTONOMOUS_STOP_EVENT.set()
+        if _AUTONOMOUS_THREAD is not None:
+            _AUTONOMOUS_THREAD.join(timeout=10.0)
+        _AUTONOMOUS_THREAD = None
+        _AUTONOMOUS_STOP_EVENT = None
+        clear_process_record()
+        return {
+            "ok": True,
+            "stopped": True,
+            "pid": pid,
+            "stopped_at": _utc_now(),
+        }
     try:
         if os.name == "nt":
             os.kill(pid, signal.SIGTERM)
@@ -196,3 +247,91 @@ def stop_autonomous_process() -> dict[str, Any]:
         "pid": pid,
         "stopped_at": _utc_now(),
     }
+
+
+def heartbeat_autonomous_process(pid: int, *, last_cycle_at: str | None = None) -> dict[str, Any]:
+    updates: dict[str, Any] = {"last_heartbeat_at": _utc_now()}
+    if last_cycle_at:
+        updates["last_cycle_at"] = last_cycle_at
+    return update_process_record(pid, **updates)
+
+
+def finalize_autonomous_process(
+    pid: int,
+    *,
+    exit_reason: str,
+    stopped_at: str | None = None,
+    clear_if_current: bool = True,
+) -> dict[str, Any]:
+    status = get_process_status()
+    if int(status.get("pid", 0) or 0) != int(pid):
+        return {
+            "ok": False,
+            "reason": "pid_mismatch",
+            "status": status,
+            "requested_pid": int(pid),
+        }
+
+    payload = update_process_record(
+        pid,
+        exit_reason=exit_reason,
+        stopped_at=stopped_at or _utc_now(),
+        last_heartbeat_at=_utc_now(),
+    )
+    if clear_if_current:
+        clear_process_record()
+    return payload
+
+
+def _run_autonomous_loop_in_background(
+    *,
+    stop_event: threading.Event,
+    live: bool,
+    adopt_active_positions: bool,
+    interval_seconds: float,
+) -> None:
+    try:
+        from run_merged_partial_v2 import _build_autonomous_service, _build_engine, _write_crash_log
+        from merged_partial_v2.main import build_snapshot_payload, write_snapshot_payload
+
+        engine, config, _, _ = _build_engine()
+        service = _build_autonomous_service(engine, config)
+        cycle_index = 0
+        while not stop_event.is_set():
+            try:
+                try:
+                    write_snapshot_payload(build_snapshot_payload())
+                except Exception:
+                    pass
+                report = service.run_cycle(
+                    dry_run=False,
+                    adopt_existing_positions=adopt_active_positions if cycle_index == 0 else False,
+                )
+                try:
+                    write_snapshot_payload(build_snapshot_payload())
+                except Exception:
+                    pass
+                heartbeat_autonomous_process(os.getpid(), last_cycle_at=report.get("ts"))
+            except Exception as exc:  # noqa: BLE001
+                report = service.write_loop_error_report(
+                    error=exc,
+                    dry_run=False,
+                    cycle_index=cycle_index,
+                    retry_sleep_seconds=max(interval_seconds, 0.0),
+                )
+                heartbeat_autonomous_process(os.getpid(), last_cycle_at=report.get("ts"))
+                _write_crash_log(exc)
+            cycle_index += 1
+            if stop_event.wait(max(interval_seconds, 0.0)):
+                break
+    except Exception as exc:  # noqa: BLE001
+        try:
+            from run_merged_partial_v2 import _write_crash_log
+
+            _write_crash_log(exc)
+        except Exception:
+            pass
+    finally:
+        global _AUTONOMOUS_THREAD, _AUTONOMOUS_STOP_EVENT
+        _AUTONOMOUS_THREAD = None
+        _AUTONOMOUS_STOP_EVENT = None

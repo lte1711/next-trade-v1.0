@@ -45,7 +45,7 @@ exe = EXE(
     strip=False,
     upx=True,
     version=str(merged_root / "version_info_v1.txt"),
-    console=True,
+    console=False,
 )
 coll = COLLECT(
     exe,

@@ -20,9 +20,9 @@ class SymbolSelectionService:
                 "HIGH_VOLATILITY": 9.0,
             },
             "max_symbols_by_regime": {
-                "EXTREME": 1,
-                "HIGH_VOLATILITY": 1,
-                "NORMAL": 1,
+                "EXTREME": 5,
+                "HIGH_VOLATILITY": 5,
+                "NORMAL": 5,
             },
             "profit_potential_offset": 16.0,
         }
@@ -46,21 +46,33 @@ class SymbolSelectionService:
         evaluated_symbols: List[Dict[str, Any]],
         market_regime: str,
     ) -> List[Dict[str, Any]]:
-        """Keep symbols whose bullish score and profit potential clear the regime threshold."""
-        threshold = self.profile.get("entry_thresholds", {}).get(market_regime, 72.0)
-        potential_floor = threshold - self.profile.get("profit_potential_offset", 16.0)
+        """Keep symbols whose rise-rate clears the configured live-entry floor."""
+        threshold = float(self.profile.get("entry_thresholds", {}).get(market_regime, 72.0) or 72.0)
+        rise_rate_floor = float(self.profile.get("live_rise_rate_floor", 80.0) or 80.0)
         profitable = [
             item
             for item in evaluated_symbols
-            if item.get("bullish_score", 0.0) >= threshold and item.get("profit_potential", 0.0) >= potential_floor
+            if item.get("bullish_score", 0.0) >= threshold and item.get("profit_potential", 0.0) >= rise_rate_floor
         ]
-        profitable.sort(key=lambda item: item["profit_potential"], reverse=True)
+        profitable.sort(
+            key=lambda item: (
+                float(item.get("quote_volume", item.get("quoteVolume", 0.0)) or 0.0),
+                float(item.get("profit_potential", 0.0) or 0.0),
+                float(item.get("bullish_score", 0.0) or 0.0),
+            ),
+            reverse=True,
+        )
         return profitable
 
     def select_symbols(self, profitable_symbols: List[Dict[str, Any]], market_regime: str, symbol_count: int) -> List[Dict[str, Any]]:
-        """Apply regime-aware symbol-count limits."""
-        max_symbols = min(
-            symbol_count,
-            self.profile.get("max_symbols_by_regime", {}).get(market_regime, symbol_count),
+        """Select the highest-volume candidates from the scanned universe."""
+        ranked = sorted(
+            profitable_symbols,
+            key=lambda item: (
+                float(item.get("quote_volume", item.get("quoteVolume", 0.0)) or 0.0),
+                float(item.get("volume", 0.0) or 0.0),
+                float(item.get("bullish_score", 0.0) or 0.0),
+            ),
+            reverse=True,
         )
-        return profitable_symbols[:max_symbols]
+        return ranked[: max(int(symbol_count or 0), 0)]

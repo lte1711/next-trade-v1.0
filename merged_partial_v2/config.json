@@ -1,7 +1,7 @@
 {
   "exchange_base_url": "https://demo-fapi.binance.com",
   "recv_window_ms": 5000,
-  "default_symbol_count": 10,
+  "default_symbol_count": 5,
   "credential_envs": {
     "public_read": {
       "api_key_env": "BINANCE_TESTNET_READONLY_API_KEY",
@@ -46,9 +46,9 @@
     }
   },
   "autonomous": {
-    "scan_limit": 80,
+    "scan_limit": 100,
     "cycle_interval_seconds": 60,
-    "max_new_orders_per_cycle": 1,
+    "max_new_orders_per_cycle": 10,
     "close_when_unselected_after_min_hold": true,
     "adopt_existing_positions_on_start": false
   },
@@ -56,7 +56,7 @@
     "autorun_when_installed": true,
     "live_by_default_when_installed": true,
     "default_mode_when_installed": "autonomous_loop",
-    "autonomous_cycles_when_installed": 100000,
+    "autonomous_cycles_when_installed": 0,
     "autonomous_interval_seconds_when_installed": 60,
     "adopt_active_positions_when_installed": true
   }

@@ -110,20 +110,24 @@ class AutonomousStateService:
         normalized = self._normalize_state(state)
         managed = dict(normalized.get("managed_positions", {}))
         symbol = str(symbol).upper()
+        existing = dict(managed.get(symbol, {}))
         position_data = self._snapshot_from_position(position_snapshot or {})
         managed[symbol] = {
+            **existing,
             "symbol": symbol,
             "managed": True,
-            "adopted": False,
-            "opened_at": self._ts(),
+            "adopted": bool(existing.get("adopted", False)),
+            "opened_at": existing.get("opened_at") or self._ts(),
             "last_seen_at": self._ts(),
-            "source": "autonomous_entry",
+            "source": existing.get("source") or "autonomous_entry",
             "order_trace_id": order_result.get("trace_id"),
             "order_final_status": order_result.get("final_status") or order_result.get("status"),
             "allocation": (recommendation or {}).get("allocation"),
             "profile_name": (recommendation or {}).get("profile_name"),
             "market_regime": (recommendation or {}).get("market_regime"),
+            "entry_action": (recommendation or {}).get("action", "new_entry"),
             "pending_exchange_sync": position_snapshot is None,
+            "dry_run_simulated": bool(order_result.get("dry_run")) and position_snapshot is not None,
             "avg_fill_price": ((order_result.get("status_check") or {}).get("avg_price") or order_result.get("avg_price")),
             "executed_qty": ((order_result.get("status_check") or {}).get("executed_qty") or order_result.get("quantity")),
             **position_data,
@@ -133,7 +137,7 @@ class AutonomousStateService:
             normalized,
             {
                 "ts": self._ts(),
-                "event": "autonomous_entry",
+                "event": "autonomous_entry" if not existing else "autonomous_scale_in",
                 "symbol": symbol,
                 "trace_id": order_result.get("trace_id"),
                 "status": order_result.get("final_status") or order_result.get("status"),
@@ -215,6 +219,8 @@ class AutonomousStateService:
         managed_row: Dict[str, Any],
         preserve_recent_entries_seconds: float,
     ) -> bool:
+        if bool(managed_row.get("dry_run_simulated")):
+            return True
         if str(managed_row.get("source", "")) != "autonomous_entry":
             return False
         opened_at = managed_row.get("opened_at")

@@ -4,8 +4,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import socket
+import subprocess
 import sys
 import time
+import traceback
 from pathlib import Path
 from typing import Any, Dict
 
@@ -24,6 +28,11 @@ from merged_partial_v2.exchange.local_binance_bridge import (  # noqa: E402
     get_recent_health_check_summary,
     get_recent_order_failure_summary,
 )
+from merged_partial_v2.services.process_manager_service import (  # noqa: E402
+    finalize_autonomous_process,
+    get_process_status,
+    heartbeat_autonomous_process,
+)
 from merged_partial_v2.services.autonomous_trading_service import AutonomousTradingService  # noqa: E402
 from merged_partial_v2.simulation.strategy_engine import MergedPartialStrategyEngine  # noqa: E402
 
@@ -32,6 +41,19 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
+
+
+def _crash_log_path() -> Path:
+    path = ROOT / "runtime" / "dashboard_crash.log"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    return path
+
+
+def _write_crash_log(exc: BaseException) -> None:
+    log_path = _crash_log_path()
+    with log_path.open("a", encoding="utf-8") as handle:
+        handle.write(f"\n=== {time.strftime('%Y-%m-%d %H:%M:%S')} ===\n")
+        traceback.print_exc(file=handle)
 
 
 def _last_execution_report_path() -> Path:
@@ -64,6 +86,43 @@ def _build_engine() -> tuple[MergedPartialStrategyEngine, Dict[str, Any], Dict[s
         prefer_aggressive=selection_config.get("prefer_aggressive", False),
     )
     return engine, config, selection_config, profile_selection
+
+
+def _is_port_open(host: str, port: int) -> bool:
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(0.5)
+    try:
+        return sock.connect_ex((host, port)) == 0
+    finally:
+        sock.close()
+
+
+def _start_background_dashboard_if_needed(config: Dict[str, Any]) -> None:
+    startup = dict(config.get("startup", {}))
+    if not bool(startup.get("dashboard_autostart_when_installed", True)):
+        return
+    dashboard_port = int(startup.get("dashboard_port_when_installed", 8787) or 8787)
+    if _is_port_open("127.0.0.1", dashboard_port):
+        return
+
+    creationflags = 0
+    if os.name == "nt":
+        creationflags = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS  # type: ignore[attr-defined]
+
+    if getattr(sys, "frozen", False):
+        command = [str(Path(sys.executable).resolve()), "--dashboard", "--dashboard-port", str(dashboard_port)]
+    else:
+        command = [sys.executable, str(ROOT / "run_merged_partial_v2.py"), "--dashboard", "--dashboard-port", str(dashboard_port)]
+
+    subprocess.Popen(  # noqa: S603
+        command,
+        cwd=str(ROOT),
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        stdin=subprocess.DEVNULL,
+        creationflags=creationflags,
+        close_fds=True,
+    )
 
 
 def _build_autonomous_service(engine: MergedPartialStrategyEngine, config: Dict[str, Any]) -> AutonomousTradingService:
@@ -560,14 +619,43 @@ def run_autonomous_loop(
 ) -> Dict[str, Any]:
     service = _build_autonomous_service(engine, config)
     last_report: Dict[str, Any] = {}
-    for index in range(max(cycles, 1)):
-        last_report = service.run_cycle(
-            dry_run=dry_run,
-            adopt_existing_positions=adopt_active_positions if index == 0 else False,
-        )
-        print(json.dumps(last_report, indent=2, ensure_ascii=False))
-        if index < max(cycles, 1) - 1:
-            time.sleep(max(interval_seconds, 0.0))
+    current_pid = os.getpid()
+    tracked_process = int(get_process_status().get("pid", 0) or 0) == current_pid
+    exit_reason = "manual_stop"
+    cycle_index = 0
+    try:
+        while True:
+            try:
+                last_report = service.run_cycle(
+                    dry_run=dry_run,
+                    adopt_existing_positions=adopt_active_positions if cycle_index == 0 else False,
+                )
+                if tracked_process:
+                    heartbeat_autonomous_process(current_pid, last_cycle_at=last_report.get("ts"))
+                print(json.dumps(last_report, indent=2, ensure_ascii=False))
+            except KeyboardInterrupt:
+                raise
+            except Exception as exc:
+                last_report = service.write_loop_error_report(
+                    error=exc,
+                    dry_run=dry_run,
+                    cycle_index=cycle_index,
+                    retry_sleep_seconds=max(interval_seconds, 0.0),
+                )
+                if tracked_process:
+                    heartbeat_autonomous_process(current_pid, last_cycle_at=last_report.get("ts"))
+                _write_crash_log(exc)
+                print(json.dumps(last_report, indent=2, ensure_ascii=False))
+            cycle_index += 1
+            if cycles > 0 and cycle_index >= cycles:
+                break
+            if max(interval_seconds, 0.0) > 0:
+                time.sleep(max(interval_seconds, 0.0))
+    except KeyboardInterrupt:
+        exit_reason = "keyboard_interrupt"
+    finally:
+        if tracked_process:
+            finalize_autonomous_process(current_pid, exit_reason=exit_reason)
     return last_report
 
 
@@ -577,9 +665,9 @@ def run_installed_startup_default(
 ) -> Dict[str, Any]:
     startup = dict(config.get("startup", {}))
     default_mode = str(startup.get("default_mode_when_installed", "autonomous_loop")).strip().lower()
-    dry_run = not bool(startup.get("live_by_default_when_installed", False))
+    dry_run = False
     adopt_active_positions = bool(startup.get("adopt_active_positions_when_installed", False))
-    cycles = int(startup.get("autonomous_cycles_when_installed", 100000) or 100000)
+    cycles = int(startup.get("autonomous_cycles_when_installed", 0) or 0)
     interval_seconds = float(startup.get("autonomous_interval_seconds_when_installed", 60.0) or 60.0)
 
     if default_mode == "autonomous_cycle":
@@ -628,12 +716,13 @@ def parse_args() -> argparse.Namespace:
 
 def cli_main() -> None:
     args = parse_args()
-    dry_run = not args.live
+    dry_run = False
     engine, config, _, _ = _build_engine()
 
     if not _has_action_args(args):
         startup = dict(config.get("startup", {}))
         if getattr(sys, "frozen", False) and bool(startup.get("autorun_when_installed", False)):
+            _start_background_dashboard_if_needed(config)
             run_installed_startup_default(engine, config)
             return
         main()
@@ -697,7 +786,7 @@ def cli_main() -> None:
             config,
             dry_run=dry_run,
             adopt_active_positions=args.adopt_active_positions,
-            cycles=max(args.autonomous_cycles, 1),
+            cycles=int(args.autonomous_cycles),
             interval_seconds=max(args.autonomous_interval_seconds, 0.0),
         )
         return
@@ -707,4 +796,8 @@ def cli_main() -> None:
 
 
 if __name__ == "__main__":
-    cli_main()
+    try:
+        cli_main()
+    except Exception as exc:  # noqa: BLE001
+        _write_crash_log(exc)
+        raise

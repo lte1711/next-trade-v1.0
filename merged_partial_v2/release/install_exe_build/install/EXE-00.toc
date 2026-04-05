@@ -179,9 +179,17 @@
    'C:\\next-trade-ver1.0\\merged_partial_v2\\release\\portable\\Launch Merged '
    'Partial V2 v1.bat',
    'DATA'),
+  ('package_payload\\Launch Merged Partial V2 v1.vbs',
+   'C:\\next-trade-ver1.0\\merged_partial_v2\\release\\portable\\Launch Merged '
+   'Partial V2 v1.vbs',
+   'DATA'),
   ('package_payload\\Open Merged Partial V2 Dashboard.bat',
    'C:\\next-trade-ver1.0\\merged_partial_v2\\release\\portable\\Open Merged '
    'Partial V2 Dashboard.bat',
+   'DATA'),
+  ('package_payload\\Open Merged Partial V2 Dashboard.vbs',
+   'C:\\next-trade-ver1.0\\merged_partial_v2\\release\\portable\\Open Merged '
+   'Partial V2 Dashboard.vbs',
    'DATA'),
   ('package_payload\\_internal\\.env.merged_partial_v2',
    'C:\\next-trade-ver1.0\\merged_partial_v2\\release\\portable\\_internal\\.env.merged_partial_v2',
@@ -251,7 +259,7 @@
  [],
  False,
  False,
- 1775383700,
+ 1775393165,
  [('run.exe',
    'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\run.exe',
    'EXECUTABLE')],

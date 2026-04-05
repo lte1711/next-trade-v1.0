@@ -6,6 +6,7 @@ import json
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from datetime import datetime
 from urllib.parse import urlparse
 
 from merged_partial_v2.main import (
@@ -27,6 +28,47 @@ def _dashboard_asset(name: str) -> Path:
     return resolve_resource(f"dashboard_assets/{name}")
 
 
+def _last_execution_report_path() -> Path:
+    path = merged_root() / "execution_reports" / "last_execution_report.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    return path
+
+
+def _write_execution_report(payload: dict) -> Path:
+    report_path = _last_execution_report_path()
+    with report_path.open("w", encoding="utf-8") as handle:
+        json.dump(payload, handle, indent=2, ensure_ascii=False)
+    return report_path
+
+
+def _build_alert_summary(payload: dict) -> str:
+    mode = payload.get("mode") or "-"
+    symbol = payload.get("symbol") or payload.get("payload", {}).get("symbol") or "-"
+    reason = payload.get("reason") or "-"
+    if payload.get("executed") is True:
+        final_status = (
+            payload.get("final_status")
+            or payload.get("result", {}).get("final_status")
+            or payload.get("result", {}).get("status")
+            or payload.get("open_final_status")
+            or "-"
+        )
+        return f"execution complete | mode={mode} | symbol={symbol} | status={final_status}"
+    if mode == "health_check_order":
+        open_status = payload.get("open_final_status") or payload.get("open_result", {}).get("final_status") or "-"
+        close_status = payload.get("close_final_status") or payload.get("close_result", {}).get("final_status") or "-"
+        return f"health-check complete | symbol={symbol} | open={open_status} | close={close_status}"
+    return f"waiting or no action | mode={mode} | reason={reason}"
+
+
+def _persist_execution_report(payload: dict) -> dict:
+    report_payload = dict(payload)
+    report_payload["alert_summary"] = _build_alert_summary(report_payload)
+    report_path = _write_execution_report(report_payload)
+    report_payload["report_path"] = str(report_path)
+    return report_payload
+
+
 def _read_json_body(handler: BaseHTTPRequestHandler) -> dict:
     length = int(handler.headers.get("Content-Length", "0") or 0)
     if length <= 0:
@@ -39,12 +81,174 @@ def _read_json_body(handler: BaseHTTPRequestHandler) -> dict:
 
 def build_dashboard_payload() -> dict:
     snapshot = build_snapshot_payload()
+    snapshot = _apply_runtime_overlay(snapshot)
     write_snapshot_payload(snapshot)
     return {
         "ok": True,
         "snapshot": snapshot,
         "autonomous_process": get_process_status(),
     }
+
+
+def _load_json_if_exists(path: Path) -> dict | None:
+    if not path.exists():
+        return None
+    with path.open("r", encoding="utf-8-sig") as handle:
+        return json.load(handle)
+
+
+def _parse_iso_ts(value: str | None) -> datetime | None:
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def _report_sort_key(payload: dict | None, path: Path) -> tuple[float, float]:
+    ts_value = None
+    if isinstance(payload, dict):
+        ts_value = payload.get("ts") or payload.get("payload", {}).get("ts")
+    parsed_ts = _parse_iso_ts(ts_value)
+    ts_key = parsed_ts.timestamp() if parsed_ts else 0.0
+    mtime_key = path.stat().st_mtime if path.exists() else 0.0
+    return ts_key, mtime_key
+
+
+def _managed_positions_from_state(state_payload: dict | None) -> list[dict]:
+    managed = dict((state_payload or {}).get("managed_positions", {}))
+    rows: list[dict] = []
+    for symbol, item in managed.items():
+        rows.append(
+            {
+                "symbol": symbol,
+                "positionAmt": item.get("position_amt"),
+                "entryPrice": item.get("entry_price"),
+                "markPrice": item.get("mark_price"),
+                "unRealizedProfit": item.get("unrealized_profit"),
+                "positionSide": item.get("position_side"),
+                "leverage": item.get("leverage"),
+                "marginType": item.get("margin_type"),
+            }
+        )
+    return rows
+
+
+def _active_notional(active_positions: list[dict]) -> float:
+    total = 0.0
+    for position in active_positions:
+        amount = abs(float(position.get("positionAmt", 0.0) or 0.0))
+        mark_price = float(position.get("markPrice", 0.0) or 0.0)
+        total += amount * mark_price
+    return total
+
+
+def _apply_runtime_overlay(snapshot: dict) -> dict:
+    report_path = merged_root() / "autonomous_reports" / "last_autonomous_report.json"
+    execution_report_path = _last_execution_report_path()
+    state_path = merged_root() / "runtime" / "autonomous_state.json"
+    last_report = _load_json_if_exists(report_path)
+    state_payload = _load_json_if_exists(state_path)
+
+    if last_report:
+      snapshot["last_autonomous_report"] = {
+          "ok": True,
+          "path": str(report_path),
+          "mode": last_report.get("mode"),
+          "dry_run": last_report.get("dry_run"),
+          "entry_count": last_report.get("entry_count"),
+          "exit_count": last_report.get("exit_count"),
+          "decision_line": last_report.get("decision_line"),
+          "payload": last_report,
+      }
+      if isinstance(last_report.get("paper_decision"), dict):
+          snapshot["paper_decision"] = last_report["paper_decision"]
+          snapshot["paper_decision_summary"] = {
+              "recommended_orders": len(last_report["paper_decision"].get("recommendations", [])),
+              "blocked_candidates": len(last_report["paper_decision"].get("blocked", [])),
+              "top_recommendation_symbol": (
+                  last_report["paper_decision"].get("recommendations", [{}])[0].get("symbol")
+                  if last_report["paper_decision"].get("recommendations")
+                  else None
+              ),
+              "decision_line": last_report["paper_decision"].get("decision_line"),
+          }
+      existing_execution = snapshot.get("last_execution_report", {})
+      should_replace_execution = not existing_execution.get("ok")
+      if not should_replace_execution:
+          autonomous_sort_key = _report_sort_key(last_report, report_path)
+          existing_payload = existing_execution.get("payload")
+          should_replace_execution = autonomous_sort_key > _report_sort_key(existing_payload, execution_report_path)
+      if should_replace_execution:
+          latest_entry = (last_report.get("entries") or [None])[0]
+          latest_exit = (last_report.get("exits") or [None])[0]
+          latest_action = latest_entry or latest_exit
+          if latest_action:
+              result_payload = latest_action.get("result") or {}
+              direction = "entry" if latest_entry else "exit"
+              symbol = latest_action.get("symbol")
+              status = (
+                  result_payload.get("final_status")
+                  or result_payload.get("status_check", {}).get("status")
+                  or result_payload.get("status")
+              )
+              summary = (
+                  f"auto {direction} | "
+                  f"symbol={symbol or '-'} | "
+                  f"status={status or '-'}"
+              )
+              snapshot["last_execution_report"] = {
+                  "ok": True,
+                  "path": str(report_path),
+                  "mode": "autonomous_cycle",
+                  "dry_run": last_report.get("dry_run"),
+                  "executed": True,
+                  "guard_passed": True,
+                  "reason": direction,
+                  "decision_line": last_report.get("decision_line"),
+                  "alert_summary": summary,
+                  "short_summary": summary,
+                  "symbol": symbol,
+                  "payload": latest_action,
+              }
+
+    if state_payload:
+        active_positions = _managed_positions_from_state(state_payload)
+        snapshot.setdefault("account", {}).setdefault("positions", {})
+        snapshot["account"]["positions"]["active_positions"] = active_positions
+        snapshot["account"]["positions"]["active_position_count"] = len(active_positions)
+        snapshot["account"]["positions"]["position_count"] = len(active_positions)
+        snapshot["account"]["positions"]["ts"] = state_payload.get("last_synced_at")
+        snapshot["account"]["positions"]["source"] = "autonomous_state"
+        current_invested_notional = _active_notional(active_positions)
+        if isinstance(snapshot.get("paper_decision"), dict):
+            snapshot["paper_decision"]["active_position_count"] = len(active_positions)
+            snapshot["paper_decision"]["current_invested_notional"] = current_invested_notional
+            target_symbol_count = int(snapshot["paper_decision"].get("target_symbol_count", 0) or 0)
+            snapshot["paper_decision"]["available_slots"] = max(target_symbol_count - len(active_positions), 0)
+        if isinstance(snapshot.get("paper_decision_summary"), dict):
+            snapshot["paper_decision_summary"]["decision_line"] = snapshot.get("paper_decision", {}).get(
+                "decision_line",
+                snapshot["paper_decision_summary"].get("decision_line"),
+            )
+
+    return snapshot
+
+
+def _snapshot_is_materialized(snapshot: dict) -> bool:
+    market = dict(snapshot.get("market") or {})
+    operational = dict(snapshot.get("operational_summary") or {})
+    account = dict((snapshot.get("account") or {}).get("account") or {})
+    return any(
+        [
+            market.get("profile"),
+            market.get("selected_symbols"),
+            operational.get("selected_profile"),
+            account.get("account_equity") is not None,
+            account.get("wallet_balance") is not None,
+        ]
+    )
 
 
 def load_cached_dashboard_payload() -> dict:
@@ -55,6 +259,33 @@ def load_cached_dashboard_payload() -> dict:
     else:
         snapshot = build_snapshot_payload()
         write_snapshot_payload(snapshot)
+    snapshot = _apply_runtime_overlay(snapshot)
+    return {
+        "ok": True,
+        "snapshot": snapshot,
+        "autonomous_process": get_process_status(),
+    }
+
+
+def load_fast_dashboard_payload() -> dict:
+    snapshot_path = merged_root() / "merged_snapshot.json"
+    snapshot: dict
+    if snapshot_path.exists():
+        with snapshot_path.open("r", encoding="utf-8-sig") as handle:
+            snapshot = json.load(handle)
+    else:
+        snapshot = {
+            "paper_decision": {"recommendations": [], "blocked": [], "risk_gate": {}},
+            "paper_decision_summary": {"recommended_orders": 0, "blocked_candidates": 0},
+            "operational_summary": {},
+            "market": {},
+            "account": {"account": {}, "positions": {"active_positions": [], "active_position_count": 0}},
+            "last_execution_report": {"ok": False, "reason": "no_execution_report"},
+            "last_autonomous_report": {"ok": False, "reason": "no_autonomous_report"},
+        }
+    if not _snapshot_is_materialized(snapshot):
+        return build_dashboard_payload()
+    snapshot = _apply_runtime_overlay(snapshot)
     return {
         "ok": True,
         "snapshot": snapshot,
@@ -67,7 +298,7 @@ def _build_engine() -> MergedPartialStrategyEngine:
     selection_config, benchmark_metrics = load_profile_metrics(config)
     engine = MergedPartialStrategyEngine(
         exchange_base_url=config.get("exchange_base_url", "https://demo-fapi.binance.com"),
-        symbol_count=config.get("default_symbol_count", 10),
+        symbol_count=config.get("default_symbol_count", 5),
         profile_name=selection_config.get("default_profile_name"),
         selection_config=selection_config,
         benchmark_metrics=benchmark_metrics,
@@ -83,6 +314,35 @@ def _build_engine() -> MergedPartialStrategyEngine:
 
 class DashboardHandler(BaseHTTPRequestHandler):
     server_version = "MergedPartialV2Dashboard/1.0"
+
+    def _send_not_found(self, *, method: str, path: str) -> None:
+        self._send_json(
+            {
+                "ok": False,
+                "reason": "not_found",
+                "method": method,
+                "path": path,
+                "available_endpoints": {
+                    "GET": [
+                        "/",
+                        "/index.html",
+                        "/app.js",
+                        "/styles.css",
+                        "/api/status",
+                        "/api/process",
+                    ],
+                    "POST": [
+                        "/api/autonomous/start",
+                        "/api/autonomous/stop",
+                        "/api/autonomous/start-live",
+                        "/api/actions/health-check",
+                        "/api/actions/stop-and-close-all",
+                        "/api/status/refresh",
+                    ],
+                },
+            },
+            status=HTTPStatus.NOT_FOUND,
+        )
 
     def _send_json(self, payload: dict, status: int = 200) -> None:
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
@@ -115,105 +375,109 @@ class DashboardHandler(BaseHTTPRequestHandler):
             self._send_file(_dashboard_asset("styles.css"), "text/css; charset=utf-8")
             return
         if parsed.path == "/api/status":
-            self._send_json(load_cached_dashboard_payload())
+            self._send_json(load_fast_dashboard_payload())
             return
         if parsed.path == "/api/process":
             self._send_json({"ok": True, "autonomous_process": get_process_status()})
             return
-        self.send_error(HTTPStatus.NOT_FOUND)
+        self._send_not_found(method="GET", path=parsed.path)
 
     def do_POST(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
-        if parsed.path == "/api/autonomous/start":
-            payload = _read_json_body(self)
-            result = start_autonomous_process(
-                live=bool(payload.get("live", False)),
-                adopt_active_positions=bool(payload.get("adopt_active_positions", True)),
-                interval_seconds=float(payload.get("interval_seconds", 60.0) or 60.0),
-            )
-            self._send_json(result, status=200 if result.get("ok") else 400)
-            return
-        if parsed.path == "/api/autonomous/stop":
-            result = stop_autonomous_process()
-            self._send_json(result, status=200 if result.get("ok") else 400)
-            return
-        if parsed.path == "/api/actions/health-check":
-            payload = _read_json_body(self)
-            live = bool(payload.get("live", False))
-            engine = _build_engine()
-            symbol = str(payload.get("symbol", "BTCUSDT"))
-            side = str(payload.get("side", "BUY"))
-            quantity = float(payload.get("quantity", 0.001) or 0.001)
-            if live:
+        try:
+            if parsed.path in {"/api/autonomous/start", "/api/autonomous/start-live"}:
+                payload = _read_json_body(self)
+                result = start_autonomous_process(
+                    live=True,
+                    adopt_active_positions=bool(payload.get("adopt_active_positions", True)),
+                    interval_seconds=float(payload.get("interval_seconds", 60.0) or 60.0),
+                )
+                self._send_json(result, status=200 if result.get("ok") else 400)
+                return
+            if parsed.path == "/api/autonomous/stop":
+                result = stop_autonomous_process()
+                self._send_json(result, status=200 if result.get("ok") else 400)
+                return
+            if parsed.path == "/api/actions/health-check":
+                payload = _read_json_body(self)
+                engine = _build_engine()
+                symbol = str(payload.get("symbol", "BTCUSDT"))
+                side = str(payload.get("side", "BUY"))
+                quantity = float(payload.get("quantity", 0.001) or 0.001)
                 result = engine.execution_client.open_and_close_test_order(
                     symbol=symbol,
                     side=side,
                     quantity=quantity,
                 )
-                self._send_json({"ok": True, "live": True, "result": result})
+                response_payload = _persist_execution_report(
+                    {
+                        "mode": "health_check_order",
+                        "dry_run": False,
+                        "executed": True,
+                        "symbol": symbol,
+                        "requested_quantity": quantity,
+                        "submitted_quantity": result.get("submitted_quantity"),
+                        "open_final_status": result.get("open_result", {}).get("final_status"),
+                        "close_final_status": result.get("close_result", {}).get("final_status"),
+                        "live": True,
+                        "result": result,
+                        "open_result": result.get("open_result"),
+                        "close_result": result.get("close_result"),
+                        "reason": "Health-check order completed.",
+                    }
+                )
+                self._send_json({"ok": True, "live": True, "result": result, "report": response_payload})
                 return
-            preview = {
-                "mode": "health_check_preview",
-                "symbol": symbol,
-                "side": side,
-                "requested_quantity": quantity,
-                "reason": "Dry mode preview only. Toggle live mode to send the testnet order.",
-            }
-            self._send_json({"ok": True, "live": False, "result": {"preview": preview}})
-            return
-        if parsed.path == "/api/actions/execute-top":
-            payload = _read_json_body(self)
-            dry_run = not bool(payload.get("live", False))
-            engine = _build_engine()
-            snapshot = engine.build_paper_decision(limit=80)
-            recommendations = list(snapshot["paper_decision"].get("recommendations", []))
-            if not recommendations:
+            if parsed.path == "/api/actions/execute-top":
                 self._send_json(
-                    {"ok": False, "reason": "no_recommendation", "paper_decision": snapshot["paper_decision"]},
-                    status=400,
+                    {
+                        "ok": False,
+                        "reason": "manual_execute_disabled_use_autonomous",
+                        "detail": "추천 실행은 자동매매 사이클에서 자동 처리됩니다. 자동 시작 버튼을 사용하세요.",
+                    },
+                    status=410,
                 )
                 return
-            recommendation = recommendations[0]
-            order_payload = {
-                "symbol": recommendation["symbol"],
-                "side": recommendation.get("side", "BUY"),
-                "type": "MARKET",
-                "qty": recommendation.get("estimated_quantity", 0.0),
-                "trace_id": f"dashboard-exec-{recommendation['symbol'].lower()}",
-                "dry_run": dry_run,
-                "wait_for_fill": not dry_run,
-                "status_timeout_seconds": 8.0,
-            }
-            result = engine.submit_order(order_payload)
+            if parsed.path == "/api/actions/stop-and-close-all":
+                stop_result = stop_autonomous_process()
+                engine = _build_engine()
+                close_result = engine.close_all_active_positions(dry_run=False)
+                report_payload = _persist_execution_report(
+                    {
+                        "mode": "stop_and_close_all",
+                        "dry_run": False,
+                        "executed": True,
+                        "symbol": None,
+                        "result": close_result,
+                        "stop_result": stop_result,
+                        "reason": "Stop and close-all requested from dashboard.",
+                        "final_status": "COMPLETED" if close_result.get("ok") else "FAILED",
+                    }
+                )
+                self._send_json(
+                    {
+                        "ok": True,
+                        "dry_run": False,
+                        "stop_result": stop_result,
+                        "close_result": close_result,
+                        "report": report_payload,
+                    }
+                )
+                return
+            if parsed.path == "/api/status/refresh":
+                self._send_json(build_dashboard_payload())
+                return
+            self._send_not_found(method="POST", path=parsed.path)
+        except Exception as exc:  # pragma: no cover - defensive runtime guard
             self._send_json(
                 {
-                    "ok": True,
-                    "dry_run": dry_run,
-                    "recommendation": recommendation,
-                    "order_payload": order_payload,
-                    "result": result,
-                }
+                    "ok": False,
+                    "error": "dashboard_post_failed",
+                    "reason": str(exc),
+                    "path": parsed.path,
+                },
+                status=500,
             )
-            return
-        if parsed.path == "/api/actions/stop-and-close-all":
-            payload = _read_json_body(self)
-            dry_run = not bool(payload.get("live", False))
-            stop_result = stop_autonomous_process()
-            engine = _build_engine()
-            close_result = engine.close_all_active_positions(dry_run=dry_run)
-            self._send_json(
-                {
-                    "ok": True,
-                    "dry_run": dry_run,
-                    "stop_result": stop_result,
-                    "close_result": close_result,
-                }
-            )
-            return
-        if parsed.path == "/api/status/refresh":
-            self._send_json(build_dashboard_payload())
-            return
-        self.send_error(HTTPStatus.NOT_FOUND)
 
     def log_message(self, format: str, *args) -> None:  # noqa: A003
         return

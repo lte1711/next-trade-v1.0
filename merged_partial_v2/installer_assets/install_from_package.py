@@ -25,8 +25,10 @@ def _bundle_root() -> Path:
 def _create_shortcuts(install_root: Path) -> None:
     launcher = install_root / "Launch Merged Partial V2 v1.bat"
     dashboard_launcher = install_root / "Open Merged Partial V2 Dashboard.bat"
+    hidden_launcher = install_root / "Launch Merged Partial V2 v1.vbs"
+    dashboard_hidden_launcher = install_root / "Open Merged Partial V2 Dashboard.vbs"
     exe_path = install_root / "merged_partial_v2_v1.exe"
-    target = launcher if launcher.exists() else exe_path
+    target = hidden_launcher if hidden_launcher.exists() else (launcher if launcher.exists() else exe_path)
     if not target.exists():
         raise RuntimeError(f"Installed executable was not found: {exe_path}")
 
@@ -42,14 +44,14 @@ $WshShell = New-Object -ComObject WScript.Shell
 $pairs = @(
   @('{desktop}', '{target}', '{install_root}'),
   @('{start_menu}', '{target}', '{install_root}'),
-  @('{desktop_dashboard}', '{dashboard_launcher if dashboard_launcher.exists() else exe_path}', '{install_root}'),
-  @('{start_menu_dashboard}', '{dashboard_launcher if dashboard_launcher.exists() else exe_path}', '{install_root}')
+  @('{desktop_dashboard}', '{dashboard_hidden_launcher if dashboard_hidden_launcher.exists() else (dashboard_launcher if dashboard_launcher.exists() else exe_path)}', '{install_root}'),
+  @('{start_menu_dashboard}', '{dashboard_hidden_launcher if dashboard_hidden_launcher.exists() else (dashboard_launcher if dashboard_launcher.exists() else exe_path)}', '{install_root}')
 )
 foreach ($p in $pairs) {{
   $sc = $WshShell.CreateShortcut($p[0])
   $sc.TargetPath = $p[1]
   $sc.WorkingDirectory = $p[2]
-  $sc.Description = 'Merged Partial V2 v1 Auto Live'
+  $sc.Description = 'Merged Partial V2 v1 Background Auto Live'
   $sc.Save()
 }}
 """
