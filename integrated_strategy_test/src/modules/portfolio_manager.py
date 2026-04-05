@@ -7,7 +7,7 @@ from typing import Any, Dict, List
 
 
 class PortfolioManager:
-    """Tracks cash, positions, fees, and performance history."""
+    """Track cash, positions, fees, and replacement history."""
 
     def __init__(self, initial_capital: float = 1000.0, trading_fee: float = 0.0004):
         self.initial_capital = initial_capital
@@ -16,17 +16,16 @@ class PortfolioManager:
         self.trading_fee = trading_fee
         self.total_fees_paid = 0.0
 
+        self.default_take_profit_percent = 5.0
+        self.default_stop_loss_percent = -3.0
+        self.minimum_hold_minutes = 6
+        self.reentry_cooldown_minutes = 9
+
         self.investments: Dict[str, Dict[str, Any]] = {}
         self.performance_history: List[Dict[str, Any]] = []
         self.replacement_history: List[Dict[str, Any]] = []
 
-        self.last_replacement_time = None
-        self.replacements_this_hour = 0
-        self.replacements_today = 0
-        self.last_hour_reset = datetime.now().hour
-        self.last_day_reset = datetime.now().date()
-
-        self.replacement_cooldown: Dict[str, Any] = {}
+        self.replacement_cooldown: Dict[str, str] = {}
         self.replacement_blacklist: Dict[str, Any] = {}
         self.recent_replacements: List[Dict[str, Any]] = []
 
@@ -51,7 +50,7 @@ class PortfolioManager:
                 "allocation": fixed_amount,
                 "percentage": (fixed_amount / self.initial_capital) * 100,
                 "symbol_data": symbol_data,
-                "profit_potential": symbol_data.get("profit_potential", 0),
+                "profit_potential": symbol_data.get("profit_potential", 0.0),
                 "fixed_amount": True,
             }
 
@@ -60,7 +59,7 @@ class PortfolioManager:
         print(f"  remaining cash after allocation plan: ${self.cash_balance - used_capital:.2f}")
         return allocations
 
-    def initialize_investments(self, allocations: Dict[str, Any]):
+    def initialize_investments(self, allocations: Dict[str, Any]) -> None:
         """Initialize portfolio positions from an allocation plan."""
         print("FACT: investment initialization started")
 
@@ -77,24 +76,14 @@ class PortfolioManager:
             price = symbol_data["price"]
             shares = net_investment / price
 
-            self.investments[symbol] = {
-                "initial_investment": allocation,
-                "net_investment": net_investment,
-                "current_investment": net_investment,
-                "initial_price": price,
-                "current_price": price,
-                "shares": shares,
-                "initial_time": datetime.now().isoformat(),
-                "last_update": datetime.now().isoformat(),
-                "pnl": 0.0,
-                "pnl_percent": 0.0,
-                "rank": symbol_data.get("bullish_rank", 1),
-                "bullish_score": symbol_data["bullish_score"],
-                "fees_paid": fee,
-                "take_profit": 5.0,
-                "stop_loss": -3.0,
-                "profit_potential": symbol_data.get("profit_potential", 50),
-            }
+            self.investments[symbol] = self._build_investment_record(
+                symbol_data=symbol_data,
+                allocation=allocation,
+                net_investment=net_investment,
+                price=price,
+                shares=shares,
+                fee=fee,
+            )
 
             allocated_total += allocation
             total_buy_fees += fee
@@ -178,8 +167,8 @@ class PortfolioManager:
             "replacement_history": self.replacement_history,
         }
 
-    def add_investment(self, symbol: str, symbol_data: Dict[str, Any], amount: float = 100.0):
-        """Add a new position if cash is available."""
+    def add_investment(self, symbol: str, symbol_data: Dict[str, Any], amount: float = 100.0) -> bool:
+        """Add a new position if cash is available and cooldown allows it."""
         if symbol in self.investments:
             print(f"  {symbol} is already in the portfolio")
             return False
@@ -188,29 +177,23 @@ class PortfolioManager:
             print(f"  insufficient cash for {symbol}: need ${amount:.2f}, have ${self.cash_balance:.2f}")
             return False
 
+        if not self.can_reenter_symbol(symbol):
+            print(f"  {symbol} is still in reentry cooldown")
+            return False
+
         fee = amount * self.trading_fee
         net_investment = amount - fee
         price = symbol_data["price"]
         shares = net_investment / price
 
-        self.investments[symbol] = {
-            "initial_investment": amount,
-            "net_investment": net_investment,
-            "current_investment": net_investment,
-            "initial_price": price,
-            "current_price": price,
-            "shares": shares,
-            "initial_time": datetime.now().isoformat(),
-            "last_update": datetime.now().isoformat(),
-            "pnl": 0.0,
-            "pnl_percent": 0.0,
-            "rank": symbol_data.get("bullish_rank", 1),
-            "bullish_score": symbol_data["bullish_score"],
-            "fees_paid": fee,
-            "take_profit": 5.0,
-            "stop_loss": -3.0,
-            "profit_potential": symbol_data.get("profit_potential", 0),
-        }
+        self.investments[symbol] = self._build_investment_record(
+            symbol_data=symbol_data,
+            allocation=amount,
+            net_investment=net_investment,
+            price=price,
+            shares=shares,
+            fee=fee,
+        )
 
         self.cash_balance -= amount
         self.total_fees_paid += fee
@@ -220,7 +203,7 @@ class PortfolioManager:
         print(f"  added {symbol}: invested ${net_investment:.2f} after ${fee:.2f} fee")
         return True
 
-    def remove_investment(self, symbol: str) -> Dict[str, Any]:
+    def remove_investment(self, symbol: str, reason: str = "rebalance") -> Dict[str, Any]:
         """Close an existing position and return the trade summary."""
         if symbol not in self.investments:
             print(f"  {symbol} is not currently invested")
@@ -238,14 +221,42 @@ class PortfolioManager:
             active["current_investment"] for active in self.investments.values()
         )
 
+        self.record_symbol_exit(symbol, reason)
         result = {
             "symbol": symbol,
             "net_proceeds": net_proceeds,
             "sell_fee": sell_fee,
             "investment": investment,
+            "reason": reason,
         }
-        print(f"  removed {symbol}: recovered ${net_proceeds:.2f} after ${sell_fee:.2f} fee")
+        print(f"  removed {symbol}: recovered ${net_proceeds:.2f} after ${sell_fee:.2f} fee ({reason})")
         return result
+
+    def get_holding_minutes(self, symbol: str) -> float:
+        """Return how long the symbol has been held."""
+        investment = self.investments.get(symbol)
+        if not investment:
+            return 0.0
+
+        initial_time = datetime.fromisoformat(investment["initial_time"])
+        return (datetime.now() - initial_time).total_seconds() / 60
+
+    def can_reenter_symbol(self, symbol: str) -> bool:
+        """Return whether a symbol can be re-added after a recent removal."""
+        if symbol not in self.replacement_cooldown:
+            return True
+
+        removed_at = datetime.fromisoformat(self.replacement_cooldown[symbol])
+        elapsed_minutes = (datetime.now() - removed_at).total_seconds() / 60
+        return elapsed_minutes >= self.reentry_cooldown_minutes
+
+    def record_symbol_exit(self, symbol: str, reason: str) -> None:
+        """Record an exit and activate reentry cooldown."""
+        timestamp = datetime.now().isoformat()
+        self.replacement_cooldown[symbol] = timestamp
+        event = {"symbol": symbol, "reason": reason, "timestamp": timestamp}
+        self.replacement_history.append(event)
+        self.recent_replacements.append(event)
 
     def get_performance_summary(self) -> Dict[str, Any]:
         """Return the latest aggregate and per-symbol performance summary."""
@@ -266,7 +277,9 @@ class PortfolioManager:
                     "rank": investment["rank"],
                     "bullish_score": investment["bullish_score"],
                     "fees_paid": investment["fees_paid"],
-                    "profit_potential": investment.get("profit_potential", 50),
+                    "profit_potential": investment.get("profit_potential", 50.0),
+                    "take_profit": investment["take_profit"],
+                    "stop_loss": investment["stop_loss"],
                 }
             )
 
@@ -280,4 +293,34 @@ class PortfolioManager:
             "net_pnl": latest_performance["net_pnl"],
             "net_pnl_percent": latest_performance["net_pnl_percent"],
             "individual_performance": individual_performance,
+        }
+
+    def _build_investment_record(
+        self,
+        symbol_data: Dict[str, Any],
+        allocation: float,
+        net_investment: float,
+        price: float,
+        shares: float,
+        fee: float,
+    ) -> Dict[str, Any]:
+        """Create the normalized position structure used across the simulator."""
+        now = datetime.now().isoformat()
+        return {
+            "initial_investment": allocation,
+            "net_investment": net_investment,
+            "current_investment": net_investment,
+            "initial_price": price,
+            "current_price": price,
+            "shares": shares,
+            "initial_time": now,
+            "last_update": now,
+            "pnl": 0.0,
+            "pnl_percent": 0.0,
+            "rank": symbol_data.get("bullish_rank", 1),
+            "bullish_score": symbol_data.get("bullish_score", 0.0),
+            "fees_paid": fee,
+            "take_profit": self.default_take_profit_percent,
+            "stop_loss": self.default_stop_loss_percent,
+            "profit_potential": symbol_data.get("profit_potential", 50.0),
         }
