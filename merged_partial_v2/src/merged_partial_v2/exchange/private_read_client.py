@@ -15,3 +15,15 @@ class PrivateReadClient:
     def get_positions(self) -> Dict[str, Any]:
         """Return current position information."""
         return get_positions_snapshot()
+
+    def get_active_positions(self) -> Dict[str, Any]:
+        """Return only non-zero positions for simpler operational checks."""
+        snapshot = get_positions_snapshot()
+        return {
+            "ok": snapshot.get("ok"),
+            "ts": snapshot.get("ts"),
+            "source": snapshot.get("source"),
+            "active_positions": snapshot.get("active_positions", []),
+            "active_position_count": snapshot.get("active_position_count", 0),
+            "error": snapshot.get("error"),
+        }

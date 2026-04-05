@@ -1,0 +1,74 @@
+{
+  "profiles": [
+    {
+      "profile_name": "cs_base_reference",
+      "final_capital": 1089.4813755647199,
+      "final_pnl_percent": 8.948137556471988,
+      "total_fees_paid": 26.761153011430352,
+      "realized_pnl": 89.48137556471997,
+      "entries": 167,
+      "take_profits": 46,
+      "loss_threshold_exits": 55,
+      "potential_drop_exits": 66,
+      "win_rate_percent": 27.54491017964072,
+      "active_days": 130,
+      "avg_invested_symbols": 0.4562841530054645
+    },
+    {
+      "profile_name": "cs_hold_winners",
+      "final_capital": 1058.331683725934,
+      "final_pnl_percent": 5.833168372593399,
+      "total_fees_paid": 21.14301655808861,
+      "realized_pnl": 47.03837866357526,
+      "entries": 133,
+      "take_profits": 41,
+      "loss_threshold_exits": 54,
+      "potential_drop_exits": 36,
+      "win_rate_percent": 31.297709923664126,
+      "active_days": 196,
+      "avg_invested_symbols": 0.726775956284153
+    },
+    {
+      "profile_name": "cs_wider_stop",
+      "final_capital": 1058.331683725934,
+      "final_pnl_percent": 5.833168372593399,
+      "total_fees_paid": 21.14301655808861,
+      "realized_pnl": 47.03837866357526,
+      "entries": 133,
+      "take_profits": 38,
+      "loss_threshold_exits": 50,
+      "potential_drop_exits": 43,
+      "win_rate_percent": 29.00763358778626,
+      "active_days": 196,
+      "avg_invested_symbols": 0.726775956284153
+    },
+    {
+      "profile_name": "cs_more_entries",
+      "final_capital": 1162.6424337194146,
+      "final_pnl_percent": 16.26424337194146,
+      "total_fees_paid": 35.92825707631825,
+      "realized_pnl": 162.64243371941396,
+      "entries": 249,
+      "take_profits": 68,
+      "loss_threshold_exits": 84,
+      "potential_drop_exits": 97,
+      "win_rate_percent": 27.309236947791167,
+      "active_days": 176,
+      "avg_invested_symbols": 0.680327868852459
+    },
+    {
+      "profile_name": "cs_conviction",
+      "final_capital": 949.8517217573834,
+      "final_pnl_percent": -5.014827824261658,
+      "total_fees_paid": 12.280040848419986,
+      "realized_pnl": -55.97791979842336,
+      "entries": 62,
+      "take_profits": 13,
+      "loss_threshold_exits": 27,
+      "potential_drop_exits": 21,
+      "win_rate_percent": 21.311475409836063,
+      "active_days": 124,
+      "avg_invested_symbols": 0.33879781420765026
+    }
+  ]
+}

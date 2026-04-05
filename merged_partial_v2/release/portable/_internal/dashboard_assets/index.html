@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Merged Partial V2 Dashboard</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Merged Partial V2</p>
+        <h1>Operations Dashboard</h1>
+        <p class="subtitle">Monitor status, start or stop autonomous trading, run health checks, execute the top recommendation, and close all active positions.</p>
+      </div>
+      <div class="hero-side">
+        <section class="mode-panel">
+          <p class="mode-label">Execution Mode</p>
+          <label class="toggle-row">
+            <input id="liveModeToggle" type="checkbox">
+            <span id="liveModeText">Dry Run</span>
+          </label>
+          <p class="mode-hint">Dry run previews orders without sending them. Live mode sends real testnet orders.</p>
+        </section>
+        <div class="actions">
+        <button id="refreshBtn">Refresh</button>
+        <button id="startDryBtn">Start Dry</button>
+        <button id="startLiveBtn" class="danger">Start Live</button>
+        <button id="stopBtn">Stop Auto</button>
+        <button id="healthBtn">Health Check</button>
+        <button id="execTopBtn">Execute Top</button>
+        <button id="closeAllBtn" class="danger">Stop and Close All</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="grid top-grid">
+      <article class="card">
+        <h2>Runtime</h2>
+        <div id="processStatus"></div>
+      </article>
+      <article class="card">
+        <h2>Market</h2>
+        <div id="operationalSummary"></div>
+      </article>
+      <article class="card">
+        <h2>Last Action</h2>
+        <div id="lastExecution"></div>
+      </article>
+      <article class="card">
+        <h2>Auto Cycle</h2>
+        <div id="lastAutonomous"></div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Account Snapshot</h2>
+        <div id="accountSummary"></div>
+      </article>
+      <article class="card">
+        <h2>Decision Status</h2>
+        <div id="paperDecision"></div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Top Recommendation</h2>
+        <div id="topRecommendation"></div>
+      </article>
+      <article class="card">
+        <h2>Action Result</h2>
+        <div id="actionResultSummary"></div>
+        <details class="details-block">
+          <summary>Raw action payload</summary>
+          <pre id="actionResult" class="mono scroll small-scroll"></pre>
+        </details>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card wide">
+        <h2>Active Positions</h2>
+        <div id="activePositions"></div>
+      </article>
+      <article class="card wide">
+        <h2>Risk Gate</h2>
+        <div id="riskGateSummary"></div>
+        <details class="details-block">
+          <summary>Raw risk gate payload</summary>
+          <pre id="riskGate" class="mono scroll"></pre>
+        </details>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>Status Message</h2>
+      <div id="messageBox" class="message"></div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

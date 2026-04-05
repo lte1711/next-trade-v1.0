@@ -1,0 +1,61 @@
+{
+  "profiles": [
+    {
+      "profile_name": "aggressive_momentum",
+      "final_capital": 1030.9480676328685,
+      "final_pnl": 30.948067632868515,
+      "final_pnl_percent": 3.0948067632868512,
+      "total_fees_paid": 10.634521035467332,
+      "entries": 89,
+      "take_profits": 32,
+      "loss_threshold_exits": 29,
+      "potential_drop_exits": 27,
+      "win_rate_percent": 36.36363636363637,
+      "active_days": 76,
+      "avg_invested_symbols": 0.24316939890710382,
+      "market_regime_counts": {
+        "NORMAL": 105,
+        "HIGH_VOLATILITY": 204,
+        "EXTREME": 57
+      }
+    },
+    {
+      "profile_name": "trend_capture",
+      "final_capital": 1021.9603100997183,
+      "final_pnl": 21.9603100997183,
+      "final_pnl_percent": 2.19603100997183,
+      "total_fees_paid": 5.769940100079916,
+      "entries": 48,
+      "take_profits": 14,
+      "loss_threshold_exits": 15,
+      "potential_drop_exits": 19,
+      "win_rate_percent": 29.166666666666668,
+      "active_days": 47,
+      "avg_invested_symbols": 0.13114754098360656,
+      "market_regime_counts": {
+        "NORMAL": 105,
+        "HIGH_VOLATILITY": 204,
+        "EXTREME": 57
+      }
+    },
+    {
+      "profile_name": "concentrated_swing",
+      "final_capital": 1089.4813755647199,
+      "final_pnl": 89.48137556471988,
+      "final_pnl_percent": 8.948137556471988,
+      "total_fees_paid": 26.761153011430352,
+      "entries": 167,
+      "take_profits": 46,
+      "loss_threshold_exits": 55,
+      "potential_drop_exits": 66,
+      "win_rate_percent": 27.54491017964072,
+      "active_days": 130,
+      "avg_invested_symbols": 0.4562841530054645,
+      "market_regime_counts": {
+        "NORMAL": 105,
+        "HIGH_VOLATILITY": 204,
+        "EXTREME": 57
+      }
+    }
+  ]
+}

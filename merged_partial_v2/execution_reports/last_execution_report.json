@@ -1,0 +1,9 @@
+﻿{
+    "dry_run":  true,
+    "ts":  "2026-04-05T07:31:08.4867639Z",
+    "executed":  false,
+    "ready_for_live_autonomous":  false,
+    "alert_summary":  "shutdown cleanup complete | all positions closed | open orders cleared | runtime state reset",
+    "reason":  "All merged_partial_v2 activity was stopped. Active positions and open orders are cleared.",
+    "mode":  "shutdown_cleanup"
+}

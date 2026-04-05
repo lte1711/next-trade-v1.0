@@ -15,11 +15,12 @@ class PortfolioManager:
         self.cash_balance = initial_capital
         self.trading_fee = trading_fee
         self.total_fees_paid = 0.0
+        self.realized_pnl = 0.0
 
-        self.default_take_profit_percent = 5.0
+        self.default_take_profit_percent = 1.5
         self.default_stop_loss_percent = -3.0
         self.minimum_hold_minutes = 6
-        self.reentry_cooldown_minutes = 9
+        self.reentry_cooldown_minutes = 20
 
         self.investments: Dict[str, Dict[str, Any]] = {}
         self.performance_history: List[Dict[str, Any]] = []
@@ -103,7 +104,7 @@ class PortfolioManager:
     ) -> Dict[str, Any]:
         """Update mark-to-market values and aggregate performance."""
         invested_value = 0.0
-        total_pnl = 0.0
+        unrealized_pnl = 0.0
 
         for symbol, investment in self.investments.items():
             try:
@@ -123,24 +124,28 @@ class PortfolioManager:
                 investment["last_update"] = datetime.now().isoformat()
 
                 invested_value += current_value
-                total_pnl += pnl
+                unrealized_pnl += pnl
 
             except Exception as exc:
                 print(f"  {symbol} performance update failed: {exc}")
 
         total_value = self.cash_balance + invested_value
         self.current_capital = total_value
+        total_pnl = total_value - self.initial_capital
+        net_pnl = total_pnl
 
         performance_record = {
             "timestamp": datetime.now().isoformat(),
             "total_value": total_value,
             "cash_balance": self.cash_balance,
             "invested_value": invested_value,
+            "realized_pnl": self.realized_pnl,
+            "unrealized_pnl": unrealized_pnl,
             "total_pnl": total_pnl,
             "pnl_percent": (total_pnl / self.initial_capital) * 100,
             "total_fees_paid": self.total_fees_paid,
-            "net_pnl": total_pnl - self.total_fees_paid,
-            "net_pnl_percent": ((total_pnl - self.total_fees_paid) / self.initial_capital) * 100,
+            "net_pnl": net_pnl,
+            "net_pnl_percent": (net_pnl / self.initial_capital) * 100,
             "invested_symbols": len(self.investments),
         }
         self.performance_history.append(performance_record)
@@ -149,11 +154,13 @@ class PortfolioManager:
             "total_value": total_value,
             "cash_balance": self.cash_balance,
             "invested_value": invested_value,
+            "realized_pnl": self.realized_pnl,
+            "unrealized_pnl": unrealized_pnl,
             "total_pnl": total_pnl,
             "pnl_percent": (total_pnl / self.initial_capital) * 100,
             "total_fees_paid": self.total_fees_paid,
-            "net_pnl": total_pnl - self.total_fees_paid,
-            "net_pnl_percent": ((total_pnl - self.total_fees_paid) / self.initial_capital) * 100,
+            "net_pnl": net_pnl,
+            "net_pnl_percent": (net_pnl / self.initial_capital) * 100,
         }
 
     def get_current_portfolio(self) -> Dict[str, Any]:
@@ -213,10 +220,12 @@ class PortfolioManager:
         current_value = investment["current_investment"]
         sell_fee = current_value * self.trading_fee
         net_proceeds = current_value - sell_fee
+        realized_trade_pnl = net_proceeds - investment["initial_investment"]
 
         del self.investments[symbol]
         self.cash_balance += net_proceeds
         self.total_fees_paid += sell_fee
+        self.realized_pnl += realized_trade_pnl
         self.current_capital = self.cash_balance + sum(
             active["current_investment"] for active in self.investments.values()
         )
@@ -228,8 +237,12 @@ class PortfolioManager:
             "sell_fee": sell_fee,
             "investment": investment,
             "reason": reason,
+            "realized_pnl": realized_trade_pnl,
         }
-        print(f"  removed {symbol}: recovered ${net_proceeds:.2f} after ${sell_fee:.2f} fee ({reason})")
+        print(
+            f"  removed {symbol}: recovered ${net_proceeds:.2f} after ${sell_fee:.2f} fee "
+            f"({reason}, realized {realized_trade_pnl:+.2f})"
+        )
         return result
 
     def get_holding_minutes(self, symbol: str) -> float:
@@ -290,6 +303,8 @@ class PortfolioManager:
             "total_pnl": latest_performance["total_pnl"],
             "pnl_percent": latest_performance["pnl_percent"],
             "total_fees_paid": latest_performance["total_fees_paid"],
+            "realized_pnl": latest_performance["realized_pnl"],
+            "unrealized_pnl": latest_performance["unrealized_pnl"],
             "net_pnl": latest_performance["net_pnl"],
             "net_pnl_percent": latest_performance["net_pnl_percent"],
             "individual_performance": individual_performance,

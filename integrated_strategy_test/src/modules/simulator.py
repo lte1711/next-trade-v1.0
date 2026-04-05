@@ -25,12 +25,12 @@ class ModularTradingSimulator:
         self.realtime_fetcher = RealTimeDataFetcher()
 
         self.market_regime_thresholds = {
-            "EXTREME": 70.0,
-            "HIGH_VOLATILITY": 75.0,
+            "EXTREME": 80.0,
+            "HIGH_VOLATILITY": 78.0,
             "NORMAL": 80.0,
         }
-        self.entry_buffer = 5.0
-        self.exit_buffer = 5.0
+        self.entry_buffer = 3.0
+        self.exit_buffer = 3.0
 
         self.market_regime = "NORMAL"
         self.current_strategy = "balanced"
@@ -82,9 +82,9 @@ class ModularTradingSimulator:
     def select_optimal_symbols(self, profitable_symbols: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Select the best symbols allowed by the current regime."""
         if self.market_regime == "EXTREME":
-            max_symbols = min(self.symbol_count, 5)
+            max_symbols = min(self.symbol_count, 3)
         elif self.market_regime == "HIGH_VOLATILITY":
-            max_symbols = min(self.symbol_count, 7)
+            max_symbols = min(self.symbol_count, 5)
         else:
             max_symbols = self.symbol_count
         return profitable_symbols[:max_symbols]
@@ -314,6 +314,8 @@ class ModularTradingSimulator:
             "initial_capital": self.portfolio_manager.initial_capital,
             "final_capital": portfolio_summary["total_value"],
             "cash_balance": portfolio_summary["cash_balance"],
+            "realized_pnl": portfolio_summary["realized_pnl"],
+            "unrealized_pnl": portfolio_summary["unrealized_pnl"],
             "total_pnl": portfolio_summary["total_pnl"],
             "pnl_percent": portfolio_summary["pnl_percent"],
             "total_fees_paid": portfolio_summary["total_fees_paid"],
@@ -353,7 +355,7 @@ class ModularTradingSimulator:
             investment["current_investment"] for investment in self.portfolio_manager.investments.values()
         )
         total_equity = self.portfolio_manager.cash_balance + invested_amount
-        net_profit = total_equity - self.portfolio_manager.initial_capital - self.portfolio_manager.total_fees_paid
+        net_profit = total_equity - self.portfolio_manager.initial_capital
 
         print(
             f"Total Capital $ {self.portfolio_manager.initial_capital:.2f} | "

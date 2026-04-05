@@ -1,0 +1,8 @@
+﻿{
+    "dry_run":  true,
+    "exit_count":  0,
+    "ts":  "2026-04-05T07:31:08.4867639Z",
+    "entry_count":  0,
+    "decision_line":  "autonomous trading stopped and runtime state reset",
+    "mode":  "shutdown_cleanup"
+}

@@ -6,16 +6,23 @@ from typing import Any, Dict, List
 
 import requests
 
+from merged_partial_v2.exchange.credential_store import build_public_headers
+
 
 class PublicReadClient:
     """Read-only market data access for ticker and kline lookups."""
 
     def __init__(self, exchange_base_url: str = "https://demo-fapi.binance.com"):
         self.exchange_base_url = exchange_base_url.rstrip("/")
+        self._kline_cache: Dict[tuple[str, str, int], List[List[Any]]] = {}
 
     def get_top_quote_volume_symbols(self, limit: int = 80) -> List[Dict[str, Any]]:
         """Return liquid USDT futures symbols sorted by quote volume."""
-        response = requests.get(f"{self.exchange_base_url}/fapi/v1/ticker/24hr", timeout=10)
+        response = requests.get(
+            f"{self.exchange_base_url}/fapi/v1/ticker/24hr",
+            headers=build_public_headers(),
+            timeout=10,
+        )
         response.raise_for_status()
 
         symbols: List[Dict[str, Any]] = []
@@ -48,6 +55,7 @@ class PublicReadClient:
         """Return 24h ticker information for one symbol."""
         response = requests.get(
             f"{self.exchange_base_url}/fapi/v1/ticker/24hr?symbol={symbol}",
+            headers=build_public_headers(),
             timeout=10,
         )
         response.raise_for_status()
@@ -63,9 +71,17 @@ class PublicReadClient:
 
     def get_klines(self, symbol: str, interval: str = "1h", limit: int = 100) -> List[List[Any]]:
         """Return raw kline rows from the exchange."""
+        cache_key = (symbol.upper(), interval, int(limit))
+        cached = self._kline_cache.get(cache_key)
+        if cached is not None:
+            return [list(row) for row in cached]
+
         response = requests.get(
             f"{self.exchange_base_url}/fapi/v1/klines?symbol={symbol}&interval={interval}&limit={limit}",
+            headers=build_public_headers(),
             timeout=10,
         )
         response.raise_for_status()
-        return response.json()
+        payload = response.json()
+        self._kline_cache[cache_key] = payload
+        return [list(row) for row in payload]

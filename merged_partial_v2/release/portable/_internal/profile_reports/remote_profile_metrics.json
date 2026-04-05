@@ -1,0 +1,21 @@
+{
+  "generated_from": "integrated_strategy_test external-input tuning artifacts",
+  "profiles": {
+    "remote_risk_reference": {
+      "final_pnl_percent": 44.00082587246275,
+      "max_drawdown_percent": -16.54331228720844,
+      "fees_paid": 11.84240746647642,
+      "positive_months": 5,
+      "negative_months": 6,
+      "max_consecutive_losses": 4
+    },
+    "v3_remote_default_capital_preserver": {
+      "final_pnl_percent": 33.0795906147486,
+      "max_drawdown_percent": -11.455004896755936,
+      "fees_paid": 7.5258503025800305,
+      "positive_months": 6,
+      "negative_months": 4,
+      "max_consecutive_losses": 4
+    }
+  }
+}

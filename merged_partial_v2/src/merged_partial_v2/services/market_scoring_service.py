@@ -13,12 +13,24 @@ class MarketScoringService:
 
     def __init__(self, public_read_client: PublicReadClient):
         self.public_read_client = public_read_client
+        self._evaluation_cache: Dict[tuple[str, float, float, float], Dict[str, Any]] = {}
 
     def evaluate_symbols(self, symbols: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Evaluate a universe of symbols and rank them by bullish score."""
         evaluated: List[Dict[str, Any]] = []
         for symbol_data in symbols:
             symbol = symbol_data["symbol"]
+            cache_key = (
+                str(symbol).upper(),
+                round(float(symbol_data.get("price", 0.0) or 0.0), 8),
+                round(float(symbol_data.get("change_percent", 0.0) or 0.0), 6),
+                round(float(symbol_data.get("quote_volume", symbol_data.get("quoteVolume", 0.0)) or 0.0), 2),
+            )
+            cached = self._evaluation_cache.get(cache_key)
+            if cached is not None:
+                evaluated.append({**cached})
+                continue
+
             klines = self.public_read_client.get_klines(symbol, interval="1h", limit=100)
             closes = [float(k[4]) for k in klines]
             volumes = [float(k[5]) for k in klines]
@@ -31,14 +43,14 @@ class MarketScoringService:
                 bullish_score=bullish_score,
             )
 
-            evaluated.append(
-                {
-                    **symbol_data,
-                    **indicators,
-                    "bullish_score": bullish_score,
-                    "profit_potential": profit_potential,
-                }
-            )
+            evaluated_item = {
+                **symbol_data,
+                **indicators,
+                "bullish_score": bullish_score,
+                "profit_potential": profit_potential,
+            }
+            self._evaluation_cache[cache_key] = dict(evaluated_item)
+            evaluated.append(evaluated_item)
 
         evaluated.sort(key=lambda item: item["bullish_score"], reverse=True)
         for index, item in enumerate(evaluated, start=1):

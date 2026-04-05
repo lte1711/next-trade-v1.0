@@ -1,0 +1,68 @@
+{
+  "profiles": [
+    {
+      "profile_name": "remote_balanced_1",
+      "final_capital": 1130.0707936688975,
+      "final_pnl_percent": 13.007079366889752,
+      "total_fees_paid": 22.136466904229213,
+      "entries": 184,
+      "take_profits": 79,
+      "loss_threshold_exits": 80,
+      "potential_drop_exits": 25,
+      "win_rate_percent": 42.934782608695656,
+      "market_regime_counts": {
+        "EXTREME": 235,
+        "HIGH_VOLATILITY": 117,
+        "NORMAL": 14
+      }
+    },
+    {
+      "profile_name": "remote_balanced_2",
+      "final_capital": 1123.355483072716,
+      "final_pnl_percent": 12.335548307271598,
+      "total_fees_paid": 12.651882946407655,
+      "entries": 105,
+      "take_profits": 42,
+      "loss_threshold_exits": 50,
+      "potential_drop_exits": 13,
+      "win_rate_percent": 40.0,
+      "market_regime_counts": {
+        "EXTREME": 177,
+        "HIGH_VOLATILITY": 166,
+        "NORMAL": 23
+      }
+    },
+    {
+      "profile_name": "remote_low_churn",
+      "final_capital": 1440.0082587246275,
+      "final_pnl_percent": 44.00082587246275,
+      "total_fees_paid": 11.84240746647642,
+      "entries": 81,
+      "take_profits": 34,
+      "loss_threshold_exits": 34,
+      "potential_drop_exits": 13,
+      "win_rate_percent": 41.9753086419753,
+      "market_regime_counts": {
+        "HIGH_VOLATILITY": 200,
+        "EXTREME": 116,
+        "NORMAL": 50
+      }
+    },
+    {
+      "profile_name": "remote_selective_momentum",
+      "final_capital": 1339.0456420182961,
+      "final_pnl_percent": 33.904564201829615,
+      "total_fees_paid": 30.269700537022203,
+      "entries": 269,
+      "take_profits": 122,
+      "loss_threshold_exits": 112,
+      "potential_drop_exits": 35,
+      "win_rate_percent": 45.353159851301115,
+      "market_regime_counts": {
+        "EXTREME": 206,
+        "HIGH_VOLATILITY": 142,
+        "NORMAL": 18
+      }
+    }
+  ]
+}

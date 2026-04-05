@@ -1,0 +1,56 @@
+{
+  "profiles": [
+    {
+      "profile_name": "remote_risk_reference",
+      "final_capital": 1440.0082587246275,
+      "final_pnl_percent": 44.00082587246275,
+      "total_fees_paid": 11.84240746647642,
+      "entries": 81,
+      "take_profits": 34,
+      "loss_threshold_exits": 34,
+      "potential_drop_exits": 13,
+      "max_drawdown_percent": -16.54331228720844,
+      "max_consecutive_losses": 4,
+      "risk_adjusted_score": 27.457513585254308
+    },
+    {
+      "profile_name": "remote_drawdown_guard",
+      "final_capital": 1195.5985075165565,
+      "final_pnl_percent": 19.559850751655652,
+      "total_fees_paid": 9.680191479598468,
+      "entries": 75,
+      "take_profits": 29,
+      "loss_threshold_exits": 36,
+      "potential_drop_exits": 10,
+      "max_drawdown_percent": -18.307398033523516,
+      "max_consecutive_losses": 5,
+      "risk_adjusted_score": 1.2524527181321368
+    },
+    {
+      "profile_name": "remote_capital_preserver",
+      "final_capital": 1330.795906147486,
+      "final_pnl_percent": 33.0795906147486,
+      "total_fees_paid": 7.5258503025800305,
+      "entries": 66,
+      "take_profits": 29,
+      "loss_threshold_exits": 29,
+      "potential_drop_exits": 8,
+      "max_drawdown_percent": -11.455004896755936,
+      "max_consecutive_losses": 4,
+      "risk_adjusted_score": 21.62458571799266
+    },
+    {
+      "profile_name": "remote_smoother_equity",
+      "final_capital": 1231.8649834113326,
+      "final_pnl_percent": 23.186498341133255,
+      "total_fees_paid": 9.334631846102964,
+      "entries": 77,
+      "take_profits": 30,
+      "loss_threshold_exits": 35,
+      "potential_drop_exits": 12,
+      "max_drawdown_percent": -13.287330156290409,
+      "max_consecutive_losses": 5,
+      "risk_adjusted_score": 9.899168184842846
+    }
+  ]
+}
