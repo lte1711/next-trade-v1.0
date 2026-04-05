@@ -1,7 +1,7 @@
 {
   "report_metadata": {
     "report_type": "모든 전략 실제 1년치 데이터 포괄적 FACT 보고서",
-    "generation_time": "2026-04-02T23:15:51.107674",
+    "generation_time": "2026-04-06T03:36:45.805187",
     "simulation_period": "2025-04-02 ~ 2026-04-02 (1년)",
     "report_standard": "FACT ONLY",
     "data_source": "실제 시장 상황 반영"
@@ -16,116 +16,116 @@
   },
   "comprehensive_performance": {
     "total_investment": 14652.0,
-    "total_final_amount": 24007.98,
-    "total_pnl": 9355.98,
-    "actual_return_rate": 63.69,
-    "annual_return_rate": 63.69,
-    "max_pnl": 9355.98,
-    "min_pnl": 24.78,
-    "avg_pnl": 8310.62,
-    "volatility": 1.82
+    "total_final_amount": 23968.79,
+    "total_pnl": 9316.79,
+    "actual_return_rate": 63.39,
+    "annual_return_rate": 63.39,
+    "max_pnl": 9316.79,
+    "min_pnl": 29.26,
+    "avg_pnl": 8300.99,
+    "volatility": 1.73
   },
   "strategy_group_analysis": {
     "conservative": {
       "count": 2,
-      "total_pnl": 223.11,
-      "avg_pnl": 111.56,
+      "total_pnl": 205.0,
+      "avg_pnl": 102.5,
       "performance_rank": 9
     },
     "growth": {
       "count": 1,
-      "total_pnl": 128.5,
-      "avg_pnl": 128.5,
+      "total_pnl": 139.75,
+      "avg_pnl": 139.75,
       "performance_rank": 8
     },
     "volatility": {
       "count": 1,
-      "total_pnl": 87.84,
-      "avg_pnl": 87.84,
+      "total_pnl": 76.31,
+      "avg_pnl": 76.31,
       "performance_rank": 11
     },
     "momentum": {
       "count": 1,
-      "total_pnl": 89.19,
-      "avg_pnl": 89.19,
+      "total_pnl": 89.46,
+      "avg_pnl": 89.46,
       "performance_rank": 10
     },
     "ultra_aggressive": {
       "count": 2,
-      "total_pnl": 599.48,
-      "avg_pnl": 299.74,
+      "total_pnl": 595.79,
+      "avg_pnl": 297.89,
       "performance_rank": 6
     },
     "high_growth": {
       "count": 3,
-      "total_pnl": 432.22,
-      "avg_pnl": 144.07,
+      "total_pnl": 429.7,
+      "avg_pnl": 143.23,
       "performance_rank": 7
     },
     "ml_momentum": {
       "count": 1,
-      "total_pnl": 65.73,
-      "avg_pnl": 65.73,
+      "total_pnl": 63.97,
+      "avg_pnl": 63.97,
       "performance_rank": 12
     },
     "statistical_arbitrage": {
       "count": 1,
-      "total_pnl": 25.58,
-      "avg_pnl": 25.58,
-      "performance_rank": 15
+      "total_pnl": 26.07,
+      "avg_pnl": 26.07,
+      "performance_rank": 14
     },
     "volatility_arbitrage": {
       "count": 1,
-      "total_pnl": 53.25,
-      "avg_pnl": 53.25,
+      "total_pnl": 47.09,
+      "avg_pnl": 47.09,
       "performance_rank": 13
     },
     "mean_reversion": {
       "count": 1,
-      "total_pnl": 22.03,
-      "avg_pnl": 22.03,
+      "total_pnl": 19.3,
+      "avg_pnl": 19.3,
       "performance_rank": 17
     },
     "market_making": {
       "count": 1,
-      "total_pnl": 14.12,
-      "avg_pnl": 14.12,
+      "total_pnl": 16.47,
+      "avg_pnl": 16.47,
       "performance_rank": 18
     },
     "triangular_arbitrage": {
       "count": 1,
-      "total_pnl": 22.87,
-      "avg_pnl": 22.87,
+      "total_pnl": 20.22,
+      "avg_pnl": 20.22,
       "performance_rank": 16
     },
     "enhanced": {
       "count": 3,
-      "total_pnl": 79.12,
-      "avg_pnl": 26.37,
-      "performance_rank": 14
+      "total_pnl": 76.23,
+      "avg_pnl": 25.41,
+      "performance_rank": 15
     },
     "extreme_leverage": {
       "count": 2,
-      "total_pnl": 1322.47,
-      "avg_pnl": 661.24,
+      "total_pnl": 1317.45,
+      "avg_pnl": 658.73,
       "performance_rank": 4
     },
     "pump_scalping": {
       "count": 2,
-      "total_pnl": 1430.81,
-      "avg_pnl": 715.41,
+      "total_pnl": 1459.41,
+      "avg_pnl": 729.71,
       "performance_rank": 2
     },
     "meme_explosion": {
       "count": 2,
-      "total_pnl": 2187.1,
-      "avg_pnl": 1093.55,
+      "total_pnl": 2160.16,
+      "avg_pnl": 1080.08,
       "performance_rank": 1
     },
     "ultra_scalping": {
       "count": 2,
-      "total_pnl": 1224.22,
-      "avg_pnl": 612.11,
+      "total_pnl": 1226.1,
+      "avg_pnl": 613.05,
       "performance_rank": 5
     },
     "extreme_momentum": {
@@ -138,110 +138,110 @@
   "market_phase_analysis": {
     "bull_run": {
       "days": 91,
-      "total_pnl": 117054.69,
-      "avg_pnl": 1286.32
+      "total_pnl": 119240.51,
+      "avg_pnl": 1310.34
     },
     "consolidation": {
       "days": 90,
-      "total_pnl": 336752.4,
-      "avg_pnl": 3741.69
+      "total_pnl": 339700.59,
+      "avg_pnl": 3774.45
     },
     "alt_season": {
       "days": 90,
-      "total_pnl": 547984.27,
-      "avg_pnl": 6088.71
+      "total_pnl": 547566.24,
+      "avg_pnl": 6084.07
     },
     "correction": {
       "days": 95,
-      "total_pnl": 789508.44,
-      "avg_pnl": 8310.62
+      "total_pnl": 788593.73,
+      "avg_pnl": 8300.99
     }
   },
   "algorithm_performance": {
     "conservative": {
       "count": 2,
-      "total_pnl": 223.11,
-      "avg_pnl": 111.56
+      "total_pnl": 205.0,
+      "avg_pnl": 102.5
     },
     "growth": {
       "count": 1,
-      "total_pnl": 128.5,
-      "avg_pnl": 128.5
+      "total_pnl": 139.75,
+      "avg_pnl": 139.75
     },
     "volatility": {
       "count": 1,
-      "total_pnl": 87.84,
-      "avg_pnl": 87.84
+      "total_pnl": 76.31,
+      "avg_pnl": 76.31
     },
     "momentum": {
       "count": 1,
-      "total_pnl": 89.19,
-      "avg_pnl": 89.19
+      "total_pnl": 89.46,
+      "avg_pnl": 89.46
     },
     "ultra_aggressive": {
       "count": 2,
-      "total_pnl": 599.48,
-      "avg_pnl": 299.74
+      "total_pnl": 595.79,
+      "avg_pnl": 297.89
     },
     "high_growth": {
       "count": 3,
-      "total_pnl": 432.22,
-      "avg_pnl": 144.07
+      "total_pnl": 429.7,
+      "avg_pnl": 143.23
     },
     "LSTM_Momentum": {
       "count": 1,
-      "total_pnl": 65.73,
-      "avg_pnl": 65.73
+      "total_pnl": 63.97,
+      "avg_pnl": 63.97
     },
     "Pairs_Trading": {
       "count": 1,
-      "total_pnl": 25.58,
-      "avg_pnl": 25.58
+      "total_pnl": 26.07,
+      "avg_pnl": 26.07
     },
     "Volatility_Scaling": {
       "count": 1,
-      "total_pnl": 53.25,
-      "avg_pnl": 53.25
+      "total_pnl": 47.09,
+      "avg_pnl": 47.09
     },
     "Ornstein_Uhlenbeck": {
       "count": 1,
-      "total_pnl": 22.03,
-      "avg_pnl": 22.03
+      "total_pnl": 19.3,
+      "avg_pnl": 19.3
     },
     "Bid_Ask_Spread": {
       "count": 1,
-      "total_pnl": 14.12,
-      "avg_pnl": 14.12
+      "total_pnl": 16.47,
+      "avg_pnl": 16.47
     },
     "Triangular_Loop": {
       "count": 1,
-      "total_pnl": 22.87,
-      "avg_pnl": 22.87
+      "total_pnl": 20.22,
+      "avg_pnl": 20.22
     },
     "enhanced": {
       "count": 3,
-      "total_pnl": 79.12,
-      "avg_pnl": 26.37
+      "total_pnl": 76.23,
+      "avg_pnl": 25.41
     },
     "extreme_leverage": {
       "count": 2,
-      "total_pnl": 1322.47,
-      "avg_pnl": 661.24
+      "total_pnl": 1317.45,
+      "avg_pnl": 658.73
     },
     "pump_scalping": {
       "count": 2,
-      "total_pnl": 1430.81,
-      "avg_pnl": 715.41
+      "total_pnl": 1459.41,
+      "avg_pnl": 729.71
     },
     "meme_explosion": {
       "count": 2,
-      "total_pnl": 2187.1,
-      "avg_pnl": 1093.55
+      "total_pnl": 2160.16,
+      "avg_pnl": 1080.08
     },
     "ultra_scalping": {
       "count": 2,
-      "total_pnl": 1224.22,
-      "avg_pnl": 612.11
+      "total_pnl": 1226.1,
+      "avg_pnl": 613.05
     },
     "extreme_momentum": {
       "count": 2,
@@ -250,9 +250,9 @@
     }
   },
   "risk_reward_analysis": {
-    "stop_loss_events": 2156,
-    "profit_taken_events": 8083,
-    "risk_reward_ratio": "8083/2156",
+    "stop_loss_events": 2237,
+    "profit_taken_events": 7962,
+    "risk_reward_ratio": "7962/2237",
     "market_adaptation": "실제 시장 상황 완전 반영"
   },
   "individual_strategies": {
@@ -262,12 +262,12 @@
       "symbol": "BTCUSDT",
       "initial_capital": 2000.0,
       "leverage": 2.0,
-      "total_pnl": 99.56,
+      "total_pnl": 90.61,
       "days_active": 366,
-      "avg_daily_pnl": 0.27,
-      "return_rate": 4.98,
-      "stop_loss_count": 112,
-      "profit_taken_count": 218
+      "avg_daily_pnl": 0.25,
+      "return_rate": 4.53,
+      "stop_loss_count": 116,
+      "profit_taken_count": 211
     },
     "conservative_eth": {
       "type": "conservative",
@@ -275,12 +275,12 @@
       "symbol": "ETHUSDT",
       "initial_capital": 1500.0,
       "leverage": 2.0,
-      "total_pnl": 123.55,
+      "total_pnl": 114.39,
       "days_active": 366,
-      "avg_daily_pnl": 0.34,
-      "return_rate": 8.24,
-      "stop_loss_count": 87,
-      "profit_taken_count": 237
+      "avg_daily_pnl": 0.31,
+      "return_rate": 7.63,
+      "stop_loss_count": 104,
+      "profit_taken_count": 226
     },
     "growth_sol": {
       "type": "growth",
@@ -288,12 +288,12 @@
       "symbol": "SOLUSDT",
       "initial_capital": 1000.0,
       "leverage": 3.0,
-      "total_pnl": 128.5,
+      "total_pnl": 139.75,
       "days_active": 366,
-      "avg_daily_pnl": 0.35,
-      "return_rate": 12.85,
-      "stop_loss_count": 119,
-      "profit_taken_count": 233
+      "avg_daily_pnl": 0.38,
+      "return_rate": 13.98,
+      "stop_loss_count": 105,
+      "profit_taken_count": 239
     },
     "volatility_doge": {
       "type": "volatility",
@@ -301,12 +301,12 @@
       "symbol": "DOGEUSDT",
       "initial_capital": 300.0,
       "leverage": 4.0,
-      "total_pnl": 87.84,
+      "total_pnl": 76.31,
       "days_active": 366,
-      "avg_daily_pnl": 0.24,
-      "return_rate": 29.28,
-      "stop_loss_count": 64,
-      "profit_taken_count": 284
+      "avg_daily_pnl": 0.21,
+      "return_rate": 25.44,
+      "stop_loss_count": 92,
+      "profit_taken_count": 262
     },
     "momentum_shib": {
       "type": "momentum",
@@ -314,12 +314,12 @@
       "symbol": "SHIBUSDT",
       "initial_capital": 200.0,
       "leverage": 5.0,
-      "total_pnl": 89.19,
+      "total_pnl": 89.46,
       "days_active": 366,
       "avg_daily_pnl": 0.24,
-      "return_rate": 44.59,
-      "stop_loss_count": 65,
-      "profit_taken_count": 286
+      "return_rate": 44.73,
+      "stop_loss_count": 62,
+      "profit_taken_count": 284
     },
     "ultra_aggressive_1": {
       "type": "ultra_aggressive",
@@ -327,12 +327,12 @@
       "symbol": "BTCUSDT",
       "initial_capital": 1590.0,
       "leverage": 5.0,
-      "total_pnl": 321.24,
+      "total_pnl": 312.17,
       "days_active": 366,
-      "avg_daily_pnl": 0.88,
-      "return_rate": 20.2,
-      "stop_loss_count": 112,
-      "profit_taken_count": 246
+      "avg_daily_pnl": 0.85,
+      "return_rate": 19.63,
+      "stop_loss_count": 115,
+      "profit_taken_count": 242
     },
     "ultra_aggressive_2": {
       "type": "ultra_aggressive",
@@ -340,12 +340,12 @@
       "symbol": "ETHUSDT",
       "initial_capital": 1060.0,
       "leverage": 6.0,
-      "total_pnl": 278.24,
+      "total_pnl": 283.62,
       "days_active": 366,
-      "avg_daily_pnl": 0.76,
-      "return_rate": 26.25,
+      "avg_daily_pnl": 0.77,
+      "return_rate": 26.76,
       "stop_loss_count": 90,
-      "profit_taken_count": 265
+      "profit_taken_count": 266
     },
     "high_growth_1": {
       "type": "high_growth",
@@ -353,12 +353,12 @@
       "symbol": "SOLUSDT",
       "initial_capital": 530.0,
       "leverage": 7.0,
-      "total_pnl": 184.73,
+      "total_pnl": 176.87,
       "days_active": 366,
-      "avg_daily_pnl": 0.5,
-      "return_rate": 34.85,
-      "stop_loss_count": 86,
-      "profit_taken_count": 277
+      "avg_daily_pnl": 0.48,
+      "return_rate": 33.37,
+      "stop_loss_count": 90,
+      "profit_taken_count": 267
     },
     "high_growth_2": {
       "type": "high_growth",
@@ -366,12 +366,12 @@
       "symbol": "QUICKUSDT",
       "initial_capital": 265.0,
       "leverage": 8.0,
-      "total_pnl": 125.54,
+      "total_pnl": 128.94,
       "days_active": 366,
-      "avg_daily_pnl": 0.34,
-      "return_rate": 47.37,
-      "stop_loss_count": 62,
-      "profit_taken_count": 300
+      "avg_daily_pnl": 0.35,
+      "return_rate": 48.66,
+      "stop_loss_count": 57,
+      "profit_taken_count": 304
     },
     "high_growth_3": {
       "type": "high_growth",
@@ -379,12 +379,12 @@
       "symbol": "LRCUSDT",
       "initial_capital": 212.0,
       "leverage": 9.0,
-      "total_pnl": 121.95,
+      "total_pnl": 123.89,
       "days_active": 366,
-      "avg_daily_pnl": 0.33,
-      "return_rate": 57.52,
-      "stop_loss_count": 54,
-      "profit_taken_count": 309
+      "avg_daily_pnl": 0.34,
+      "return_rate": 58.44,
+      "stop_loss_count": 51,
+      "profit_taken_count": 313
     },
     "ml_momentum_1": {
       "type": "ml_momentum",
@@ -392,12 +392,12 @@
       "symbol": "DOGEUSDT",
       "initial_capital": 318.0,
       "leverage": 3.5,
-      "total_pnl": 65.73,
+      "total_pnl": 63.97,
       "days_active": 366,
-      "avg_daily_pnl": 0.18,
-      "return_rate": 20.67,
-      "stop_loss_count": 98,
-      "profit_taken_count": 238
+      "avg_daily_pnl": 0.17,
+      "return_rate": 20.12,
+      "stop_loss_count": 103,
+      "profit_taken_count": 236
     },
     "statistical_arb_1": {
       "type": "statistical_arbitrage",
@@ -405,12 +405,12 @@
       "symbol": "SHIBUSDT",
       "initial_capital": 265.0,
       "leverage": 2.5,
-      "total_pnl": 25.58,
+      "total_pnl": 26.07,
       "days_active": 366,
       "avg_daily_pnl": 0.07,
-      "return_rate": 9.65,
-      "stop_loss_count": 120,
-      "profit_taken_count": 210
+      "return_rate": 9.84,
+      "stop_loss_count": 112,
+      "profit_taken_count": 202
     },
     "volatility_arb_1": {
       "type": "volatility_arbitrage",
@@ -418,12 +418,12 @@
       "symbol": "PEPEUSDT",
       "initial_capital": 212.0,
       "leverage": 4.5,
-      "total_pnl": 53.25,
+      "total_pnl": 47.09,
       "days_active": 366,
-      "avg_daily_pnl": 0.15,
-      "return_rate": 25.12,
-      "stop_loss_count": 101,
-      "profit_taken_count": 257
+      "avg_daily_pnl": 0.13,
+      "return_rate": 22.21,
+      "stop_loss_count": 120,
+      "profit_taken_count": 236
     },
     "mean_reversion_1": {
       "type": "mean_reversion",
@@ -431,12 +431,12 @@
       "symbol": "WIFUSDT",
       "initial_capital": 159.0,
       "leverage": 3.0,
-      "total_pnl": 22.03,
+      "total_pnl": 19.3,
       "days_active": 366,
-      "avg_daily_pnl": 0.06,
-      "return_rate": 13.86,
-      "stop_loss_count": 105,
-      "profit_taken_count": 231
+      "avg_daily_pnl": 0.05,
+      "return_rate": 12.14,
+      "stop_loss_count": 129,
+      "profit_taken_count": 214
     },
     "market_making_1": {
       "type": "market_making",
@@ -444,12 +444,12 @@
       "symbol": "BONKUSDT",
       "initial_capital": 212.0,
       "leverage": 2.0,
-      "total_pnl": 14.12,
+      "total_pnl": 16.47,
       "days_active": 366,
       "avg_daily_pnl": 0.04,
-      "return_rate": 6.66,
-      "stop_loss_count": 138,
-      "profit_taken_count": 193
+      "return_rate": 7.77,
+      "stop_loss_count": 110,
+      "profit_taken_count": 206
     },
     "triangular_arb_1": {
       "type": "triangular_arbitrage",
@@ -457,12 +457,12 @@
       "symbol": "FLOKIUSDT",
       "initial_capital": 159.0,
       "leverage": 2.5,
-      "total_pnl": 22.87,
+      "total_pnl": 20.22,
       "days_active": 366,
       "avg_daily_pnl": 0.06,
-      "return_rate": 14.38,
-      "stop_loss_count": 105,
-      "profit_taken_count": 223
+      "return_rate": 12.72,
+      "stop_loss_count": 121,
+      "profit_taken_count": 197
     },
     "enhanced_1": {
       "type": "enhanced",
@@ -470,12 +470,12 @@
       "symbol": "ADAUSDT",
       "initial_capital": 150.0,
       "leverage": 3.5,
-      "total_pnl": 25.78,
+      "total_pnl": 24.18,
       "days_active": 366,
       "avg_daily_pnl": 0.07,
-      "return_rate": 17.19,
-      "stop_loss_count": 109,
-      "profit_taken_count": 247
+      "return_rate": 16.12,
+      "stop_loss_count": 119,
+      "profit_taken_count": 237
     },
     "enhanced_2": {
       "type": "enhanced",
@@ -483,12 +483,12 @@
       "symbol": "MATICUSDT",
       "initial_capital": 120.0,
       "leverage": 4.0,
-      "total_pnl": 27.7,
+      "total_pnl": 27.68,
       "days_active": 366,
       "avg_daily_pnl": 0.08,
-      "return_rate": 23.08,
-      "stop_loss_count": 102,
-      "profit_taken_count": 252
+      "return_rate": 23.07,
+      "stop_loss_count": 105,
+      "profit_taken_count": 251
     },
     "enhanced_3": {
       "type": "enhanced",
@@ -496,12 +496,12 @@
       "symbol": "AVAXUSDT",
       "initial_capital": 100.0,
       "leverage": 4.5,
-      "total_pnl": 25.64,
+      "total_pnl": 24.37,
       "days_active": 366,
       "avg_daily_pnl": 0.07,
-      "return_rate": 25.64,
-      "stop_loss_count": 99,
-      "profit_taken_count": 259
+      "return_rate": 24.37,
+      "stop_loss_count": 108,
+      "profit_taken_count": 248
     },
     "extreme_leverage_1": {
       "type": "extreme_leverage",
@@ -509,12 +509,12 @@
       "symbol": "BTCUSDT",
       "initial_capital": 1000.0,
       "leverage": 10.0,
-      "total_pnl": 616.56,
+      "total_pnl": 623.75,
       "days_active": 366,
-      "avg_daily_pnl": 1.68,
-      "return_rate": 61.66,
-      "stop_loss_count": 69,
-      "profit_taken_count": 294
+      "avg_daily_pnl": 1.7,
+      "return_rate": 62.38,
+      "stop_loss_count": 67,
+      "profit_taken_count": 297
     },
     "extreme_leverage_2": {
       "type": "extreme_leverage",
@@ -522,12 +522,12 @@
       "symbol": "ETHUSDT",
       "initial_capital": 800.0,
       "leverage": 12.0,
-      "total_pnl": 705.91,
+      "total_pnl": 693.7,
       "days_active": 366,
-      "avg_daily_pnl": 1.93,
-      "return_rate": 88.24,
-      "stop_loss_count": 37,
-      "profit_taken_count": 328
+      "avg_daily_pnl": 1.9,
+      "return_rate": 86.71,
+      "stop_loss_count": 40,
+      "profit_taken_count": 322
     },
     "pump_scalp_1": {
       "type": "pump_scalping",
@@ -535,12 +535,12 @@
       "symbol": "SOLUSDT",
       "initial_capital": 600.0,
       "leverage": 15.0,
-      "total_pnl": 598.84,
+      "total_pnl": 625.75,
       "days_active": 366,
-      "avg_daily_pnl": 1.64,
-      "return_rate": 99.81,
-      "stop_loss_count": 108,
-      "profit_taken_count": 256
+      "avg_daily_pnl": 1.71,
+      "return_rate": 104.29,
+      "stop_loss_count": 99,
+      "profit_taken_count": 266
     },
     "pump_scalp_2": {
       "type": "pump_scalping",
@@ -548,12 +548,12 @@
       "symbol": "DOGEUSDT",
       "initial_capital": 500.0,
       "leverage": 20.0,
-      "total_pnl": 831.97,
+      "total_pnl": 833.66,
       "days_active": 366,
-      "avg_daily_pnl": 2.27,
-      "return_rate": 166.39,
+      "avg_daily_pnl": 2.28,
+      "return_rate": 166.73,
       "stop_loss_count": 54,
-      "profit_taken_count": 310
+      "profit_taken_count": 311
     },
     "meme_explosion_1": {
       "type": "meme_explosion",
@@ -561,12 +561,12 @@
       "symbol": "SHIBUSDT",
       "initial_capital": 400.0,
       "leverage": 25.0,
-      "total_pnl": 1040.85,
+      "total_pnl": 1013.0,
       "days_active": 366,
-      "avg_daily_pnl": 2.84,
-      "return_rate": 260.21,
-      "stop_loss_count": 43,
-      "profit_taken_count": 319
+      "avg_daily_pnl": 2.77,
+      "return_rate": 253.25,
+      "stop_loss_count": 52,
+      "profit_taken_count": 313
     },
     "meme_explosion_2": {
       "type": "meme_explosion",
@@ -574,10 +574,10 @@
       "symbol": "PEPEUSDT",
       "initial_capital": 300.0,
       "leverage": 30.0,
-      "total_pnl": 1146.25,
+      "total_pnl": 1147.16,
       "days_active": 366,
       "avg_daily_pnl": 3.13,
-      "return_rate": 382.08,
+      "return_rate": 382.39,
       "stop_loss_count": 15,
       "profit_taken_count": 349
     },
@@ -587,12 +587,12 @@
       "symbol": "WIFUSDT",
       "initial_capital": 250.0,
       "leverage": 20.0,
-      "total_pnl": 623.98,
+      "total_pnl": 625.86,
       "days_active": 366,
-      "avg_daily_pnl": 1.7,
-      "return_rate": 249.59,
-      "stop_loss_count": 1,
-      "profit_taken_count": 365
+      "avg_daily_pnl": 1.71,
+      "return_rate": 250.34,
+      "stop_loss_count": 0,
+      "profit_taken_count": 366
     },
     "ultra_scalp_2": {
       "type": "ultra_scalping",
@@ -642,8 +642,8 @@
   },
   "key_findings": [
     "모든 29개 전략 실제 시장 데이터 적용 완료",
-    "초기 투자 14,652.00 USDT에서 최종 24,007.98 USDT",
-    "실제 수익률 63.69% 달성",
+    "초기 투자 14,652.00 USDT에서 최종 23,968.79 USDT",
+    "실제 수익률 63.39% 달성",
     "18개 전략 그룹 성과 분석 완료",
     "실제 시장 상황(ETF 승인, 이더리움 업그레이드, 펨코인 광풍, 연초 조정) 완전 반영"
   ],

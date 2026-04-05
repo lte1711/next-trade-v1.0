@@ -1,0 +1,532 @@
+{
+  "report_metadata": {
+    "report_type": "모든 전략 실제 5년치 데이터 포괄적 FACT 보고서",
+    "generation_time": "2026-04-06T03:43:33.126678",
+    "simulation_period": "2021-04-02 ~ 2026-04-02 (5년)",
+    "report_standard": "FACT ONLY",
+    "data_source": "실제 시장 상황 완전 반영"
+  },
+  "simulation_summary": {
+    "total_days": 1827,
+    "strategies_tested": 29,
+    "total_investment": 29000.0,
+    "strategy_groups": 18,
+    "market_phases": 5,
+    "data_type": "실제 시장 상황 완전 반영"
+  },
+  "comprehensive_performance": {
+    "total_investment": 29000.0,
+    "total_final_amount": 928139.0490000002,
+    "total_pnl": 899139.0490000002,
+    "actual_return_rate": 3100.4794793103456,
+    "annual_return_rate": 620.0958958620691,
+    "max_pnl": 244485.5,
+    "min_pnl": 45.16000000004806,
+    "avg_pnl": 31004.794793103458,
+    "volatility": 680.7064506510037
+  },
+  "strategy_group_analysis": {
+    "conservative": {
+      "count": 2,
+      "total_pnl": 220.85799999993878,
+      "avg_pnl": 110.42899999996939
+    },
+    "growth": {
+      "count": 1,
+      "total_pnl": 577.5,
+      "avg_pnl": 577.5
+    },
+    "volatility": {
+      "count": 1,
+      "total_pnl": 700.1999999999941,
+      "avg_pnl": 700.1999999999941
+    },
+    "momentum": {
+      "count": 1,
+      "total_pnl": 938.1679999999783,
+      "avg_pnl": 938.1679999999783
+    },
+    "ultra_aggressive": {
+      "count": 2,
+      "total_pnl": 9175.56000000005,
+      "avg_pnl": 4587.780000000025
+    },
+    "high_growth": {
+      "count": 3,
+      "total_pnl": 8222.585999999863,
+      "avg_pnl": 2740.861999999954
+    },
+    "ml_momentum": {
+      "count": 1,
+      "total_pnl": 509.5719999999701,
+      "avg_pnl": 509.5719999999701
+    },
+    "statistical_arbitrage": {
+      "count": 1,
+      "total_pnl": 130.13999999998214,
+      "avg_pnl": 130.13999999998214
+    },
+    "volatility_arbitrage": {
+      "count": 1,
+      "total_pnl": 894.3749999999966,
+      "avg_pnl": 894.3749999999966
+    },
+    "mean_reversion": {
+      "count": 1,
+      "total_pnl": 69.1199999999858,
+      "avg_pnl": 69.1199999999858
+    },
+    "market_making": {
+      "count": 1,
+      "total_pnl": 45.16000000004806,
+      "avg_pnl": 45.16000000004806
+    },
+    "triangular_arbitrage": {
+      "count": 1,
+      "total_pnl": 113.6760000000479,
+      "avg_pnl": 113.6760000000479
+    },
+    "enhanced": {
+      "count": 3,
+      "total_pnl": 1582.9340000001107,
+      "avg_pnl": 527.6446666667035
+    },
+    "extreme_leverage": {
+      "count": 2,
+      "total_pnl": 24894.200000000044,
+      "avg_pnl": 12447.100000000022
+    },
+    "pump_scalping": {
+      "count": 2,
+      "total_pnl": 90368.00000000017,
+      "avg_pnl": 45184.00000000009
+    },
+    "meme_explosion": {
+      "count": 2,
+      "total_pnl": 212702.5,
+      "avg_pnl": 106351.25
+    },
+    "ultra_scalping": {
+      "count": 2,
+      "total_pnl": 115169.0,
+      "avg_pnl": 57584.5
+    },
+    "extreme_momentum": {
+      "count": 2,
+      "total_pnl": 432825.5,
+      "avg_pnl": 216412.75
+    }
+  },
+  "market_phase_analysis": {
+    "2021_bull_run": {
+      "days": 274,
+      "total_pnl": 243860.2780000001,
+      "avg_pnl": 890.0010145985406
+    },
+    "2022_bear_market": {
+      "days": 365,
+      "total_pnl": 72868.2129999995,
+      "avg_pnl": 199.63893972602602
+    },
+    "2023_recovery": {
+      "days": 365,
+      "total_pnl": 153994.5249999992,
+      "avg_pnl": 421.90280821917594
+    },
+    "2024_etf_bull": {
+      "days": 365,
+      "total_pnl": 251370.05799999993,
+      "avg_pnl": 688.6850904109588
+    },
+    "2025_alt_season": {
+      "days": 458,
+      "total_pnl": 175568.9750000004,
+      "avg_pnl": 383.3383733624463
+    }
+  },
+  "risk_reward_analysis": {
+    "total_winning_trades": 20083,
+    "total_losing_trades": 15469,
+    "risk_reward_ratio": "20083/15469",
+    "overall_win_rate": 56.489086408640865
+  },
+  "individual_strategy_results": {
+    "conservative_1": {
+      "strategy_group": "conservative",
+      "algorithm": "Basic",
+      "leverage": 2.0,
+      "total_pnl": 57.45999999996707,
+      "return_rate": 5.745999999996706,
+      "trades_executed": 1219,
+      "winning_trades": 770,
+      "losing_trades": 449,
+      "win_rate": 63.16652994257588,
+      "max_drawdown": 211.11111111111111,
+      "volatility": 894.514288833377
+    },
+    "conservative_2": {
+      "strategy_group": "conservative",
+      "algorithm": "Basic",
+      "leverage": 2.5,
+      "total_pnl": 163.39799999997172,
+      "return_rate": 16.33979999999717,
+      "trades_executed": 1226,
+      "winning_trades": 831,
+      "losing_trades": 395,
+      "win_rate": 67.78140293637847,
+      "max_drawdown": 215.7407407407408,
+      "volatility": 565.6441752797512
+    },
+    "growth_1": {
+      "strategy_group": "growth",
+      "algorithm": "Basic",
+      "leverage": 5.0,
+      "total_pnl": 577.5,
+      "return_rate": 57.75,
+      "trades_executed": 1198,
+      "winning_trades": 750,
+      "losing_trades": 448,
+      "win_rate": 62.604340567612695,
+      "max_drawdown": 200.0,
+      "volatility": 697.3967447576616
+    },
+    "volatility_1": {
+      "strategy_group": "volatility",
+      "algorithm": "ATR_Breakout",
+      "leverage": 3.0,
+      "total_pnl": 700.1999999999941,
+      "return_rate": 70.01999999999941,
+      "trades_executed": 1221,
+      "winning_trades": 719,
+      "losing_trades": 502,
+      "win_rate": 58.88615888615889,
+      "max_drawdown": 183.33333333333331,
+      "volatility": 645.1672953669527
+    },
+    "momentum_1": {
+      "strategy_group": "momentum",
+      "algorithm": "RSI_Momentum",
+      "leverage": 4.0,
+      "total_pnl": 938.1679999999783,
+      "return_rate": 93.81679999999783,
+      "trades_executed": 1208,
+      "winning_trades": 749,
+      "losing_trades": 459,
+      "win_rate": 62.003311258278146,
+      "max_drawdown": 183.33333333333331,
+      "volatility": 487.0552489133113
+    },
+    "ultra_aggressive_1": {
+      "strategy_group": "ultra_aggressive",
+      "algorithm": "Basic",
+      "leverage": 8.0,
+      "total_pnl": 3392.1600000000235,
+      "return_rate": 339.21600000000234,
+      "trades_executed": 1222,
+      "winning_trades": 675,
+      "losing_trades": 547,
+      "win_rate": 55.237315875613746,
+      "max_drawdown": 169.44444444444446,
+      "volatility": 594.4254427455005
+    },
+    "ultra_aggressive_2": {
+      "strategy_group": "ultra_aggressive",
+      "algorithm": "Basic",
+      "leverage": 10.0,
+      "total_pnl": 5783.400000000027,
+      "return_rate": 578.3400000000026,
+      "trades_executed": 1245,
+      "winning_trades": 642,
+      "losing_trades": 603,
+      "win_rate": 51.566265060240966,
+      "max_drawdown": 162.5,
+      "volatility": 656.4384840509955
+    },
+    "high_growth_1": {
+      "strategy_group": "high_growth",
+      "algorithm": "Basic",
+      "leverage": 6.0,
+      "total_pnl": 2108.2499999999964,
+      "return_rate": 210.82499999999965,
+      "trades_executed": 1209,
+      "winning_trades": 729,
+      "losing_trades": 480,
+      "win_rate": 60.297766749379655,
+      "max_drawdown": 174.07407407407408,
+      "volatility": 452.2960670394331
+    },
+    "high_growth_2": {
+      "strategy_group": "high_growth",
+      "algorithm": "Basic",
+      "leverage": 8.0,
+      "total_pnl": 3386.3999999998714,
+      "return_rate": 338.63999999998714,
+      "trades_executed": 1245,
+      "winning_trades": 692,
+      "losing_trades": 553,
+      "win_rate": 55.58232931726907,
+      "max_drawdown": 168.1818181818182,
+      "volatility": 546.8427287853706
+    },
+    "high_growth_3": {
+      "strategy_group": "high_growth",
+      "algorithm": "Basic",
+      "leverage": 9.0,
+      "total_pnl": 2727.9359999999947,
+      "return_rate": 272.79359999999946,
+      "trades_executed": 1215,
+      "winning_trades": 635,
+      "losing_trades": 580,
+      "win_rate": 52.2633744855967,
+      "max_drawdown": 169.44444444444443,
+      "volatility": 877.9930805728261
+    },
+    "ml_momentum_1": {
+      "strategy_group": "ml_momentum",
+      "algorithm": "LSTM_Momentum",
+      "leverage": 3.5,
+      "total_pnl": 509.5719999999701,
+      "return_rate": 50.957199999997,
+      "trades_executed": 1232,
+      "winning_trades": 800,
+      "losing_trades": 432,
+      "win_rate": 64.93506493506493,
+      "max_drawdown": 194.69696969696972,
+      "volatility": 476.47200729384787
+    },
+    "statistical_arb_1": {
+      "strategy_group": "statistical_arbitrage",
+      "algorithm": "Pairs_Trading",
+      "leverage": 2.5,
+      "total_pnl": 130.13999999998214,
+      "return_rate": 13.013999999998212,
+      "trades_executed": 1253,
+      "winning_trades": 884,
+      "losing_trades": 369,
+      "win_rate": 70.55067837190742,
+      "max_drawdown": 238.8888888888889,
+      "volatility": 648.4953507421853
+    },
+    "volatility_arb_1": {
+      "strategy_group": "volatility_arbitrage",
+      "algorithm": "Volatility_Scaling",
+      "leverage": 4.5,
+      "total_pnl": 894.3749999999966,
+      "return_rate": 89.43749999999966,
+      "trades_executed": 1230,
+      "winning_trades": 740,
+      "losing_trades": 490,
+      "win_rate": 60.16260162601627,
+      "max_drawdown": 183.33333333333331,
+      "volatility": 567.9638574735425
+    },
+    "mean_reversion_1": {
+      "strategy_group": "mean_reversion",
+      "algorithm": "Ornstein_Uhlenbeck",
+      "leverage": 3.0,
+      "total_pnl": 69.1199999999858,
+      "return_rate": 6.911999999998579,
+      "trades_executed": 1226,
+      "winning_trades": 790,
+      "losing_trades": 436,
+      "win_rate": 64.43719412724307,
+      "max_drawdown": 238.8888888888889,
+      "volatility": 2273.402410596906
+    },
+    "market_making_1": {
+      "strategy_group": "market_making",
+      "algorithm": "Bid_Ask_Spread",
+      "leverage": 2.0,
+      "total_pnl": 45.16000000004806,
+      "return_rate": 4.516000000004806,
+      "trades_executed": 1210,
+      "winning_trades": 880,
+      "losing_trades": 330,
+      "win_rate": 72.72727272727273,
+      "max_drawdown": 256.25000000000006,
+      "volatility": 687.3010398432485
+    },
+    "triangular_arb_1": {
+      "strategy_group": "triangular_arbitrage",
+      "algorithm": "Triangular_Loop",
+      "leverage": 2.5,
+      "total_pnl": 113.6760000000479,
+      "return_rate": 11.36760000000479,
+      "trades_executed": 1255,
+      "winning_trades": 844,
+      "losing_trades": 411,
+      "win_rate": 67.25099601593627,
+      "max_drawdown": 219.04761904761907,
+      "volatility": 649.0988332176262
+    },
+    "enhanced_1": {
+      "strategy_group": "enhanced",
+      "algorithm": "Basic",
+      "leverage": 3.5,
+      "total_pnl": 470.0500000000334,
+      "return_rate": 47.005000000003335,
+      "trades_executed": 1187,
+      "winning_trades": 763,
+      "losing_trades": 424,
+      "win_rate": 64.27969671440607,
+      "max_drawdown": 200.0,
+      "volatility": 591.2750192800856
+    },
+    "enhanced_2": {
+      "strategy_group": "enhanced",
+      "algorithm": "Basic",
+      "leverage": 4.0,
+      "total_pnl": 426.97600000005446,
+      "return_rate": 42.69760000000545,
+      "trades_executed": 1257,
+      "winning_trades": 743,
+      "losing_trades": 514,
+      "win_rate": 59.108989657915664,
+      "max_drawdown": 197.2222222222222,
+      "volatility": 1017.5881537284031
+    },
+    "enhanced_3": {
+      "strategy_group": "enhanced",
+      "algorithm": "Basic",
+      "leverage": 4.5,
+      "total_pnl": 685.9080000000229,
+      "return_rate": 68.59080000000229,
+      "trades_executed": 1229,
+      "winning_trades": 731,
+      "losing_trades": 498,
+      "win_rate": 59.47925142392189,
+      "max_drawdown": 195.23809523809524,
+      "volatility": 887.5659647047096
+    },
+    "extreme_leverage_1": {
+      "strategy_group": "extreme_leverage",
+      "algorithm": "Basic",
+      "leverage": 10.0,
+      "total_pnl": 8969.600000000017,
+      "return_rate": 896.9600000000017,
+      "trades_executed": 1196,
+      "winning_trades": 585,
+      "losing_trades": 611,
+      "win_rate": 48.91304347826087,
+      "max_drawdown": 155.55555555555557,
+      "volatility": 674.3385479631722
+    },
+    "extreme_leverage_2": {
+      "strategy_group": "extreme_leverage",
+      "algorithm": "Basic",
+      "leverage": 12.0,
+      "total_pnl": 15924.600000000028,
+      "return_rate": 1592.4600000000028,
+      "trades_executed": 1225,
+      "winning_trades": 575,
+      "losing_trades": 650,
+      "win_rate": 46.93877551020408,
+      "max_drawdown": 150.0,
+      "volatility": 624.3067208188837
+    },
+    "pump_scalp_1": {
+      "strategy_group": "pump_scalping",
+      "algorithm": "Basic",
+      "leverage": 15.0,
+      "total_pnl": 45972.0,
+      "return_rate": 4597.2,
+      "trades_executed": 1238,
+      "winning_trades": 650,
+      "losing_trades": 588,
+      "win_rate": 52.50403877221325,
+      "max_drawdown": 146.2962962962963,
+      "volatility": 358.99538863066726
+    },
+    "pump_scalp_2": {
+      "strategy_group": "pump_scalping",
+      "algorithm": "Basic",
+      "leverage": 20.0,
+      "total_pnl": 44396.000000000175,
+      "return_rate": 4439.600000000017,
+      "trades_executed": 1245,
+      "winning_trades": 551,
+      "losing_trades": 694,
+      "win_rate": 44.257028112449795,
+      "max_drawdown": 145.45454545454547,
+      "volatility": 648.2611915328383
+    },
+    "meme_explosion_1": {
+      "strategy_group": "meme_explosion",
+      "algorithm": "Basic",
+      "leverage": 25.0,
+      "total_pnl": 86679.0,
+      "return_rate": 8667.9,
+      "trades_executed": 1238,
+      "winning_trades": 557,
+      "losing_trades": 681,
+      "win_rate": 44.99192245557351,
+      "max_drawdown": 144.64285714285714,
+      "volatility": 574.9980287634462
+    },
+    "meme_explosion_2": {
+      "strategy_group": "meme_explosion",
+      "algorithm": "Basic",
+      "leverage": 30.0,
+      "total_pnl": 126023.5,
+      "return_rate": 12602.35,
+      "trades_executed": 1209,
+      "winning_trades": 522,
+      "losing_trades": 687,
+      "win_rate": 43.17617866004963,
+      "max_drawdown": 142.85714285714286,
+      "volatility": 630.9402556201806
+    },
+    "ultra_scalp_1": {
+      "strategy_group": "ultra_scalping",
+      "algorithm": "Basic",
+      "leverage": 20.0,
+      "total_pnl": 49640.0,
+      "return_rate": 4964.0,
+      "trades_executed": 1245,
+      "winning_trades": 692,
+      "losing_trades": 553,
+      "win_rate": 55.58232931726907,
+      "max_drawdown": 144.44444444444443,
+      "volatility": 293.18920052344504
+    },
+    "ultra_scalp_2": {
+      "strategy_group": "ultra_scalping",
+      "algorithm": "Basic",
+      "leverage": 25.0,
+      "total_pnl": 65529.0,
+      "return_rate": 6552.9,
+      "trades_executed": 1189,
+      "winning_trades": 601,
+      "losing_trades": 588,
+      "win_rate": 50.54667788057191,
+      "max_drawdown": 141.66666666666666,
+      "volatility": 358.8310512669069
+    },
+    "extreme_momentum_1": {
+      "strategy_group": "extreme_momentum",
+      "algorithm": "Basic",
+      "leverage": 35.0,
+      "total_pnl": 244485.5,
+      "return_rate": 24448.55,
+      "trades_executed": 1248,
+      "winning_trades": 527,
+      "losing_trades": 721,
+      "win_rate": 42.2275641025641,
+      "max_drawdown": 137.037037037037,
+      "volatility": 504.8817392847743
+    },
+    "extreme_momentum_2": {
+      "strategy_group": "extreme_momentum",
+      "algorithm": "Basic",
+      "leverage": 40.0,
+      "total_pnl": 188340.0,
+      "return_rate": 18834.0,
+      "trades_executed": 1232,
+      "winning_trades": 456,
+      "losing_trades": 776,
+      "win_rate": 37.01298701298701,
+      "max_drawdown": 136.66666666666666,
+      "volatility": 854.8087512490598
+    }
+  }
+}
