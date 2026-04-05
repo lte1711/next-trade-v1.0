@@ -20,6 +20,25 @@ from merged_partial_v2.exchange.credential_store import resolve_api_base, resolv
 from merged_partial_v2.pathing import merged_root as resolve_merged_root
 
 
+def _get_environment_config() -> dict[str, Any]:
+    """환경 설정을 로드하여 테스트넷/실거래 구분"""
+    try:
+        config_path = resolve_merged_root() / "config.json"
+        if config_path.exists():
+            with config_path.open("r", encoding="utf-8") as handle:
+                config = json.load(handle)
+                return {
+                    "environment": config.get("environment", "testnet"),
+                    "exchange_base_url": config.get("exchange_base_url", "https://demo-fapi.binance.com"),
+                }
+    except Exception:
+        pass
+    return {
+        "environment": "testnet",
+        "exchange_base_url": "https://demo-fapi.binance.com",
+    }
+
+
 _SYMBOL_RULES_CACHE: dict[str, Dict[str, float]] = {}
 
 
@@ -215,11 +234,13 @@ def _prefail(
     price: float | None = None,
     normalization: Dict[str, Any] | None = None,
 ) -> RuntimeError:
+    env_config = _get_environment_config()
     record = {
         "ts": datetime.now(timezone.utc).isoformat(),
         "ok": False,
         "submit_called": False,
-        "exchange": "BINANCE_TESTNET",
+        "exchange": "BINANCE_LIVE" if env_config["environment"] == "live" else "BINANCE_TESTNET",
+        "environment": env_config["environment"],
         "trace_id": trace_id,
         "symbol": symbol,
         "side": side,

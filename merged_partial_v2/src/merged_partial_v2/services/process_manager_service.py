@@ -127,16 +127,21 @@ def _launcher_command(
     adopt_active_positions: bool,
     interval_seconds: float,
 ) -> list[str]:
+    """자동매매 루프를 별도 프로세스로 실행하기 위한 명령어 생성"""
     args = [
         "--autonomous-loop",
         "--autonomous-cycles",
-        "0",
+        "0",  # 무한 루프
         "--autonomous-interval-seconds",
         str(max(interval_seconds, 1.0)),
     ]
     if adopt_active_positions:
         args.append("--adopt-active-positions")
-    args.append("--live")
+    if live:
+        args.append("--live")
+    else:
+        # 테스트넷 환경에서는 --live 플래그 없이 실행 (dry_run 모드)
+        pass
 
     if getattr(sys, "frozen", False):
         return [str(Path(sys.executable).resolve()), *args]
@@ -162,7 +167,7 @@ def start_autonomous_process(
 
     global _AUTONOMOUS_THREAD, _AUTONOMOUS_STOP_EVENT
     command = _launcher_command(
-        live=True,
+        live=live,
         adopt_active_positions=adopt_active_positions,
         interval_seconds=interval_seconds,
     )
@@ -171,7 +176,7 @@ def start_autonomous_process(
         target=_run_autonomous_loop_in_background,
         kwargs={
             "stop_event": _AUTONOMOUS_STOP_EVENT,
-            "live": True,
+            "live": live,
             "adopt_active_positions": adopt_active_positions,
             "interval_seconds": interval_seconds,
         },
@@ -182,7 +187,7 @@ def start_autonomous_process(
     record = {
         "pid": os.getpid(),
         "mode": "autonomous_loop",
-        "live": True,
+        "live": live,
         "adopt_active_positions": adopt_active_positions,
         "interval_seconds": interval_seconds,
         "command": command,

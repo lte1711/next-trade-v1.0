@@ -665,7 +665,12 @@ def run_installed_startup_default(
 ) -> Dict[str, Any]:
     startup = dict(config.get("startup", {}))
     default_mode = str(startup.get("default_mode_when_installed", "autonomous_loop")).strip().lower()
-    dry_run = False
+    
+    # 환경에 따른 dry_run 설정
+    environment = config.get("environment", "testnet").lower()
+    is_testnet = "testnet" in environment
+    dry_run = not bool(startup.get("live_by_default_when_installed", False)) and is_testnet
+    
     adopt_active_positions = bool(startup.get("adopt_active_positions_when_installed", False))
     cycles = int(startup.get("autonomous_cycles_when_installed", 0) or 0)
     interval_seconds = float(startup.get("autonomous_interval_seconds_when_installed", 60.0) or 60.0)
@@ -716,9 +721,13 @@ def parse_args() -> argparse.Namespace:
 
 def cli_main() -> None:
     args = parse_args()
-    dry_run = False
     engine, config, _, _ = _build_engine()
-
+    
+    # 환경에 따른 dry_run 설정
+    environment = config.get("environment", "testnet").lower()
+    is_testnet = "testnet" in environment
+    dry_run = not args.live and is_testnet
+    
     if not _has_action_args(args):
         startup = dict(config.get("startup", {}))
         if getattr(sys, "frozen", False) and bool(startup.get("autorun_when_installed", False)):

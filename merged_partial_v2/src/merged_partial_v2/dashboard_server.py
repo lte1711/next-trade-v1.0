@@ -83,10 +83,16 @@ def build_dashboard_payload() -> dict:
     snapshot = build_snapshot_payload()
     snapshot = _apply_runtime_overlay(snapshot)
     write_snapshot_payload(snapshot)
+    config = load_merge_config()
     return {
         "ok": True,
         "snapshot": snapshot,
         "autonomous_process": get_process_status(),
+        "environment": {
+            "type": config.get("environment", "unknown"),
+            "exchange_base_url": config.get("exchange_base_url", ""),
+            "is_testnet": "testnet" in config.get("environment", "").lower(),
+        },
     }
 
 
@@ -145,74 +151,44 @@ def _active_notional(active_positions: list[dict]) -> float:
 
 
 def _apply_runtime_overlay(snapshot: dict) -> dict:
+    """런타임 상태 소스를 단순화하여 일관성 확보"""
+    # 주요 상태 파일 경로
     report_path = merged_root() / "autonomous_reports" / "last_autonomous_report.json"
-    execution_report_path = _last_execution_report_path()
     state_path = merged_root() / "runtime" / "autonomous_state.json"
+    
+    # 파일 로드 (존재하지 않으면 None)
     last_report = _load_json_if_exists(report_path)
     state_payload = _load_json_if_exists(state_path)
 
+    # 자동매매 보고서 처리
     if last_report:
-      snapshot["last_autonomous_report"] = {
-          "ok": True,
-          "path": str(report_path),
-          "mode": last_report.get("mode"),
-          "dry_run": last_report.get("dry_run"),
-          "entry_count": last_report.get("entry_count"),
-          "exit_count": last_report.get("exit_count"),
-          "decision_line": last_report.get("decision_line"),
-          "payload": last_report,
-      }
-      if isinstance(last_report.get("paper_decision"), dict):
-          snapshot["paper_decision"] = last_report["paper_decision"]
-          snapshot["paper_decision_summary"] = {
-              "recommended_orders": len(last_report["paper_decision"].get("recommendations", [])),
-              "blocked_candidates": len(last_report["paper_decision"].get("blocked", [])),
-              "top_recommendation_symbol": (
-                  last_report["paper_decision"].get("recommendations", [{}])[0].get("symbol")
-                  if last_report["paper_decision"].get("recommendations")
-                  else None
-              ),
-              "decision_line": last_report["paper_decision"].get("decision_line"),
-          }
-      existing_execution = snapshot.get("last_execution_report", {})
-      should_replace_execution = not existing_execution.get("ok")
-      if not should_replace_execution:
-          autonomous_sort_key = _report_sort_key(last_report, report_path)
-          existing_payload = existing_execution.get("payload")
-          should_replace_execution = autonomous_sort_key > _report_sort_key(existing_payload, execution_report_path)
-      if should_replace_execution:
-          latest_entry = (last_report.get("entries") or [None])[0]
-          latest_exit = (last_report.get("exits") or [None])[0]
-          latest_action = latest_entry or latest_exit
-          if latest_action:
-              result_payload = latest_action.get("result") or {}
-              direction = "entry" if latest_entry else "exit"
-              symbol = latest_action.get("symbol")
-              status = (
-                  result_payload.get("final_status")
-                  or result_payload.get("status_check", {}).get("status")
-                  or result_payload.get("status")
-              )
-              summary = (
-                  f"auto {direction} | "
-                  f"symbol={symbol or '-'} | "
-                  f"status={status or '-'}"
-              )
-              snapshot["last_execution_report"] = {
-                  "ok": True,
-                  "path": str(report_path),
-                  "mode": "autonomous_cycle",
-                  "dry_run": last_report.get("dry_run"),
-                  "executed": True,
-                  "guard_passed": True,
-                  "reason": direction,
-                  "decision_line": last_report.get("decision_line"),
-                  "alert_summary": summary,
-                  "short_summary": summary,
-                  "symbol": symbol,
-                  "payload": latest_action,
-              }
+        snapshot["last_autonomous_report"] = {
+            "ok": True,
+            "path": str(report_path),
+            "mode": last_report.get("mode"),
+            "dry_run": last_report.get("dry_run"),
+            "entry_count": last_report.get("entry_count"),
+            "exit_count": last_report.get("exit_count"),
+            "decision_line": last_report.get("decision_line"),
+            "payload": last_report,
+        }
+        
+        # 페이퍼 디시전 정보 처리
+        if isinstance(last_report.get("paper_decision"), dict):
+            paper_decision = last_report["paper_decision"]
+            snapshot["paper_decision"] = paper_decision
+            snapshot["paper_decision_summary"] = {
+                "recommended_orders": len(paper_decision.get("recommendations", [])),
+                "blocked_candidates": len(paper_decision.get("blocked", [])),
+                "top_recommendation_symbol": (
+                    paper_decision.get("recommendations", [{}])[0].get("symbol")
+                    if paper_decision.get("recommendations")
+                    else None
+                ),
+                "decision_line": paper_decision.get("decision_line"),
+            }
 
+    # 상태 정보 처리 (포지션 정보)
     if state_payload:
         active_positions = _managed_positions_from_state(state_payload)
         snapshot.setdefault("account", {}).setdefault("positions", {})
@@ -221,17 +197,14 @@ def _apply_runtime_overlay(snapshot: dict) -> dict:
         snapshot["account"]["positions"]["position_count"] = len(active_positions)
         snapshot["account"]["positions"]["ts"] = state_payload.get("last_synced_at")
         snapshot["account"]["positions"]["source"] = "autonomous_state"
+        
+        # 투자 정보 계산
         current_invested_notional = _active_notional(active_positions)
         if isinstance(snapshot.get("paper_decision"), dict):
             snapshot["paper_decision"]["active_position_count"] = len(active_positions)
             snapshot["paper_decision"]["current_invested_notional"] = current_invested_notional
             target_symbol_count = int(snapshot["paper_decision"].get("target_symbol_count", 0) or 0)
             snapshot["paper_decision"]["available_slots"] = max(target_symbol_count - len(active_positions), 0)
-        if isinstance(snapshot.get("paper_decision_summary"), dict):
-            snapshot["paper_decision_summary"]["decision_line"] = snapshot.get("paper_decision", {}).get(
-                "decision_line",
-                snapshot["paper_decision_summary"].get("decision_line"),
-            )
 
     return snapshot
 
@@ -269,6 +242,7 @@ def load_cached_dashboard_payload() -> dict:
 
 def load_fast_dashboard_payload() -> dict:
     snapshot_path = merged_root() / "merged_snapshot.json"
+    config = load_merge_config()
     snapshot: dict
     if snapshot_path.exists():
         with snapshot_path.open("r", encoding="utf-8-sig") as handle:
@@ -290,6 +264,11 @@ def load_fast_dashboard_payload() -> dict:
         "ok": True,
         "snapshot": snapshot,
         "autonomous_process": get_process_status(),
+        "environment": {
+            "type": config.get("environment", "unknown"),
+            "exchange_base_url": config.get("exchange_base_url", ""),
+            "is_testnet": "testnet" in config.get("environment", "").lower(),
+        },
     }
 
 

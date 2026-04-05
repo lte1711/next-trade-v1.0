@@ -1,4 +1,5 @@
 {
+  "environment": "testnet",
   "exchange_base_url": "https://demo-fapi.binance.com",
   "recv_window_ms": 5000,
   "default_symbol_count": 5,
@@ -45,10 +46,39 @@
       "max_consecutive_losses": 4
     }
   },
+  "risk_limits": {
+    "daily_loss_limit_percent": 5.0,
+    "max_consecutive_failures": 3,
+    "max_total_exposure_percent": 95.0,
+    "max_position_size_percent": 20.0
+  },
+  "leverage_management": {
+    "default_leverage": 3,
+    "max_leverage": 10,
+    "leverage_adjustment_threshold": 15.0,
+    "position_size_limit_factor": 0.8,
+    "auto_reduce_on_margin_pressure": true
+  },
+  "margin_management": {
+    "initial_margin_ratio": 0.1,
+    "maintenance_margin_ratio": 0.05,
+    "margin_buffer_percent": 20.0,
+    "max_margin_utilization_percent": 80.0,
+    "emergency_liquidation_buffer": 10.0,
+    "dynamic_position_sizing": true
+  },
+  "capital_allocation": {
+    "max_positions_per_symbol": 1,
+    "min_allocation_per_position": 100.0,
+    "max_allocation_per_position": 5000.0,
+    "rebalance_threshold_percent": 10.0,
+    "profit_taking_threshold_percent": 50.0,
+    "stop_loss_threshold_percent": 20.0
+  },
   "autonomous": {
     "scan_limit": 100,
     "cycle_interval_seconds": 60,
-    "max_new_orders_per_cycle": 10,
+    "max_new_orders_per_cycle": 5,
     "close_when_unselected_after_min_hold": true,
     "adopt_existing_positions_on_start": false
   },

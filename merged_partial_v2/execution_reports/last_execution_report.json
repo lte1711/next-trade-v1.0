@@ -1,9 +1,34 @@
-﻿{
-    "dry_run":  true,
-    "ts":  "2026-04-05T07:31:08.4867639Z",
-    "executed":  false,
-    "ready_for_live_autonomous":  false,
-    "alert_summary":  "shutdown cleanup complete | all positions closed | open orders cleared | runtime state reset",
-    "reason":  "All merged_partial_v2 activity was stopped. Active positions and open orders are cleared.",
-    "mode":  "shutdown_cleanup"
+{
+  "mode": "autonomous_cycle",
+  "ts": "2026-04-05T16:10:47.860945+00:00",
+  "dry_run": false,
+  "executed": true,
+  "guard_passed": true,
+  "reason": "entry",
+  "symbol": "STOUSDT",
+  "payload": {
+    "symbol": "STOUSDT",
+    "allocation": 9302.20411629,
+    "estimated_quantity": 46541.27240852,
+    "recommendation": {
+      "symbol": "STOUSDT",
+      "side": "BUY",
+      "action": "new_entry",
+      "profile_name": "remote_risk_reference",
+      "market_regime": "NORMAL",
+      "entry_price_reference": 0.19987,
+      "allocation": 9302.20411629,
+      "estimated_quantity": 46541.27240852,
+      "current_notional": 0.0,
+      "target_allocation": 9302.20411629,
+      "target_invested_capital": 9302.20411629,
+      "bullish_score": 80.35134488481026,
+      "profit_potential": 87.14053795392411,
+      "reason": "Selected by remote_risk_reference under NORMAL regime."
+    },
+    "error": "Order failed [insufficient_margin] code=-2027 message=Exceeded the maximum allowable position at current leverage. | hint=Reduce size or free margin before retrying."
+  },
+  "decision_line": "autonomous cycle | entries=1 | exits=0 | managed=0",
+  "alert_summary": "auto entry | symbol=STOUSDT | status=-",
+  "short_summary": "auto entry | symbol=STOUSDT | status=-"
 }

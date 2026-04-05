@@ -1,8 +1,127 @@
-﻿{
-    "dry_run":  true,
-    "exit_count":  0,
-    "ts":  "2026-04-05T07:31:08.4867639Z",
-    "entry_count":  0,
-    "decision_line":  "autonomous trading stopped and runtime state reset",
-    "mode":  "shutdown_cleanup"
+{
+  "mode": "autonomous_cycle",
+  "ts": "2026-04-05T16:17:39.729234+00:00",
+  "dry_run": false,
+  "profile_name": "remote_risk_reference",
+  "market_regime": "NORMAL",
+  "risk_gate": {
+    "ok": false,
+    "block_new_entries": true,
+    "market_regime": "NORMAL",
+    "reason_count": 1,
+    "reasons": [
+      {
+        "reason": "recent_critical_order_failure",
+        "detail": "Recent critical order failure detected: insufficient_margin / STOUSDT"
+      }
+    ],
+    "recent_order_failures": {
+      "ok": true,
+      "failure_count": 1,
+      "critical_failure_count": 1,
+      "retryable_failure_count": 0,
+      "categories": {
+        "insufficient_margin": 1
+      },
+      "latest_failure": {
+        "ts": "2026-04-05T16:11:13.260279+00:00",
+        "symbol": "STOUSDT",
+        "side": "BUY",
+        "category": "insufficient_margin",
+        "retryable": false,
+        "message": "Exceeded the maximum allowable position at current leverage.",
+        "operator_hint": "Reduce size or free margin before retrying."
+      },
+      "decision_line": "recent failures=1 | critical=1 | retryable=0"
+    },
+    "risk_metrics": {
+      "daily_pnl_percent": 0.0,
+      "consecutive_failures": 0,
+      "total_exposure_percent": 0.0,
+      "max_position_size_percent": 20.0
+    },
+    "decision_line": "risk gate blocked 1 condition(s)"
+  },
+  "paper_decision": {
+    "profile_name": "remote_risk_reference",
+    "market_regime": "NORMAL",
+    "wallet_balance": 9302.12719713,
+    "account_equity": 9302.12719713,
+    "current_invested_notional": 0.0,
+    "target_invested_capital": 9302.12719713,
+    "target_allocation_per_symbol": 9302.12719713,
+    "target_symbol_count": 1,
+    "capital_utilization_percent": 100.0,
+    "reserve_cash_percent": 0.0,
+    "active_position_count": 0,
+    "available_slots": 1,
+    "risk_gate": {
+      "ok": false,
+      "block_new_entries": true,
+      "market_regime": "NORMAL",
+      "reason_count": 1,
+      "reasons": [
+        {
+          "reason": "recent_critical_order_failure",
+          "detail": "Recent critical order failure detected: insufficient_margin / STOUSDT"
+        }
+      ],
+      "recent_order_failures": {
+        "ok": true,
+        "failure_count": 1,
+        "critical_failure_count": 1,
+        "retryable_failure_count": 0,
+        "categories": {
+          "insufficient_margin": 1
+        },
+        "latest_failure": {
+          "ts": "2026-04-05T16:11:13.260279+00:00",
+          "symbol": "STOUSDT",
+          "side": "BUY",
+          "category": "insufficient_margin",
+          "retryable": false,
+          "message": "Exceeded the maximum allowable position at current leverage.",
+          "operator_hint": "Reduce size or free margin before retrying."
+        },
+        "decision_line": "recent failures=1 | critical=1 | retryable=0"
+      },
+      "risk_metrics": {
+        "daily_pnl_percent": 0.0,
+        "consecutive_failures": 0,
+        "total_exposure_percent": 0.0,
+        "max_position_size_percent": 20.0
+      },
+      "decision_line": "risk gate blocked 1 condition(s)"
+    },
+    "recommendations": [],
+    "blocked": [
+      {
+        "symbol": "AIOTUSDT",
+        "reason": "risk_gate_blocked",
+        "detail": "risk gate blocked 1 condition(s)"
+      }
+    ],
+    "decision_line": "paper-decision recommends 0 order(s) | wallet $9302.13 | invested $0.00 | target invest $9302.13 | active positions 0 | blocked 1"
+  },
+  "state_before": {
+    "managed_position_count": 0,
+    "managed_symbols": [],
+    "last_synced_at": "2026-04-05T16:14:58.875334+00:00",
+    "event_count": 0
+  },
+  "state_after": {
+    "managed_position_count": 0,
+    "managed_symbols": [],
+    "last_synced_at": "2026-04-05T16:18:05.067394+00:00",
+    "event_count": 0
+  },
+  "entry_count": 0,
+  "exit_count": 0,
+  "entries": [],
+  "exits": [],
+  "selected_symbols": [
+    "AIOTUSDT"
+  ],
+  "managed_symbols": [],
+  "decision_line": "autonomous cycle | entries=0 | exits=0 | managed=0"
 }
