@@ -25,6 +25,34 @@ class LeverageManagementService:
                 return json.load(handle)
         return {}
 
+    def _calculate_volatility_adjustment_factor(self, volatility: float) -> float:
+        """변동성에 따른 레버리지 조정 계수"""
+        adjustment_threshold = float(self.leverage_config.get("leverage_adjustment_threshold", 15.0))
+        
+        if volatility > adjustment_threshold * 2:  # 매우 높은 변동성
+            return 0.4  # 60% 감소
+        elif volatility > adjustment_threshold:  # 높은 변동성
+            return 0.6  # 40% 감소
+        elif volatility < adjustment_threshold * 0.5:  # 매우 낮은 변동성
+            return 1.3  # 30% 증가
+        elif volatility < adjustment_threshold:  # 낮은 변동성
+            return 1.1  # 10% 증가
+        else:  # 정상 변동성
+            return 1.0  # 기본값
+
+    def _calculate_regime_adjustment_factor(self, market_regime: str) -> float:
+        """시장 레짐에 따른 레버리지 조정 계수"""
+        if market_regime == "EXTREME":
+            return 0.5  # 50% 감소
+        elif market_regime == "VOLATILE":
+            return 0.8  # 20% 감소
+        elif market_regime == "BEARISH":
+            return 0.7  # 30% 감소
+        elif market_regime == "BULLISH":
+            return 1.1  # 10% 증가
+        else:  # NORMAL 또는 기타
+            return 1.0  # 기본값
+
     def calculate_optimal_leverage(self, 
                                 account_balance: float,
                                 symbol_volatility: float,
@@ -42,20 +70,16 @@ class LeverageManagementService:
         max_leverage = float(self.leverage_config.get("max_leverage", 10))
         adjustment_threshold = float(self.leverage_config.get("leverage_adjustment_threshold", 15.0))
         
-        # Adjust leverage based on volatility
-        if symbol_volatility > adjustment_threshold:
-            # High volatility - reduce leverage
-            optimal_leverage = max(default_leverage * 0.5, 1)
-        elif symbol_volatility < 5.0:
-            # Low volatility - can use higher leverage
-            optimal_leverage = min(default_leverage * 1.5, max_leverage)
-        else:
-            # Normal volatility - use default
-            optimal_leverage = default_leverage
-
-        # Additional adjustment for market regime
-        if market_regime == "EXTREME":
-            optimal_leverage = max(optimal_leverage * 0.7, 1)
+        # Adjust leverage based on volatility and market regime
+        volatility_factor = self._calculate_volatility_adjustment_factor(symbol_volatility)
+        regime_factor = self._calculate_regime_adjustment_factor(market_regime)
+        
+        # Combined adjustment
+        combined_factor = volatility_factor * regime_factor
+        optimal_leverage = max(default_leverage * combined_factor, 1)
+        
+        # Apply maximum leverage constraint
+        optimal_leverage = min(optimal_leverage, max_leverage)
 
         return {
             "recommended_leverage": int(optimal_leverage),
@@ -65,6 +89,25 @@ class LeverageManagementService:
             "volatility": symbol_volatility,
             "market_regime": market_regime,
         }
+
+    def _calculate_dynamic_reserve_ratio(self, account_balance: float, unrealized_pnl_percent: float) -> float:
+        """계정 상태와 손익에 따른 동적 예비금 비율 계산"""
+        # 기본 예비금 비율
+        base_reserve_ratio = 0.1  # 10%
+        
+        # 손익에 따른 조정
+        if unrealized_pnl_percent > 10.0:
+            # 높은 수익: 예비금 증가 (기회 포착을 위한)
+            return min(base_reserve_ratio + 0.1, 0.3)  # 최대 30%
+        elif unrealized_pnl_percent < -5.0:
+            # 높은 손실: 예비금 대폭 증가 (위험 관리 강화)
+            return min(base_reserve_ratio + 0.2, 0.5)  # 최대 50%
+        elif -5.0 <= unrealized_pnl_percent <= 0.0:
+            # 적은 손실: 예비금 소폭 증가
+            return min(base_reserve_ratio + 0.05, 0.2)  # 최대 20%
+        else:
+            # 작은 수익: 기본값 유지
+            return base_reserve_ratio
 
     def calculate_position_size_limit(self,
                                    account_balance: float,
@@ -94,9 +137,15 @@ class LeverageManagementService:
         
         max_position_value = min(max_position_value, max_allocation)
         
+        # 동적 예비금 비율 계산
+        reserve_ratio = self._calculate_dynamic_reserve_ratio(account_balance, unrealized_pnl_percent)
+        adjusted_available_margin = available_margin * (1 - reserve_ratio)
+        
         return {
             "max_position_value": max(max_position_value, min_allocation),
             "available_margin": available_margin,
+            "adjusted_available_margin": adjusted_available_margin,
+            "reserve_ratio": reserve_ratio,
             "leverage": leverage,
             "position_size_factor": position_size_factor,
             "max_margin_utilization": max_margin_utilization * 100,

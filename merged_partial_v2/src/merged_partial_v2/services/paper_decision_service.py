@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from typing import Any, Dict, List
+from merged_partial_v2.services.leverage_management_service import LeverageManagementService
+from merged_partial_v2.services.capital_allocation_service import CapitalAllocationService
 
 
 class PaperDecisionService:
@@ -10,6 +12,8 @@ class PaperDecisionService:
 
     def __init__(self, profile: Dict[str, Any]) -> None:
         self.profile = profile
+        self.leverage_service = LeverageManagementService()
+        self.allocation_service = CapitalAllocationService()
 
     def build_decision(
         self,
@@ -121,26 +125,74 @@ class PaperDecisionService:
                 )
                 continue
 
+            # Apply leverage management
+            market_regime = market_snapshot.get("market_regime", "NORMAL")
+            symbol_volatility = item.get("volatility", 15.0)  # Default volatility
+            
+            # Calculate optimal leverage
+            leverage_info = self.leverage_service.calculate_optimal_leverage(
+                account_balance=wallet_balance,
+                symbol_volatility=symbol_volatility,
+                market_regime=market_regime
+            )
+            
+            # Validate position size with leverage consideration
+            position_validation = self.leverage_service.validate_position_size(
+                requested_size=allocation_gap,
+                account_balance=wallet_balance,
+                leverage=leverage_info["recommended_leverage"],
+                symbol=symbol
+            )
+            
+            if not position_validation["valid"]:
+                # Adjust allocation based on validation
+                allocation_gap = position_validation["recommended_size"]
+                if allocation_gap < min_allocation:
+                    blocked.append(
+                        {
+                            "symbol": symbol,
+                            "reason": "adjusted_allocation_below_minimum",
+                            "detail": f"Leverage-adjusted allocation {allocation_gap:.2f} is below minimum {min_allocation:.2f}.",
+                        }
+                    )
+                    continue
+
+            # Apply capital allocation optimization
+            allocation_info = self.allocation_service.calculate_position_allocation(
+                total_capital=total_capital,
+                active_positions=active_positions,
+                new_symbol=symbol,
+                target_symbol_count=target_symbol_count
+            )
+            
+            # Use the more conservative allocation
+            final_allocation = min(allocation_gap, allocation_info["recommended_allocation"])
+
             price = float(item.get("price", 0.0) or 0.0)
-            estimated_quantity = allocation_gap / price if price > 0 else 0.0
+            estimated_quantity = final_allocation / price if price > 0 else 0.0
+            
             recommendations.append(
                 {
                     "symbol": symbol,
                     "side": "BUY",
                     "action": action,
                     "profile_name": self.profile.get("name"),
-                    "market_regime": market_snapshot.get("market_regime"),
+                    "market_regime": market_regime,
                     "entry_price_reference": price,
-                    "allocation": allocation_gap,
+                    "allocation": final_allocation,
                     "estimated_quantity": round(estimated_quantity, 8),
                     "current_notional": current_symbol_notional,
                     "target_allocation": target_allocation,
                     "target_invested_capital": target_invested_capital,
+                    "leverage": leverage_info["recommended_leverage"],
+                    "leverage_info": leverage_info,
+                    "allocation_info": allocation_info,
+                    "position_validation": position_validation,
                     "bullish_score": item.get("bullish_score"),
                     "profit_potential": item.get("profit_potential"),
                     "reason": (
                         f"Selected by {self.profile.get('name')} under "
-                        f"{market_snapshot.get('market_regime')} regime."
+                        f"{market_regime} regime with leverage {leverage_info['recommended_leverage']}x."
                     ),
                 }
             )

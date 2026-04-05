@@ -1,6 +1,6 @@
 {
   "mode": "autonomous_cycle",
-  "ts": "2026-04-05T16:17:39.729234+00:00",
+  "ts": "2026-04-05T18:25:27.083909+00:00",
   "dry_run": false,
   "profile_name": "remote_risk_reference",
   "market_regime": "NORMAL",
@@ -8,11 +8,19 @@
     "ok": false,
     "block_new_entries": true,
     "market_regime": "NORMAL",
-    "reason_count": 1,
+    "reason_count": 3,
     "reasons": [
       {
-        "reason": "recent_critical_order_failure",
-        "detail": "Recent critical order failure detected: insufficient_margin / STOUSDT"
+        "reason": "account_snapshot_unavailable",
+        "detail": "Private account snapshot is unavailable, so new entry recommendations are blocked."
+      },
+      {
+        "reason": "position_snapshot_unavailable",
+        "detail": "Private position snapshot is unavailable, so new entry recommendations are blocked."
+      },
+      {
+        "reason": "wallet_balance_not_positive",
+        "detail": "Wallet balance must be positive before new entries are considered."
       }
     ],
     "recent_order_failures": {
@@ -40,30 +48,38 @@
       "total_exposure_percent": 0.0,
       "max_position_size_percent": 20.0
     },
-    "decision_line": "risk gate blocked 1 condition(s)"
+    "decision_line": "risk gate blocked 3 condition(s)"
   },
   "paper_decision": {
     "profile_name": "remote_risk_reference",
     "market_regime": "NORMAL",
-    "wallet_balance": 9302.12719713,
-    "account_equity": 9302.12719713,
+    "wallet_balance": 0.0,
+    "account_equity": 0.0,
     "current_invested_notional": 0.0,
-    "target_invested_capital": 9302.12719713,
-    "target_allocation_per_symbol": 9302.12719713,
-    "target_symbol_count": 1,
+    "target_invested_capital": 0.0,
+    "target_allocation_per_symbol": 0.0,
+    "target_symbol_count": 0,
     "capital_utilization_percent": 100.0,
     "reserve_cash_percent": 0.0,
     "active_position_count": 0,
-    "available_slots": 1,
+    "available_slots": 0,
     "risk_gate": {
       "ok": false,
       "block_new_entries": true,
       "market_regime": "NORMAL",
-      "reason_count": 1,
+      "reason_count": 3,
       "reasons": [
         {
-          "reason": "recent_critical_order_failure",
-          "detail": "Recent critical order failure detected: insufficient_margin / STOUSDT"
+          "reason": "account_snapshot_unavailable",
+          "detail": "Private account snapshot is unavailable, so new entry recommendations are blocked."
+        },
+        {
+          "reason": "position_snapshot_unavailable",
+          "detail": "Private position snapshot is unavailable, so new entry recommendations are blocked."
+        },
+        {
+          "reason": "wallet_balance_not_positive",
+          "detail": "Wallet balance must be positive before new entries are considered."
         }
       ],
       "recent_order_failures": {
@@ -91,37 +107,29 @@
         "total_exposure_percent": 0.0,
         "max_position_size_percent": 20.0
       },
-      "decision_line": "risk gate blocked 1 condition(s)"
+      "decision_line": "risk gate blocked 3 condition(s)"
     },
     "recommendations": [],
-    "blocked": [
-      {
-        "symbol": "AIOTUSDT",
-        "reason": "risk_gate_blocked",
-        "detail": "risk gate blocked 1 condition(s)"
-      }
-    ],
-    "decision_line": "paper-decision recommends 0 order(s) | wallet $9302.13 | invested $0.00 | target invest $9302.13 | active positions 0 | blocked 1"
+    "blocked": [],
+    "decision_line": "paper-decision recommends 0 order(s) | wallet $0.00 | invested $0.00 | target invest $0.00 | active positions 0 | blocked 0"
   },
   "state_before": {
     "managed_position_count": 0,
     "managed_symbols": [],
-    "last_synced_at": "2026-04-05T16:14:58.875334+00:00",
+    "last_synced_at": "2026-04-05T18:23:57.585982+00:00",
     "event_count": 0
   },
   "state_after": {
     "managed_position_count": 0,
     "managed_symbols": [],
-    "last_synced_at": "2026-04-05T16:18:05.067394+00:00",
+    "last_synced_at": "2026-04-05T18:25:28.821939+00:00",
     "event_count": 0
   },
   "entry_count": 0,
   "exit_count": 0,
   "entries": [],
   "exits": [],
-  "selected_symbols": [
-    "AIOTUSDT"
-  ],
+  "selected_symbols": [],
   "managed_symbols": [],
   "decision_line": "autonomous cycle | entries=0 | exits=0 | managed=0"
 }

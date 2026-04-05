@@ -51,6 +51,9 @@ class RiskGateService:
         health = dict(recent_health_check or {})
         order_failures = dict(recent_order_failures or {})
         risk_limits = dict(config.get("risk_limits", {}) if config else {})
+        
+        # 시장 상태 추출
+        market_regime = market_snapshot.get("market_regime", "NORMAL")
 
         reasons: List[Dict[str, str]] = []
 
@@ -106,15 +109,15 @@ class RiskGateService:
                     }
                 )
 
-        # 개별 포지션 크기 제한 체크
-        max_position_size = float(risk_limits.get("max_position_size_percent", 20.0))
+        # 개별 포지션 크기 제한 체크 (탄력적 조정)
+        max_position_size = self._calculate_dynamic_position_size_limit(market_regime, account)
         if max_position_size > 0:
             large_positions = self._check_large_positions(positions, account, max_position_size)
             if large_positions:
                 reasons.append(
                     {
                         "reason": "max_position_size_exceeded",
-                        "detail": f"Positions {large_positions} exceed size limit of {max_position_size:.2f}%",
+                        "detail": f"Positions {large_positions} exceed dynamic size limit of {max_position_size:.2f}% (market: {market_regime})",
                     }
                 )
 
@@ -186,6 +189,27 @@ class RiskGateService:
                 else f"risk gate blocked {len(reasons)} condition(s)"
             ),
         }
+
+    def _calculate_dynamic_position_size_limit(self, market_regime: str, account: Dict[str, Any]) -> float:
+        """시장 상태에 따른 동적 포지션 크기 제한 계산"""
+        risk_limits = self.risk_config
+        
+        # 기본값
+        base_limit = float(risk_limits.get("max_position_size_percent", 20.0))
+        
+        # 시장 상태에 따른 조정
+        if market_regime == "EXTREME":
+            # 극단적 시장: 포지션 크기 50% 감소
+            return base_limit * 0.5
+        elif market_regime == "VOLATILE":
+            # 변동성 높은 시장: 포지션 크기 30% 감소
+            return base_limit * 0.7
+        elif market_regime == "NORMAL":
+            # 정상 시장: 기본값 적용
+            return base_limit
+        else:
+            # 기타 시장: 보수적 접근 (20% 감소)
+            return base_limit * 0.8
 
     def _calculate_daily_pnl(self, account: Dict[str, Any]) -> float:
         """일일 손익 계산 (간단화된 버전)"""

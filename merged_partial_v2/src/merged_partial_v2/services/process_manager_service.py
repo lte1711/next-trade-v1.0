@@ -35,6 +35,30 @@ def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _record_failure_recovery_attempt(pid: int, recovery_type: str) -> None:
+    """실패 복구 시도 기록"""
+    try:
+        record = {
+            "pid": pid,
+            "recovery_type": recovery_type,
+            "timestamp": _utc_now(),
+            "reason": "Automatic recovery attempt recorded",
+        }
+        
+        recovery_path = _runtime_dir() / "recovery_attempts.json"
+        if recovery_path.exists():
+            with recovery_path.open("r", encoding="utf-8") as f:
+                existing_records = json.load(f)
+            existing_records.append(record)
+        else:
+            existing_records = [record]
+        
+        with recovery_path.open("w", encoding="utf-8") as f:
+            json.dump(existing_records, f, indent=2, ensure_ascii=False)
+    except Exception:
+        pass  # 기록 실패 시 무시
+
+
 def _is_pid_running(pid: int) -> bool:
     if pid <= 0:
         return False
@@ -270,7 +294,19 @@ def stop_autonomous_process() -> dict[str, Any]:
                     os.kill(pid, signal.SIGKILL)
             except OSError:
                 pass  # 이미 종료되었을 수 있음
-                
+        
+        # 실패 기록 남기기
+        _record_failure_recovery_attempt(pid, "process_termination")
+        
+        clear_process_record()
+        return {
+            "ok": True,
+            "stopped": True,
+            "pid": pid,
+            "stopped_at": _utc_now(),
+            "recovery_attempted": True,
+        }
+        
     except OSError as exc:
         return {
             "ok": False,
@@ -279,14 +315,6 @@ def stop_autonomous_process() -> dict[str, Any]:
             "error": str(exc),
             "status": status,
         }
-
-    clear_process_record()
-    return {
-        "ok": True,
-        "stopped": True,
-        "pid": pid,
-        "stopped_at": _utc_now(),
-    }
 
 
 def heartbeat_autonomous_process(pid: int, *, last_cycle_at: str | None = None) -> dict[str, Any]:

@@ -17,9 +17,11 @@ class PublicReadClient:
         self._kline_cache: Dict[tuple[str, str, int], List[List[Any]]] = {}
 
     def get_top_quote_volume_symbols(self, limit: int = 80) -> List[Dict[str, Any]]:
-        """Return liquid USDT futures symbols sorted by quote volume."""
+        """Return liquid USDT spot symbols sorted by quote volume."""
+        # Spot API 엔드포인트 사용
+        api_path = "/api/v3/ticker/24hr"
         response = requests.get(
-            f"{self.exchange_base_url}/fapi/v1/ticker/24hr",
+            f"{self.exchange_base_url}{api_path}",
             headers=build_public_headers(),
             timeout=10,
         )
@@ -53,8 +55,9 @@ class PublicReadClient:
 
     def get_symbol_ticker(self, symbol: str) -> Dict[str, Any]:
         """Return 24h ticker information for one symbol."""
+        # Spot API 엔드포인트 사용
         response = requests.get(
-            f"{self.exchange_base_url}/fapi/v1/ticker/24hr?symbol={symbol}",
+            f"{self.exchange_base_url}/api/v3/ticker/24hr?symbol={symbol}",
             headers=build_public_headers(),
             timeout=10,
         )
@@ -76,8 +79,9 @@ class PublicReadClient:
         if cached is not None:
             return [list(row) for row in cached]
 
+        # Spot API 엔드포인트 사용
         response = requests.get(
-            f"{self.exchange_base_url}/fapi/v1/klines?symbol={symbol}&interval={interval}&limit={limit}",
+            f"{self.exchange_base_url}/api/v3/klines?symbol={symbol}&interval={interval}&limit={limit}",
             headers=build_public_headers(),
             timeout=10,
         )

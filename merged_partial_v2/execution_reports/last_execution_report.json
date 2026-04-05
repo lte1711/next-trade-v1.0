@@ -1,34 +1,70 @@
 {
-  "mode": "autonomous_cycle",
-  "ts": "2026-04-05T16:10:47.860945+00:00",
+  "mode": "execute_top_recommendation",
   "dry_run": false,
-  "executed": true,
-  "guard_passed": true,
-  "reason": "entry",
-  "symbol": "STOUSDT",
-  "payload": {
-    "symbol": "STOUSDT",
-    "allocation": 9302.20411629,
-    "estimated_quantity": 46541.27240852,
-    "recommendation": {
-      "symbol": "STOUSDT",
-      "side": "BUY",
-      "action": "new_entry",
-      "profile_name": "remote_risk_reference",
+  "executed": false,
+  "paper_decision": {
+    "profile_name": "remote_risk_reference",
+    "market_regime": "NORMAL",
+    "wallet_balance": 0.0,
+    "account_equity": 0.0,
+    "current_invested_notional": 0.0,
+    "target_invested_capital": 0.0,
+    "target_allocation_per_symbol": 0.0,
+    "target_symbol_count": 0,
+    "capital_utilization_percent": 100.0,
+    "reserve_cash_percent": 0.0,
+    "active_position_count": 0,
+    "available_slots": 0,
+    "risk_gate": {
+      "ok": false,
+      "block_new_entries": true,
       "market_regime": "NORMAL",
-      "entry_price_reference": 0.19987,
-      "allocation": 9302.20411629,
-      "estimated_quantity": 46541.27240852,
-      "current_notional": 0.0,
-      "target_allocation": 9302.20411629,
-      "target_invested_capital": 9302.20411629,
-      "bullish_score": 80.35134488481026,
-      "profit_potential": 87.14053795392411,
-      "reason": "Selected by remote_risk_reference under NORMAL regime."
+      "reason_count": 3,
+      "reasons": [
+        {
+          "reason": "account_snapshot_unavailable",
+          "detail": "Private account snapshot is unavailable, so new entry recommendations are blocked."
+        },
+        {
+          "reason": "position_snapshot_unavailable",
+          "detail": "Private position snapshot is unavailable, so new entry recommendations are blocked."
+        },
+        {
+          "reason": "wallet_balance_not_positive",
+          "detail": "Wallet balance must be positive before new entries are considered."
+        }
+      ],
+      "recent_order_failures": {
+        "ok": true,
+        "failure_count": 1,
+        "critical_failure_count": 1,
+        "retryable_failure_count": 0,
+        "categories": {
+          "insufficient_margin": 1
+        },
+        "latest_failure": {
+          "ts": "2026-04-05T16:11:13.260279+00:00",
+          "symbol": "STOUSDT",
+          "side": "BUY",
+          "category": "insufficient_margin",
+          "retryable": false,
+          "message": "Exceeded the maximum allowable position at current leverage.",
+          "operator_hint": "Reduce size or free margin before retrying."
+        },
+        "decision_line": "recent failures=1 | critical=1 | retryable=0"
+      },
+      "risk_metrics": {
+        "daily_pnl_percent": 0.0,
+        "consecutive_failures": 0,
+        "total_exposure_percent": 0.0,
+        "max_position_size_percent": 20.0
+      },
+      "decision_line": "risk gate blocked 3 condition(s)"
     },
-    "error": "Order failed [insufficient_margin] code=-2027 message=Exceeded the maximum allowable position at current leverage. | hint=Reduce size or free margin before retrying."
+    "recommendations": [],
+    "blocked": [],
+    "decision_line": "paper-decision recommends 0 order(s) | wallet $0.00 | invested $0.00 | target invest $0.00 | active positions 0 | blocked 0"
   },
-  "decision_line": "autonomous cycle | entries=1 | exits=0 | managed=0",
-  "alert_summary": "auto entry | symbol=STOUSDT | status=-",
-  "short_summary": "auto entry | symbol=STOUSDT | status=-"
+  "reason": "No executable recommendation is available.",
+  "alert_summary": "waiting or no action | mode=execute_top_recommendation | profile=remote_risk_reference | reason=No executable recommendation is available."
 }
