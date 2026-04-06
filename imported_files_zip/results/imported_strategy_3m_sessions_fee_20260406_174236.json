@@ -1,0 +1,2463 @@
+{
+  "source": "imported_files_zip",
+  "split_basis": "entry_time_utc_session",
+  "fee_rate_per_side": 0.0004,
+  "round_trip_fee_pct_per_event": 0.08,
+  "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "XRPUSDT"
+  ],
+  "cache_suffix": "5m_0.25y",
+  "generated_at": "2026-04-06T08:42:36.328932+00:00",
+  "modes": [
+    {
+      "mode": "all",
+      "allowed_signal_types": [
+        "all"
+      ],
+      "session_summary": {
+        "US_PEAK": {
+          "trade_events": 510,
+          "final_trades": 474,
+          "partial_events": 36,
+          "wins_after_fee": 193,
+          "losses_after_fee": 281,
+          "net_pnl_after_fee_pct": -22.9203,
+          "fee_drag_pct": 40.8,
+          "win_rate_after_fee_pct": 40.7173
+        },
+        "EU_PEAK": {
+          "trade_events": 318,
+          "final_trades": 292,
+          "partial_events": 26,
+          "wins_after_fee": 123,
+          "losses_after_fee": 169,
+          "net_pnl_after_fee_pct": -5.5883,
+          "fee_drag_pct": 25.44,
+          "win_rate_after_fee_pct": 42.123288
+        },
+        "ASIA_PEAK": {
+          "trade_events": 318,
+          "final_trades": 290,
+          "partial_events": 28,
+          "wins_after_fee": 115,
+          "losses_after_fee": 175,
+          "net_pnl_after_fee_pct": -11.5823,
+          "fee_drag_pct": 25.44,
+          "win_rate_after_fee_pct": 39.655172
+        },
+        "NORMAL": {
+          "trade_events": 1383,
+          "final_trades": 1274,
+          "partial_events": 109,
+          "wins_after_fee": 510,
+          "losses_after_fee": 764,
+          "net_pnl_after_fee_pct": -38.1932,
+          "fee_drag_pct": 110.64,
+          "win_rate_after_fee_pct": 40.031397
+        },
+        "DEAD_ZONE": {
+          "trade_events": 544,
+          "final_trades": 510,
+          "partial_events": 34,
+          "wins_after_fee": 198,
+          "losses_after_fee": 312,
+          "net_pnl_after_fee_pct": -17.2241,
+          "fee_drag_pct": 43.52,
+          "win_rate_after_fee_pct": 38.823529
+        }
+      },
+      "symbols": [
+        {
+          "symbol": "BTCUSDT",
+          "mode": "all",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "signal_count": 1072,
+          "session_summary": {
+            "US_PEAK": {
+              "trade_events": 155,
+              "final_trades": 144,
+              "partial_events": 11,
+              "wins_after_fee": 55,
+              "losses_after_fee": 89,
+              "win_rate_after_fee_pct": 38.194444,
+              "net_pnl_after_fee_pct": -7.4511,
+              "fee_drag_pct": 12.4,
+              "avg_final_pnl_after_fee_pct": -0.064383,
+              "profit_factor_after_fee": 0.431469,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": 0.6179,
+                "pullback": -8.069
+              },
+              "exit_counts": {
+                "ha_reversal_14\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 75,
+                "ha_reversal_3\\ubd09": 17,
+                "ha_reversal_4\\ubd09": 9,
+                "ha_reversal_5\\ubd09": 5,
+                "ha_reversal_6\\ubd09": 1,
+                "ha_reversal_7\\ubd09": 1,
+                "ha_reversal_9\\ubd09": 1,
+                "net_color_blue": 9,
+                "net_color_red": 3,
+                "opposite_fractal": 17,
+                "stop_loss": 5,
+                "tp1_partial": 11
+              },
+              "side_counts": {
+                "long": 68,
+                "short": 87
+              }
+            },
+            "EU_PEAK": {
+              "trade_events": 97,
+              "final_trades": 92,
+              "partial_events": 5,
+              "wins_after_fee": 36,
+              "losses_after_fee": 56,
+              "win_rate_after_fee_pct": 39.130435,
+              "net_pnl_after_fee_pct": -2.7683,
+              "fee_drag_pct": 7.76,
+              "avg_final_pnl_after_fee_pct": -0.039602,
+              "profit_factor_after_fee": 0.617972,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -0.957,
+                "pullback": -1.8113
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 46,
+                "ha_reversal_3\\ubd09": 12,
+                "ha_reversal_4\\ubd09": 8,
+                "ha_reversal_5\\ubd09": 3,
+                "ha_reversal_6\\ubd09": 1,
+                "net_color_blue": 4,
+                "net_color_red": 3,
+                "opposite_fractal": 12,
+                "stop_loss": 2,
+                "tp1_partial": 5,
+                "tp2": 1
+              },
+              "side_counts": {
+                "long": 36,
+                "short": 61
+              }
+            },
+            "ASIA_PEAK": {
+              "trade_events": 90,
+              "final_trades": 85,
+              "partial_events": 5,
+              "wins_after_fee": 33,
+              "losses_after_fee": 52,
+              "win_rate_after_fee_pct": 38.823529,
+              "net_pnl_after_fee_pct": -2.3006,
+              "fee_drag_pct": 7.2,
+              "avg_final_pnl_after_fee_pct": -0.037249,
+              "profit_factor_after_fee": 0.584079,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": 2.3942,
+                "pullback": -4.6948
+              },
+              "exit_counts": {
+                "ha_reversal_11\\ubd09": 1,
+                "ha_reversal_17\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 51,
+                "ha_reversal_3\\ubd09": 9,
+                "ha_reversal_4\\ubd09": 2,
+                "ha_reversal_5\\ubd09": 4,
+                "ha_reversal_6\\ubd09": 2,
+                "ha_reversal_7\\ubd09": 1,
+                "net_color_blue": 1,
+                "net_color_red": 1,
+                "opposite_fractal": 11,
+                "stop_loss": 1,
+                "tp1_partial": 5
+              },
+              "side_counts": {
+                "long": 27,
+                "short": 63
+              }
+            },
+            "NORMAL": {
+              "trade_events": 390,
+              "final_trades": 361,
+              "partial_events": 29,
+              "wins_after_fee": 139,
+              "losses_after_fee": 222,
+              "win_rate_after_fee_pct": 38.504155,
+              "net_pnl_after_fee_pct": -12.0889,
+              "fee_drag_pct": 31.2,
+              "avg_final_pnl_after_fee_pct": -0.041815,
+              "profit_factor_after_fee": 0.596913,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": 1.5118,
+                "pullback": -13.6007
+              },
+              "exit_counts": {
+                "ha_reversal_10\\ubd09": 2,
+                "ha_reversal_12\\ubd09": 1,
+                "ha_reversal_14\\ubd09": 2,
+                "ha_reversal_2\\ubd09": 202,
+                "ha_reversal_3\\ubd09": 33,
+                "ha_reversal_4\\ubd09": 38,
+                "ha_reversal_5\\ubd09": 6,
+                "ha_reversal_6\\ubd09": 10,
+                "ha_reversal_7\\ubd09": 2,
+                "ha_reversal_8\\ubd09": 2,
+                "ha_reversal_9\\ubd09": 1,
+                "net_color_blue": 11,
+                "net_color_red": 7,
+                "opposite_fractal": 32,
+                "stop_loss": 12,
+                "tp1_partial": 29
+              },
+              "side_counts": {
+                "long": 174,
+                "short": 216
+              }
+            },
+            "DEAD_ZONE": {
+              "trade_events": 183,
+              "final_trades": 173,
+              "partial_events": 10,
+              "wins_after_fee": 60,
+              "losses_after_fee": 113,
+              "win_rate_after_fee_pct": 34.682081,
+              "net_pnl_after_fee_pct": -7.7724,
+              "fee_drag_pct": 14.64,
+              "avg_final_pnl_after_fee_pct": -0.050162,
+              "profit_factor_after_fee": 0.461586,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -0.4542,
+                "pullback": -7.3182
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 105,
+                "ha_reversal_3\\ubd09": 18,
+                "ha_reversal_4\\ubd09": 8,
+                "ha_reversal_5\\ubd09": 4,
+                "ha_reversal_6\\ubd09": 4,
+                "ha_reversal_7\\ubd09": 4,
+                "ha_reversal_8\\ubd09": 1,
+                "ha_reversal_9\\ubd09": 1,
+                "net_color_blue": 4,
+                "net_color_red": 4,
+                "opposite_fractal": 17,
+                "stop_loss": 3,
+                "tp1_partial": 10
+              },
+              "side_counts": {
+                "long": 93,
+                "short": 90
+              }
+            }
+          },
+          "overall": {
+            "trade_events": 915,
+            "final_trades": 855,
+            "partial_events": 60,
+            "wins_after_fee": 323,
+            "losses_after_fee": 532,
+            "win_rate_after_fee_pct": 37.777778,
+            "net_pnl_after_fee_pct": -32.3813,
+            "fee_drag_pct": 73.2,
+            "avg_final_pnl_after_fee_pct": -0.046613,
+            "profit_factor_after_fee": 0.542031,
+            "by_signal_type_pnl_after_fee_pct": {
+              "fractal_break": 3.1127,
+              "pullback": -35.494
+            },
+            "exit_counts": {
+              "ha_reversal_10\\ubd09": 2,
+              "ha_reversal_11\\ubd09": 1,
+              "ha_reversal_12\\ubd09": 1,
+              "ha_reversal_14\\ubd09": 3,
+              "ha_reversal_17\\ubd09": 1,
+              "ha_reversal_2\\ubd09": 479,
+              "ha_reversal_3\\ubd09": 89,
+              "ha_reversal_4\\ubd09": 65,
+              "ha_reversal_5\\ubd09": 22,
+              "ha_reversal_6\\ubd09": 18,
+              "ha_reversal_7\\ubd09": 8,
+              "ha_reversal_8\\ubd09": 3,
+              "ha_reversal_9\\ubd09": 3,
+              "net_color_blue": 29,
+              "net_color_red": 18,
+              "opposite_fractal": 89,
+              "stop_loss": 23,
+              "tp1_partial": 60,
+              "tp2": 1
+            },
+            "side_counts": {
+              "long": 398,
+              "short": 517
+            }
+          }
+        },
+        {
+          "symbol": "ETHUSDT",
+          "mode": "all",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "signal_count": 1205,
+          "session_summary": {
+            "US_PEAK": {
+              "trade_events": 156,
+              "final_trades": 141,
+              "partial_events": 15,
+              "wins_after_fee": 61,
+              "losses_after_fee": 80,
+              "win_rate_after_fee_pct": 43.262411,
+              "net_pnl_after_fee_pct": -3.2355,
+              "fee_drag_pct": 12.48,
+              "avg_final_pnl_after_fee_pct": -0.041934,
+              "profit_factor_after_fee": 0.634097,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": 0.4625,
+                "pullback": -3.698
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 78,
+                "ha_reversal_3\\ubd09": 19,
+                "ha_reversal_4\\ubd09": 5,
+                "ha_reversal_5\\ubd09": 6,
+                "ha_reversal_8\\ubd09": 2,
+                "net_color_blue": 9,
+                "net_color_red": 5,
+                "opposite_fractal": 8,
+                "stop_loss": 9,
+                "tp1_partial": 15
+              },
+              "side_counts": {
+                "long": 86,
+                "short": 70
+              }
+            },
+            "EU_PEAK": {
+              "trade_events": 108,
+              "final_trades": 97,
+              "partial_events": 11,
+              "wins_after_fee": 40,
+              "losses_after_fee": 57,
+              "win_rate_after_fee_pct": 41.237113,
+              "net_pnl_after_fee_pct": -0.1932,
+              "fee_drag_pct": 8.64,
+              "avg_final_pnl_after_fee_pct": -0.021119,
+              "profit_factor_after_fee": 0.788745,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": 1.2904,
+                "pullback": -1.4836
+              },
+              "exit_counts": {
+                "ha_reversal_13\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 46,
+                "ha_reversal_3\\ubd09": 9,
+                "ha_reversal_4\\ubd09": 6,
+                "ha_reversal_5\\ubd09": 9,
+                "ha_reversal_6\\ubd09": 3,
+                "ha_reversal_9\\ubd09": 3,
+                "net_color_blue": 6,
+                "net_color_red": 3,
+                "opposite_fractal": 10,
+                "stop_loss": 1,
+                "tp1_partial": 11
+              },
+              "side_counts": {
+                "long": 41,
+                "short": 67
+              }
+            },
+            "ASIA_PEAK": {
+              "trade_events": 103,
+              "final_trades": 92,
+              "partial_events": 11,
+              "wins_after_fee": 32,
+              "losses_after_fee": 60,
+              "win_rate_after_fee_pct": 34.782609,
+              "net_pnl_after_fee_pct": -3.9661,
+              "fee_drag_pct": 8.24,
+              "avg_final_pnl_after_fee_pct": -0.052835,
+              "profit_factor_after_fee": 0.482216,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -0.2816,
+                "pullback": -3.6845
+              },
+              "exit_counts": {
+                "ha_reversal_12\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 53,
+                "ha_reversal_3\\ubd09": 6,
+                "ha_reversal_4\\ubd09": 8,
+                "ha_reversal_5\\ubd09": 5,
+                "ha_reversal_6\\ubd09": 1,
+                "ha_reversal_8\\ubd09": 2,
+                "net_color_blue": 3,
+                "net_color_red": 1,
+                "opposite_fractal": 10,
+                "stop_loss": 2,
+                "tp1_partial": 11
+              },
+              "side_counts": {
+                "long": 26,
+                "short": 77
+              }
+            },
+            "NORMAL": {
+              "trade_events": 497,
+              "final_trades": 456,
+              "partial_events": 41,
+              "wins_after_fee": 173,
+              "losses_after_fee": 283,
+              "win_rate_after_fee_pct": 37.938596,
+              "net_pnl_after_fee_pct": -18.5466,
+              "fee_drag_pct": 39.76,
+              "avg_final_pnl_after_fee_pct": -0.051932,
+              "profit_factor_after_fee": 0.544076,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": 2.0328,
+                "pullback": -20.5794
+              },
+              "exit_counts": {
+                "ha_reversal_11\\ubd09": 1,
+                "ha_reversal_12\\ubd09": 2,
+                "ha_reversal_13\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 244,
+                "ha_reversal_3\\ubd09": 47,
+                "ha_reversal_4\\ubd09": 34,
+                "ha_reversal_5\\ubd09": 9,
+                "ha_reversal_6\\ubd09": 5,
+                "ha_reversal_7\\ubd09": 6,
+                "ha_reversal_8\\ubd09": 3,
+                "net_color_blue": 20,
+                "net_color_red": 16,
+                "opposite_fractal": 47,
+                "stop_loss": 21,
+                "tp1_partial": 41
+              },
+              "side_counts": {
+                "long": 197,
+                "short": 300
+              }
+            },
+            "DEAD_ZONE": {
+              "trade_events": 179,
+              "final_trades": 165,
+              "partial_events": 14,
+              "wins_after_fee": 69,
+              "losses_after_fee": 96,
+              "win_rate_after_fee_pct": 41.818182,
+              "net_pnl_after_fee_pct": -2.4149,
+              "fee_drag_pct": 14.32,
+              "avg_final_pnl_after_fee_pct": -0.02522,
+              "profit_factor_after_fee": 0.719027,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -0.047,
+                "pullback": -2.3679
+              },
+              "exit_counts": {
+                "ha_reversal_11\\ubd09": 1,
+                "ha_reversal_12\\ubd09": 2,
+                "ha_reversal_2\\ubd09": 91,
+                "ha_reversal_3\\ubd09": 20,
+                "ha_reversal_4\\ubd09": 10,
+                "ha_reversal_5\\ubd09": 3,
+                "ha_reversal_6\\ubd09": 4,
+                "ha_reversal_7\\ubd09": 2,
+                "net_color_blue": 5,
+                "net_color_red": 6,
+                "opposite_fractal": 18,
+                "stop_loss": 3,
+                "tp1_partial": 14
+              },
+              "side_counts": {
+                "long": 83,
+                "short": 96
+              }
+            }
+          },
+          "overall": {
+            "trade_events": 1043,
+            "final_trades": 951,
+            "partial_events": 92,
+            "wins_after_fee": 375,
+            "losses_after_fee": 576,
+            "win_rate_after_fee_pct": 39.432177,
+            "net_pnl_after_fee_pct": -28.3563,
+            "fee_drag_pct": 83.44,
+            "avg_final_pnl_after_fee_pct": -0.042759,
+            "profit_factor_after_fee": 0.60131,
+            "by_signal_type_pnl_after_fee_pct": {
+              "fractal_break": 3.4571,
+              "pullback": -31.8134
+            },
+            "exit_counts": {
+              "ha_reversal_11\\ubd09": 2,
+              "ha_reversal_12\\ubd09": 5,
+              "ha_reversal_13\\ubd09": 2,
+              "ha_reversal_2\\ubd09": 512,
+              "ha_reversal_3\\ubd09": 101,
+              "ha_reversal_4\\ubd09": 63,
+              "ha_reversal_5\\ubd09": 32,
+              "ha_reversal_6\\ubd09": 13,
+              "ha_reversal_7\\ubd09": 8,
+              "ha_reversal_8\\ubd09": 7,
+              "ha_reversal_9\\ubd09": 3,
+              "net_color_blue": 43,
+              "net_color_red": 31,
+              "opposite_fractal": 93,
+              "stop_loss": 36,
+              "tp1_partial": 92
+            },
+            "side_counts": {
+              "long": 433,
+              "short": 610
+            }
+          }
+        },
+        {
+          "symbol": "XRPUSDT",
+          "mode": "all",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "signal_count": 1293,
+          "session_summary": {
+            "US_PEAK": {
+              "trade_events": 199,
+              "final_trades": 189,
+              "partial_events": 10,
+              "wins_after_fee": 77,
+              "losses_after_fee": 112,
+              "win_rate_after_fee_pct": 40.740741,
+              "net_pnl_after_fee_pct": -12.2337,
+              "fee_drag_pct": 15.92,
+              "avg_final_pnl_after_fee_pct": -0.069268,
+              "profit_factor_after_fee": 0.438984,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -0.5617,
+                "pullback": -11.672
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 99,
+                "ha_reversal_3\\ubd09": 18,
+                "ha_reversal_4\\ubd09": 12,
+                "ha_reversal_5\\ubd09": 7,
+                "ha_reversal_6\\ubd09": 4,
+                "ha_reversal_7\\ubd09": 5,
+                "ha_reversal_9\\ubd09": 1,
+                "net_color_blue": 12,
+                "net_color_red": 7,
+                "opposite_fractal": 18,
+                "stop_loss": 6,
+                "tp1_partial": 10
+              },
+              "side_counts": {
+                "long": 77,
+                "short": 122
+              }
+            },
+            "EU_PEAK": {
+              "trade_events": 113,
+              "final_trades": 103,
+              "partial_events": 10,
+              "wins_after_fee": 47,
+              "losses_after_fee": 56,
+              "win_rate_after_fee_pct": 45.631068,
+              "net_pnl_after_fee_pct": -2.6268,
+              "fee_drag_pct": 9.04,
+              "avg_final_pnl_after_fee_pct": -0.037382,
+              "profit_factor_after_fee": 0.622383,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": 0.1991,
+                "pullback": -2.8259
+              },
+              "exit_counts": {
+                "ha_reversal_11\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 62,
+                "ha_reversal_3\\ubd09": 15,
+                "ha_reversal_4\\ubd09": 8,
+                "ha_reversal_5\\ubd09": 4,
+                "ha_reversal_7\\ubd09": 1,
+                "net_color_blue": 3,
+                "opposite_fractal": 6,
+                "stop_loss": 3,
+                "tp1_partial": 10
+              },
+              "side_counts": {
+                "long": 20,
+                "short": 93
+              }
+            },
+            "ASIA_PEAK": {
+              "trade_events": 125,
+              "final_trades": 113,
+              "partial_events": 12,
+              "wins_after_fee": 50,
+              "losses_after_fee": 63,
+              "win_rate_after_fee_pct": 44.247788,
+              "net_pnl_after_fee_pct": -5.3156,
+              "fee_drag_pct": 10.0,
+              "avg_final_pnl_after_fee_pct": -0.058248,
+              "profit_factor_after_fee": 0.444139,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -1.3391,
+                "pullback": -3.9765
+              },
+              "exit_counts": {
+                "ha_reversal_11\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 55,
+                "ha_reversal_3\\ubd09": 15,
+                "ha_reversal_4\\ubd09": 7,
+                "ha_reversal_5\\ubd09": 4,
+                "ha_reversal_6\\ubd09": 2,
+                "ha_reversal_7\\ubd09": 2,
+                "ha_reversal_8\\ubd09": 2,
+                "net_color_blue": 3,
+                "net_color_red": 4,
+                "opposite_fractal": 14,
+                "stop_loss": 3,
+                "tp1_partial": 12,
+                "tp2": 1
+              },
+              "side_counts": {
+                "long": 30,
+                "short": 95
+              }
+            },
+            "NORMAL": {
+              "trade_events": 496,
+              "final_trades": 457,
+              "partial_events": 39,
+              "wins_after_fee": 198,
+              "losses_after_fee": 259,
+              "win_rate_after_fee_pct": 43.326039,
+              "net_pnl_after_fee_pct": -7.5577,
+              "fee_drag_pct": 39.68,
+              "avg_final_pnl_after_fee_pct": -0.028574,
+              "profit_factor_after_fee": 0.727101,
+              "by_signal_type_pnl_after_fee_pct": {
+                "cloud_rebound": -0.1294,
+                "fractal_break": 7.5495,
+                "pullback": -14.9778
+              },
+              "exit_counts": {
+                "ha_reversal_10\\ubd09": 1,
+                "ha_reversal_11\\ubd09": 1,
+                "ha_reversal_12\\ubd09": 1,
+                "ha_reversal_14\\ubd09": 1,
+                "ha_reversal_15\\ubd09": 1,
+                "ha_reversal_18\\ubd09": 1,
+                "ha_reversal_21\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 228,
+                "ha_reversal_3\\ubd09": 67,
+                "ha_reversal_4\\ubd09": 28,
+                "ha_reversal_5\\ubd09": 18,
+                "ha_reversal_6\\ubd09": 6,
+                "ha_reversal_7\\ubd09": 3,
+                "ha_reversal_8\\ubd09": 5,
+                "ha_reversal_9\\ubd09": 2,
+                "net_color_blue": 22,
+                "net_color_red": 14,
+                "opposite_fractal": 40,
+                "stop_loss": 17,
+                "tp1_partial": 39
+              },
+              "side_counts": {
+                "long": 162,
+                "short": 334
+              }
+            },
+            "DEAD_ZONE": {
+              "trade_events": 182,
+              "final_trades": 172,
+              "partial_events": 10,
+              "wins_after_fee": 69,
+              "losses_after_fee": 103,
+              "win_rate_after_fee_pct": 40.116279,
+              "net_pnl_after_fee_pct": -7.0368,
+              "fee_drag_pct": 14.56,
+              "avg_final_pnl_after_fee_pct": -0.050001,
+              "profit_factor_after_fee": 0.528216,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -0.5543,
+                "pullback": -6.4825
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 89,
+                "ha_reversal_3\\ubd09": 18,
+                "ha_reversal_4\\ubd09": 9,
+                "ha_reversal_5\\ubd09": 7,
+                "ha_reversal_6\\ubd09": 2,
+                "ha_reversal_7\\ubd09": 4,
+                "ha_reversal_8\\ubd09": 1,
+                "ha_reversal_9\\ubd09": 4,
+                "net_color_blue": 2,
+                "net_color_red": 12,
+                "opposite_fractal": 22,
+                "stop_loss": 2,
+                "tp1_partial": 10
+              },
+              "side_counts": {
+                "long": 80,
+                "short": 102
+              }
+            }
+          },
+          "overall": {
+            "trade_events": 1115,
+            "final_trades": 1034,
+            "partial_events": 81,
+            "wins_after_fee": 441,
+            "losses_after_fee": 593,
+            "win_rate_after_fee_pct": 42.649903,
+            "net_pnl_after_fee_pct": -34.7706,
+            "fee_drag_pct": 89.2,
+            "avg_final_pnl_after_fee_pct": -0.043697,
+            "profit_factor_after_fee": 0.594603,
+            "by_signal_type_pnl_after_fee_pct": {
+              "cloud_rebound": -0.1294,
+              "fractal_break": 5.2935,
+              "pullback": -39.9347
+            },
+            "exit_counts": {
+              "ha_reversal_10\\ubd09": 1,
+              "ha_reversal_11\\ubd09": 3,
+              "ha_reversal_12\\ubd09": 1,
+              "ha_reversal_14\\ubd09": 1,
+              "ha_reversal_15\\ubd09": 1,
+              "ha_reversal_18\\ubd09": 1,
+              "ha_reversal_21\\ubd09": 1,
+              "ha_reversal_2\\ubd09": 533,
+              "ha_reversal_3\\ubd09": 133,
+              "ha_reversal_4\\ubd09": 64,
+              "ha_reversal_5\\ubd09": 40,
+              "ha_reversal_6\\ubd09": 14,
+              "ha_reversal_7\\ubd09": 15,
+              "ha_reversal_8\\ubd09": 8,
+              "ha_reversal_9\\ubd09": 7,
+              "net_color_blue": 42,
+              "net_color_red": 37,
+              "opposite_fractal": 100,
+              "stop_loss": 31,
+              "tp1_partial": 81,
+              "tp2": 1
+            },
+            "side_counts": {
+              "long": 369,
+              "short": 746
+            }
+          }
+        }
+      ]
+    },
+    {
+      "mode": "pullback",
+      "allowed_signal_types": [
+        "pullback"
+      ],
+      "session_summary": {
+        "US_PEAK": {
+          "trade_events": 448,
+          "final_trades": 413,
+          "partial_events": 35,
+          "wins_after_fee": 162,
+          "losses_after_fee": 251,
+          "net_pnl_after_fee_pct": -24.0093,
+          "fee_drag_pct": 35.84,
+          "win_rate_after_fee_pct": 39.225182
+        },
+        "EU_PEAK": {
+          "trade_events": 243,
+          "final_trades": 222,
+          "partial_events": 21,
+          "wins_after_fee": 89,
+          "losses_after_fee": 133,
+          "net_pnl_after_fee_pct": -6.1208,
+          "fee_drag_pct": 19.44,
+          "win_rate_after_fee_pct": 40.09009
+        },
+        "ASIA_PEAK": {
+          "trade_events": 261,
+          "final_trades": 236,
+          "partial_events": 25,
+          "wins_after_fee": 88,
+          "losses_after_fee": 148,
+          "net_pnl_after_fee_pct": -12.3558,
+          "fee_drag_pct": 20.88,
+          "win_rate_after_fee_pct": 37.288136
+        },
+        "NORMAL": {
+          "trade_events": 1123,
+          "final_trades": 1020,
+          "partial_events": 103,
+          "wins_after_fee": 381,
+          "losses_after_fee": 639,
+          "net_pnl_after_fee_pct": -49.8609,
+          "fee_drag_pct": 89.84,
+          "win_rate_after_fee_pct": 37.352941
+        },
+        "DEAD_ZONE": {
+          "trade_events": 439,
+          "final_trades": 406,
+          "partial_events": 33,
+          "wins_after_fee": 155,
+          "losses_after_fee": 251,
+          "net_pnl_after_fee_pct": -16.3956,
+          "fee_drag_pct": 35.12,
+          "win_rate_after_fee_pct": 38.17734
+        }
+      },
+      "symbols": [
+        {
+          "symbol": "BTCUSDT",
+          "mode": "pullback",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "signal_count": 865,
+          "session_summary": {
+            "US_PEAK": {
+              "trade_events": 142,
+              "final_trades": 131,
+              "partial_events": 11,
+              "wins_after_fee": 47,
+              "losses_after_fee": 84,
+              "win_rate_after_fee_pct": 35.877863,
+              "net_pnl_after_fee_pct": -8.069,
+              "fee_drag_pct": 11.36,
+              "avg_final_pnl_after_fee_pct": -0.075489,
+              "profit_factor_after_fee": 0.365892,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -8.069
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 70,
+                "ha_reversal_3\\ubd09": 15,
+                "ha_reversal_4\\ubd09": 9,
+                "ha_reversal_5\\ubd09": 4,
+                "ha_reversal_9\\ubd09": 1,
+                "net_color_blue": 9,
+                "net_color_red": 3,
+                "opposite_fractal": 15,
+                "stop_loss": 5,
+                "tp1_partial": 11
+              },
+              "side_counts": {
+                "long": 61,
+                "short": 81
+              }
+            },
+            "EU_PEAK": {
+              "trade_events": 73,
+              "final_trades": 68,
+              "partial_events": 5,
+              "wins_after_fee": 26,
+              "losses_after_fee": 42,
+              "win_rate_after_fee_pct": 38.235294,
+              "net_pnl_after_fee_pct": -1.8113,
+              "fee_drag_pct": 5.84,
+              "avg_final_pnl_after_fee_pct": -0.039506,
+              "profit_factor_after_fee": 0.6005,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -1.8113
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 40,
+                "ha_reversal_3\\ubd09": 7,
+                "ha_reversal_4\\ubd09": 4,
+                "ha_reversal_5\\ubd09": 1,
+                "ha_reversal_6\\ubd09": 1,
+                "net_color_blue": 4,
+                "net_color_red": 3,
+                "opposite_fractal": 6,
+                "stop_loss": 1,
+                "tp1_partial": 5,
+                "tp2": 1
+              },
+              "side_counts": {
+                "long": 26,
+                "short": 47
+              }
+            },
+            "ASIA_PEAK": {
+              "trade_events": 78,
+              "final_trades": 74,
+              "partial_events": 4,
+              "wins_after_fee": 25,
+              "losses_after_fee": 49,
+              "win_rate_after_fee_pct": 33.783784,
+              "net_pnl_after_fee_pct": -4.6948,
+              "fee_drag_pct": 6.24,
+              "avg_final_pnl_after_fee_pct": -0.068166,
+              "profit_factor_after_fee": 0.307596,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -4.6948
+              },
+              "exit_counts": {
+                "ha_reversal_11\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 49,
+                "ha_reversal_3\\ubd09": 6,
+                "ha_reversal_4\\ubd09": 2,
+                "ha_reversal_5\\ubd09": 3,
+                "ha_reversal_6\\ubd09": 1,
+                "ha_reversal_7\\ubd09": 1,
+                "net_color_blue": 1,
+                "net_color_red": 1,
+                "opposite_fractal": 8,
+                "stop_loss": 1,
+                "tp1_partial": 4
+              },
+              "side_counts": {
+                "long": 21,
+                "short": 57
+              }
+            },
+            "NORMAL": {
+              "trade_events": 315,
+              "final_trades": 287,
+              "partial_events": 28,
+              "wins_after_fee": 102,
+              "losses_after_fee": 185,
+              "win_rate_after_fee_pct": 35.54007,
+              "net_pnl_after_fee_pct": -14.3122,
+              "fee_drag_pct": 25.2,
+              "avg_final_pnl_after_fee_pct": -0.059151,
+              "profit_factor_after_fee": 0.456764,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -14.3122
+              },
+              "exit_counts": {
+                "ha_reversal_14\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 178,
+                "ha_reversal_3\\ubd09": 26,
+                "ha_reversal_4\\ubd09": 24,
+                "ha_reversal_5\\ubd09": 4,
+                "ha_reversal_6\\ubd09": 2,
+                "ha_reversal_7\\ubd09": 2,
+                "ha_reversal_8\\ubd09": 1,
+                "ha_reversal_9\\ubd09": 1,
+                "net_color_blue": 11,
+                "net_color_red": 7,
+                "opposite_fractal": 18,
+                "stop_loss": 12,
+                "tp1_partial": 28
+              },
+              "side_counts": {
+                "long": 143,
+                "short": 172
+              }
+            },
+            "DEAD_ZONE": {
+              "trade_events": 147,
+              "final_trades": 137,
+              "partial_events": 10,
+              "wins_after_fee": 45,
+              "losses_after_fee": 92,
+              "win_rate_after_fee_pct": 32.846715,
+              "net_pnl_after_fee_pct": -7.2694,
+              "fee_drag_pct": 11.76,
+              "avg_final_pnl_after_fee_pct": -0.059672,
+              "profit_factor_after_fee": 0.357813,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -7.2694
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 92,
+                "ha_reversal_3\\ubd09": 14,
+                "ha_reversal_4\\ubd09": 7,
+                "ha_reversal_5\\ubd09": 2,
+                "ha_reversal_6\\ubd09": 1,
+                "ha_reversal_7\\ubd09": 1,
+                "net_color_blue": 4,
+                "net_color_red": 4,
+                "opposite_fractal": 9,
+                "stop_loss": 3,
+                "tp1_partial": 10
+              },
+              "side_counts": {
+                "long": 79,
+                "short": 68
+              }
+            }
+          },
+          "overall": {
+            "trade_events": 755,
+            "final_trades": 697,
+            "partial_events": 58,
+            "wins_after_fee": 245,
+            "losses_after_fee": 452,
+            "win_rate_after_fee_pct": 35.150646,
+            "net_pnl_after_fee_pct": -36.1567,
+            "fee_drag_pct": 60.4,
+            "avg_final_pnl_after_fee_pct": -0.061365,
+            "profit_factor_after_fee": 0.418753,
+            "by_signal_type_pnl_after_fee_pct": {
+              "pullback": -36.1567
+            },
+            "exit_counts": {
+              "ha_reversal_11\\ubd09": 1,
+              "ha_reversal_14\\ubd09": 1,
+              "ha_reversal_2\\ubd09": 429,
+              "ha_reversal_3\\ubd09": 68,
+              "ha_reversal_4\\ubd09": 46,
+              "ha_reversal_5\\ubd09": 14,
+              "ha_reversal_6\\ubd09": 5,
+              "ha_reversal_7\\ubd09": 4,
+              "ha_reversal_8\\ubd09": 1,
+              "ha_reversal_9\\ubd09": 2,
+              "net_color_blue": 29,
+              "net_color_red": 18,
+              "opposite_fractal": 56,
+              "stop_loss": 22,
+              "tp1_partial": 58,
+              "tp2": 1
+            },
+            "side_counts": {
+              "long": 330,
+              "short": 425
+            }
+          }
+        },
+        {
+          "symbol": "ETHUSDT",
+          "mode": "pullback",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "signal_count": 1017,
+          "session_summary": {
+            "US_PEAK": {
+              "trade_events": 138,
+              "final_trades": 124,
+              "partial_events": 14,
+              "wins_after_fee": 53,
+              "losses_after_fee": 71,
+              "win_rate_after_fee_pct": 42.741935,
+              "net_pnl_after_fee_pct": -3.5764,
+              "fee_drag_pct": 11.04,
+              "avg_final_pnl_after_fee_pct": -0.048041,
+              "profit_factor_after_fee": 0.578378,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -3.5764
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 71,
+                "ha_reversal_3\\ubd09": 17,
+                "ha_reversal_4\\ubd09": 3,
+                "ha_reversal_5\\ubd09": 6,
+                "net_color_blue": 9,
+                "net_color_red": 5,
+                "opposite_fractal": 5,
+                "stop_loss": 8,
+                "tp1_partial": 14
+              },
+              "side_counts": {
+                "long": 75,
+                "short": 63
+              }
+            },
+            "EU_PEAK": {
+              "trade_events": 82,
+              "final_trades": 73,
+              "partial_events": 9,
+              "wins_after_fee": 27,
+              "losses_after_fee": 46,
+              "win_rate_after_fee_pct": 36.986301,
+              "net_pnl_after_fee_pct": -1.4836,
+              "fee_drag_pct": 6.56,
+              "avg_final_pnl_after_fee_pct": -0.035812,
+              "profit_factor_after_fee": 0.666424,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -1.4836
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 40,
+                "ha_reversal_3\\ubd09": 7,
+                "ha_reversal_4\\ubd09": 3,
+                "ha_reversal_5\\ubd09": 4,
+                "ha_reversal_6\\ubd09": 1,
+                "ha_reversal_9\\ubd09": 1,
+                "net_color_blue": 6,
+                "net_color_red": 3,
+                "opposite_fractal": 7,
+                "stop_loss": 1,
+                "tp1_partial": 9
+              },
+              "side_counts": {
+                "long": 30,
+                "short": 52
+              }
+            },
+            "ASIA_PEAK": {
+              "trade_events": 90,
+              "final_trades": 79,
+              "partial_events": 11,
+              "wins_after_fee": 27,
+              "losses_after_fee": 52,
+              "win_rate_after_fee_pct": 34.177215,
+              "net_pnl_after_fee_pct": -3.6845,
+              "fee_drag_pct": 7.2,
+              "avg_final_pnl_after_fee_pct": -0.057965,
+              "profit_factor_after_fee": 0.428258,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -3.6845
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 48,
+                "ha_reversal_3\\ubd09": 5,
+                "ha_reversal_4\\ubd09": 7,
+                "ha_reversal_5\\ubd09": 5,
+                "ha_reversal_6\\ubd09": 1,
+                "net_color_blue": 3,
+                "net_color_red": 1,
+                "opposite_fractal": 7,
+                "stop_loss": 2,
+                "tp1_partial": 11
+              },
+              "side_counts": {
+                "long": 19,
+                "short": 71
+              }
+            },
+            "NORMAL": {
+              "trade_events": 426,
+              "final_trades": 386,
+              "partial_events": 40,
+              "wins_after_fee": 141,
+              "losses_after_fee": 245,
+              "win_rate_after_fee_pct": 36.528497,
+              "net_pnl_after_fee_pct": -20.5708,
+              "fee_drag_pct": 34.08,
+              "avg_final_pnl_after_fee_pct": -0.065542,
+              "profit_factor_after_fee": 0.437533,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -20.5708
+              },
+              "exit_counts": {
+                "ha_reversal_13\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 222,
+                "ha_reversal_3\\ubd09": 40,
+                "ha_reversal_4\\ubd09": 25,
+                "ha_reversal_5\\ubd09": 6,
+                "ha_reversal_6\\ubd09": 3,
+                "ha_reversal_7\\ubd09": 2,
+                "ha_reversal_8\\ubd09": 1,
+                "net_color_blue": 20,
+                "net_color_red": 16,
+                "opposite_fractal": 29,
+                "stop_loss": 21,
+                "tp1_partial": 40
+              },
+              "side_counts": {
+                "long": 167,
+                "short": 259
+              }
+            },
+            "DEAD_ZONE": {
+              "trade_events": 154,
+              "final_trades": 140,
+              "partial_events": 14,
+              "wins_after_fee": 59,
+              "losses_after_fee": 81,
+              "win_rate_after_fee_pct": 42.142857,
+              "net_pnl_after_fee_pct": -2.5297,
+              "fee_drag_pct": 12.32,
+              "avg_final_pnl_after_fee_pct": -0.030544,
+              "profit_factor_after_fee": 0.663291,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -2.5297
+              },
+              "exit_counts": {
+                "ha_reversal_12\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 84,
+                "ha_reversal_3\\ubd09": 15,
+                "ha_reversal_4\\ubd09": 9,
+                "ha_reversal_5\\ubd09": 3,
+                "ha_reversal_6\\ubd09": 1,
+                "net_color_blue": 5,
+                "net_color_red": 6,
+                "opposite_fractal": 13,
+                "stop_loss": 3,
+                "tp1_partial": 14
+              },
+              "side_counts": {
+                "long": 71,
+                "short": 83
+              }
+            }
+          },
+          "overall": {
+            "trade_events": 890,
+            "final_trades": 802,
+            "partial_events": 88,
+            "wins_after_fee": 307,
+            "losses_after_fee": 495,
+            "win_rate_after_fee_pct": 38.279302,
+            "net_pnl_after_fee_pct": -31.845,
+            "fee_drag_pct": 71.2,
+            "avg_final_pnl_after_fee_pct": -0.053274,
+            "profit_factor_after_fee": 0.512562,
+            "by_signal_type_pnl_after_fee_pct": {
+              "pullback": -31.845
+            },
+            "exit_counts": {
+              "ha_reversal_12\\ubd09": 1,
+              "ha_reversal_13\\ubd09": 1,
+              "ha_reversal_2\\ubd09": 465,
+              "ha_reversal_3\\ubd09": 84,
+              "ha_reversal_4\\ubd09": 47,
+              "ha_reversal_5\\ubd09": 24,
+              "ha_reversal_6\\ubd09": 6,
+              "ha_reversal_7\\ubd09": 2,
+              "ha_reversal_8\\ubd09": 1,
+              "ha_reversal_9\\ubd09": 1,
+              "net_color_blue": 43,
+              "net_color_red": 31,
+              "opposite_fractal": 61,
+              "stop_loss": 35,
+              "tp1_partial": 88
+            },
+            "side_counts": {
+              "long": 362,
+              "short": 528
+            }
+          }
+        },
+        {
+          "symbol": "XRPUSDT",
+          "mode": "pullback",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "signal_count": 997,
+          "session_summary": {
+            "US_PEAK": {
+              "trade_events": 168,
+              "final_trades": 158,
+              "partial_events": 10,
+              "wins_after_fee": 62,
+              "losses_after_fee": 96,
+              "win_rate_after_fee_pct": 39.240506,
+              "net_pnl_after_fee_pct": -12.3639,
+              "fee_drag_pct": 13.44,
+              "avg_final_pnl_after_fee_pct": -0.083683,
+              "profit_factor_after_fee": 0.338028,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -12.3639
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 84,
+                "ha_reversal_3\\ubd09": 13,
+                "ha_reversal_4\\ubd09": 9,
+                "ha_reversal_5\\ubd09": 5,
+                "ha_reversal_6\\ubd09": 2,
+                "ha_reversal_7\\ubd09": 4,
+                "net_color_blue": 12,
+                "net_color_red": 7,
+                "opposite_fractal": 16,
+                "stop_loss": 6,
+                "tp1_partial": 10
+              },
+              "side_counts": {
+                "long": 66,
+                "short": 102
+              }
+            },
+            "EU_PEAK": {
+              "trade_events": 88,
+              "final_trades": 81,
+              "partial_events": 7,
+              "wins_after_fee": 36,
+              "losses_after_fee": 45,
+              "win_rate_after_fee_pct": 44.444444,
+              "net_pnl_after_fee_pct": -2.8259,
+              "fee_drag_pct": 7.04,
+              "avg_final_pnl_after_fee_pct": -0.042883,
+              "profit_factor_after_fee": 0.578259,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -2.8259
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 53,
+                "ha_reversal_3\\ubd09": 8,
+                "ha_reversal_4\\ubd09": 8,
+                "ha_reversal_5\\ubd09": 2,
+                "net_color_blue": 3,
+                "opposite_fractal": 4,
+                "stop_loss": 3,
+                "tp1_partial": 7
+              },
+              "side_counts": {
+                "long": 12,
+                "short": 76
+              }
+            },
+            "ASIA_PEAK": {
+              "trade_events": 93,
+              "final_trades": 83,
+              "partial_events": 10,
+              "wins_after_fee": 36,
+              "losses_after_fee": 47,
+              "win_rate_after_fee_pct": 43.373494,
+              "net_pnl_after_fee_pct": -3.9765,
+              "fee_drag_pct": 7.44,
+              "avg_final_pnl_after_fee_pct": -0.05354,
+              "profit_factor_after_fee": 0.471511,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -3.9765
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 44,
+                "ha_reversal_3\\ubd09": 11,
+                "ha_reversal_4\\ubd09": 6,
+                "ha_reversal_5\\ubd09": 1,
+                "ha_reversal_9\\ubd09": 1,
+                "net_color_blue": 3,
+                "net_color_red": 4,
+                "opposite_fractal": 9,
+                "stop_loss": 3,
+                "tp1_partial": 10,
+                "tp2": 1
+              },
+              "side_counts": {
+                "long": 21,
+                "short": 72
+              }
+            },
+            "NORMAL": {
+              "trade_events": 382,
+              "final_trades": 347,
+              "partial_events": 35,
+              "wins_after_fee": 138,
+              "losses_after_fee": 209,
+              "win_rate_after_fee_pct": 39.769452,
+              "net_pnl_after_fee_pct": -14.9779,
+              "fee_drag_pct": 30.56,
+              "avg_final_pnl_after_fee_pct": -0.053654,
+              "profit_factor_after_fee": 0.541602,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -14.9779
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 192,
+                "ha_reversal_3\\ubd09": 41,
+                "ha_reversal_4\\ubd09": 20,
+                "ha_reversal_5\\ubd09": 10,
+                "ha_reversal_6\\ubd09": 4,
+                "ha_reversal_7\\ubd09": 2,
+                "ha_reversal_8\\ubd09": 3,
+                "net_color_blue": 22,
+                "net_color_red": 14,
+                "opposite_fractal": 23,
+                "stop_loss": 16,
+                "tp1_partial": 35
+              },
+              "side_counts": {
+                "long": 123,
+                "short": 259
+              }
+            },
+            "DEAD_ZONE": {
+              "trade_events": 138,
+              "final_trades": 129,
+              "partial_events": 9,
+              "wins_after_fee": 51,
+              "losses_after_fee": 78,
+              "win_rate_after_fee_pct": 39.534884,
+              "net_pnl_after_fee_pct": -6.5965,
+              "fee_drag_pct": 11.04,
+              "avg_final_pnl_after_fee_pct": -0.061171,
+              "profit_factor_after_fee": 0.459177,
+              "by_signal_type_pnl_after_fee_pct": {
+                "pullback": -6.5965
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 77,
+                "ha_reversal_3\\ubd09": 12,
+                "ha_reversal_4\\ubd09": 6,
+                "ha_reversal_5\\ubd09": 4,
+                "ha_reversal_6\\ubd09": 1,
+                "ha_reversal_7\\ubd09": 1,
+                "net_color_blue": 2,
+                "net_color_red": 12,
+                "opposite_fractal": 12,
+                "stop_loss": 2,
+                "tp1_partial": 9
+              },
+              "side_counts": {
+                "long": 64,
+                "short": 74
+              }
+            }
+          },
+          "overall": {
+            "trade_events": 869,
+            "final_trades": 798,
+            "partial_events": 71,
+            "wins_after_fee": 323,
+            "losses_after_fee": 475,
+            "win_rate_after_fee_pct": 40.47619,
+            "net_pnl_after_fee_pct": -40.7407,
+            "fee_drag_pct": 69.52,
+            "avg_final_pnl_after_fee_pct": -0.05971,
+            "profit_factor_after_fee": 0.481093,
+            "by_signal_type_pnl_after_fee_pct": {
+              "pullback": -40.7407
+            },
+            "exit_counts": {
+              "ha_reversal_2\\ubd09": 450,
+              "ha_reversal_3\\ubd09": 85,
+              "ha_reversal_4\\ubd09": 49,
+              "ha_reversal_5\\ubd09": 22,
+              "ha_reversal_6\\ubd09": 7,
+              "ha_reversal_7\\ubd09": 7,
+              "ha_reversal_8\\ubd09": 3,
+              "ha_reversal_9\\ubd09": 1,
+              "net_color_blue": 42,
+              "net_color_red": 37,
+              "opposite_fractal": 64,
+              "stop_loss": 30,
+              "tp1_partial": 71,
+              "tp2": 1
+            },
+            "side_counts": {
+              "long": 286,
+              "short": 583
+            }
+          }
+        }
+      ]
+    },
+    {
+      "mode": "fractal_break",
+      "allowed_signal_types": [
+        "fractal_break"
+      ],
+      "session_summary": {
+        "US_PEAK": {
+          "trade_events": 72,
+          "final_trades": 71,
+          "partial_events": 1,
+          "wins_after_fee": 35,
+          "losses_after_fee": 36,
+          "net_pnl_after_fee_pct": -0.5602,
+          "fee_drag_pct": 5.76,
+          "win_rate_after_fee_pct": 49.295775
+        },
+        "EU_PEAK": {
+          "trade_events": 81,
+          "final_trades": 78,
+          "partial_events": 3,
+          "wins_after_fee": 38,
+          "losses_after_fee": 40,
+          "net_pnl_after_fee_pct": 0.9558,
+          "fee_drag_pct": 6.48,
+          "win_rate_after_fee_pct": 48.717949
+        },
+        "ASIA_PEAK": {
+          "trade_events": 62,
+          "final_trades": 59,
+          "partial_events": 3,
+          "wins_after_fee": 28,
+          "losses_after_fee": 31,
+          "net_pnl_after_fee_pct": 0.4519,
+          "fee_drag_pct": 4.96,
+          "win_rate_after_fee_pct": 47.457627
+        },
+        "NORMAL": {
+          "trade_events": 300,
+          "final_trades": 292,
+          "partial_events": 8,
+          "wins_after_fee": 141,
+          "losses_after_fee": 151,
+          "net_pnl_after_fee_pct": 10.4534,
+          "fee_drag_pct": 24.0,
+          "win_rate_after_fee_pct": 48.287671
+        },
+        "DEAD_ZONE": {
+          "trade_events": 123,
+          "final_trades": 121,
+          "partial_events": 2,
+          "wins_after_fee": 51,
+          "losses_after_fee": 70,
+          "net_pnl_after_fee_pct": -0.7533,
+          "fee_drag_pct": 9.84,
+          "win_rate_after_fee_pct": 42.14876
+        }
+      },
+      "symbols": [
+        {
+          "symbol": "BTCUSDT",
+          "mode": "fractal_break",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "signal_count": 207,
+          "session_summary": {
+            "US_PEAK": {
+              "trade_events": 15,
+              "final_trades": 15,
+              "partial_events": 0,
+              "wins_after_fee": 8,
+              "losses_after_fee": 7,
+              "win_rate_after_fee_pct": 53.333333,
+              "net_pnl_after_fee_pct": 0.1378,
+              "fee_drag_pct": 1.2,
+              "avg_final_pnl_after_fee_pct": 0.009187,
+              "profit_factor_after_fee": 1.132347,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": 0.1378
+              },
+              "exit_counts": {
+                "ha_reversal_11\\ubd09": 1,
+                "ha_reversal_14\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 3,
+                "ha_reversal_3\\ubd09": 5,
+                "ha_reversal_5\\ubd09": 1,
+                "ha_reversal_6\\ubd09": 1,
+                "ha_reversal_7\\ubd09": 1,
+                "opposite_fractal": 2
+              },
+              "side_counts": {
+                "long": 7,
+                "short": 8
+              }
+            },
+            "EU_PEAK": {
+              "trade_events": 27,
+              "final_trades": 27,
+              "partial_events": 0,
+              "wins_after_fee": 13,
+              "losses_after_fee": 14,
+              "win_rate_after_fee_pct": 48.148148,
+              "net_pnl_after_fee_pct": -0.1859,
+              "fee_drag_pct": 2.16,
+              "avg_final_pnl_after_fee_pct": -0.006885,
+              "profit_factor_after_fee": 0.935285,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -0.1859
+              },
+              "exit_counts": {
+                "ha_reversal_10\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 8,
+                "ha_reversal_3\\ubd09": 5,
+                "ha_reversal_4\\ubd09": 4,
+                "ha_reversal_5\\ubd09": 2,
+                "ha_reversal_7\\ubd09": 1,
+                "opposite_fractal": 5,
+                "stop_loss": 1
+              },
+              "side_counts": {
+                "long": 11,
+                "short": 16
+              }
+            },
+            "ASIA_PEAK": {
+              "trade_events": 16,
+              "final_trades": 15,
+              "partial_events": 1,
+              "wins_after_fee": 8,
+              "losses_after_fee": 7,
+              "win_rate_after_fee_pct": 53.333333,
+              "net_pnl_after_fee_pct": 2.0576,
+              "fee_drag_pct": 1.28,
+              "avg_final_pnl_after_fee_pct": 0.102767,
+              "profit_factor_after_fee": 3.321886,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": 2.0576
+              },
+              "exit_counts": {
+                "ha_reversal_17\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 3,
+                "ha_reversal_3\\ubd09": 3,
+                "ha_reversal_5\\ubd09": 2,
+                "ha_reversal_6\\ubd09": 2,
+                "ha_reversal_7\\ubd09": 1,
+                "opposite_fractal": 3,
+                "tp1_partial": 1
+              },
+              "side_counts": {
+                "long": 10,
+                "short": 6
+              }
+            },
+            "NORMAL": {
+              "trade_events": 92,
+              "final_trades": 91,
+              "partial_events": 1,
+              "wins_after_fee": 39,
+              "losses_after_fee": 52,
+              "win_rate_after_fee_pct": 42.857143,
+              "net_pnl_after_fee_pct": -0.4087,
+              "fee_drag_pct": 7.36,
+              "avg_final_pnl_after_fee_pct": -0.008251,
+              "profit_factor_after_fee": 0.913702,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -0.4087
+              },
+              "exit_counts": {
+                "ha_reversal_10\\ubd09": 2,
+                "ha_reversal_12\\ubd09": 1,
+                "ha_reversal_14\\ubd09": 1,
+                "ha_reversal_19\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 16,
+                "ha_reversal_3\\ubd09": 14,
+                "ha_reversal_4\\ubd09": 19,
+                "ha_reversal_5\\ubd09": 3,
+                "ha_reversal_6\\ubd09": 13,
+                "ha_reversal_7\\ubd09": 4,
+                "ha_reversal_8\\ubd09": 3,
+                "ha_reversal_9\\ubd09": 1,
+                "opposite_fractal": 13,
+                "tp1_partial": 1
+              },
+              "side_counts": {
+                "long": 42,
+                "short": 50
+              }
+            },
+            "DEAD_ZONE": {
+              "trade_events": 40,
+              "final_trades": 40,
+              "partial_events": 0,
+              "wins_after_fee": 17,
+              "losses_after_fee": 23,
+              "win_rate_after_fee_pct": 42.5,
+              "net_pnl_after_fee_pct": -0.2093,
+              "fee_drag_pct": 3.2,
+              "avg_final_pnl_after_fee_pct": -0.005233,
+              "profit_factor_after_fee": 0.940681,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -0.2093
+              },
+              "exit_counts": {
+                "ha_reversal_13\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 9,
+                "ha_reversal_3\\ubd09": 5,
+                "ha_reversal_4\\ubd09": 4,
+                "ha_reversal_5\\ubd09": 4,
+                "ha_reversal_6\\ubd09": 4,
+                "ha_reversal_7\\ubd09": 5,
+                "ha_reversal_8\\ubd09": 1,
+                "ha_reversal_9\\ubd09": 1,
+                "opposite_fractal": 6
+              },
+              "side_counts": {
+                "long": 16,
+                "short": 24
+              }
+            }
+          },
+          "overall": {
+            "trade_events": 190,
+            "final_trades": 188,
+            "partial_events": 2,
+            "wins_after_fee": 85,
+            "losses_after_fee": 103,
+            "win_rate_after_fee_pct": 45.212766,
+            "net_pnl_after_fee_pct": 1.3915,
+            "fee_drag_pct": 15.2,
+            "avg_final_pnl_after_fee_pct": 0.002837,
+            "profit_factor_after_fee": 1.031732,
+            "by_signal_type_pnl_after_fee_pct": {
+              "fractal_break": 1.3915
+            },
+            "exit_counts": {
+              "ha_reversal_10\\ubd09": 3,
+              "ha_reversal_11\\ubd09": 1,
+              "ha_reversal_12\\ubd09": 1,
+              "ha_reversal_13\\ubd09": 1,
+              "ha_reversal_14\\ubd09": 2,
+              "ha_reversal_17\\ubd09": 1,
+              "ha_reversal_19\\ubd09": 1,
+              "ha_reversal_2\\ubd09": 39,
+              "ha_reversal_3\\ubd09": 32,
+              "ha_reversal_4\\ubd09": 27,
+              "ha_reversal_5\\ubd09": 12,
+              "ha_reversal_6\\ubd09": 20,
+              "ha_reversal_7\\ubd09": 12,
+              "ha_reversal_8\\ubd09": 4,
+              "ha_reversal_9\\ubd09": 2,
+              "opposite_fractal": 29,
+              "stop_loss": 1,
+              "tp1_partial": 2
+            },
+            "side_counts": {
+              "long": 86,
+              "short": 104
+            }
+          }
+        },
+        {
+          "symbol": "ETHUSDT",
+          "mode": "fractal_break",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "signal_count": 188,
+          "session_summary": {
+            "US_PEAK": {
+              "trade_events": 23,
+              "final_trades": 22,
+              "partial_events": 1,
+              "wins_after_fee": 11,
+              "losses_after_fee": 11,
+              "win_rate_after_fee_pct": 50.0,
+              "net_pnl_after_fee_pct": -0.1942,
+              "fee_drag_pct": 1.84,
+              "avg_final_pnl_after_fee_pct": -0.022305,
+              "profit_factor_after_fee": 0.823698,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -0.1942
+              },
+              "exit_counts": {
+                "ha_reversal_10\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 3,
+                "ha_reversal_3\\ubd09": 1,
+                "ha_reversal_4\\ubd09": 3,
+                "ha_reversal_5\\ubd09": 3,
+                "ha_reversal_6\\ubd09": 4,
+                "ha_reversal_8\\ubd09": 3,
+                "opposite_fractal": 3,
+                "stop_loss": 1,
+                "tp1_partial": 1
+              },
+              "side_counts": {
+                "long": 14,
+                "short": 9
+              }
+            },
+            "EU_PEAK": {
+              "trade_events": 27,
+              "final_trades": 25,
+              "partial_events": 2,
+              "wins_after_fee": 13,
+              "losses_after_fee": 12,
+              "win_rate_after_fee_pct": 52.0,
+              "net_pnl_after_fee_pct": 1.0922,
+              "fee_drag_pct": 2.16,
+              "avg_final_pnl_after_fee_pct": 0.014704,
+              "profit_factor_after_fee": 1.178637,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": 1.0922
+              },
+              "exit_counts": {
+                "ha_reversal_10\\ubd09": 1,
+                "ha_reversal_13\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 6,
+                "ha_reversal_3\\ubd09": 2,
+                "ha_reversal_4\\ubd09": 3,
+                "ha_reversal_5\\ubd09": 5,
+                "ha_reversal_6\\ubd09": 2,
+                "ha_reversal_9\\ubd09": 2,
+                "opposite_fractal": 3,
+                "tp1_partial": 2
+              },
+              "side_counts": {
+                "long": 12,
+                "short": 15
+              }
+            },
+            "ASIA_PEAK": {
+              "trade_events": 13,
+              "final_trades": 13,
+              "partial_events": 0,
+              "wins_after_fee": 5,
+              "losses_after_fee": 8,
+              "win_rate_after_fee_pct": 38.461538,
+              "net_pnl_after_fee_pct": -0.2816,
+              "fee_drag_pct": 1.04,
+              "avg_final_pnl_after_fee_pct": -0.021662,
+              "profit_factor_after_fee": 0.79572,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -0.2816
+              },
+              "exit_counts": {
+                "ha_reversal_12\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 2,
+                "ha_reversal_3\\ubd09": 1,
+                "ha_reversal_4\\ubd09": 4,
+                "ha_reversal_6\\ubd09": 1,
+                "ha_reversal_8\\ubd09": 2,
+                "opposite_fractal": 2
+              },
+              "side_counts": {
+                "long": 7,
+                "short": 6
+              }
+            },
+            "NORMAL": {
+              "trade_events": 85,
+              "final_trades": 82,
+              "partial_events": 3,
+              "wins_after_fee": 39,
+              "losses_after_fee": 43,
+              "win_rate_after_fee_pct": 47.560976,
+              "net_pnl_after_fee_pct": 4.4693,
+              "fee_drag_pct": 6.8,
+              "avg_final_pnl_after_fee_pct": 0.042441,
+              "profit_factor_after_fee": 1.440727,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": 4.4693
+              },
+              "exit_counts": {
+                "ha_reversal_11\\ubd09": 2,
+                "ha_reversal_12\\ubd09": 2,
+                "ha_reversal_15\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 17,
+                "ha_reversal_3\\ubd09": 12,
+                "ha_reversal_4\\ubd09": 14,
+                "ha_reversal_5\\ubd09": 10,
+                "ha_reversal_6\\ubd09": 3,
+                "ha_reversal_7\\ubd09": 7,
+                "ha_reversal_8\\ubd09": 3,
+                "opposite_fractal": 11,
+                "tp1_partial": 3
+              },
+              "side_counts": {
+                "long": 35,
+                "short": 50
+              }
+            },
+            "DEAD_ZONE": {
+              "trade_events": 31,
+              "final_trades": 31,
+              "partial_events": 0,
+              "wins_after_fee": 12,
+              "losses_after_fee": 19,
+              "win_rate_after_fee_pct": 38.709677,
+              "net_pnl_after_fee_pct": -0.3194,
+              "fee_drag_pct": 2.48,
+              "avg_final_pnl_after_fee_pct": -0.010303,
+              "profit_factor_after_fee": 0.887225,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -0.3194
+              },
+              "exit_counts": {
+                "ha_reversal_11\\ubd09": 1,
+                "ha_reversal_12\\ubd09": 1,
+                "ha_reversal_13\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 4,
+                "ha_reversal_3\\ubd09": 8,
+                "ha_reversal_4\\ubd09": 1,
+                "ha_reversal_5\\ubd09": 1,
+                "ha_reversal_6\\ubd09": 5,
+                "ha_reversal_7\\ubd09": 4,
+                "opposite_fractal": 5
+              },
+              "side_counts": {
+                "long": 15,
+                "short": 16
+              }
+            }
+          },
+          "overall": {
+            "trade_events": 179,
+            "final_trades": 173,
+            "partial_events": 6,
+            "wins_after_fee": 80,
+            "losses_after_fee": 93,
+            "win_rate_after_fee_pct": 46.242775,
+            "net_pnl_after_fee_pct": 4.7663,
+            "fee_drag_pct": 14.32,
+            "avg_final_pnl_after_fee_pct": 0.015931,
+            "profit_factor_after_fee": 1.162618,
+            "by_signal_type_pnl_after_fee_pct": {
+              "fractal_break": 4.7663
+            },
+            "exit_counts": {
+              "ha_reversal_10\\ubd09": 2,
+              "ha_reversal_11\\ubd09": 3,
+              "ha_reversal_12\\ubd09": 4,
+              "ha_reversal_13\\ubd09": 2,
+              "ha_reversal_15\\ubd09": 1,
+              "ha_reversal_2\\ubd09": 32,
+              "ha_reversal_3\\ubd09": 24,
+              "ha_reversal_4\\ubd09": 25,
+              "ha_reversal_5\\ubd09": 19,
+              "ha_reversal_6\\ubd09": 15,
+              "ha_reversal_7\\ubd09": 11,
+              "ha_reversal_8\\ubd09": 8,
+              "ha_reversal_9\\ubd09": 2,
+              "opposite_fractal": 24,
+              "stop_loss": 1,
+              "tp1_partial": 6
+            },
+            "side_counts": {
+              "long": 83,
+              "short": 96
+            }
+          }
+        },
+        {
+          "symbol": "XRPUSDT",
+          "mode": "fractal_break",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "signal_count": 295,
+          "session_summary": {
+            "US_PEAK": {
+              "trade_events": 34,
+              "final_trades": 34,
+              "partial_events": 0,
+              "wins_after_fee": 16,
+              "losses_after_fee": 18,
+              "win_rate_after_fee_pct": 47.058824,
+              "net_pnl_after_fee_pct": -0.5038,
+              "fee_drag_pct": 2.72,
+              "avg_final_pnl_after_fee_pct": -0.014818,
+              "profit_factor_after_fee": 0.862372,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -0.5038
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 12,
+                "ha_reversal_3\\ubd09": 5,
+                "ha_reversal_4\\ubd09": 4,
+                "ha_reversal_5\\ubd09": 4,
+                "ha_reversal_6\\ubd09": 4,
+                "ha_reversal_7\\ubd09": 2,
+                "ha_reversal_9\\ubd09": 1,
+                "opposite_fractal": 2
+              },
+              "side_counts": {
+                "long": 13,
+                "short": 21
+              }
+            },
+            "EU_PEAK": {
+              "trade_events": 27,
+              "final_trades": 26,
+              "partial_events": 1,
+              "wins_after_fee": 12,
+              "losses_after_fee": 14,
+              "win_rate_after_fee_pct": 46.153846,
+              "net_pnl_after_fee_pct": 0.0495,
+              "fee_drag_pct": 2.16,
+              "avg_final_pnl_after_fee_pct": -0.008446,
+              "profit_factor_after_fee": 0.900277,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": 0.0495
+              },
+              "exit_counts": {
+                "ha_reversal_11\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 7,
+                "ha_reversal_3\\ubd09": 8,
+                "ha_reversal_5\\ubd09": 4,
+                "ha_reversal_7\\ubd09": 1,
+                "ha_reversal_9\\ubd09": 2,
+                "opposite_fractal": 3,
+                "tp1_partial": 1
+              },
+              "side_counts": {
+                "long": 8,
+                "short": 19
+              }
+            },
+            "ASIA_PEAK": {
+              "trade_events": 33,
+              "final_trades": 31,
+              "partial_events": 2,
+              "wins_after_fee": 15,
+              "losses_after_fee": 16,
+              "win_rate_after_fee_pct": 48.387097,
+              "net_pnl_after_fee_pct": -1.3241,
+              "fee_drag_pct": 2.64,
+              "avg_final_pnl_after_fee_pct": -0.06849,
+              "profit_factor_after_fee": 0.38146,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -1.3241
+              },
+              "exit_counts": {
+                "ha_reversal_11\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 8,
+                "ha_reversal_3\\ubd09": 5,
+                "ha_reversal_4\\ubd09": 2,
+                "ha_reversal_5\\ubd09": 3,
+                "ha_reversal_6\\ubd09": 4,
+                "ha_reversal_7\\ubd09": 2,
+                "ha_reversal_8\\ubd09": 2,
+                "opposite_fractal": 4,
+                "tp1_partial": 2
+              },
+              "side_counts": {
+                "long": 9,
+                "short": 24
+              }
+            },
+            "NORMAL": {
+              "trade_events": 123,
+              "final_trades": 119,
+              "partial_events": 4,
+              "wins_after_fee": 63,
+              "losses_after_fee": 56,
+              "win_rate_after_fee_pct": 52.941176,
+              "net_pnl_after_fee_pct": 6.3928,
+              "fee_drag_pct": 9.84,
+              "avg_final_pnl_after_fee_pct": 0.038087,
+              "profit_factor_after_fee": 1.550651,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": 6.3928
+              },
+              "exit_counts": {
+                "ha_reversal_10\\ubd09": 1,
+                "ha_reversal_11\\ubd09": 1,
+                "ha_reversal_12\\ubd09": 1,
+                "ha_reversal_14\\ubd09": 1,
+                "ha_reversal_15\\ubd09": 1,
+                "ha_reversal_18\\ubd09": 1,
+                "ha_reversal_21\\ubd09": 1,
+                "ha_reversal_2\\ubd09": 26,
+                "ha_reversal_3\\ubd09": 30,
+                "ha_reversal_4\\ubd09": 12,
+                "ha_reversal_5\\ubd09": 13,
+                "ha_reversal_6\\ubd09": 4,
+                "ha_reversal_7\\ubd09": 4,
+                "ha_reversal_8\\ubd09": 5,
+                "ha_reversal_9\\ubd09": 4,
+                "opposite_fractal": 14,
+                "tp1_partial": 4
+              },
+              "side_counts": {
+                "long": 46,
+                "short": 77
+              }
+            },
+            "DEAD_ZONE": {
+              "trade_events": 52,
+              "final_trades": 50,
+              "partial_events": 2,
+              "wins_after_fee": 22,
+              "losses_after_fee": 28,
+              "win_rate_after_fee_pct": 44.0,
+              "net_pnl_after_fee_pct": -0.2246,
+              "fee_drag_pct": 4.16,
+              "avg_final_pnl_after_fee_pct": -0.015172,
+              "profit_factor_after_fee": 0.80682,
+              "by_signal_type_pnl_after_fee_pct": {
+                "fractal_break": -0.2246
+              },
+              "exit_counts": {
+                "ha_reversal_2\\ubd09": 14,
+                "ha_reversal_3\\ubd09": 10,
+                "ha_reversal_4\\ubd09": 5,
+                "ha_reversal_5\\ubd09": 5,
+                "ha_reversal_6\\ubd09": 3,
+                "ha_reversal_7\\ubd09": 3,
+                "ha_reversal_8\\ubd09": 1,
+                "ha_reversal_9\\ubd09": 4,
+                "opposite_fractal": 5,
+                "tp1_partial": 2
+              },
+              "side_counts": {
+                "long": 21,
+                "short": 31
+              }
+            }
+          },
+          "overall": {
+            "trade_events": 269,
+            "final_trades": 260,
+            "partial_events": 9,
+            "wins_after_fee": 128,
+            "losses_after_fee": 132,
+            "win_rate_after_fee_pct": 49.230769,
+            "net_pnl_after_fee_pct": 4.3898,
+            "fee_drag_pct": 21.52,
+            "avg_final_pnl_after_fee_pct": 0.003566,
+            "profit_factor_after_fee": 1.043215,
+            "by_signal_type_pnl_after_fee_pct": {
+              "fractal_break": 4.3898
+            },
+            "exit_counts": {
+              "ha_reversal_10\\ubd09": 1,
+              "ha_reversal_11\\ubd09": 3,
+              "ha_reversal_12\\ubd09": 1,
+              "ha_reversal_14\\ubd09": 1,
+              "ha_reversal_15\\ubd09": 1,
+              "ha_reversal_18\\ubd09": 1,
+              "ha_reversal_21\\ubd09": 1,
+              "ha_reversal_2\\ubd09": 67,
+              "ha_reversal_3\\ubd09": 58,
+              "ha_reversal_4\\ubd09": 23,
+              "ha_reversal_5\\ubd09": 29,
+              "ha_reversal_6\\ubd09": 15,
+              "ha_reversal_7\\ubd09": 12,
+              "ha_reversal_8\\ubd09": 8,
+              "ha_reversal_9\\ubd09": 11,
+              "opposite_fractal": 28,
+              "tp1_partial": 9
+            },
+            "side_counts": {
+              "long": 97,
+              "short": 172
+            }
+          }
+        }
+      ]
+    },
+    {
+      "mode": "cloud_rebound",
+      "allowed_signal_types": [
+        "cloud_rebound"
+      ],
+      "session_summary": {
+        "US_PEAK": {
+          "trade_events": 0,
+          "final_trades": 0,
+          "partial_events": 0,
+          "wins_after_fee": 0,
+          "losses_after_fee": 0,
+          "net_pnl_after_fee_pct": 0.0,
+          "fee_drag_pct": 0.0,
+          "win_rate_after_fee_pct": 0.0
+        },
+        "EU_PEAK": {
+          "trade_events": 0,
+          "final_trades": 0,
+          "partial_events": 0,
+          "wins_after_fee": 0,
+          "losses_after_fee": 0,
+          "net_pnl_after_fee_pct": 0.0,
+          "fee_drag_pct": 0.0,
+          "win_rate_after_fee_pct": 0.0
+        },
+        "ASIA_PEAK": {
+          "trade_events": 0,
+          "final_trades": 0,
+          "partial_events": 0,
+          "wins_after_fee": 0,
+          "losses_after_fee": 0,
+          "net_pnl_after_fee_pct": 0.0,
+          "fee_drag_pct": 0.0,
+          "win_rate_after_fee_pct": 0.0
+        },
+        "NORMAL": {
+          "trade_events": 1,
+          "final_trades": 1,
+          "partial_events": 0,
+          "wins_after_fee": 0,
+          "losses_after_fee": 1,
+          "net_pnl_after_fee_pct": -0.1294,
+          "fee_drag_pct": 0.08,
+          "win_rate_after_fee_pct": 0.0
+        },
+        "DEAD_ZONE": {
+          "trade_events": 0,
+          "final_trades": 0,
+          "partial_events": 0,
+          "wins_after_fee": 0,
+          "losses_after_fee": 0,
+          "net_pnl_after_fee_pct": 0.0,
+          "fee_drag_pct": 0.0,
+          "win_rate_after_fee_pct": 0.0
+        }
+      },
+      "symbols": [
+        {
+          "symbol": "BTCUSDT",
+          "mode": "cloud_rebound",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "signal_count": 0,
+          "session_summary": {
+            "US_PEAK": {
+              "trade_events": 0,
+              "final_trades": 0,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 0,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": 0.0,
+              "fee_drag_pct": 0.0,
+              "avg_final_pnl_after_fee_pct": 0.0,
+              "profit_factor_after_fee": null,
+              "by_signal_type_pnl_after_fee_pct": {},
+              "exit_counts": {},
+              "side_counts": {}
+            },
+            "EU_PEAK": {
+              "trade_events": 0,
+              "final_trades": 0,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 0,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": 0.0,
+              "fee_drag_pct": 0.0,
+              "avg_final_pnl_after_fee_pct": 0.0,
+              "profit_factor_after_fee": null,
+              "by_signal_type_pnl_after_fee_pct": {},
+              "exit_counts": {},
+              "side_counts": {}
+            },
+            "ASIA_PEAK": {
+              "trade_events": 0,
+              "final_trades": 0,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 0,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": 0.0,
+              "fee_drag_pct": 0.0,
+              "avg_final_pnl_after_fee_pct": 0.0,
+              "profit_factor_after_fee": null,
+              "by_signal_type_pnl_after_fee_pct": {},
+              "exit_counts": {},
+              "side_counts": {}
+            },
+            "NORMAL": {
+              "trade_events": 0,
+              "final_trades": 0,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 0,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": 0.0,
+              "fee_drag_pct": 0.0,
+              "avg_final_pnl_after_fee_pct": 0.0,
+              "profit_factor_after_fee": null,
+              "by_signal_type_pnl_after_fee_pct": {},
+              "exit_counts": {},
+              "side_counts": {}
+            },
+            "DEAD_ZONE": {
+              "trade_events": 0,
+              "final_trades": 0,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 0,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": 0.0,
+              "fee_drag_pct": 0.0,
+              "avg_final_pnl_after_fee_pct": 0.0,
+              "profit_factor_after_fee": null,
+              "by_signal_type_pnl_after_fee_pct": {},
+              "exit_counts": {},
+              "side_counts": {}
+            }
+          },
+          "overall": {
+            "trade_events": 0,
+            "final_trades": 0,
+            "partial_events": 0,
+            "wins_after_fee": 0,
+            "losses_after_fee": 0,
+            "win_rate_after_fee_pct": 0.0,
+            "net_pnl_after_fee_pct": 0.0,
+            "fee_drag_pct": 0.0,
+            "avg_final_pnl_after_fee_pct": 0.0,
+            "profit_factor_after_fee": null,
+            "by_signal_type_pnl_after_fee_pct": {},
+            "exit_counts": {},
+            "side_counts": {}
+          }
+        },
+        {
+          "symbol": "ETHUSDT",
+          "mode": "cloud_rebound",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "signal_count": 0,
+          "session_summary": {
+            "US_PEAK": {
+              "trade_events": 0,
+              "final_trades": 0,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 0,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": 0.0,
+              "fee_drag_pct": 0.0,
+              "avg_final_pnl_after_fee_pct": 0.0,
+              "profit_factor_after_fee": null,
+              "by_signal_type_pnl_after_fee_pct": {},
+              "exit_counts": {},
+              "side_counts": {}
+            },
+            "EU_PEAK": {
+              "trade_events": 0,
+              "final_trades": 0,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 0,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": 0.0,
+              "fee_drag_pct": 0.0,
+              "avg_final_pnl_after_fee_pct": 0.0,
+              "profit_factor_after_fee": null,
+              "by_signal_type_pnl_after_fee_pct": {},
+              "exit_counts": {},
+              "side_counts": {}
+            },
+            "ASIA_PEAK": {
+              "trade_events": 0,
+              "final_trades": 0,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 0,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": 0.0,
+              "fee_drag_pct": 0.0,
+              "avg_final_pnl_after_fee_pct": 0.0,
+              "profit_factor_after_fee": null,
+              "by_signal_type_pnl_after_fee_pct": {},
+              "exit_counts": {},
+              "side_counts": {}
+            },
+            "NORMAL": {
+              "trade_events": 0,
+              "final_trades": 0,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 0,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": 0.0,
+              "fee_drag_pct": 0.0,
+              "avg_final_pnl_after_fee_pct": 0.0,
+              "profit_factor_after_fee": null,
+              "by_signal_type_pnl_after_fee_pct": {},
+              "exit_counts": {},
+              "side_counts": {}
+            },
+            "DEAD_ZONE": {
+              "trade_events": 0,
+              "final_trades": 0,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 0,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": 0.0,
+              "fee_drag_pct": 0.0,
+              "avg_final_pnl_after_fee_pct": 0.0,
+              "profit_factor_after_fee": null,
+              "by_signal_type_pnl_after_fee_pct": {},
+              "exit_counts": {},
+              "side_counts": {}
+            }
+          },
+          "overall": {
+            "trade_events": 0,
+            "final_trades": 0,
+            "partial_events": 0,
+            "wins_after_fee": 0,
+            "losses_after_fee": 0,
+            "win_rate_after_fee_pct": 0.0,
+            "net_pnl_after_fee_pct": 0.0,
+            "fee_drag_pct": 0.0,
+            "avg_final_pnl_after_fee_pct": 0.0,
+            "profit_factor_after_fee": null,
+            "by_signal_type_pnl_after_fee_pct": {},
+            "exit_counts": {},
+            "side_counts": {}
+          }
+        },
+        {
+          "symbol": "XRPUSDT",
+          "mode": "cloud_rebound",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "signal_count": 1,
+          "session_summary": {
+            "US_PEAK": {
+              "trade_events": 0,
+              "final_trades": 0,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 0,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": 0.0,
+              "fee_drag_pct": 0.0,
+              "avg_final_pnl_after_fee_pct": 0.0,
+              "profit_factor_after_fee": null,
+              "by_signal_type_pnl_after_fee_pct": {},
+              "exit_counts": {},
+              "side_counts": {}
+            },
+            "EU_PEAK": {
+              "trade_events": 0,
+              "final_trades": 0,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 0,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": 0.0,
+              "fee_drag_pct": 0.0,
+              "avg_final_pnl_after_fee_pct": 0.0,
+              "profit_factor_after_fee": null,
+              "by_signal_type_pnl_after_fee_pct": {},
+              "exit_counts": {},
+              "side_counts": {}
+            },
+            "ASIA_PEAK": {
+              "trade_events": 0,
+              "final_trades": 0,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 0,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": 0.0,
+              "fee_drag_pct": 0.0,
+              "avg_final_pnl_after_fee_pct": 0.0,
+              "profit_factor_after_fee": null,
+              "by_signal_type_pnl_after_fee_pct": {},
+              "exit_counts": {},
+              "side_counts": {}
+            },
+            "NORMAL": {
+              "trade_events": 1,
+              "final_trades": 1,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 1,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": -0.1294,
+              "fee_drag_pct": 0.08,
+              "avg_final_pnl_after_fee_pct": -0.1294,
+              "profit_factor_after_fee": 0.0,
+              "by_signal_type_pnl_after_fee_pct": {
+                "cloud_rebound": -0.1294
+              },
+              "exit_counts": {
+                "stop_loss": 1
+              },
+              "side_counts": {
+                "short": 1
+              }
+            },
+            "DEAD_ZONE": {
+              "trade_events": 0,
+              "final_trades": 0,
+              "partial_events": 0,
+              "wins_after_fee": 0,
+              "losses_after_fee": 0,
+              "win_rate_after_fee_pct": 0.0,
+              "net_pnl_after_fee_pct": 0.0,
+              "fee_drag_pct": 0.0,
+              "avg_final_pnl_after_fee_pct": 0.0,
+              "profit_factor_after_fee": null,
+              "by_signal_type_pnl_after_fee_pct": {},
+              "exit_counts": {},
+              "side_counts": {}
+            }
+          },
+          "overall": {
+            "trade_events": 1,
+            "final_trades": 1,
+            "partial_events": 0,
+            "wins_after_fee": 0,
+            "losses_after_fee": 1,
+            "win_rate_after_fee_pct": 0.0,
+            "net_pnl_after_fee_pct": -0.1294,
+            "fee_drag_pct": 0.08,
+            "avg_final_pnl_after_fee_pct": -0.1294,
+            "profit_factor_after_fee": 0.0,
+            "by_signal_type_pnl_after_fee_pct": {
+              "cloud_rebound": -0.1294
+            },
+            "exit_counts": {
+              "stop_loss": 1
+            },
+            "side_counts": {
+              "short": 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

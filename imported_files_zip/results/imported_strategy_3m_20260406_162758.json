@@ -1,0 +1,646 @@
+{
+  "source": "imported_files_zip",
+  "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "XRPUSDT"
+  ],
+  "cache_suffix": "5m_0.25y",
+  "generated_at": "2026-04-06T07:27:58.737918+00:00",
+  "modes": [
+    {
+      "mode": "all",
+      "allowed_signal_types": [
+        "all"
+      ],
+      "summary": {
+        "combined_net_pnl_pct_simple_sum": 150.33,
+        "combined_final_trades": 2840,
+        "combined_wins": 1601,
+        "combined_losses": 1239,
+        "combined_win_rate_pct": 56.373239
+      },
+      "results": [
+        {
+          "symbol": "BTCUSDT",
+          "mode": "all",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "ltf_rows": 26209,
+          "htf_rows": 8737,
+          "signal_count": 1072,
+          "trade_event_count": 915,
+          "side_counts": {
+            "long": 479,
+            "short": 593
+          },
+          "signal_type_counts": {
+            "pullback": 865,
+            "fractal_break": 207
+          },
+          "exit_reason_counts": {
+            "ha_reversal_2\\ubd09": 479,
+            "ha_reversal_3\\ubd09": 89,
+            "opposite_fractal": 89,
+            "net_color_red": 18,
+            "ha_reversal_4\\ubd09": 65,
+            "net_color_blue": 29,
+            "ha_reversal_17\\ubd09": 1,
+            "stop_loss": 23,
+            "ha_reversal_9\\ubd09": 3,
+            "ha_reversal_6\\ubd09": 18,
+            "tp1_partial": 60,
+            "ha_reversal_7\\ubd09": 8,
+            "ha_reversal_5\\ubd09": 22,
+            "ha_reversal_11\\ubd09": 1,
+            "ha_reversal_14\\ubd09": 3,
+            "ha_reversal_10\\ubd09": 2,
+            "ha_reversal_12\\ubd09": 1,
+            "tp2": 1,
+            "ha_reversal_8\\ubd09": 3
+          },
+          "kpi": {
+            "total_trades": 855,
+            "wins": 476,
+            "losses": 379,
+            "win_rate_pct": 55.7,
+            "profit_factor": 1.57,
+            "net_pnl_pct": 40.82,
+            "tp1_gains_pct": 12.27,
+            "max_drawdown": -2.11,
+            "max_loss_streak": 9,
+            "by_signal_type": {
+              "pullback": {
+                "count": 692,
+                "win_rate": 54.0,
+                "avg_pnl": 0.0191
+              },
+              "fractal_break": {
+                "count": 163,
+                "win_rate": 62.6,
+                "avg_pnl": 0.0938
+              }
+            }
+          }
+        },
+        {
+          "symbol": "ETHUSDT",
+          "mode": "all",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "ltf_rows": 26209,
+          "htf_rows": 8737,
+          "signal_count": 1205,
+          "trade_event_count": 1043,
+          "side_counts": {
+            "short": 695,
+            "long": 510
+          },
+          "signal_type_counts": {
+            "pullback": 1017,
+            "fractal_break": 188
+          },
+          "exit_reason_counts": {
+            "ha_reversal_2\\ubd09": 512,
+            "opposite_fractal": 93,
+            "tp1_partial": 92,
+            "ha_reversal_3\\ubd09": 101,
+            "ha_reversal_4\\ubd09": 63,
+            "stop_loss": 36,
+            "ha_reversal_12\\ubd09": 5,
+            "ha_reversal_6\\ubd09": 13,
+            "net_color_blue": 43,
+            "ha_reversal_11\\ubd09": 2,
+            "ha_reversal_5\\ubd09": 32,
+            "ha_reversal_8\\ubd09": 7,
+            "net_color_red": 31,
+            "ha_reversal_13\\ubd09": 2,
+            "ha_reversal_9\\ubd09": 3,
+            "ha_reversal_7\\ubd09": 8
+          },
+          "kpi": {
+            "total_trades": 951,
+            "wins": 535,
+            "losses": 416,
+            "win_rate_pct": 56.3,
+            "profit_factor": 1.57,
+            "net_pnl_pct": 55.08,
+            "tp1_gains_pct": 19.67,
+            "max_drawdown": -1.59,
+            "max_loss_streak": 6,
+            "by_signal_type": {
+              "pullback": {
+                "count": 797,
+                "win_rate": 56.1,
+                "avg_pnl": 0.0264
+              },
+              "fractal_break": {
+                "count": 154,
+                "win_rate": 57.1,
+                "avg_pnl": 0.0932
+              }
+            }
+          }
+        },
+        {
+          "symbol": "XRPUSDT",
+          "mode": "all",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "ltf_rows": 26209,
+          "htf_rows": 8737,
+          "signal_count": 1293,
+          "trade_event_count": 1115,
+          "side_counts": {
+            "short": 855,
+            "long": 438
+          },
+          "signal_type_counts": {
+            "pullback": 997,
+            "fractal_break": 295,
+            "cloud_rebound": 1
+          },
+          "exit_reason_counts": {
+            "ha_reversal_2\\ubd09": 533,
+            "stop_loss": 31,
+            "ha_reversal_11\\ubd09": 3,
+            "ha_reversal_3\\ubd09": 133,
+            "tp1_partial": 81,
+            "net_color_red": 37,
+            "opposite_fractal": 100,
+            "ha_reversal_8\\ubd09": 8,
+            "ha_reversal_5\\ubd09": 40,
+            "net_color_blue": 42,
+            "ha_reversal_4\\ubd09": 64,
+            "ha_reversal_9\\ubd09": 7,
+            "ha_reversal_7\\ubd09": 15,
+            "ha_reversal_12\\ubd09": 1,
+            "ha_reversal_6\\ubd09": 14,
+            "ha_reversal_10\\ubd09": 1,
+            "ha_reversal_15\\ubd09": 1,
+            "tp2": 1,
+            "ha_reversal_14\\ubd09": 1,
+            "ha_reversal_18\\ubd09": 1,
+            "ha_reversal_21\\ubd09": 1
+          },
+          "kpi": {
+            "total_trades": 1034,
+            "wins": 590,
+            "losses": 444,
+            "win_rate_pct": 57.1,
+            "profit_factor": 1.53,
+            "net_pnl_pct": 54.43,
+            "tp1_gains_pct": 16.89,
+            "max_drawdown": -1.96,
+            "max_loss_streak": 6,
+            "by_signal_type": {
+              "pullback": {
+                "count": 795,
+                "win_rate": 54.8,
+                "avg_pnl": 0.0211
+              },
+              "fractal_break": {
+                "count": 238,
+                "win_rate": 64.7,
+                "avg_pnl": 0.0875
+              },
+              "cloud_rebound": {
+                "count": 1,
+                "win_rate": 0.0,
+                "avg_pnl": -0.0494
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "mode": "pullback",
+      "allowed_signal_types": [
+        "pullback"
+      ],
+      "summary": {
+        "combined_net_pnl_pct_simple_sum": 92.38,
+        "combined_final_trades": 2297,
+        "combined_wins": 1266,
+        "combined_losses": 1031,
+        "combined_win_rate_pct": 55.115368
+      },
+      "results": [
+        {
+          "symbol": "BTCUSDT",
+          "mode": "pullback",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "ltf_rows": 26209,
+          "htf_rows": 8737,
+          "signal_count": 865,
+          "trade_event_count": 755,
+          "side_counts": {
+            "long": 385,
+            "short": 480
+          },
+          "signal_type_counts": {
+            "pullback": 865
+          },
+          "exit_reason_counts": {
+            "ha_reversal_2\\ubd09": 429,
+            "ha_reversal_3\\ubd09": 68,
+            "opposite_fractal": 56,
+            "net_color_red": 18,
+            "ha_reversal_4\\ubd09": 46,
+            "net_color_blue": 29,
+            "stop_loss": 22,
+            "ha_reversal_9\\ubd09": 2,
+            "tp1_partial": 58,
+            "ha_reversal_5\\ubd09": 14,
+            "ha_reversal_11\\ubd09": 1,
+            "ha_reversal_6\\ubd09": 5,
+            "tp2": 1,
+            "ha_reversal_8\\ubd09": 1,
+            "ha_reversal_7\\ubd09": 4,
+            "ha_reversal_14\\ubd09": 1
+          },
+          "kpi": {
+            "total_trades": 697,
+            "wins": 376,
+            "losses": 321,
+            "win_rate_pct": 53.9,
+            "profit_factor": 1.31,
+            "net_pnl_pct": 24.24,
+            "tp1_gains_pct": 11.25,
+            "max_drawdown": -2.06,
+            "max_loss_streak": 9,
+            "by_signal_type": {
+              "pullback": {
+                "count": 697,
+                "win_rate": 53.9,
+                "avg_pnl": 0.0186
+              }
+            }
+          }
+        },
+        {
+          "symbol": "ETHUSDT",
+          "mode": "pullback",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "ltf_rows": 26209,
+          "htf_rows": 8737,
+          "signal_count": 1017,
+          "trade_event_count": 890,
+          "side_counts": {
+            "short": 593,
+            "long": 424
+          },
+          "signal_type_counts": {
+            "pullback": 1017
+          },
+          "exit_reason_counts": {
+            "ha_reversal_2\\ubd09": 465,
+            "tp1_partial": 88,
+            "ha_reversal_3\\ubd09": 84,
+            "ha_reversal_4\\ubd09": 47,
+            "stop_loss": 35,
+            "opposite_fractal": 61,
+            "net_color_blue": 43,
+            "ha_reversal_5\\ubd09": 24,
+            "net_color_red": 31,
+            "ha_reversal_13\\ubd09": 1,
+            "ha_reversal_6\\ubd09": 6,
+            "ha_reversal_7\\ubd09": 2,
+            "ha_reversal_8\\ubd09": 1,
+            "ha_reversal_12\\ubd09": 1,
+            "ha_reversal_9\\ubd09": 1
+          },
+          "kpi": {
+            "total_trades": 802,
+            "wins": 450,
+            "losses": 352,
+            "win_rate_pct": 56.1,
+            "profit_factor": 1.4,
+            "net_pnl_pct": 39.36,
+            "tp1_gains_pct": 17.92,
+            "max_drawdown": -1.41,
+            "max_loss_streak": 6,
+            "by_signal_type": {
+              "pullback": {
+                "count": 802,
+                "win_rate": 56.1,
+                "avg_pnl": 0.0267
+              }
+            }
+          }
+        },
+        {
+          "symbol": "XRPUSDT",
+          "mode": "pullback",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "ltf_rows": 26209,
+          "htf_rows": 8737,
+          "signal_count": 997,
+          "trade_event_count": 869,
+          "side_counts": {
+            "short": 669,
+            "long": 328
+          },
+          "signal_type_counts": {
+            "pullback": 997
+          },
+          "exit_reason_counts": {
+            "ha_reversal_2\\ubd09": 450,
+            "stop_loss": 30,
+            "net_color_red": 37,
+            "ha_reversal_3\\ubd09": 85,
+            "ha_reversal_5\\ubd09": 22,
+            "net_color_blue": 42,
+            "opposite_fractal": 64,
+            "tp1_partial": 71,
+            "ha_reversal_8\\ubd09": 3,
+            "ha_reversal_4\\ubd09": 49,
+            "ha_reversal_7\\ubd09": 7,
+            "ha_reversal_6\\ubd09": 7,
+            "ha_reversal_9\\ubd09": 1,
+            "tp2": 1
+          },
+          "kpi": {
+            "total_trades": 798,
+            "wins": 440,
+            "losses": 358,
+            "win_rate_pct": 55.1,
+            "profit_factor": 1.28,
+            "net_pnl_pct": 28.78,
+            "tp1_gains_pct": 12.59,
+            "max_drawdown": -2.09,
+            "max_loss_streak": 6,
+            "by_signal_type": {
+              "pullback": {
+                "count": 798,
+                "win_rate": 55.1,
+                "avg_pnl": 0.0203
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "mode": "fractal_break",
+      "allowed_signal_types": [
+        "fractal_break"
+      ],
+      "summary": {
+        "combined_net_pnl_pct_simple_sum": 61.59,
+        "combined_final_trades": 621,
+        "combined_wins": 377,
+        "combined_losses": 244,
+        "combined_win_rate_pct": 60.708535
+      },
+      "results": [
+        {
+          "symbol": "BTCUSDT",
+          "mode": "fractal_break",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "ltf_rows": 26209,
+          "htf_rows": 8737,
+          "signal_count": 207,
+          "trade_event_count": 190,
+          "side_counts": {
+            "short": 113,
+            "long": 94
+          },
+          "signal_type_counts": {
+            "fractal_break": 207
+          },
+          "exit_reason_counts": {
+            "ha_reversal_17\\ubd09": 1,
+            "opposite_fractal": 29,
+            "ha_reversal_3\\ubd09": 32,
+            "ha_reversal_6\\ubd09": 20,
+            "ha_reversal_4\\ubd09": 27,
+            "ha_reversal_7\\ubd09": 12,
+            "ha_reversal_2\\ubd09": 39,
+            "ha_reversal_11\\ubd09": 1,
+            "ha_reversal_5\\ubd09": 12,
+            "stop_loss": 1,
+            "ha_reversal_14\\ubd09": 2,
+            "ha_reversal_10\\ubd09": 3,
+            "tp1_partial": 2,
+            "ha_reversal_12\\ubd09": 1,
+            "ha_reversal_8\\ubd09": 4,
+            "ha_reversal_9\\ubd09": 2,
+            "ha_reversal_13\\ubd09": 1,
+            "ha_reversal_19\\ubd09": 1
+          },
+          "kpi": {
+            "total_trades": 188,
+            "wins": 113,
+            "losses": 75,
+            "win_rate_pct": 60.1,
+            "profit_factor": 2.64,
+            "net_pnl_pct": 16.59,
+            "tp1_gains_pct": 1.02,
+            "max_drawdown": -1.18,
+            "max_loss_streak": 4,
+            "by_signal_type": {
+              "fractal_break": {
+                "count": 188,
+                "win_rate": 60.1,
+                "avg_pnl": 0.0828
+              }
+            }
+          }
+        },
+        {
+          "symbol": "ETHUSDT",
+          "mode": "fractal_break",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "ltf_rows": 26209,
+          "htf_rows": 8737,
+          "signal_count": 188,
+          "trade_event_count": 179,
+          "side_counts": {
+            "short": 102,
+            "long": 86
+          },
+          "signal_type_counts": {
+            "fractal_break": 188
+          },
+          "exit_reason_counts": {
+            "ha_reversal_3\\ubd09": 24,
+            "ha_reversal_2\\ubd09": 32,
+            "opposite_fractal": 24,
+            "ha_reversal_12\\ubd09": 4,
+            "ha_reversal_4\\ubd09": 25,
+            "ha_reversal_6\\ubd09": 15,
+            "ha_reversal_5\\ubd09": 19,
+            "ha_reversal_11\\ubd09": 3,
+            "ha_reversal_8\\ubd09": 8,
+            "ha_reversal_15\\ubd09": 1,
+            "ha_reversal_7\\ubd09": 11,
+            "ha_reversal_9\\ubd09": 2,
+            "ha_reversal_13\\ubd09": 2,
+            "tp1_partial": 6,
+            "stop_loss": 1,
+            "ha_reversal_10\\ubd09": 2
+          },
+          "kpi": {
+            "total_trades": 173,
+            "wins": 98,
+            "losses": 75,
+            "win_rate_pct": 56.6,
+            "profit_factor": 2.62,
+            "net_pnl_pct": 19.09,
+            "tp1_gains_pct": 2.49,
+            "max_drawdown": -1.15,
+            "max_loss_streak": 5,
+            "by_signal_type": {
+              "fractal_break": {
+                "count": 173,
+                "win_rate": 56.6,
+                "avg_pnl": 0.0959
+              }
+            }
+          }
+        },
+        {
+          "symbol": "XRPUSDT",
+          "mode": "fractal_break",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "ltf_rows": 26209,
+          "htf_rows": 8737,
+          "signal_count": 295,
+          "trade_event_count": 269,
+          "side_counts": {
+            "long": 110,
+            "short": 185
+          },
+          "signal_type_counts": {
+            "fractal_break": 295
+          },
+          "exit_reason_counts": {
+            "ha_reversal_11\\ubd09": 3,
+            "ha_reversal_3\\ubd09": 58,
+            "tp1_partial": 9,
+            "ha_reversal_5\\ubd09": 29,
+            "ha_reversal_8\\ubd09": 8,
+            "ha_reversal_2\\ubd09": 67,
+            "ha_reversal_9\\ubd09": 11,
+            "opposite_fractal": 28,
+            "ha_reversal_6\\ubd09": 15,
+            "ha_reversal_4\\ubd09": 23,
+            "ha_reversal_12\\ubd09": 1,
+            "ha_reversal_7\\ubd09": 12,
+            "ha_reversal_10\\ubd09": 1,
+            "ha_reversal_15\\ubd09": 1,
+            "ha_reversal_14\\ubd09": 1,
+            "ha_reversal_18\\ubd09": 1,
+            "ha_reversal_21\\ubd09": 1
+          },
+          "kpi": {
+            "total_trades": 260,
+            "wins": 166,
+            "losses": 94,
+            "win_rate_pct": 63.8,
+            "profit_factor": 2.72,
+            "net_pnl_pct": 25.91,
+            "tp1_gains_pct": 4.18,
+            "max_drawdown": -1.01,
+            "max_loss_streak": 6,
+            "by_signal_type": {
+              "fractal_break": {
+                "count": 260,
+                "win_rate": 63.8,
+                "avg_pnl": 0.0836
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "mode": "cloud_rebound",
+      "allowed_signal_types": [
+        "cloud_rebound"
+      ],
+      "summary": {
+        "combined_net_pnl_pct_simple_sum": -0.05,
+        "combined_final_trades": 1,
+        "combined_wins": 0,
+        "combined_losses": 1,
+        "combined_win_rate_pct": 0.0
+      },
+      "results": [
+        {
+          "symbol": "BTCUSDT",
+          "mode": "cloud_rebound",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "ltf_rows": 26209,
+          "htf_rows": 8737,
+          "signal_count": 0,
+          "trade_event_count": 0,
+          "side_counts": {},
+          "signal_type_counts": {},
+          "exit_reason_counts": {},
+          "kpi": {}
+        },
+        {
+          "symbol": "ETHUSDT",
+          "mode": "cloud_rebound",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "ltf_rows": 26209,
+          "htf_rows": 8737,
+          "signal_count": 0,
+          "trade_event_count": 0,
+          "side_counts": {},
+          "signal_type_counts": {},
+          "exit_reason_counts": {},
+          "kpi": {}
+        },
+        {
+          "symbol": "XRPUSDT",
+          "mode": "cloud_rebound",
+          "start": "2026-01-05T04:10:00+00:00",
+          "end": "2026-04-06T04:10:00+00:00",
+          "ltf_rows": 26209,
+          "htf_rows": 8737,
+          "signal_count": 1,
+          "trade_event_count": 1,
+          "side_counts": {
+            "short": 1
+          },
+          "signal_type_counts": {
+            "cloud_rebound": 1
+          },
+          "exit_reason_counts": {
+            "stop_loss": 1
+          },
+          "kpi": {
+            "total_trades": 1,
+            "wins": 0,
+            "losses": 1,
+            "win_rate_pct": 0.0,
+            "profit_factor": 0.0,
+            "net_pnl_pct": -0.05,
+            "tp1_gains_pct": 0,
+            "max_drawdown": 0.0,
+            "max_loss_streak": 1,
+            "by_signal_type": {
+              "cloud_rebound": {
+                "count": 1,
+                "win_rate": 0.0,
+                "avg_pnl": -0.0494
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
