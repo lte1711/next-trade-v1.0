@@ -1,0 +1,232 @@
+{
+  "start_time": "2026-04-06T06:16:24.133491",
+  "end_time": "2026-04-06T06:18:24.133491",
+  "strategy_performance": {},
+  "market_data": {
+    "BTCUSDT": 67500.0,
+    "ETHUSDT": 2060.56,
+    "BCHUSDT": 424.34,
+    "XRPUSDT": 1.2989,
+    "LTCUSDT": 53.6,
+    "TRXUSDT": 0.3185,
+    "ETCUSDT": 8.614,
+    "LINKUSDT": 8.611,
+    "XLMUSDT": 0.15873,
+    "ADAUSDT": 0.2428,
+    "ZECUSDT": 239.64,
+    "NEOUSDT": 2.742,
+    "BNBUSDT": 592.2,
+    "DASHUSDT": 29.83,
+    "ATOMUSDT": 1.668
+  },
+  "total_pnl": -0.14804715999889595,
+  "total_trades": 4,
+  "winning_trades": 3,
+  "losing_trades": 1,
+  "pending_trades": 0,
+  "real_orders": [
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "ETHUSDT",
+      "side": "SELL",
+      "quantity": 0.246,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-2019,\"msg\":\"Margin is insufficient.\"}",
+      "timestamp": "2026-04-06T06:16:29.736807",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "NEOUSDT",
+      "side": "SELL",
+      "quantity": 184.5,
+      "price": 2.742,
+      "order_id": 175696779,
+      "status": "FILLED",
+      "executed_qty": 184.5,
+      "timestamp": "2026-04-06T06:17:41.357343",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "BTCUSDT",
+      "side": "BUY",
+      "quantity": 0.0105,
+      "price": 67504.6,
+      "order_id": 13022409230,
+      "status": "FILLED",
+      "executed_qty": 0.0105,
+      "timestamp": "2026-04-06T06:17:45.727190",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "trend_following_strategy_4",
+      "symbol": "BCHUSDT",
+      "side": "SELL",
+      "quantity": 1.734,
+      "price": 424.4,
+      "order_id": 1330522242,
+      "status": "FILLED",
+      "executed_qty": 1.734,
+      "timestamp": "2026-04-06T06:17:50.225296",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    }
+  ],
+  "balance_history": [
+    {
+      "timestamp": "2026-04-06T06:16:28.221245",
+      "total_balance": 8933.04516445,
+      "total_pnl": 0.2848526000016136,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-06T06:17:29.587006",
+      "total_balance": 8932.93637822,
+      "total_pnl": 0.1760663700006262,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:17:42.696925",
+      "total_balance": 8932.54181266,
+      "total_pnl": -0.2184991899994202,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:17:47.061357",
+      "total_balance": 8933.37079405,
+      "total_pnl": 0.6104822000015702,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:17:51.556602",
+      "total_balance": 8932.29996379,
+      "total_pnl": -0.4603480599998875,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:18:30.924915",
+      "total_balance": 8932.61226469,
+      "total_pnl": -0.14804715999889595,
+      "market_regime": "SIDEWAYS_MARKET"
+    }
+  ],
+  "initial_capital": 8932.76031185,
+  "current_capital": 8932.61226469,
+  "active_positions": {
+    "ZECUSDT": {
+      "amount": 7.469,
+      "entry_price": 241.3594698086,
+      "mark_price": 239.64,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.7124103354898723
+    },
+    "ETHUSDT": {
+      "amount": -0.738,
+      "entry_price": 2066.565325204,
+      "mark_price": 2060.56,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.29059450145411625
+    },
+    "NEOUSDT": {
+      "amount": -173.81,
+      "entry_price": 2.742,
+      "mark_price": 2.742,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.0
+    },
+    "BCHUSDT": {
+      "amount": -1.16,
+      "entry_price": 424.4,
+      "mark_price": 424.34,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.014137606032045778
+    },
+    "BNBUSDT": {
+      "amount": 10.57,
+      "entry_price": 593.3281772311,
+      "mark_price": 592.2,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.19014388232239698
+    },
+    "ETCUSDT": {
+      "amount": -189.42,
+      "entry_price": 8.623552221938,
+      "mark_price": 8.614,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.11076899277886042
+    },
+    "XLMUSDT": {
+      "amount": -1441.0,
+      "entry_price": 0.15808,
+      "mark_price": 0.15873,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.41118421052632315
+    },
+    "DASHUSDT": {
+      "amount": -39.759,
+      "entry_price": 29.87220126261,
+      "mark_price": 29.83,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.14127269108495633
+    },
+    "LTCUSDT": {
+      "amount": -16.512,
+      "entry_price": 53.5,
+      "mark_price": 53.6,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.18691588785046995
+    },
+    "ATOMUSDT": {
+      "amount": -24.42,
+      "entry_price": 1.668670288349,
+      "mark_price": 1.668,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.04016901083936547
+    },
+    "XRPUSDT": {
+      "amount": -2424.1,
+      "entry_price": 1.30223011427,
+      "mark_price": 1.2989,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.25572394874824
+    },
+    "ADAUSDT": {
+      "amount": 1017.0,
+      "entry_price": 0.2442925513987,
+      "mark_price": 0.2428,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.6109688527768764
+    },
+    "LINKUSDT": {
+      "amount": 77.45,
+      "entry_price": 8.653,
+      "mark_price": 8.611,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.48538079278862606
+    },
+    "BTCUSDT": {
+      "amount": -0.0006,
+      "entry_price": 67603.15855856,
+      "mark_price": 67500.0,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.15259428813616405
+    }
+  },
+  "market_regime": "SIDEWAYS_MARKET",
+  "sync_status": "SYNCED",
+  "system_errors": [],
+  "error_count": 0,
+  "last_error": null
+}

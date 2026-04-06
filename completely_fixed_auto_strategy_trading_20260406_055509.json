@@ -1,0 +1,847 @@
+{
+  "start_time": "2026-04-06T05:44:54.431751",
+  "end_time": "2026-04-06T05:54:54.431751",
+  "strategy_performance": {},
+  "market_data": {
+    "BTCUSDT": 67609.7,
+    "ETHUSDT": 2068.35,
+    "BCHUSDT": 425.79,
+    "XRPUSDT": 1.3031,
+    "LTCUSDT": 53.58,
+    "TRXUSDT": 0.31885,
+    "ETCUSDT": 8.635,
+    "LINKUSDT": 8.64,
+    "XLMUSDT": 0.15884,
+    "ADAUSDT": 0.2441
+  },
+  "total_pnl": -8.64279223000085,
+  "total_trades": 31,
+  "winning_trades": 0,
+  "losing_trades": 31,
+  "real_orders": [
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "ATOMUSDT",
+      "side": "BUY",
+      "quantity": 3.25,
+      "price": 100.0,
+      "order_id": 255254660,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:44:58.442247",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "IOTAUSDT",
+      "side": "SELL",
+      "quantity": 2.1,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T05:45:33.867847",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "IOTAUSDT",
+      "side": "SELL",
+      "quantity": 2.1,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T05:46:40.569100",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "NEOUSDT",
+      "side": "BUY",
+      "quantity": 3.25,
+      "price": 100.0,
+      "order_id": 175692675,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:46:41.766238",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "ATOMUSDT",
+      "side": "SELL",
+      "quantity": 2.52,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T05:46:43.774095",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "IOTAUSDT",
+      "side": "SELL",
+      "quantity": 2.1,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T05:47:17.820398",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "ZECUSDT",
+      "side": "BUY",
+      "quantity": 3.252,
+      "price": 100.0,
+      "order_id": 1209151502,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:47:18.911037",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "trend_following_strategy_4",
+      "symbol": "ATOMUSDT",
+      "side": "SELL",
+      "quantity": 5.57,
+      "price": 100.0,
+      "order_id": 255255056,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:47:20.881743",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "IOTAUSDT",
+      "side": "SELL",
+      "quantity": 2.1,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T05:47:55.797612",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "ATOMUSDT",
+      "side": "BUY",
+      "quantity": 3.25,
+      "price": 100.0,
+      "order_id": 255255202,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:47:56.684393",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "ATOMUSDT",
+      "side": "SELL",
+      "quantity": 2.52,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T05:47:58.764280",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "trend_following_strategy_4",
+      "symbol": "ATOMUSDT",
+      "side": "SELL",
+      "quantity": 5.57,
+      "price": 100.0,
+      "order_id": 255255207,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:47:59.751204",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "IOTAUSDT",
+      "side": "SELL",
+      "quantity": 2.1,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T05:48:35.004364",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "BTCUSDT",
+      "side": "SELL",
+      "quantity": 0.0037,
+      "price": 67575.2,
+      "order_id": 13022386927,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:48:36.274601",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "BNBUSDT",
+      "side": "SELL",
+      "quantity": 2.15,
+      "price": 100.0,
+      "order_id": 1333625023,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:49:11.471247",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "ATOMUSDT",
+      "side": "BUY",
+      "quantity": 3.25,
+      "price": 100.0,
+      "order_id": 255255423,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:49:13.460238",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "IOTAUSDT",
+      "side": "SELL",
+      "quantity": 2.1,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T05:49:48.801589",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "BTCUSDT",
+      "side": "SELL",
+      "quantity": 0.0037,
+      "price": 67632.6,
+      "order_id": 13022388172,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:49:49.671144",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "trend_following_strategy_4",
+      "symbol": "ATOMUSDT",
+      "side": "SELL",
+      "quantity": 5.57,
+      "price": 100.0,
+      "order_id": 255255532,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:49:51.588565",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "ZECUSDT",
+      "side": "BUY",
+      "quantity": 3.252,
+      "price": 100.0,
+      "order_id": 1209151954,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:50:26.757189",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "trend_following_strategy_4",
+      "symbol": "ETCUSDT",
+      "side": "SELL",
+      "quantity": 64.5,
+      "price": 8.63,
+      "order_id": 365835309,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:50:29.012919",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "trend_following_strategy_4",
+      "symbol": "ETCUSDT",
+      "side": "SELL",
+      "quantity": 64.48,
+      "price": 8.632,
+      "order_id": 365835432,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:51:04.179941",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "trend_following_strategy_4",
+      "symbol": "ATOMUSDT",
+      "side": "SELL",
+      "quantity": 5.57,
+      "price": 100.0,
+      "order_id": 255255997,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:51:39.103810",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "BATUSDT",
+      "side": "SELL",
+      "quantity": 2.5,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T05:52:14.333787",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "ETCUSDT",
+      "side": "SELL",
+      "quantity": 24.9,
+      "price": 8.634,
+      "order_id": 365835781,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:53:21.123031",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "BTCUSDT",
+      "side": "SELL",
+      "quantity": 0.0037,
+      "price": 67607.1,
+      "order_id": 13022391377,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:53:23.087917",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "ATOMUSDT",
+      "side": "BUY",
+      "quantity": 3.25,
+      "price": 100.0,
+      "order_id": 255256511,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:53:58.220341",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "ATOMUSDT",
+      "side": "SELL",
+      "quantity": 2.52,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T05:54:00.188934",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "ETCUSDT",
+      "side": "SELL",
+      "quantity": 24.9,
+      "price": 8.635,
+      "order_id": 365836039,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:54:34.050857",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "ZECUSDT",
+      "side": "BUY",
+      "quantity": 3.252,
+      "price": 100.0,
+      "order_id": 1209152564,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:54:36.053660",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "trend_following_strategy_4",
+      "symbol": "ATOMUSDT",
+      "side": "SELL",
+      "quantity": 5.57,
+      "price": 100.0,
+      "order_id": 255256675,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:54:38.306663",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    }
+  ],
+  "balance_history": [
+    {
+      "timestamp": "2026-04-06T05:44:55.811341",
+      "total_balance": 8949.75448089,
+      "total_pnl": -0.07494057999974757,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-06T05:44:59.527875",
+      "total_balance": 8949.48795987,
+      "total_pnl": -0.34146159999909287,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:45:56.889071",
+      "total_balance": 8948.67852285,
+      "total_pnl": -1.1508986200005893,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:46:42.989593",
+      "total_balance": 8949.64830813,
+      "total_pnl": -0.18111334000059287,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:46:58.188806",
+      "total_balance": 8949.28418525,
+      "total_pnl": -0.5452362199994241,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:47:20.020446",
+      "total_balance": 8945.61273804,
+      "total_pnl": -4.216683430000558,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:47:21.955193",
+      "total_balance": 8945.51512964,
+      "total_pnl": -4.314291830000002,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:47:57.805702",
+      "total_balance": 8944.74575276,
+      "total_pnl": -5.0836687099999835,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:47:59.497306",
+      "total_balance": 8944.74998289,
+      "total_pnl": -5.079438579999987,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:48:00.938385",
+      "total_balance": 8944.74108039,
+      "total_pnl": -5.088341079999736,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:48:37.400491",
+      "total_balance": 8945.02230141,
+      "total_pnl": -4.8071200600006705,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:49:00.593897",
+      "total_balance": 8944.17734155,
+      "total_pnl": -5.652079920000688,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:49:12.595582",
+      "total_balance": 8942.89874369,
+      "total_pnl": -6.930677779999314,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:49:14.572882",
+      "total_balance": 8943.08230341,
+      "total_pnl": -6.747118060000503,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:49:50.767928",
+      "total_balance": 8942.45548285,
+      "total_pnl": -7.373938619999535,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:49:52.668911",
+      "total_balance": 8942.4588684,
+      "total_pnl": -7.370553070000824,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:50:01.936959",
+      "total_balance": 8942.52631741,
+      "total_pnl": -7.303104059999896,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:50:27.898561",
+      "total_balance": 8942.64210999,
+      "total_pnl": -7.187311480000062,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:50:30.111162",
+      "total_balance": 8942.45481579,
+      "total_pnl": -7.374605679999149,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:51:03.242474",
+      "total_balance": 8942.21858774,
+      "total_pnl": -7.610833729999285,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:51:05.287141",
+      "total_balance": 8942.5246481,
+      "total_pnl": -7.3047733700004756,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:51:40.238262",
+      "total_balance": 8941.67260488,
+      "total_pnl": -8.156816590000744,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:52:04.353976",
+      "total_balance": 8941.84830079,
+      "total_pnl": -7.981120680000458,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:53:05.451186",
+      "total_balance": 8941.44090981,
+      "total_pnl": -8.388511659999494,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:53:22.231643",
+      "total_balance": 8941.84754308,
+      "total_pnl": -7.98187838999911,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:53:24.186216",
+      "total_balance": 8941.57514579,
+      "total_pnl": -8.25427567999941,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:53:59.337689",
+      "total_balance": 8941.63913107,
+      "total_pnl": -8.190290399999867,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:54:06.674831",
+      "total_balance": 8941.47512397,
+      "total_pnl": -8.35429750000003,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:54:35.187661",
+      "total_balance": 8940.87496035,
+      "total_pnl": -8.954461119999905,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:54:37.357765",
+      "total_balance": 8940.36089766,
+      "total_pnl": -9.46852380999917,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:54:39.604285",
+      "total_balance": 8940.52080612,
+      "total_pnl": -9.308615350000764,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T05:55:07.766733",
+      "total_balance": 8941.18662924,
+      "total_pnl": -8.64279223000085,
+      "market_regime": "SIDEWAYS_MARKET"
+    }
+  ],
+  "initial_capital": 8949.82942147,
+  "current_capital": 8941.18662924,
+  "active_positions": {},
+  "market_regime": "SIDEWAYS_MARKET",
+  "sync_status": "SYNCED",
+  "system_errors": [
+    {
+      "timestamp": "2026-04-06T05:44:55.143716",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:44:58.964461",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:45:56.351594",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:46:42.398833",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:46:57.545185",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:47:19.468262",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:47:21.423867",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:47:57.253273",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:47:58.869944",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:48:00.331574",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:48:36.839636",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:49:00.039970",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:49:12.039702",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:49:14.001243",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:49:50.225203",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:49:52.131851",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:50:01.261963",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:50:27.311176",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:50:29.589558",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:51:02.598641",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:51:04.710075",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:51:39.679254",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:52:03.791784",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:53:04.910940",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:53:21.714016",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:53:23.630758",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:53:58.774542",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:54:06.114314",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:54:34.615715",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:54:36.688224",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:54:38.943588",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:55:07.205552",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    }
+  ],
+  "error_count": 32,
+  "last_error": {
+    "timestamp": "2026-04-06T05:55:07.205552",
+    "error_type": "포지션 동기화 실패",
+    "message": "'markPrice'",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 333, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+  }
+}

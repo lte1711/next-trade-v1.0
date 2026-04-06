@@ -1,0 +1,89 @@
+{
+  "start_time": "2026-04-06T05:40:54.183079",
+  "end_time": "2026-04-07T05:40:54.183079",
+  "strategy_performance": {},
+  "market_data": {
+    "BTCUSDT": 67631.8,
+    "ETHUSDT": 2071.85,
+    "BCHUSDT": 425.53,
+    "XRPUSDT": 1.3034,
+    "LTCUSDT": 53.55,
+    "TRXUSDT": 0.31885,
+    "ETCUSDT": 8.61,
+    "LINKUSDT": 8.653,
+    "XLMUSDT": 0.15883,
+    "ADAUSDT": 0.2441
+  },
+  "total_pnl": 0.09064839999882679,
+  "total_trades": 1,
+  "winning_trades": 0,
+  "losing_trades": 1,
+  "real_orders": [
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "ETHUSDT",
+      "side": "BUY",
+      "quantity": 0.207,
+      "price": 2071.85,
+      "order_id": 8632239862,
+      "status": "NEW",
+      "timestamp": "2026-04-06T05:41:33.846266",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    }
+  ],
+  "balance_history": [
+    {
+      "timestamp": "2026-04-06T05:40:58.593645",
+      "total_balance": 8952.04914039,
+      "total_pnl": 0.09064839999882679,
+      "market_regime": "UNKNOWN"
+    }
+  ],
+  "initial_capital": 8951.95849199,
+  "current_capital": 8952.04914039,
+  "active_positions": {},
+  "market_regime": "SIDEWAYS_MARKET",
+  "sync_status": "SYNCED",
+  "system_errors": [
+    {
+      "timestamp": "2026-04-06T05:40:57.980165",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 293, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:41:34.330209",
+      "error_type": "포지션 동기화 실패",
+      "message": "'markPrice'",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 293, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:41:34.330209",
+      "error_type": "전략 거래 실행 오류",
+      "message": "[Errno 22] Invalid argument",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 293, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 592, in submit_order\n    self.sync_positions()\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 302, in sync_positions\n    self.log_system_error(\"포지션 동기화 실패\", str(e))\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 280, in log_system_error\n    print(f\"🚨 시스템 오류 기록: {error_type} - {error_message}\")\nOSError: [Errno 22] Invalid argument\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 676, in execute_strategy_trade\n    order_result = self.submit_order(strategy_name, symbol, signal, quantity)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 623, in submit_order\n    print(f\"❌ {error_msg}\")\nOSError: [Errno 22] Invalid argument\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:41:34.330209",
+      "error_type": "거래 실행 루프 오류",
+      "message": "[Errno 22] Invalid argument",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 293, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 592, in submit_order\n    self.sync_positions()\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 302, in sync_positions\n    self.log_system_error(\"포지션 동기화 실패\", str(e))\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 280, in log_system_error\n    print(f\"🚨 시스템 오류 기록: {error_type} - {error_message}\")\nOSError: [Errno 22] Invalid argument\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 676, in execute_strategy_trade\n    order_result = self.submit_order(strategy_name, symbol, signal, quantity)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 623, in submit_order\n    print(f\"❌ {error_msg}\")\nOSError: [Errno 22] Invalid argument\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 868, in run_trading\n    self.execute_strategy_trade(strategy_name)\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 683, in execute_strategy_trade\n    self.log_system_error(\"전략 거래 실행 오류\", str(e))\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 280, in log_system_error\n    print(f\"🚨 시스템 오류 기록: {error_type} - {error_message}\")\nOSError: [Errno 22] Invalid argument\n"
+    },
+    {
+      "timestamp": "2026-04-06T05:41:34.330209",
+      "error_type": "거래 실행 오류",
+      "message": "[Errno 22] Invalid argument",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 293, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 592, in submit_order\n    self.sync_positions()\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 302, in sync_positions\n    self.log_system_error(\"포지션 동기화 실패\", str(e))\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 280, in log_system_error\n    print(f\"🚨 시스템 오류 기록: {error_type} - {error_message}\")\nOSError: [Errno 22] Invalid argument\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 676, in execute_strategy_trade\n    order_result = self.submit_order(strategy_name, symbol, signal, quantity)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 623, in submit_order\n    print(f\"❌ {error_msg}\")\nOSError: [Errno 22] Invalid argument\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 868, in run_trading\n    self.execute_strategy_trade(strategy_name)\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 683, in execute_strategy_trade\n    self.log_system_error(\"전략 거래 실행 오류\", str(e))\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 280, in log_system_error\n    print(f\"🚨 시스템 오류 기록: {error_type} - {error_message}\")\nOSError: [Errno 22] Invalid argument\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 877, in run_trading\n    self.log_system_error(\"거래 실행 루프 오류\", str(e))\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 280, in log_system_error\n    print(f\"🚨 시스템 오류 기록: {error_type} - {error_message}\")\nOSError: [Errno 22] Invalid argument\n"
+    }
+  ],
+  "error_count": 5,
+  "last_error": {
+    "timestamp": "2026-04-06T05:41:34.330209",
+    "error_type": "거래 실행 오류",
+    "message": "[Errno 22] Invalid argument",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 293, in sync_positions\n    'mark_price': float(position['markPrice']),\n                        ~~~~~~~~^^^^^^^^^^^^^\nKeyError: 'markPrice'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 592, in submit_order\n    self.sync_positions()\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 302, in sync_positions\n    self.log_system_error(\"포지션 동기화 실패\", str(e))\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 280, in log_system_error\n    print(f\"🚨 시스템 오류 기록: {error_type} - {error_message}\")\nOSError: [Errno 22] Invalid argument\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 676, in execute_strategy_trade\n    order_result = self.submit_order(strategy_name, symbol, signal, quantity)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 623, in submit_order\n    print(f\"❌ {error_msg}\")\nOSError: [Errno 22] Invalid argument\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 868, in run_trading\n    self.execute_strategy_trade(strategy_name)\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 683, in execute_strategy_trade\n    self.log_system_error(\"전략 거래 실행 오류\", str(e))\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 280, in log_system_error\n    print(f\"🚨 시스템 오류 기록: {error_type} - {error_message}\")\nOSError: [Errno 22] Invalid argument\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 877, in run_trading\n    self.log_system_error(\"거래 실행 루프 오류\", str(e))\n  File \"C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading.py\", line 280, in log_system_error\n    print(f\"🚨 시스템 오류 기록: {error_type} - {error_message}\")\nOSError: [Errno 22] Invalid argument\n"
+  }
+}

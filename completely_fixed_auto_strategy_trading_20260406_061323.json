@@ -1,0 +1,508 @@
+{
+  "start_time": "2026-04-06T06:03:03.704636",
+  "end_time": "2026-04-06T06:13:03.704636",
+  "strategy_performance": {},
+  "market_data": {
+    "BTCUSDT": 67579.4,
+    "ETHUSDT": 2064.63,
+    "BCHUSDT": 425.12,
+    "XRPUSDT": 1.3011,
+    "LTCUSDT": 53.57,
+    "TRXUSDT": 0.31841,
+    "ETCUSDT": 8.632,
+    "LINKUSDT": 8.64,
+    "XLMUSDT": 0.15887,
+    "ADAUSDT": 0.2434
+  },
+  "total_pnl": -4.778100449999329,
+  "total_trades": 17,
+  "winning_trades": 11,
+  "losing_trades": 6,
+  "pending_trades": 0,
+  "real_orders": [
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "ETCUSDT",
+      "side": "BUY",
+      "quantity": 28.28,
+      "price": 8.645,
+      "order_id": 365837563,
+      "status": "FILLED",
+      "executed_qty": 28.28,
+      "timestamp": "2026-04-06T06:03:09.912578",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "ATOMUSDT",
+      "side": "SELL",
+      "quantity": 1.93,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T06:03:45.707649",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "ETCUSDT",
+      "side": "BUY",
+      "quantity": 28.3,
+      "price": 8.645,
+      "order_id": 365837801,
+      "status": "FILLED",
+      "executed_qty": 28.3,
+      "timestamp": "2026-04-06T06:04:55.233767",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "ONTUSDT",
+      "side": "SELL",
+      "quantity": 6.6,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T06:06:37.610439",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "NEOUSDT",
+      "side": "SELL",
+      "quantity": 1.93,
+      "price": 2.744,
+      "order_id": 175695298,
+      "status": "FILLED",
+      "executed_qty": 1.93,
+      "timestamp": "2026-04-06T06:06:40.506417",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "ONTUSDT",
+      "side": "BUY",
+      "quantity": 2.5,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T06:07:16.018415",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "trend_following_strategy_4",
+      "symbol": "NEOUSDT",
+      "side": "SELL",
+      "quantity": 7.1,
+      "price": 2.744,
+      "order_id": 175695377,
+      "status": "FILLED",
+      "executed_qty": 7.1,
+      "timestamp": "2026-04-06T06:07:18.656171",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "LTCUSDT",
+      "side": "SELL",
+      "quantity": 12.206,
+      "price": 53.5,
+      "order_id": 1005432902,
+      "status": "FILLED",
+      "executed_qty": 12.206,
+      "timestamp": "2026-04-06T06:09:37.164736",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "ETCUSDT",
+      "side": "BUY",
+      "quantity": 28.31,
+      "price": 8.64461,
+      "order_id": 365838407,
+      "status": "FILLED",
+      "executed_qty": 28.31,
+      "timestamp": "2026-04-06T06:09:40.932569",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "trend_following_strategy_4",
+      "symbol": "IOTAUSDT",
+      "side": "SELL",
+      "quantity": 7.1,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T06:10:17.010248",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "ONTUSDT",
+      "side": "SELL",
+      "quantity": 6.6,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T06:10:51.129218",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "BCHUSDT",
+      "side": "BUY",
+      "quantity": 0.574,
+      "price": 425.41,
+      "order_id": 1330520320,
+      "status": "FILLED",
+      "executed_qty": 0.574,
+      "timestamp": "2026-04-06T06:10:53.932703",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "NEOUSDT",
+      "side": "SELL",
+      "quantity": 1.93,
+      "price": 2.745,
+      "order_id": 175695890,
+      "status": "FILLED",
+      "executed_qty": 1.93,
+      "timestamp": "2026-04-06T06:10:57.742806",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "NEOUSDT",
+      "side": "SELL",
+      "quantity": 1.93,
+      "price": 2.745,
+      "order_id": 175695980,
+      "status": "FILLED",
+      "executed_qty": 1.93,
+      "timestamp": "2026-04-06T06:11:35.018687",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "trend_following_strategy_4",
+      "symbol": "IOTAUSDT",
+      "side": "SELL",
+      "quantity": 7.1,
+      "status": "FAILED",
+      "error": "주문 실패: 400 - {\"code\":-4164,\"msg\":\"Order's notional must be no smaller than 5 (unless you choose reduce only).\"}",
+      "timestamp": "2026-04-06T06:11:37.163024",
+      "type": "FAILED_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "LTCUSDT",
+      "side": "SELL",
+      "quantity": 12.201,
+      "price": 53.5,
+      "order_id": 1005433339,
+      "status": "FILLED",
+      "executed_qty": 12.201,
+      "timestamp": "2026-04-06T06:12:13.140023",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "NEOUSDT",
+      "side": "SELL",
+      "quantity": 1.93,
+      "price": 2.745,
+      "order_id": 175696166,
+      "status": "FILLED",
+      "executed_qty": 1.93,
+      "timestamp": "2026-04-06T06:12:51.378064",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    }
+  ],
+  "balance_history": [
+    {
+      "timestamp": "2026-04-06T06:03:05.294236",
+      "total_balance": 8937.69092941,
+      "total_pnl": -0.08449286999893957,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-06T06:03:11.142975",
+      "total_balance": 8937.05483688,
+      "total_pnl": -0.7205854000003455,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:04:06.526357",
+      "total_balance": 8937.18115664,
+      "total_pnl": -0.5942656400002306,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:04:56.438682",
+      "total_balance": 8936.19702472,
+      "total_pnl": -1.578397559998848,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:05:07.947387",
+      "total_balance": 8936.18991583,
+      "total_pnl": -1.5855064499992295,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:06:09.302198",
+      "total_balance": 8937.07849355,
+      "total_pnl": -0.6969287299998541,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:06:41.707056",
+      "total_balance": 8936.82156748,
+      "total_pnl": -0.9538548000000446,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:07:10.530076",
+      "total_balance": 8936.37522533,
+      "total_pnl": -1.4001969499986444,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:07:19.858173",
+      "total_balance": 8936.57023024,
+      "total_pnl": -1.2051920399990195,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:08:11.757978",
+      "total_balance": 8936.29405655,
+      "total_pnl": -1.4813657300001069,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:09:13.111423",
+      "total_balance": 8935.58416091,
+      "total_pnl": -2.191261369998756,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:09:38.441608",
+      "total_balance": 8935.33812078,
+      "total_pnl": -2.4373015000001033,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:09:42.208340",
+      "total_balance": 8934.95342337,
+      "total_pnl": -2.82199890999982,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:10:14.690209",
+      "total_balance": 8934.83240115,
+      "total_pnl": -2.9430211299986695,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:10:55.166310",
+      "total_balance": 8934.73832579,
+      "total_pnl": -3.037096489999385,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:10:59.120784",
+      "total_balance": 8934.53045202,
+      "total_pnl": -3.2449702599988086,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:11:15.904155",
+      "total_balance": 8934.44747091,
+      "total_pnl": -3.327951369999937,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:11:36.278093",
+      "total_balance": 8934.37690976,
+      "total_pnl": -3.398512519999713,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:12:14.744453",
+      "total_balance": 8934.22974842,
+      "total_pnl": -3.5456738599987148,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:12:17.289298",
+      "total_balance": 8934.15378491,
+      "total_pnl": -3.621637369999007,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:12:52.824865",
+      "total_balance": 8932.95991295,
+      "total_pnl": -4.815509329999259,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-06T06:13:18.555959",
+      "total_balance": 8932.99732183,
+      "total_pnl": -4.778100449999329,
+      "market_regime": "SIDEWAYS_MARKET"
+    }
+  ],
+  "initial_capital": 8937.77542228,
+  "current_capital": 8932.99732183,
+  "active_positions": {
+    "ZECUSDT": {
+      "amount": 7.469,
+      "entry_price": 241.3594698086,
+      "mark_price": 241.3594698086,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.0
+    },
+    "ETHUSDT": {
+      "amount": -0.738,
+      "entry_price": 2066.565325204,
+      "mark_price": 2064.63,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.09364936014345408
+    },
+    "NEOUSDT": {
+      "amount": 7.51,
+      "entry_price": 2.751917843901,
+      "mark_price": 2.751917843901,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.0
+    },
+    "BCHUSDT": {
+      "amount": 0.574,
+      "entry_price": 425.41,
+      "mark_price": 425.12,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.06816953057051325
+    },
+    "BNBUSDT": {
+      "amount": 10.57,
+      "entry_price": 593.3281772311,
+      "mark_price": 593.3281772311,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.0
+    },
+    "ETCUSDT": {
+      "amount": -189.42,
+      "entry_price": 8.623552221938,
+      "mark_price": 8.632,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.09796169657914644
+    },
+    "XLMUSDT": {
+      "amount": -1441.0,
+      "entry_price": 0.15808,
+      "mark_price": 0.15887,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.4997469635627612
+    },
+    "DASHUSDT": {
+      "amount": -37.28,
+      "entry_price": 29.87367757511,
+      "mark_price": 29.87367757511,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.0
+    },
+    "LTCUSDT": {
+      "amount": -16.512,
+      "entry_price": 53.5,
+      "mark_price": 53.57,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.13084112149532762
+    },
+    "ATOMUSDT": {
+      "amount": -24.42,
+      "entry_price": 1.668670288349,
+      "mark_price": 1.668670288349,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.0
+    },
+    "XRPUSDT": {
+      "amount": -2042.9,
+      "entry_price": 1.302552949239,
+      "mark_price": 1.3011,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.11154627071774285
+    },
+    "ADAUSDT": {
+      "amount": 1017.0,
+      "entry_price": 0.2442925513987,
+      "mark_price": 0.2434,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.3653616917870263
+    },
+    "LINKUSDT": {
+      "amount": 77.45,
+      "entry_price": 8.653,
+      "mark_price": 8.64,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.15023691205362188
+    },
+    "BTCUSDT": {
+      "amount": -0.0111,
+      "entry_price": 67603.15855856,
+      "mark_price": 67579.4,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.03514415460251357
+    }
+  },
+  "market_regime": "SIDEWAYS_MARKET",
+  "sync_status": "SYNCED",
+  "system_errors": [],
+  "error_count": 0,
+  "last_error": null
+}

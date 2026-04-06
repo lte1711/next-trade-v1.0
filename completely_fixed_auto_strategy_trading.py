@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
 """
-완전 수정된 자동 전략 기반 선물 거래 시스템 - 오류 보고 및 처리 개선
+Auto futures trading system with improved error reporting and handling.
 """
 
 import json
 import time
-import random
 from datetime import datetime, timedelta
-from pathlib import Path
-import subprocess
 import sys
 import os
 import threading
@@ -17,40 +14,57 @@ import hmac
 import hashlib
 import urllib.parse
 import traceback
+from decimal import Decimal, ROUND_DOWN, ROUND_UP
+
+_builtin_print = print
+
+def print(*args, **kwargs):
+    """Safe print wrapper that tolerates console encoding issues on Windows."""
+    try:
+        _builtin_print(*args, **kwargs)
+    except UnicodeEncodeError:
+        file = kwargs.get("file", sys.stdout)
+        sep = kwargs.get("sep", " ")
+        end = kwargs.get("end", "\n")
+        flush = kwargs.get("flush", False)
+        encoding = getattr(file, "encoding", None) or "utf-8"
+        text = sep.join(str(arg) for arg in args)
+        sanitized = text.encode(encoding, errors="replace").decode(encoding, errors="replace")
+        _builtin_print(sanitized, end=end, file=file, flush=flush)
+
+def configure_console_output():
+    """Reconfigure stdout/stderr to UTF-8 when supported."""
+    for stream_name in ("stdout", "stderr"):
+        stream = getattr(sys, stream_name, None)
+        if stream and hasattr(stream, "reconfigure"):
+            try:
+                stream.reconfigure(encoding="utf-8", errors="replace")
+            except Exception:
+                pass
+
+configure_console_output()
 
 class CompletelyFixedAutoStrategyFuturesTrading:
     def __init__(self):
+        self.load_local_env_file()
         self.start_time = datetime.now()
         self.end_time = self.start_time + timedelta(hours=24)
-        self.test_duration = 24 * 60 * 60  # 24시간 (초)
-        
-        # API 설정 (환경변수 또는 설정 파일에서 로드)
-        self.api_key = os.getenv("BINANCE_TESTNET_KEY", "tyc0Nz8Trhl8zRG74u1i3gNLFFAzqVQK6mcOtviDD47Z9TpYBPE7qAILBtGCdlCg")
-        self.api_secret = os.getenv("BINANCE_TESTNET_SECRET", "jTuqPonQabOq6Xx19sEWiYsl07Te9L4YsY4j7gJQZ2Lcom0vDxttBuqgK4YME7NI")
-        self.base_url = "https://testnet.binancefuture.com"
-        
-        # 동적 자본금 설정 (실제 계정에서 가져옴)
-        self.total_capital = self.get_account_balance()
-        self.capital_per_strategy = self.total_capital / len(self.get_available_strategies())
-        
-        # 동적 심볼 목록 (실제 거래소에서 가져옴)
-        self.valid_symbols = self.get_available_symbols()
-        
-        # 동적 가격 정보 (실시간 시장에서 가져옴)
-        self.current_prices = self.get_current_prices()
-        
-        # 자동 전략 설정 (동적 생성)
-        self.strategies = self.generate_dynamic_strategies()
-        
-        # 캐시 설정
+        self.test_duration = 24 * 60 * 60
+        self.max_open_positions = 20
+        self.default_stop_loss_pct = self.safe_float_conversion(os.getenv("POSITION_STOP_LOSS_PCT"), 1.5)
+        self.default_take_profit_pct = self.safe_float_conversion(os.getenv("POSITION_TAKE_PROFIT_PCT"), 3.0)
+        self.symbol_refresh_interval_sec = int(self.safe_float_conversion(os.getenv("SYMBOL_REFRESH_INTERVAL_SEC"), 3600))
+        self.max_ranked_symbols = int(self.safe_float_conversion(os.getenv("MAX_RANKED_SYMBOLS"), 20))
+        self.min_hold_seconds = int(self.safe_float_conversion(os.getenv("MIN_HOLD_SECONDS"), 180))
+        self.reentry_cooldown_seconds = int(self.safe_float_conversion(os.getenv("REENTRY_COOLDOWN_SECONDS"), 900))
+        self.last_symbol_refresh = None
+        self.running = True
+        self.system_errors = []
         self.symbol_info_cache = {}
         self.account_info_cache = {}
-        
-        # 실행 상태
-        self.running = True
-        self.system_errors = []  # 시스템 오류 기록
-        
-        # 거래 결과 저장
+        self.account_data_available = True
+        self.position_entry_times = {}
+        self.recently_closed_symbols = {}
         self.trading_results = {
             "start_time": self.start_time.isoformat(),
             "end_time": self.end_time.isoformat(),
@@ -60,33 +74,110 @@ class CompletelyFixedAutoStrategyFuturesTrading:
             "total_trades": 0,
             "winning_trades": 0,
             "losing_trades": 0,
+            "pending_trades": 0,
+            "closed_trades": 0,
+            "entry_failures": 0,
             "real_orders": [],
             "balance_history": [],
-            "initial_capital": self.total_capital,
-            "current_capital": self.total_capital,
+            "initial_capital": 0.0,
+            "current_capital": 0.0,
+            "available_balance": 0.0,
             "active_positions": {},
             "market_regime": "UNKNOWN",
             "sync_status": "INITIALIZED",
-            "system_errors": [],  # 시스템 오류 기록
-            "error_count": 0,      # 오류 횟수
-            "last_error": None     # 마지막 오류
+            "symbol_universe_updated_at": None,
+            "system_errors": [],
+            "error_count": 0,
+            "last_error": None
         }
-        
-        # 실시간 동기화 스레드 시작
+        self.api_key, self.api_secret = self.resolve_exchange_credentials()
+        self.base_url = self.resolve_base_url()
+        self.total_capital = self.get_account_balance()
+        self.capital_per_strategy = self.get_dynamic_capital_per_strategy()
+        self.valid_symbols = self.get_available_symbols()
+        self.current_prices = self.get_current_prices()
+        self.strategies = self.generate_dynamic_strategies()
+        self.refresh_symbol_universe(force=True)
+
+        self.trading_results["initial_capital"] = self.total_capital
+        self.trading_results["current_capital"] = self.total_capital
         self.sync_thread = threading.Thread(target=self.periodic_sync, daemon=True)
         self.sync_thread.start()
-        
-        print("🚀 완전 수정된 자동 전략 기반 선물 거래 시작!")
-        print(f"⏰ 시작 시간: {self.start_time.strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"💰 초기 자본: ${self.total_capital:,.2f}")
-        print(f"📊 전략 수: {len(self.strategies)}개")
-        print(f"💱 대상 심볼: {len(self.valid_symbols)}개")
-        print(f"🔄 실시간 동기화: 활성화")
-        print(f"🛡️  오류 보고: 강화")
+
+        print("[INFO] Auto futures trading started")
+        print(f"[INFO] Start time: {self.start_time.strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"[INFO] Initial capital: ${self.total_capital:,.2f}")
+        print(f"[INFO] Strategy count: {len(self.strategies)}")
+        print(f"[INFO] Symbol count: {len(self.valid_symbols)}")
+        print("[INFO] Real-time sync: enabled")
+        print("[INFO] Error reporting: enabled")
         print("=" * 80)
-    
+
+    def load_local_env_file(self, env_path=".env"):
+        """Load a simple local .env file into process environment if present."""
+        if not os.path.exists(env_path):
+            return
+        try:
+            with open(env_path, "r", encoding="utf-8-sig") as env_file:
+                for raw_line in env_file:
+                    line = raw_line.strip()
+                    if not line or line.startswith("#") or "=" not in line:
+                        continue
+                    key, value = line.split("=", 1)
+                    key = key.strip().lstrip("\ufeff")
+                    value = value.strip().strip('"').strip("'")
+                    if key and not os.getenv(key, "").strip():
+                        os.environ[key] = value
+        except Exception:
+            pass
+
+    def resolve_exchange_credentials(self):
+        """Resolve exchange credentials using the workspace's preferred env names."""
+        key_candidates = [
+            "BINANCE_TESTNET_TRADING_API_KEY",
+            "BINANCE_TESTNET_ACCOUNT_API_KEY",
+            "BINANCE_TESTNET_API_KEY",
+            "BINANCE_TESTNET_KEY",
+            "BINANCE_API_KEY",
+        ]
+        secret_candidates = [
+            "BINANCE_TESTNET_TRADING_API_SECRET",
+            "BINANCE_TESTNET_ACCOUNT_API_SECRET",
+            "BINANCE_TESTNET_API_SECRET",
+            "BINANCE_TESTNET_SECRET",
+            "BINANCE_API_SECRET",
+        ]
+
+        api_key = ""
+        api_secret = ""
+        for env_name in key_candidates:
+            value = os.getenv(env_name, "").strip()
+            if value:
+                api_key = value
+                break
+        for env_name in secret_candidates:
+            value = os.getenv(env_name, "").strip()
+            if value:
+                api_secret = value
+                break
+        return api_key, api_secret
+
+    def resolve_base_url(self):
+        """Resolve the Binance futures base URL from environment or fallback defaults."""
+        base_candidates = [
+            "BINANCE_TESTNET_URL",
+            "BINANCE_FUTURES_TESTNET_BASE_URL",
+            "BINANCE_TESTNET_BASE_URL",
+            "BINANCE_BASE_URL",
+        ]
+        for env_name in base_candidates:
+            value = os.getenv(env_name, "").strip()
+            if value:
+                return value.rstrip("/")
+        return "https://demo-fapi.binance.com"
+
     def get_server_time(self):
-        """서버 시간 가져오기"""
+        """Fetch Binance server time."""
         try:
             response = requests.get(f"{self.base_url}/fapi/v1/time", timeout=5)
             if response.status_code == 200:
@@ -95,228 +186,453 @@ class CompletelyFixedAutoStrategyFuturesTrading:
                 return int(time.time() * 1000)
         except:
             return int(time.time() * 1000)
-    
+
     def get_account_info(self):
-        """계정 정보 가져오기"""
+        """Return futures account info from Binance."""
         try:
+            if not self.api_key or not self.api_secret:
+                self.account_data_available = False
+                self.log_system_error("account_info_error", "BINANCE_TESTNET_KEY or BINANCE_TESTNET_SECRET is missing")
+                return None
+
             server_time = self.get_server_time()
             params = {
                 "timestamp": server_time,
                 "recvWindow": 5000
             }
-            
+
             query_string = urllib.parse.urlencode(params)
             signature = hmac.new(
                 self.api_secret.encode("utf-8"),
                 query_string.encode("utf-8"),
                 hashlib.sha256
             ).hexdigest()
-            
+
             url = f"{self.base_url}/fapi/v2/account?{query_string}&signature={signature}"
             headers = {"X-MBX-APIKEY": self.api_key}
-            
             response = requests.get(url, headers=headers, timeout=10)
-            
+
             if response.status_code == 200:
                 return response.json()
-            else:
-                self.log_system_error(f"계정 정보 실패: {response.status_code}", response.text)
-                return None
-        except Exception as e:
-            self.log_system_error("계정 정보 오류", str(e))
+
+            self.log_system_error(f"account_info_failed: {response.status_code}", response.text)
             return None
-    
+        except Exception as e:
+            self.log_system_error("account_info_error", str(e))
+            return None
+
     def get_account_balance(self):
-        """실제 계정 잔고 가져오기"""
+        """Fetch the current futures wallet balance."""
         try:
             account_info = self.get_account_info()
             if account_info:
                 balance = float(account_info['totalWalletBalance'])
-                print(f"✅ 실제 계정 잔고: ${balance:,.2f}")
+                self.account_data_available = True
+                print(f"[INFO] Wallet balance: ${balance:,.2f}")
                 return balance
             else:
-                print(f"❌ 계정 정보 없음, 기본값 사용")
-                return 10000.0
+                print("[WARN] Account info unavailable; using fallback balance")
+                self.account_data_available = False
+                return self.safe_float_conversion(getattr(self, "total_capital", 0.0), 0.0)
         except Exception as e:
-            self.log_system_error("계정 잔고 오류", str(e))
-            return 10000.0
-    
+            self.log_system_error("account_balance_error", str(e))
+            self.account_data_available = False
+            return self.safe_float_conversion(getattr(self, "total_capital", 0.0), 0.0)
+
     def get_available_symbols(self):
-        """실제 거래 가능한 심볼 목록 가져오기"""
+        """Fetch ranked tradable symbols using liquidity and volatility."""
         try:
             response = requests.get(f"{self.base_url}/fapi/v1/exchangeInfo", timeout=10)
-            
-            if response.status_code == 200:
+            ticker_response = requests.get(f"{self.base_url}/fapi/v1/ticker/24hr", timeout=10)
+
+            if response.status_code == 200 and ticker_response.status_code == 200:
                 exchange_info = response.json()
-                symbols = []
-                
+                ticker_24hr = ticker_response.json()
+
+                tradable_symbols = set()
                 for symbol_info in exchange_info["symbols"]:
-                    if (symbol_info["status"] == "TRADING" and 
+                    if (
+                        symbol_info["status"] == "TRADING" and
                         symbol_info["contractType"] == "PERPETUAL" and
-                        symbol_info["symbol"].endswith("USDT")):
-                        symbols.append(symbol_info["symbol"])
-                
-                print(f"✅ 거래 가능 심볼: {len(symbols)}개")
-                return symbols[:20]  # 상위 20개만 사용
-            else:
-                self.log_system_error(f"심볼 정보 가져오기 실패: {response.status_code}", response.text)
-                return ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
-        except Exception as e:
-            self.log_system_error("심볼 정보 오류", str(e))
+                        symbol_info["symbol"].endswith("USDT")
+                    ):
+                        tradable_symbols.add(symbol_info["symbol"])
+
+                ranked = []
+                for ticker in ticker_24hr:
+                    symbol = ticker.get("symbol")
+                    if symbol not in tradable_symbols:
+                        continue
+
+                    quote_volume = self.safe_float_conversion(ticker.get("quoteVolume"), 0.0)
+                    price_change_pct = abs(self.safe_float_conversion(ticker.get("priceChangePercent"), 0.0))
+                    count = self.safe_float_conversion(ticker.get("count"), 0.0)
+                    score = ((quote_volume ** 0.5) * 100.0) + (price_change_pct * 50.0) + (count * 0.05)
+                    ranked.append((score, symbol, quote_volume, price_change_pct))
+
+                ranked.sort(key=lambda item: item[0], reverse=True)
+                selected = [item[1] for item in ranked[:self.max_ranked_symbols]]
+
+                print(f"[INFO] Tradable symbols: {len(tradable_symbols)}")
+                print(f"[INFO] Ranked symbols selected: {len(selected)}")
+                return selected if selected else ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+
+            error_text = f"exchange={response.status_code}, ticker24hr={ticker_response.status_code}"
+            self.log_system_error("symbol_rank_fetch_failed", error_text)
             return ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
-    
+        except Exception as e:
+            self.log_system_error("symbol_fetch_error", str(e))
+            return ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+
     def get_current_prices(self):
-        """실시간 시장 가격 가져오기"""
+        """Fetch current prices for the active symbol universe."""
         prices = {}
-        
+
         try:
-            for symbol in self.valid_symbols[:10]:  # 상위 10개만
+            for symbol in self.valid_symbols[:10]:
                 response = requests.get(f"{self.base_url}/fapi/v1/ticker/price?symbol={symbol}", timeout=5)
-                
                 if response.status_code == 200:
                     price_data = response.json()
                     prices[symbol] = float(price_data["price"])
-                else:
-                    prices[symbol] = 100.0  # 기본값
-            
-            print(f"✅ 시장 가격: {len(prices)}개 심볼")
+
+            print(f"[INFO] Market prices cached: {len(prices)} symbols")
             return prices
         except Exception as e:
-            self.log_system_error("시장 가격 오류", str(e))
-            return {symbol: 100.0 for symbol in self.valid_symbols[:10]}
-    
+            self.log_system_error("market_price_error", str(e))
+            return {}
+
+    def get_current_price(self, symbol, default=0.0):
+        """Fetch the latest price for one symbol and refresh the local cache."""
+        cached_price = self.safe_float_conversion(self.current_prices.get(symbol), None) if hasattr(self, "current_prices") else None
+        if cached_price is not None and cached_price > 0:
+            return cached_price
+
+        try:
+            response = requests.get(f"{self.base_url}/fapi/v1/ticker/price?symbol={symbol}", timeout=5)
+            if response.status_code == 200:
+                price_data = response.json()
+                price = self.safe_float_conversion(price_data.get("price"), default)
+                if not hasattr(self, "current_prices"):
+                    self.current_prices = {}
+                self.current_prices[symbol] = price
+                return price
+        except Exception as e:
+            self.log_system_error("price_lookup_error", f"{symbol}: {e}")
+
+        return default
+
+    def refresh_symbol_universe(self, force=False):
+        """Refresh the symbol universe and strategy symbol preferences."""
+        now = datetime.now()
+        if (
+            not force and
+            self.last_symbol_refresh and
+            (now - self.last_symbol_refresh).total_seconds() < self.symbol_refresh_interval_sec
+        ):
+            return
+
+        try:
+            previous_symbols = set(getattr(self, "valid_symbols", []))
+            self.valid_symbols = self.get_available_symbols()
+            self.current_prices = self.get_current_prices()
+
+            if hasattr(self, "strategies") and self.strategies:
+                self.refresh_strategy_capital_allocations()
+                for strategy_name, strategy in self.strategies.items():
+                    strategy["preferred_symbols"] = self.select_preferred_symbols(strategy["strategy_type"])
+                    strategy["updated_at"] = now.isoformat()
+
+            self.last_symbol_refresh = now
+            self.trading_results["symbol_universe_updated_at"] = now.isoformat()
+            changed = len(set(self.valid_symbols) ^ previous_symbols)
+            print(f"[INFO] Symbol universe refreshed | count={len(self.valid_symbols)} | changed={changed}")
+        except Exception as e:
+            self.log_system_error("symbol_universe_refresh_error", str(e))
+
     def get_available_strategies(self):
-        """사용 가능한 전략 목록 동적 생성"""
+        """Return the list of supported strategy types."""
         base_strategies = [
             "momentum_strategy",
-            "mean_reversion_strategy", 
+            "pullback_confirmation_strategy",
+            "moving_average_strategy",
             "volatility_strategy",
             "trend_following_strategy",
-            "arbitrage_strategy"
+            "balanced_rotation_strategy"
         ]
         return base_strategies
-    
+
+    def get_dynamic_capital_per_strategy(self):
+        """Return current capital allocated per strategy."""
+        strategy_count = max(1, len(self.get_available_strategies()))
+        return self.safe_float_conversion(self.total_capital, 0.0) / strategy_count
+
+    def refresh_strategy_capital_allocations(self):
+        """Refresh per-strategy capital after balance changes."""
+        self.capital_per_strategy = self.get_dynamic_capital_per_strategy()
+        for strategy in getattr(self, "strategies", {}).values():
+            strategy["capital"] = self.capital_per_strategy
+
+    def get_strategy_profile(self, strategy_name):
+        """Deterministic EMA + Heikin Ashi + fractal strategy profiles."""
+        profiles = {
+            "momentum_strategy": {
+                "leverage": 14.0,
+                "risk_per_trade": 0.018,
+                "required_alignment_count": 2,
+                "consensus_threshold": 2,
+                "exit_signal_threshold": 3,
+                "require_volume_expansion": True,
+                "require_cross": True,
+                "require_ha_alignment": True,
+                "require_strong_5m_ha": True,
+                "fractal_intervals": ["5m"],
+                "candidate_limit": 6,
+                "symbol_mode": "leaders",
+                "market_bias": "adaptive",
+            },
+            "pullback_confirmation_strategy": {
+                "leverage": 8.0,
+                "risk_per_trade": 0.012,
+                "required_alignment_count": 2,
+                "consensus_threshold": 1,
+                "exit_signal_threshold": 2,
+                "require_volume_expansion": False,
+                "require_cross": False,
+                "require_ha_alignment": True,
+                "require_strong_5m_ha": False,
+                "fractal_intervals": ["5m"],
+                "candidate_limit": 8,
+                "symbol_mode": "pullback",
+                "market_bias": "adaptive",
+            },
+            "moving_average_strategy": {
+                "leverage": 12.0,
+                "risk_per_trade": 0.015,
+                "required_alignment_count": 3,
+                "consensus_threshold": 3,
+                "exit_signal_threshold": 3,
+                "require_volume_expansion": True,
+                "require_cross": True,
+                "require_ha_alignment": True,
+                "require_strong_5m_ha": False,
+                "fractal_intervals": ["5m", "15m"],
+                "candidate_limit": 5,
+                "symbol_mode": "leaders",
+                "market_bias": "adaptive",
+            },
+            "volatility_strategy": {
+                "leverage": 10.0,
+                "risk_per_trade": 0.010,
+                "required_alignment_count": 2,
+                "consensus_threshold": 2,
+                "exit_signal_threshold": 2,
+                "require_volume_expansion": True,
+                "require_cross": False,
+                "require_ha_alignment": True,
+                "require_strong_5m_ha": False,
+                "fractal_intervals": ["5m"],
+                "candidate_limit": 8,
+                "symbol_mode": "volatile",
+                "market_bias": "adaptive",
+            },
+            "trend_following_strategy": {
+                "leverage": 11.0,
+                "risk_per_trade": 0.016,
+                "required_alignment_count": 3,
+                "consensus_threshold": 2,
+                "exit_signal_threshold": 3,
+                "require_volume_expansion": False,
+                "require_cross": False,
+                "require_ha_alignment": True,
+                "require_strong_5m_ha": False,
+                "fractal_intervals": ["15m"],
+                "candidate_limit": 6,
+                "symbol_mode": "leaders",
+                "market_bias": "adaptive",
+            },
+            "balanced_rotation_strategy": {
+                "leverage": 7.0,
+                "risk_per_trade": 0.008,
+                "required_alignment_count": 2,
+                "consensus_threshold": 1,
+                "exit_signal_threshold": 2,
+                "require_volume_expansion": False,
+                "require_cross": False,
+                "require_ha_alignment": True,
+                "require_strong_5m_ha": False,
+                "fractal_intervals": ["5m", "15m"],
+                "candidate_limit": 10,
+                "symbol_mode": "balanced",
+                "market_bias": "adaptive",
+            },
+        }
+        return profiles.get(strategy_name, profiles["moving_average_strategy"])
+
     def generate_dynamic_strategies(self):
-        """동적 전략 생성"""
+        """Build runtime strategy configurations."""
         strategies = {}
-        
+        self.refresh_strategy_capital_allocations()
+
         for i, strategy_name in enumerate(self.get_available_strategies()):
-            # 동적 파라미터 생성
             strategy_config = self.generate_strategy_config(i, strategy_name)
             strategies[f"{strategy_name}_{i+1}"] = strategy_config
-        
-        print(f"✅ 동적 전략 생성: {len(strategies)}개")
+
+        print(f"[INFO] Dynamic strategies created: {len(strategies)}")
         return strategies
-    
+
+    def select_preferred_symbols(self, strategy_name):
+        """Select preferred symbols for a strategy profile."""
+        if not self.valid_symbols:
+            return ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+
+        candidates = list(self.valid_symbols)
+        profile = self.get_strategy_profile(strategy_name)
+        symbol_mode = profile.get("symbol_mode", "leaders")
+
+        if symbol_mode == "leaders":
+            return candidates[:min(8, len(candidates))]
+        if symbol_mode == "volatile":
+            return candidates[:min(12, len(candidates)):2] or candidates[:min(4, len(candidates))]
+        if symbol_mode == "pullback":
+            return candidates[min(3, len(candidates)):min(11, len(candidates))] or candidates[:min(6, len(candidates))]
+        if symbol_mode == "balanced":
+            merged = []
+            for symbol in candidates[:min(5, len(candidates))] + candidates[-min(5, len(candidates)):]:
+                if symbol not in merged:
+                    merged.append(symbol)
+            return merged
+        return candidates[:min(6, len(candidates))]
+
     def generate_strategy_config(self, index, strategy_name):
-        """전략 설정 동적 생성"""
-        # 시장 조건에 따른 동적 파라미터
+        """Build a deterministic strategy config from the EMA/HA/fractal profile."""
         market_volatility = self.calculate_market_volatility()
-        
-        # 기본 레버리지 (변동성에 따라 조정)
-        base_leverage = 10.0 + (market_volatility * 5)
-        leverage = min(max(base_leverage, 5.0), 50.0)  # 5x-50x 범위
-        
-        # 동적 수익률 설정
-        win_rate = 0.4 + (random.random() * 0.3)  # 40%-70%
-        avg_return = 0.1 + (random.random() * 0.4)  # 10%-50%
-        
-        # 동적 리스크 관리
-        risk_per_trade = 0.01 + (random.random() * 0.03)  # 1%-4%
-        stop_loss = 0.03 + (random.random() * 0.07)  # 3%-10%
-        take_profit = stop_loss * (2 + random.random())  # 손실의 2-3배
-        
-        # 선호 심볼 동적 선택
-        preferred_symbols = random.sample(self.valid_symbols, min(3, len(self.valid_symbols)))
-        
-        # 시장 편향 동적 설정
-        market_biases = ["bullish", "bearish", "neutral", "adaptive"]
-        market_bias = random.choice(market_biases)
-        
+        profile = self.get_strategy_profile(strategy_name)
+        preferred_symbols = self.select_preferred_symbols(strategy_name)
+
         return {
-            "leverage": leverage,
-            "win_rate": win_rate,
-            "avg_return": avg_return,
+            "leverage": profile["leverage"],
+            "win_rate": 0.0,
+            "avg_return": 0.0,
             "capital": self.capital_per_strategy,
-            "risk_per_trade": risk_per_trade,
-            "stop_loss": stop_loss,
-            "take_profit": take_profit,
+            "risk_per_trade": profile["risk_per_trade"],
+            "stop_loss": self.default_stop_loss_pct / 100.0,
+            "take_profit": self.default_take_profit_pct / 100.0,
             "strategy_type": strategy_name,
             "preferred_symbols": preferred_symbols,
-            "market_bias": market_bias,
+            "market_bias": profile["market_bias"],
             "created_at": datetime.now().isoformat(),
-            "market_volatility": market_volatility
+            "market_volatility": market_volatility,
+            "required_alignment_count": profile["required_alignment_count"],
+            "consensus_threshold": profile["consensus_threshold"],
+            "exit_signal_threshold": profile["exit_signal_threshold"],
+            "require_volume_expansion": profile["require_volume_expansion"],
+            "require_cross": profile["require_cross"],
+            "require_ha_alignment": profile["require_ha_alignment"],
+            "require_strong_5m_ha": profile["require_strong_5m_ha"],
+            "fractal_intervals": profile["fractal_intervals"],
+            "candidate_limit": profile["candidate_limit"],
+            "symbol_mode": profile["symbol_mode"]
         }
-    
+
     def calculate_market_volatility(self):
-        """시장 변동성 계산"""
+        """Estimate market volatility from cached prices."""
         if len(self.current_prices) < 2:
-            return 0.02  # 기본값
-        
-        # 가격 변동성 계산
+            return 0.02
         prices = list(self.current_prices.values())
         avg_price = sum(prices) / len(prices)
-        
-        # 표준편차 기반 변동성
         variance = sum((price - avg_price) ** 2 for price in prices) / len(prices)
         volatility = (variance ** 0.5) / avg_price
-        
-        return min(max(volatility, 0.01), 0.1)  # 1%-10% 범위
-    
+
+        return min(max(volatility, 0.01), 0.1)
+
     def log_system_error(self, error_type, error_message):
-        """시스템 오류 기록"""
+        """Record a system error in memory and trading results."""
         error_record = {
             "timestamp": datetime.now().isoformat(),
             "error_type": error_type,
             "message": error_message,
             "traceback": traceback.format_exc() if traceback.format_exc() != "NoneType: None\n" else None
         }
-        
+
+        if not hasattr(self, "system_errors"):
+            self.system_errors = []
         self.system_errors.append(error_record)
-        self.trading_results["system_errors"].append(error_record)
-        self.trading_results["error_count"] += 1
+
+        if not hasattr(self, "trading_results"):
+            self.trading_results = {
+                "system_errors": [],
+                "error_count": 0,
+                "last_error": None
+            }
+
+        self.trading_results.setdefault("system_errors", []).append(error_record)
+        self.trading_results["error_count"] = self.trading_results.get("error_count", 0) + 1
         self.trading_results["last_error"] = error_record
-        
-        print(f"🚨 시스템 오류 기록: {error_type} - {error_message}")
-    
+
+        print(f"[ERROR] {error_type} - {error_message}")
+
     def sync_positions(self):
-        """실제 포지션 정보 동기화"""
+        """Synchronize active positions from the exchange."""
         try:
             account_info = self.get_account_info()
             if account_info:
+                previous_active_positions = self.trading_results.get("active_positions", {})
                 active_positions = {}
                 for position in account_info['positions']:
-                    if float(position['positionAmt']) != 0:
+                    amount = self.safe_float_conversion(position.get('positionAmt'), 0.0)
+                    if amount != 0:
+                        entry_price = self.safe_float_conversion(position.get('entryPrice'), 0.0)
+                        mark_price = self.safe_float_conversion(
+                            position.get('markPrice'),
+                            self.get_current_price(position.get('symbol'), entry_price)
+                        )
+                        unrealized_pnl = self.safe_float_conversion(position.get('unRealizedProfit'), None)
+                        if unrealized_pnl is None:
+                            unrealized_pnl = self.safe_float_conversion(position.get('unrealizedPnl'), 0.0)
+
+                        percentage = self.safe_float_conversion(position.get('percentage'), None)
+                        if percentage is None and entry_price > 0:
+                            direction = 1 if amount > 0 else -1
+                            percentage = ((mark_price - entry_price) / entry_price) * 100 * direction
+                        if percentage is None:
+                            percentage = 0.0
+
+                        inferred_entry_time = (
+                            previous_active_positions.get(position['symbol'], {}).get('entry_time') or
+                            self.position_entry_times.get(position['symbol']) or
+                            datetime.now().isoformat()
+                        )
+
                         active_positions[position['symbol']] = {
-                            'amount': float(position['positionAmt']),
-                            'entry_price': float(position['entryPrice']),
-                            'mark_price': float(position['markPrice']),
-                            'unrealized_pnl': float(position['unrealizedPnl']),
-                            'percentage': float(position['percentage'])
+                            'amount': amount,
+                            'entry_price': entry_price,
+                            'mark_price': mark_price,
+                            'unrealized_pnl': unrealized_pnl,
+                            'percentage': percentage,
+                            'entry_time': inferred_entry_time
                         }
-                
+
                 self.trading_results["active_positions"] = active_positions
-                print(f"✅ 포지션 동기화: {len(active_positions)}개")
-                
+                print(f"[INFO] Positions synced: {len(active_positions)}")
+
         except Exception as e:
-            self.log_system_error("포지션 동기화 실패", str(e))
-    
+            self.log_system_error("periodic_sync_error", str(e))
+
     def sync_account_balance(self):
-        """실제 계정 잔고 동기화"""
+        """Synchronize account balance from the exchange."""
         try:
             account_info = self.get_account_info()
             if account_info:
                 total_balance = float(account_info['totalWalletBalance'])
                 available_balance = float(account_info['availableBalance'])
-                
+                self.account_data_available = True
+
                 self.trading_results["current_capital"] = total_balance
+                self.trading_results["available_balance"] = available_balance
                 self.total_capital = total_balance
-                
-                # 손익 계산
+                self.refresh_strategy_capital_allocations()
                 pnl = total_balance - self.trading_results["initial_capital"]
                 self.trading_results["total_pnl"] = pnl
-                
-                # 잔고 기록
                 balance_record = {
                     "timestamp": datetime.now().isoformat(),
                     "total_balance": total_balance,
@@ -324,142 +640,584 @@ class CompletelyFixedAutoStrategyFuturesTrading:
                     "market_regime": self.trading_results["market_regime"]
                 }
                 self.trading_results["balance_history"].append(balance_record)
-                
-                print(f"✅ 자산 동기화: ${total_balance:.2f} (PnL: ${pnl:+.2f})")
-                
+
+                print(f"[INFO] Balance synced: ${total_balance:.2f} (PnL: ${pnl:+.2f})")
+
         except Exception as e:
-            self.log_system_error("자산 동기화 실패", str(e))
-    
-    def periodic_sync(self):
-        """주기적 데이터 동기화"""
-        while self.running:
-            try:
-                self.sync_positions()
-                self.sync_account_balance()
-                self.trading_results["sync_status"] = "SYNCED"
-                time.sleep(60)  # 1분마다 동기화
-            except Exception as e:
-                self.log_system_error("주기적 동기화 오류", str(e))
-                self.trading_results["sync_status"] = "SYNC_ERROR"
-                time.sleep(60)
-    
+            self.log_system_error("balance_sync_error", str(e))
+
     def get_symbol_info(self, symbol):
-        """심볼 정보 가져오기 (캐시 사용)"""
+        """Fetch exchange symbol metadata with caching."""
         if symbol in self.symbol_info_cache:
             return self.symbol_info_cache[symbol]
-        
+
         try:
             response = requests.get(f"{self.base_url}/fapi/v1/exchangeInfo", timeout=10)
-            
+
             if response.status_code == 200:
                 exchange_info = response.json()
-                
+
                 for symbol_info in exchange_info["symbols"]:
                     if symbol_info["symbol"] == symbol:
                         self.symbol_info_cache[symbol] = symbol_info
                         return symbol_info
-            
+
             return None
         except Exception as e:
-            self.log_system_error("심볼 정보 오류", str(e))
+            self.log_system_error("symbol_info_error", str(e))
             return None
-    
-    def analyze_market_regime(self, symbol):
-        """시장 국면 동적 분석"""
+
+    def get_klines(self, symbol, interval, limit):
+        """Fetch kline data for a symbol and interval."""
         try:
-            # 최근 가격 데이터 가져오기
-            response = requests.get(f"{self.base_url}/fapi/v1/klines?symbol={symbol}&interval=1h&limit=24", timeout=5)
-            
+            response = requests.get(
+                f"{self.base_url}/fapi/v1/klines?symbol={symbol}&interval={interval}&limit={limit}",
+                timeout=5
+            )
             if response.status_code == 200:
-                klines = response.json()
-                
-                # 일일 변화율 계산
-                daily_changes = []
-                for kline in klines:
-                    open_price = float(kline[1])
-                    close_price = float(kline[4])
-                    change = (close_price - open_price) / open_price
-                    daily_changes.append(change)
-                
-                if len(daily_changes) > 0:
-                    avg_change = sum(daily_changes) / len(daily_changes)
-                    
-                    # 변동성 계산
-                    variance = sum((change - avg_change) ** 2 for change in daily_changes) / len(daily_changes)
-                    volatility = variance ** 0.5
-                    
-                    # 시장 국면 결정
-                    if avg_change > 0.02:
-                        regime = "BULL_MARKET"
-                    elif avg_change < -0.02:
-                        regime = "BEAR_MARKET"
-                    else:
-                        regime = "SIDEWAYS_MARKET"
-                    
-                    return {
-                        "regime": regime,
-                        "avg_change": avg_change,
-                        "volatility": volatility,
-                        "strength": abs(avg_change)
-                    }
-            
-            return {"regime": "SIDEWAYS_MARKET", "avg_change": 0, "volatility": 0.02, "strength": 0}
+                return response.json()
         except Exception as e:
-            self.log_system_error("시장 분석 오류", str(e))
-            return {"regime": "SIDEWAYS_MARKET", "avg_change": 0, "volatility": 0.02, "strength": 0}
-    
-    def generate_strategy_signal(self, strategy_name, market_regime, symbol):
-        """동적 전략 신호 생성"""
-        strategy = self.strategies[strategy_name]
-        strategy_type = strategy["strategy_type"]
-        market_bias = strategy["market_bias"]
-        
-        # 시장 국면과 전략 편향에 따른 신호 생성
-        signal_strength = 0.0
-        
-        if strategy_type == "momentum_strategy":
-            if market_regime["regime"] == "BULL_MARKET" and market_bias in ["bullish", "adaptive"]:
-                signal_strength = 0.8
-            elif market_regime["regime"] == "BEAR_MARKET" and market_bias in ["bearish", "adaptive"]:
-                signal_strength = 0.8
-            else:
-                signal_strength = 0.2
-        
-        elif strategy_type == "mean_reversion_strategy":
-            if market_regime["regime"] == "SIDEWAYS_MARKET":
-                signal_strength = 0.7
-            else:
-                signal_strength = 0.3
-        
-        elif strategy_type == "volatility_strategy":
-            if market_regime["volatility"] > 0.03:
-                signal_strength = 0.8
-            else:
-                signal_strength = 0.2
-        
-        elif strategy_type == "trend_following_strategy":
-            if market_regime["strength"] > 0.02:
-                signal_strength = 0.7
-            else:
-                signal_strength = 0.3
-        
-        elif strategy_type == "arbitrage_strategy":
-            signal_strength = 0.5  # 중립적
-        
-        # 랜덤 요소 추가
-        signal_strength += (random.random() - 0.5) * 0.2
-        signal_strength = max(0, min(1, signal_strength))
-        
-        # 신호 결정
-        if signal_strength > 0.6:
-            return "BUY"
-        elif signal_strength < 0.4:
-            return "SELL"
-        else:
+            self.log_system_error("kline_fetch_error", f"{symbol} {interval}: {e}")
+        return []
+
+    def calculate_sma(self, values, period):
+        """Calculate a simple moving average."""
+        if len(values) < period or period <= 0:
             return None
-    
+        window = values[-period:]
+        return sum(window) / len(window)
+
+    def calculate_ema(self, values, period):
+        """Calculate an exponential moving average."""
+        if len(values) < period or period <= 0:
+            return None
+
+        multiplier = 2 / (period + 1)
+        ema = sum(values[:period]) / period
+        for price in values[period:]:
+            ema = (price - ema) * multiplier + ema
+        return ema
+
+    def calculate_recent_fractals(self, highs, lows, lookback=40):
+        """Find the most recent confirmed upper and lower fractals."""
+        if len(highs) < 5 or len(lows) < 5:
+            return None, None
+
+        upper_fractal = None
+        lower_fractal = None
+        start_idx = max(2, len(highs) - lookback)
+        end_idx = len(highs) - 2
+
+        for idx in range(start_idx, end_idx):
+            if (
+                highs[idx] > highs[idx - 1] and
+                highs[idx] > highs[idx - 2] and
+                highs[idx] > highs[idx + 1] and
+                highs[idx] > highs[idx + 2]
+            ):
+                upper_fractal = highs[idx]
+
+            if (
+                lows[idx] < lows[idx - 1] and
+                lows[idx] < lows[idx - 2] and
+                lows[idx] < lows[idx + 1] and
+                lows[idx] < lows[idx + 2]
+            ):
+                lower_fractal = lows[idx]
+
+        return upper_fractal, lower_fractal
+
+    def calculate_heikin_ashi(self, ohlc_rows):
+        """Convert OHLC rows into Heikin Ashi candles."""
+        if not ohlc_rows:
+            return []
+
+        ha_rows = []
+        prev_ha_open = None
+        prev_ha_close = None
+
+        for row in ohlc_rows:
+            open_price = row["open"]
+            high_price = row["high"]
+            low_price = row["low"]
+            close_price = row["close"]
+            ha_close = (open_price + high_price + low_price + close_price) / 4
+
+            if prev_ha_open is None or prev_ha_close is None:
+                ha_open = (open_price + close_price) / 2
+            else:
+                ha_open = (prev_ha_open + prev_ha_close) / 2
+
+            ha_high = max(high_price, ha_open, ha_close)
+            ha_low = min(low_price, ha_open, ha_close)
+            ha_rows.append({
+                "open": ha_open,
+                "high": ha_high,
+                "low": ha_low,
+                "close": ha_close
+            })
+            prev_ha_open = ha_open
+            prev_ha_close = ha_close
+
+        return ha_rows
+
+    def analyze_heikin_ashi(self, ha_rows):
+        """Summarize recent Heikin Ashi trend and reversal state."""
+        if len(ha_rows) < 3:
+            return None
+
+        current = ha_rows[-1]
+        previous = ha_rows[-2]
+        epsilon = max(abs(current["close"]) * 0.00001, 1e-8)
+
+        def candle_side(row):
+            if row["close"] > row["open"]:
+                return "BULLISH"
+            if row["close"] < row["open"]:
+                return "BEARISH"
+            return "NEUTRAL"
+
+        trend = candle_side(current)
+        strong_bullish = trend == "BULLISH" and abs(current["open"] - current["low"]) <= epsilon
+        strong_bearish = trend == "BEARISH" and abs(current["open"] - current["high"]) <= epsilon
+
+        bull_count = 0
+        bear_count = 0
+        for row in reversed(ha_rows[-5:]):
+            side = candle_side(row)
+            if side == "BULLISH" and bear_count == 0:
+                bull_count += 1
+            elif side == "BEARISH" and bull_count == 0:
+                bear_count += 1
+            else:
+                break
+
+        body = abs(current["close"] - current["open"])
+        total_range = max(current["high"] - current["low"], epsilon)
+        upper_wick = current["high"] - max(current["open"], current["close"])
+        lower_wick = min(current["open"], current["close"]) - current["low"]
+        reversal = body <= (total_range * 0.25) and upper_wick > body and lower_wick > body
+        flipped = candle_side(previous) != trend and trend != "NEUTRAL"
+
+        return {
+            "trend": trend,
+            "strong_bullish": strong_bullish,
+            "strong_bearish": strong_bearish,
+            "bull_count": bull_count,
+            "bear_count": bear_count,
+            "reversal": reversal,
+            "flipped": flipped
+        }
+
+    def analyze_timeframe_ma(self, symbol, interval, limit=120):
+        """Analyze moving averages, crossovers, fractals, and volume for one timeframe."""
+        klines = self.get_klines(symbol, interval, limit)
+        if len(klines) > 1:
+            klines = klines[:-1]
+        closes = [self.safe_float_conversion(kline[4], 0.0) for kline in klines]
+        closes = [price for price in closes if price > 0]
+        highs = [self.safe_float_conversion(kline[2], 0.0) for kline in klines]
+        highs = [price for price in highs if price > 0]
+        lows = [self.safe_float_conversion(kline[3], 0.0) for kline in klines]
+        lows = [price for price in lows if price > 0]
+        opens = [self.safe_float_conversion(kline[1], 0.0) for kline in klines]
+        opens = [price for price in opens if price > 0]
+        volumes = [self.safe_float_conversion(kline[5], 0.0) for kline in klines]
+        volumes = [volume for volume in volumes if volume >= 0]
+
+        if len(closes) < 60 or len(highs) < 60 or len(lows) < 60 or len(opens) < 60:
+            return None
+
+        current_price = closes[-1]
+        previous_close = closes[-2] if len(closes) >= 2 else current_price
+        ohlc_rows = []
+        for idx in range(min(len(opens), len(highs), len(lows), len(closes))):
+            ohlc_rows.append({
+                "open": opens[idx],
+                "high": highs[idx],
+                "low": lows[idx],
+                "close": closes[idx]
+            })
+        ma_fast = self.calculate_sma(closes, 5)
+        ma_mid = self.calculate_sma(closes, 20)
+        ma_slow = self.calculate_sma(closes, 60)
+        ema_fast = self.calculate_ema(closes, 9)
+        ema_mid = self.calculate_ema(closes, 21)
+        ema_slow = self.calculate_ema(closes, 55)
+        last_fractal_high, last_fractal_low = self.calculate_recent_fractals(highs, lows)
+        ha_rows = self.calculate_heikin_ashi(ohlc_rows)
+        ha_summary = self.analyze_heikin_ashi(ha_rows)
+
+        if None in (ma_fast, ma_mid, ma_slow, ema_fast, ema_mid, ema_slow) or ha_summary is None:
+            return None
+
+        returns = []
+        for idx in range(1, len(closes)):
+            prev = closes[idx - 1]
+            curr = closes[idx]
+            if prev > 0:
+                returns.append((curr - prev) / prev)
+
+        avg_change = sum(returns) / len(returns) if returns else 0.0
+        variance = sum((change - avg_change) ** 2 for change in returns) / len(returns) if returns else 0.0
+        volatility = variance ** 0.5
+
+        avg_volume = sum(volumes[-20:]) / min(len(volumes), 20) if volumes else 0.0
+        current_volume = volumes[-1] if volumes else 0.0
+        volume_ratio = (current_volume / avg_volume) if avg_volume > 0 else 1.0
+        volume_expansion = volume_ratio >= 1.2
+
+        alignment = "NEUTRAL"
+        trend_score = 0
+        if ma_fast > ma_mid > ma_slow and ema_fast > ema_mid > ema_slow:
+            alignment = "BULLISH"
+            trend_score = 1
+        elif ma_fast < ma_mid < ma_slow and ema_fast < ema_mid < ema_slow:
+            alignment = "BEARISH"
+            trend_score = -1
+
+        price_vs_ma = "ABOVE"
+        if current_price < ma_mid and current_price < ema_mid:
+            price_vs_ma = "BELOW"
+
+        previous_ema_fast = self.calculate_ema(closes[:-1], 9) if len(closes) > 55 else None
+        previous_ema_mid = self.calculate_ema(closes[:-1], 21) if len(closes) > 55 else None
+        cross_signal = "NONE"
+        if previous_ema_fast is not None and previous_ema_mid is not None:
+            if previous_ema_fast <= previous_ema_mid and ema_fast > ema_mid:
+                cross_signal = "BULLISH_CROSS"
+            elif previous_ema_fast >= previous_ema_mid and ema_fast < ema_mid:
+                cross_signal = "BEARISH_CROSS"
+
+        fractal_breakout_up = False
+        fractal_breakout_down = False
+        if last_fractal_high is not None:
+            fractal_breakout_up = current_price > last_fractal_high and previous_close <= last_fractal_high
+        if last_fractal_low is not None:
+            fractal_breakout_down = current_price < last_fractal_low and previous_close >= last_fractal_low
+
+        return {
+            "interval": interval,
+            "current_price": current_price,
+            "previous_close": previous_close,
+            "ma_fast": ma_fast,
+            "ma_mid": ma_mid,
+            "ma_slow": ma_slow,
+            "ema_fast": ema_fast,
+            "ema_mid": ema_mid,
+            "ema_slow": ema_slow,
+            "alignment": alignment,
+            "price_vs_ma": price_vs_ma,
+            "avg_change": avg_change,
+            "volatility": volatility,
+            "trend_score": trend_score,
+            "cross_signal": cross_signal,
+            "current_volume": current_volume,
+            "avg_volume": avg_volume,
+            "volume_ratio": volume_ratio,
+            "volume_expansion": volume_expansion,
+            "last_fractal_high": last_fractal_high,
+            "last_fractal_low": last_fractal_low,
+            "fractal_breakout_up": fractal_breakout_up,
+            "fractal_breakout_down": fractal_breakout_down,
+            "ha_trend": ha_summary["trend"],
+            "ha_strong_bullish": ha_summary["strong_bullish"],
+            "ha_strong_bearish": ha_summary["strong_bearish"],
+            "ha_bull_count": ha_summary["bull_count"],
+            "ha_bear_count": ha_summary["bear_count"],
+            "ha_reversal": ha_summary["reversal"],
+            "ha_flipped": ha_summary["flipped"]
+        }
+
+    def analyze_market_regime(self, symbol):
+        """Analyze market regime from multi-timeframe moving averages."""
+        try:
+            timeframe_order = [("5m", 120), ("15m", 120), ("1h", 120)]
+            timeframe_data = {}
+            trend_scores = []
+            volatilities = []
+            avg_changes = []
+
+            for interval, limit in timeframe_order:
+                data = self.analyze_timeframe_ma(symbol, interval, limit)
+                if data:
+                    timeframe_data[interval] = data
+                    trend_scores.append(data["trend_score"])
+                    volatilities.append(data["volatility"])
+                    avg_changes.append(data["avg_change"])
+
+            if not timeframe_data:
+                return {
+                    "regime": "SIDEWAYS_MARKET",
+                    "avg_change": 0,
+                    "volatility": 0.02,
+                    "strength": 0,
+                    "timeframes": {},
+                    "trend_consensus": 0
+                }
+
+            trend_consensus = sum(trend_scores)
+            avg_change = sum(avg_changes) / len(avg_changes) if avg_changes else 0.0
+            volatility = sum(volatilities) / len(volatilities) if volatilities else 0.02
+            strength = abs(avg_change) + (abs(trend_consensus) / max(1, len(trend_scores))) * 0.01
+
+            if trend_consensus >= 2:
+                regime = "BULL_MARKET"
+            elif trend_consensus <= -2:
+                regime = "BEAR_MARKET"
+            else:
+                regime = "SIDEWAYS_MARKET"
+
+            return {
+                "regime": regime,
+                "avg_change": avg_change,
+                "volatility": volatility,
+                "strength": strength,
+                "timeframes": timeframe_data,
+                "trend_consensus": trend_consensus
+            }
+        except Exception as e:
+            self.log_system_error("trading_runtime_error", str(e))
+            return {
+                "regime": "SIDEWAYS_MARKET",
+                "avg_change": 0,
+                "volatility": 0.02,
+                "strength": 0,
+                "timeframes": {},
+                "trend_consensus": 0
+            }
+
+    def get_ma_trade_decision(self, strategy, market_regime):
+        """Return a trade decision using the shared EMA + Heikin Ashi + fractal framework."""
+        timeframe_data = market_regime.get("timeframes", {})
+        tf_5m = timeframe_data.get("5m", {})
+        tf_15m = timeframe_data.get("15m", {})
+        tf_1h = timeframe_data.get("1h", {})
+        fractal_intervals = strategy.get("fractal_intervals", ["5m", "15m"])
+
+        bullish_alignment_count = sum(1 for tf in timeframe_data.values() if tf.get("alignment") == "BULLISH")
+        bearish_alignment_count = sum(1 for tf in timeframe_data.values() if tf.get("alignment") == "BEARISH")
+        bullish_cross_count = sum(1 for tf in timeframe_data.values() if tf.get("cross_signal") == "BULLISH_CROSS")
+        bearish_cross_count = sum(1 for tf in timeframe_data.values() if tf.get("cross_signal") == "BEARISH_CROSS")
+        volume_expansion_count = sum(1 for tf in timeframe_data.values() if tf.get("volume_expansion"))
+
+        bullish_fractal_trigger = any(timeframe_data.get(interval, {}).get("fractal_breakout_up") for interval in fractal_intervals)
+        bearish_fractal_trigger = any(timeframe_data.get(interval, {}).get("fractal_breakout_down") for interval in fractal_intervals)
+
+        bullish_ha_ready = (
+            tf_1h.get("ha_trend") == "BULLISH" and
+            tf_15m.get("ha_trend") == "BULLISH" and
+            (tf_5m.get("ha_trend") == "BULLISH" or tf_5m.get("ha_strong_bullish"))
+        )
+        bearish_ha_ready = (
+            tf_1h.get("ha_trend") == "BEARISH" and
+            tf_15m.get("ha_trend") == "BEARISH" and
+            (tf_5m.get("ha_trend") == "BEARISH" or tf_5m.get("ha_strong_bearish"))
+        )
+
+        if strategy.get("require_strong_5m_ha"):
+            bullish_ha_ready = bullish_ha_ready and bool(tf_5m.get("ha_strong_bullish"))
+            bearish_ha_ready = bearish_ha_ready and bool(tf_5m.get("ha_strong_bearish"))
+
+        volume_ready = (volume_expansion_count >= 1) if strategy.get("require_volume_expansion") else True
+        bullish_cross_ready = (bullish_cross_count >= 1) if strategy.get("require_cross") else True
+        bearish_cross_ready = (bearish_cross_count >= 1) if strategy.get("require_cross") else True
+        required_alignment_count = strategy.get("required_alignment_count", 2)
+        consensus_threshold = strategy.get("consensus_threshold", 2)
+
+        long_ready = (
+            bullish_alignment_count >= required_alignment_count and
+            tf_1h.get("alignment") == "BULLISH" and
+            tf_5m.get("price_vs_ma") == "ABOVE" and
+            tf_15m.get("price_vs_ma") == "ABOVE" and
+            tf_5m.get("ema_fast", 0) > tf_5m.get("ema_mid", 0) and
+            tf_15m.get("ema_fast", 0) > tf_15m.get("ema_mid", 0) and
+            market_regime.get("trend_consensus", 0) >= consensus_threshold and
+            bullish_ha_ready and
+            bullish_cross_ready and
+            volume_ready and
+            bullish_fractal_trigger
+        )
+
+        short_ready = (
+            bearish_alignment_count >= required_alignment_count and
+            tf_1h.get("alignment") == "BEARISH" and
+            tf_5m.get("price_vs_ma") == "BELOW" and
+            tf_15m.get("price_vs_ma") == "BELOW" and
+            tf_5m.get("ema_fast", 0) < tf_5m.get("ema_mid", 0) and
+            tf_15m.get("ema_fast", 0) < tf_15m.get("ema_mid", 0) and
+            market_regime.get("trend_consensus", 0) <= -consensus_threshold and
+            bearish_ha_ready and
+            bearish_cross_ready and
+            volume_ready and
+            bearish_fractal_trigger
+        )
+
+        if long_ready and not short_ready:
+            return "BUY"
+        if short_ready and not long_ready:
+            return "SELL"
+        return None
+
+    def should_exit_position_ma(self, position, market_regime, strategy=None):
+        """Determine whether a position should exit on MA reversal conditions."""
+        timeframe_data = market_regime.get("timeframes", {})
+        tf_5m = timeframe_data.get("5m", {})
+        tf_15m = timeframe_data.get("15m", {})
+        tf_1h = timeframe_data.get("1h", {})
+        amount = self.safe_float_conversion(position.get("amount"), 0.0)
+        if amount == 0:
+            return None
+
+        is_long = amount > 0
+        trend_consensus = market_regime.get("trend_consensus", 0)
+        exit_signal_threshold = 2
+        if strategy:
+            exit_signal_threshold = max(2, int(strategy.get("exit_signal_threshold", 2)))
+
+        if is_long:
+            exit_signals = 0
+            if tf_5m.get("fractal_breakout_down") or tf_15m.get("fractal_breakout_down"):
+                exit_signals += 1
+            if tf_5m.get("cross_signal") == "BEARISH_CROSS":
+                exit_signals += 1
+            if tf_15m.get("alignment") == "BEARISH":
+                exit_signals += 1
+            if tf_5m.get("price_vs_ma") == "BELOW":
+                exit_signals += 1
+            if tf_5m.get("ha_trend") == "BEARISH" and tf_15m.get("ha_trend") == "BEARISH":
+                exit_signals += 1
+            if trend_consensus <= -2:
+                exit_signals += 1
+            if exit_signals >= exit_signal_threshold:
+                return "ma_fractal_bearish_reversal"
+        else:
+            exit_signals = 0
+            if tf_5m.get("fractal_breakout_up") or tf_15m.get("fractal_breakout_up"):
+                exit_signals += 1
+            if tf_5m.get("cross_signal") == "BULLISH_CROSS":
+                exit_signals += 1
+            if tf_15m.get("alignment") == "BULLISH":
+                exit_signals += 1
+            if tf_5m.get("price_vs_ma") == "ABOVE":
+                exit_signals += 1
+            if tf_5m.get("ha_trend") == "BULLISH" and tf_15m.get("ha_trend") == "BULLISH":
+                exit_signals += 1
+            if trend_consensus >= 2:
+                exit_signals += 1
+            if exit_signals >= exit_signal_threshold:
+                return "ma_fractal_bullish_reversal"
+        if is_long and tf_1h.get("alignment") == "BEARISH":
+            return "ma_1h_trend_break"
+        if (not is_long) and tf_1h.get("alignment") == "BULLISH":
+            return "ma_1h_trend_break"
+
+        return None
+
+    def generate_strategy_signal(self, strategy_name, market_regime, symbol):
+        """Generate a signal from the shared EMA + Heikin Ashi + fractal framework."""
+        strategy = self.strategies[strategy_name]
+        signal = self.get_ma_trade_decision(strategy, market_regime)
+
+        market_bias = strategy.get("market_bias", "adaptive")
+        if signal == "BUY" and market_bias == "bearish":
+            return None
+        if signal == "SELL" and market_bias == "bullish":
+            return None
+        return signal
+
+    def score_trade_candidate(self, market_regime):
+        """Rank candidate symbols so we do not rely on random selection."""
+        timeframe_data = market_regime.get("timeframes", {})
+        score = self.safe_float_conversion(market_regime.get("strength"), 0.0) * 100.0
+        score += abs(self.safe_float_conversion(market_regime.get("trend_consensus"), 0.0)) * 5.0
+
+        for tf in timeframe_data.values():
+            if tf.get("alignment") in {"BULLISH", "BEARISH"}:
+                score += 3.0
+            if tf.get("cross_signal") in {"BULLISH_CROSS", "BEARISH_CROSS"}:
+                score += 2.0
+            if tf.get("volume_expansion"):
+                score += 1.5
+            if tf.get("fractal_breakout_up") or tf.get("fractal_breakout_down"):
+                score += 2.5
+            if tf.get("ha_trend") in {"BULLISH", "BEARISH"}:
+                score += 1.0
+
+        return score
+
+    def get_default_entry_time(self):
+        """Return a conservative fallback entry time for unknown positions."""
+        return datetime.now().isoformat()
+
+    def get_position_entry_time(self, symbol):
+        """Return the tracked entry time for an active position."""
+        active_position = self.trading_results.get("active_positions", {}).get(symbol, {})
+        for trade in reversed(self.trading_results.get("real_orders", [])):
+            if trade.get("symbol") != symbol:
+                continue
+            if trade.get("reduce_only"):
+                continue
+            if trade.get("status") not in {"FILLED", "NEW", "PARTIALLY_FILLED"}:
+                continue
+            return trade.get("timestamp") or self.get_default_entry_time()
+        return (
+            active_position.get("entry_time") or
+            self.position_entry_times.get(symbol) or
+            self.get_default_entry_time()
+        )
+
+    def get_last_entry_trade(self, symbol):
+        """Return the latest non-reduce-only trade record for a symbol."""
+        for trade in reversed(self.trading_results.get("real_orders", [])):
+            if trade.get("symbol") != symbol:
+                continue
+            if trade.get("reduce_only"):
+                continue
+            if trade.get("status") not in {"FILLED", "NEW", "PARTIALLY_FILLED"}:
+                continue
+            return trade
+        return None
+
+    def get_position_strategy(self, symbol):
+        """Return the strategy config associated with an active symbol."""
+        last_entry_trade = self.get_last_entry_trade(symbol)
+        if not last_entry_trade:
+            return None
+        return self.strategies.get(last_entry_trade.get("strategy"))
+
+    def is_past_min_hold(self, symbol):
+        """Return whether the minimum hold time has elapsed."""
+        entry_time_str = self.get_position_entry_time(symbol)
+        try:
+            entry_time = datetime.fromisoformat(entry_time_str)
+        except Exception:
+            return True
+        return (datetime.now() - entry_time).total_seconds() >= self.min_hold_seconds
+
+    def is_symbol_in_cooldown(self, symbol):
+        """Return whether a symbol is still in re-entry cooldown."""
+        cooldown_time_str = self.recently_closed_symbols.get(symbol)
+        if not cooldown_time_str:
+            for trade in reversed(self.trading_results.get("real_orders", [])):
+                if trade.get("symbol") != symbol:
+                    continue
+                if not trade.get("reduce_only"):
+                    continue
+                if trade.get("status") != "FILLED":
+                    continue
+                cooldown_time_str = trade.get("timestamp")
+                break
+        if not cooldown_time_str:
+            return False
+        try:
+            cooldown_time = datetime.fromisoformat(cooldown_time_str)
+        except Exception:
+            return False
+        return (datetime.now() - cooldown_time).total_seconds() < self.reentry_cooldown_seconds
+
     def safe_float_conversion(self, value, default=0.0):
-        """안전한 float 변환"""
+        """Safely convert a value to float."""
         try:
             if value is None:
                 return default
@@ -470,98 +1228,322 @@ class CompletelyFixedAutoStrategyFuturesTrading:
             return float(value)
         except (ValueError, TypeError):
             return default
-    
-    def submit_order(self, strategy_name, symbol, side, quantity):
-        """주문 제출 (완전 수정된 버전 - 오류 처리 강화)"""
+
+    def round_to_step(self, value, step_size, rounding=ROUND_DOWN):
+        """Round quantity to the exchange step size safely."""
         try:
-            symbol_info = self.get_symbol_info(symbol)
-            if not symbol_info:
-                self.log_system_error("심볼 정보 없음", f"{symbol} 심볼 정보를 찾을 수 없음")
-                return None
-            
-            # 필터 정보 추출
-            filters = symbol_info["filters"]
-            min_qty = 0.0
-            max_qty = 0.0
-            min_notional = 0.0
-            qty_precision = 0
-            
-            for f in filters:
-                if f["filterType"] == "LOT_SIZE":
-                    min_qty = float(f["minQty"])
-                    max_qty = float(f["maxQty"])
-                    if "stepSize" in f:
-                        step_size = str(f["stepSize"])
-                        if "." in step_size:
-                            qty_precision = len(step_size.split('.')[1])
-                        else:
-                            qty_precision = 0
-                    else:
-                        qty_precision = 8
-                elif f["filterType"] == "MIN_NOTIONAL":
-                    if "notional" in f:
-                        min_notional = float(f["notional"])
-                    else:
-                        min_notional = 10.0
-            
-            # 수량 조정
-            if quantity < min_qty:
-                quantity = min_qty
-            
-            # 최소 notional 확인 및 조정
-            current_price = self.current_prices.get(symbol, 100.0)
-            current_notional = quantity * current_price
-            
-            if current_notional < min_notional:
-                quantity = (min_notional * 1.01) / current_price
-                if quantity < min_qty:
-                    quantity = min_qty
-            
-            # 최대 수량 확인
-            if quantity > max_qty:
-                quantity = max_qty
-            
-            # 수량 정밀도 조정
-            quantity = round(quantity, qty_precision)
-            
-            # 서버 시간
+            value_dec = Decimal(str(value))
+            step_dec = Decimal(str(step_size))
+            if step_dec <= 0:
+                return float(value_dec)
+            units = (value_dec / step_dec).quantize(Decimal("1"), rounding=rounding)
+            return float(units * step_dec)
+        except Exception:
+            return float(value)
+
+    def get_order_status(self, symbol, order_id):
+        """Fetch the latest order status."""
+        try:
             server_time = self.get_server_time()
-            
-            # 주문 파라미터
             params = {
                 "symbol": symbol,
-                "side": side,
-                "type": "MARKET",
-                "quantity": str(quantity),
+                "orderId": order_id,
                 "timestamp": server_time,
                 "recvWindow": 5000
             }
-            
-            # 서명 생성
+
             query_string = urllib.parse.urlencode(params)
             signature = hmac.new(
                 self.api_secret.encode("utf-8"),
                 query_string.encode("utf-8"),
                 hashlib.sha256
             ).hexdigest()
-            
-            # 요청 URL
+
             url = f"{self.base_url}/fapi/v1/order?{query_string}&signature={signature}"
             headers = {"X-MBX-APIKEY": self.api_key}
-            
-            # 주문 제출
-            response = requests.post(url, headers=headers, timeout=10)
-            
+            response = requests.get(url, headers=headers, timeout=10)
+
             if response.status_code == 200:
+                return response.json()
+        except Exception as e:
+            self.log_system_error("trading_loop_error", str(e))
+
+        return None
+
+    def can_open_new_positions(self):
+        """Return whether the system has enough verified account state to open new positions."""
+        available_balance = self.safe_float_conversion(
+            self.trading_results.get("available_balance"),
+            self.safe_float_conversion(self.total_capital, 0.0)
+        )
+        return (
+            self.account_data_available and
+            self.safe_float_conversion(self.total_capital, 0.0) > 0 and
+            self.safe_float_conversion(self.capital_per_strategy, 0.0) > 0 and
+            available_balance > 0
+        )
+
+    def estimate_realized_pnl(self, trade_record):
+        """Estimate realized PnL for reduce-only filled trades."""
+        if not trade_record.get("reduce_only"):
+            return None
+        if trade_record.get("status") != "FILLED":
+            return None
+
+        entry_price = self.safe_float_conversion(trade_record.get("entry_price"), 0.0)
+        exit_price = self.safe_float_conversion(trade_record.get("price"), 0.0)
+        executed_qty = self.safe_float_conversion(trade_record.get("executed_qty"), trade_record.get("quantity"))
+        if entry_price <= 0 or exit_price <= 0 or executed_qty <= 0:
+            return None
+
+        direction = 1 if trade_record.get("side") == "SELL" else -1
+        return (exit_price - entry_price) * executed_qty * direction
+
+    def recompute_trade_counters(self):
+        """Recompute aggregate trade counters from the current order ledger."""
+        real_orders = self.trading_results.get("real_orders", [])
+        total_trades = 0
+        pending_trades = 0
+        winning_trades = 0
+        losing_trades = 0
+        closed_trades = 0
+        entry_failures = 0
+
+        for trade in real_orders:
+            if trade.get("reduce_only"):
+                realized_pnl = self.safe_float_conversion(trade.get("realized_pnl"), None)
+                if realized_pnl is None and trade.get("status") == "FILLED":
+                    realized_pnl = self.estimate_realized_pnl(trade)
+                    if realized_pnl is not None:
+                        trade["realized_pnl"] = realized_pnl
+
+                if trade.get("status") == "FILLED":
+                    closed_trades += 1
+                    if realized_pnl is not None:
+                        if realized_pnl > 0:
+                            winning_trades += 1
+                        elif realized_pnl < 0:
+                            losing_trades += 1
+                continue
+
+            total_trades += 1
+            status = trade.get("status")
+            if status in {"NEW", "PARTIALLY_FILLED"}:
+                pending_trades += 1
+            if status in {"FAILED", "ERROR", "CANCELED", "EXPIRED", "REJECTED"}:
+                entry_failures += 1
+
+        self.trading_results["total_trades"] = total_trades
+        self.trading_results["pending_trades"] = pending_trades
+        self.trading_results["winning_trades"] = winning_trades
+        self.trading_results["losing_trades"] = losing_trades
+        self.trading_results["closed_trades"] = closed_trades
+        self.trading_results["entry_failures"] = entry_failures
+
+    def refresh_pending_orders(self):
+        """Refresh pending order records so counters and cooldowns stay consistent."""
+        for trade in self.trading_results.get("real_orders", []):
+            if trade.get("status") not in {"NEW", "PARTIALLY_FILLED"}:
+                continue
+            order_id = trade.get("order_id")
+            symbol = trade.get("symbol")
+            if not order_id or order_id == "UNKNOWN" or not symbol:
+                continue
+
+            refreshed_status = self.get_order_status(symbol, order_id)
+            if not refreshed_status:
+                continue
+
+            trade["status"] = refreshed_status.get("status", trade.get("status"))
+            trade["executed_qty"] = self.safe_float_conversion(
+                refreshed_status.get("executedQty"),
+                trade.get("executed_qty", 0.0)
+            )
+            refreshed_price = self.safe_float_conversion(refreshed_status.get("avgPrice"), trade.get("price", 0.0))
+            if refreshed_price > 0:
+                trade["price"] = refreshed_price
+
+            if trade["status"] in {"NEW", "PARTIALLY_FILLED"}:
+                trade["type"] = "PENDING_TRADE"
+            elif trade["status"] == "FILLED":
+                trade["type"] = "ACTUAL_TRADE"
+            else:
+                trade["type"] = "FAILED_TRADE"
+
+            if trade.get("reduce_only"):
+                if trade["status"] == "FILLED":
+                    trade["realized_pnl"] = self.estimate_realized_pnl(trade)
+                    self.recently_closed_symbols[symbol] = datetime.now().isoformat()
+                    self.position_entry_times.pop(symbol, None)
+            else:
+                if trade["status"] == "FILLED":
+                    self.position_entry_times[symbol] = trade.get("timestamp", datetime.now().isoformat())
+
+        self.recompute_trade_counters()
+
+    def submit_order(self, strategy_name, symbol, side, quantity, reduce_only=False, metadata=None):
+        """Submit a market order with validation and error handling."""
+        try:
+            metadata = metadata or {}
+            symbol_info = self.get_symbol_info(symbol)
+            if not symbol_info:
+                self.log_system_error("symbol_info_missing", f"No symbol metadata found for {symbol}")
+                return None
+            if (not reduce_only) and not self.account_data_available:
+                self.log_system_error("account_data_unavailable", f"Blocked order for {symbol} because account data is unavailable")
+                return None
+
+            filters = symbol_info["filters"]
+            min_qty = 0.0
+            max_qty = 0.0
+            min_notional = 0.0
+            qty_precision = 0
+            step_size = 0.0
+
+            for f in filters:
+                if f["filterType"] == "LOT_SIZE":
+                    min_qty = float(f["minQty"])
+                    max_qty = float(f["maxQty"])
+                    if "stepSize" in f:
+                        step_size = float(f["stepSize"])
+                        step_size_str = format(Decimal(str(step_size)).normalize(), "f")
+                        if "." in step_size_str:
+                            qty_precision = len(step_size_str.rstrip("0").split('.')[1])
+                        else:
+                            qty_precision = 0
+                    else:
+                        qty_precision = 8
+                elif f["filterType"] == "MIN_NOTIONAL":
+                    min_notional = self.safe_float_conversion(f.get("notional"), min_notional)
+                elif f["filterType"] == "NOTIONAL":
+                    min_notional = self.safe_float_conversion(f.get("minNotional"), min_notional)
+
+            if min_notional <= 0:
+                min_notional = 5.0
+            if quantity < min_qty:
+                quantity = min_qty
+            current_price = self.get_current_price(symbol, 0.0)
+            if current_price <= 0:
+                self.log_system_error("price_lookup_failed", f"Blocked order for {symbol} because price lookup failed")
+                return None
+
+            if step_size > 0:
+                quantity = self.round_to_step(quantity, step_size, ROUND_UP)
+            else:
+                quantity = round(quantity, qty_precision)
+
+            current_notional = quantity * current_price
+            if current_notional < min_notional:
+                required_qty = (min_notional * 1.05) / current_price
+                quantity = max(quantity, required_qty, min_qty)
+                if step_size > 0:
+                    quantity = self.round_to_step(quantity, step_size, ROUND_UP)
+                else:
+                    quantity = round(quantity, qty_precision)
+            if quantity > max_qty:
+                quantity = max_qty
+            if step_size > 0:
+                quantity = self.round_to_step(quantity, step_size, ROUND_DOWN)
+            else:
+                quantity = round(quantity, qty_precision)
+
+            if quantity < min_qty:
+                quantity = min_qty
+                if step_size > 0:
+                    quantity = self.round_to_step(quantity, step_size, ROUND_UP)
+
+            final_notional = quantity * current_price
+            if final_notional < min_notional:
+                error_msg = f"{symbol} order quantity validation failed: quantity={quantity}, notional={final_notional:.6f}, min_notional={min_notional:.6f}"
+                self.log_system_error("min_notional_not_met", error_msg)
+                return None
+
+            available_balance = self.safe_float_conversion(
+                self.trading_results.get("available_balance"),
+                self.safe_float_conversion(self.total_capital, 0.0)
+            )
+            if (not reduce_only) and available_balance > 0:
+                max_affordable_notional = max((available_balance * 0.9), min_notional * 1.05)
+                if final_notional > max_affordable_notional:
+                    quantity = max_affordable_notional / current_price
+                    if step_size > 0:
+                        quantity = self.round_to_step(quantity, step_size, ROUND_DOWN)
+                    else:
+                        quantity = round(quantity, qty_precision)
+                    final_notional = quantity * current_price
+                    if final_notional < min_notional:
+                        self.log_system_error(
+                            "insufficient_available_balance",
+                            f"Skipped order for {symbol}: available={available_balance:.6f}, requested_notional={quantity * current_price:.6f}, min_notional={min_notional:.6f}"
+                        )
+                        return None
+
+            headers = {"X-MBX-APIKEY": self.api_key}
+            response = None
+            last_error_msg = None
+
+            for _ in range(4):
+                server_time = self.get_server_time()
+                params = {
+                    "symbol": symbol,
+                    "side": side,
+                    "type": "MARKET",
+                    "quantity": str(quantity),
+                    "reduceOnly": "true" if reduce_only else "false",
+                    "timestamp": server_time,
+                    "recvWindow": 5000
+                }
+
+                query_string = urllib.parse.urlencode(params)
+                signature = hmac.new(
+                    self.api_secret.encode("utf-8"),
+                    query_string.encode("utf-8"),
+                    hashlib.sha256
+                ).hexdigest()
+
+                url = f"{self.base_url}/fapi/v1/order?{query_string}&signature={signature}"
+                response = requests.post(url, headers=headers, timeout=10)
+
+                if response.status_code == 200:
+                    break
+
+                last_error_msg = f"Order failed: {response.status_code} - {response.text}"
+                if response.status_code == 400 and '"code":-2019' in response.text:
+                    reduced_quantity = quantity * 0.5
+                    if step_size > 0:
+                        reduced_quantity = self.round_to_step(reduced_quantity, step_size, ROUND_DOWN)
+                    else:
+                        reduced_quantity = round(reduced_quantity, qty_precision)
+
+                    if reduced_quantity < min_qty or (reduced_quantity * current_price) < min_notional:
+                        break
+
+                    quantity = reduced_quantity
+                    continue
+
+                break
+            if response is not None and response.status_code == 200:
                 result = response.json()
-                print(f"✅ 주문 성공: {result}")
-                
-                # 안전한 가격 정보 추출
-                avg_price = self.safe_float_conversion(result.get("avgPrice"), current_price)
+                print(f"[ORDER_OK] {result}")
+
                 order_id = result.get("orderId", "UNKNOWN")
-                status = result.get("status", "UNKNOWN")
-                
-                # 주문 결과를 시스템에 저장
+                order_status = result
+                if order_id != "UNKNOWN":
+                    time.sleep(1)
+                    refreshed_status = self.get_order_status(symbol, order_id)
+                    if refreshed_status:
+                        order_status = refreshed_status
+
+                avg_price = self.safe_float_conversion(order_status.get("avgPrice"), current_price)
+                executed_qty = self.safe_float_conversion(order_status.get("executedQty"), 0.0)
+                status = order_status.get("status", result.get("status", "UNKNOWN"))
+                record_type = "ACTUAL_TRADE"
+                if status in {"NEW", "PARTIALLY_FILLED"}:
+                    record_type = "PENDING_TRADE"
+                elif status in {"CANCELED", "EXPIRED", "REJECTED"}:
+                    record_type = "FAILED_TRADE"
+
+                record_timestamp = datetime.now().isoformat()
                 trade_record = {
                     "strategy": strategy_name,
                     "symbol": symbol,
@@ -570,34 +1552,43 @@ class CompletelyFixedAutoStrategyFuturesTrading:
                     "price": avg_price,
                     "order_id": order_id,
                     "status": status,
-                    "timestamp": datetime.now().isoformat(),
-                    "type": "ACTUAL_TRADE",
+                    "executed_qty": executed_qty,
+                    "timestamp": record_timestamp,
+                    "type": record_type,
                     "market_regime": self.trading_results["market_regime"],
                     "strategy_signal": side,
                     "position_type": "LONG" if side == "BUY" else "SHORT"
                 }
-                
+                trade_record.update(metadata)
+                if reduce_only:
+                    trade_record["reduce_only"] = True
+
                 self.trading_results["real_orders"].append(trade_record)
-                self.trading_results["total_trades"] += 1
-                
-                # 성공/실패 카운트 업데이트
-                if status == "FILLED":
-                    self.trading_results["winning_trades"] += 1
-                    print(f"✅ {strategy_name} | {symbol} | {side} | {quantity} | 체결됨")
+
+                if reduce_only and status == "FILLED":
+                    trade_record["realized_pnl"] = self.estimate_realized_pnl(trade_record)
+                    self.recently_closed_symbols[symbol] = record_timestamp
+                    self.position_entry_times.pop(symbol, None)
+                elif (not reduce_only) and status in {"FILLED", "NEW", "PARTIALLY_FILLED"}:
+                    self.position_entry_times[symbol] = record_timestamp
+
+                if reduce_only:
+                    print(f"[CLOSE] {strategy_name} | {symbol} | {side} | {quantity} | {status}")
+                elif status == "FILLED":
+                    print(f"[FILLED] {strategy_name} | {symbol} | {side} | {quantity}")
+                elif status in {"NEW", "PARTIALLY_FILLED"}:
+                    print(f"[PENDING] {strategy_name} | {symbol} | {side} | {quantity} | {status} | executed={executed_qty}")
                 else:
-                    self.trading_results["losing_trades"] += 1
-                    print(f"⏳ {strategy_name} | {symbol} | {side} | {quantity} | 대기 중")
-                
-                # 즉시 동기화
+                    print(f"[FAILED] {strategy_name} | {symbol} | {side} | {quantity} | {status}")
+
+                self.refresh_pending_orders()
+                self.recompute_trade_counters()
                 self.sync_positions()
                 self.sync_account_balance()
-                
                 return result
             else:
-                error_msg = f"주문 실패: {response.status_code} - {response.text}"
-                print(f"❌ {error_msg}")
-                
-                # 실패 기록
+                error_msg = last_error_msg or f"Order failed: {response.status_code} - {response.text}"
+                print(f"[ERROR] {error_msg}")
                 failed_record = {
                     "strategy": strategy_name,
                     "symbol": symbol,
@@ -611,18 +1602,16 @@ class CompletelyFixedAutoStrategyFuturesTrading:
                     "strategy_signal": side,
                     "position_type": "LONG" if side == "BUY" else "SHORT"
                 }
-                
+                if reduce_only:
+                    failed_record["reduce_only"] = True
+
                 self.trading_results["real_orders"].append(failed_record)
-                self.trading_results["total_trades"] += 1
-                self.trading_results["losing_trades"] += 1
-                
+                self.recompute_trade_counters()
                 return None
-                
+
         except Exception as e:
-            error_msg = f"주문 제출 실패: {str(e)}"
-            print(f"❌ {error_msg}")
-            
-            # 예외 기록
+            error_msg = f"Order submission failed: {str(e)}"
+            print(f"[ERROR] {error_msg}")
             error_record = {
                 "strategy": strategy_name,
                 "symbol": symbol,
@@ -636,212 +1625,209 @@ class CompletelyFixedAutoStrategyFuturesTrading:
                 "strategy_signal": side,
                 "position_type": "LONG" if side == "BUY" else "SHORT"
             }
-            
+            if reduce_only:
+                error_record["reduce_only"] = True
+
             self.trading_results["real_orders"].append(error_record)
-            self.trading_results["total_trades"] += 1
-            self.trading_results["losing_trades"] += 1
-            
-            # 시스템 오류 기록
-            self.log_system_error("주문 제출 오류", str(e))
-            
+            self.recompute_trade_counters()
+            self.log_system_error("trading_runtime_error", str(e))
+
             return None
-    
+
     def execute_strategy_trade(self, strategy_name):
-        """전략 거래 실행"""
+        """Evaluate candidate symbols and trade the best qualified one for the strategy."""
         try:
             strategy = self.strategies[strategy_name]
-            
-            # 선호 심볼에서 선택
+            self.refresh_strategy_capital_allocations()
+            if not self.can_open_new_positions():
+                return None
+
             available_symbols = [s for s in strategy["preferred_symbols"] if s in self.valid_symbols]
             if not available_symbols:
-                available_symbols = self.valid_symbols
-            
-            symbol = random.choice(available_symbols)
-            
-            # 시장 국면 분석
-            market_regime = self.analyze_market_regime(symbol)
-            self.trading_results["market_regime"] = market_regime["regime"]
-            
-            # 신호 생성
-            signal = self.generate_strategy_signal(strategy_name, market_regime, symbol)
-            
-            if signal:
-                # 포지션 타입 결정
-                position_type = "LONG" if signal == "BUY" else "SHORT"
-                
-                # 수량 계산
-                quantity = self.calculate_position_size(strategy_name, symbol)
-                
-                # 주문 제출
-                order_result = self.submit_order(strategy_name, symbol, signal, quantity)
-                
-                return order_result
-            
-            return None
-            
+                available_symbols = list(self.valid_symbols)
+
+            active_positions = self.trading_results.get("active_positions", {})
+            available_symbols = [s for s in available_symbols if s not in active_positions]
+            available_symbols = [s for s in available_symbols if not self.is_symbol_in_cooldown(s)]
+            if not available_symbols:
+                return None
+
+            candidate_limit = max(1, int(strategy.get("candidate_limit", 5)))
+            candidate_evaluations = []
+            for symbol in self.select_candidate_symbols(available_symbols, candidate_limit):
+                market_regime = self.analyze_market_regime(symbol)
+                signal = self.generate_strategy_signal(strategy_name, market_regime, symbol)
+                if not signal:
+                    continue
+                candidate_evaluations.append({
+                    "symbol": symbol,
+                    "signal": signal,
+                    "market_regime": market_regime,
+                    "score": self.score_trade_candidate(market_regime),
+                })
+
+            if not candidate_evaluations:
+                return None
+
+            best_candidate = max(candidate_evaluations, key=lambda item: item["score"])
+            self.trading_results["market_regime"] = best_candidate["market_regime"]["regime"]
+            quantity = self.calculate_position_size(strategy_name, best_candidate["symbol"])
+            if quantity <= 0:
+                return None
+
+            return self.submit_order(
+                strategy_name,
+                best_candidate["symbol"],
+                best_candidate["signal"],
+                quantity,
+            )
+
         except Exception as e:
-            self.log_system_error("전략 거래 실행 오류", str(e))
+            self.log_system_error("trading_loop_error", str(e))
             return None
-    
+
+    def select_candidate_symbols(self, available_symbols, candidate_limit):
+        """Select candidate symbols evenly across the available universe."""
+        symbols = list(available_symbols)
+        if candidate_limit >= len(symbols):
+            return symbols
+
+        selected = []
+        max_index = len(symbols) - 1
+        for idx in range(candidate_limit):
+            position = round((idx * max_index) / max(1, candidate_limit - 1))
+            symbol = symbols[position]
+            if symbol not in selected:
+                selected.append(symbol)
+
+        if len(selected) < candidate_limit:
+            for symbol in symbols:
+                if symbol not in selected:
+                    selected.append(symbol)
+                if len(selected) >= candidate_limit:
+                    break
+        return selected
+
     def calculate_position_size(self, strategy_name, symbol):
-        """동적 포지션 크기 계산"""
+        """Calculate the position size for a strategy and symbol."""
         try:
             strategy = self.strategies[strategy_name]
             capital = strategy["capital"]
             risk_per_trade = strategy["risk_per_trade"]
             leverage = strategy["leverage"]
-            
-            # 리스크 기반 포지션 크기
             risk_amount = capital * risk_per_trade
             position_value = risk_amount * leverage
-            
-            current_price = self.current_prices.get(symbol, 100.0)
+
+            current_price = self.get_current_price(symbol, 0.0)
+            if current_price <= 0:
+                return 0.0
             quantity = position_value / current_price
-            
-            # 최소 수량 보장
             min_quantities = {
                 "BTCUSDT": 0.001, "ETHUSDT": 0.01, "SOLUSDT": 0.1, "DOGEUSDT": 10,
                 "ADAUSDT": 1, "MATICUSDT": 1, "AVAXUSDT": 0.1, "DOTUSDT": 1,
                 "LINKUSDT": 0.1, "LTCUSDT": 0.01
             }
-            
+
             if symbol in min_quantities:
                 min_qty = min_quantities[symbol]
                 quantity = max(quantity, min_qty)
-            
+
             return quantity
-            
+
         except Exception as e:
-            self.log_system_error("포지션 크기 계산 오류", str(e))
-            return 0.001  # 기본값
-    
-    def update_market_data(self):
-        """시장 데이터 업데이트"""
+            self.log_system_error("position_size_error", str(e))
+            return 0.0
+
+    def close_position(self, symbol, position, reason):
+        """Close an open position with a reduce-only market order."""
+        amount = abs(self.safe_float_conversion(position.get("amount"), 0.0))
+        if amount <= 0:
+            return None
+
+        bypass_hold_reasons = {
+            "full_reset",
+            "full_reset_retry",
+            "restart_after_hold_fix",
+            "restart_after_entry_time_fix"
+        }
+        if reason not in bypass_hold_reasons and not self.is_past_min_hold(symbol):
+            return None
+
+        side = "SELL" if self.safe_float_conversion(position.get("amount"), 0.0) > 0 else "BUY"
+        metadata = {
+            "entry_price": self.safe_float_conversion(position.get("entry_price"), 0.0),
+            "close_reason": reason
+        }
+        return self.submit_order("position_manager", symbol, side, amount, reduce_only=True, metadata=metadata)
+
+    def manage_open_positions(self):
+        """Manage open positions and exit on moving-average reversal."""
         try:
-            # 가격 정보 업데이트
+            self.sync_positions()
+            active_positions = self.trading_results.get("active_positions", {})
+            if not active_positions:
+                return
+            for symbol, position in list(active_positions.items()):
+                hold_ready = self.is_past_min_hold(symbol)
+                if not hold_ready:
+                    continue
+                market_regime = self.analyze_market_regime(symbol)
+                strategy = self.get_position_strategy(symbol)
+                exit_reason = self.should_exit_position_ma(position, market_regime, strategy)
+
+                if exit_reason and hold_ready:
+                    self.close_position(symbol, position, exit_reason)
+            active_positions = self.trading_results.get("active_positions", {})
+            if len(active_positions) > self.max_open_positions:
+                excess = len(active_positions) - self.max_open_positions
+                ranked = sorted(
+                    active_positions.items(),
+                    key=lambda item: self.safe_float_conversion(item[1].get("percentage"), 0.0)
+                )
+                for symbol, position in ranked[:excess]:
+                    self.close_position(symbol, position, "position_limit")
+
+        except Exception as e:
+            self.log_system_error("position_management_error", str(e))
+
+    def update_market_data(self):
+        """Refresh cached market prices."""
+        try:
             for symbol in self.valid_symbols[:10]:
                 response = requests.get(f"{self.base_url}/fapi/v1/ticker/price?symbol={symbol}", timeout=3)
                 if response.status_code == 200:
                     price_data = response.json()
                     self.current_prices[symbol] = float(price_data["price"])
-            
+
             self.trading_results["market_data"] = self.current_prices.copy()
-            
+
         except Exception as e:
-            self.log_system_error("시장 데이터 업데이트 오류", str(e))
-    
+            self.log_system_error("market_data_update_error", str(e))
+
     def display_status(self):
-        """상태 표시 (완전 수정된 버전 - 오류 상태 포함)"""
-        try:
-            current_time = datetime.now()
-            elapsed = current_time - self.start_time
-            progress = (elapsed.total_seconds() / self.test_duration) * 100
-            remaining = self.test_duration - elapsed.total_seconds()
-            
-            # 시장 국면 분석
-            sample_symbol = self.valid_symbols[0] if self.valid_symbols else "BTCUSDT"
-            market_regime = self.analyze_market_regime(sample_symbol)
-            
-            print(f"\n{'='*80}")
-            print(f"🚀 완전 수정된 자동 전략 기반 선물 거래 실행")
-            print(f"{'='*80}")
-            print(f"⏰ 현재 시간: {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
-            print(f"⏱️  경과 시간: {elapsed}")
-            print(f"📊 진행률: {progress:.2f}%")
-            print(f"🎯 남은 시간: {timedelta(seconds=int(remaining))}")
-            print(f"🔗 API 상태: 🟢 바이낸스 테스트넷 선물 연결")
-            print(f"💰 계정 잔액: ${self.trading_results['current_capital']:,.2f}")
-            print(f"📈 시장 국면: {market_regime['regime']}")
-            print(f"🔄 동기화 상태: {self.trading_results['sync_status']}")
-            
-            # 오류 상태 표시
-            error_count = self.trading_results["error_count"]
-            if error_count > 0:
-                print(f"🚨 시스템 오류: {error_count}개 발생")
-                if self.trading_results["last_error"]:
-                    last_error = self.trading_results["last_error"]
-                    print(f"   마지막 오류: {last_error['error_type']} - {last_error['message']}")
-            else:
-                print(f"✅ 시스템 오류: 없음")
-            
-            print(f"\n📈 실시간 시장 데이터:")
-            for symbol, price in list(self.current_prices.items())[:6]:
-                prev_price = self.trading_results["market_data"].get(symbol, price)
-                change = ((price - prev_price) / prev_price) * 100 if prev_price > 0 else 0
-                trend = "📈" if change > 0 else "📉" if change < 0 else "➡️"
-                print(f"  {symbol}: ${price:.4f} {trend} {change:+.2f}%")
-            
-            print(f"\n🎯 자동 전략 성과:")
-            for strategy_name, strategy in self.strategies.items():
-                capital = strategy["capital"]
-                pnl = strategy.get("total_pnl", 0)
-                return_rate = (pnl / self.capital_per_strategy) * 100
-                leverage = strategy["leverage"]
-                strategy_type = strategy["strategy_type"]
-                market_bias = strategy["market_bias"]
-                print(f"  {strategy_name}: ${capital:,.2f} ({return_rate:+.2f}%) 📉 [{leverage:.1f}x] {strategy_type} | {market_bias}")
-            
-            print(f"\n📊 선물 거래 요약:")
-            print(f"  💰 초기 자본: ${self.trading_results['initial_capital']:,.2f}")
-            print(f"  💰 현재 자본: ${self.trading_results['current_capital']:,.2f}")
-            print(f"  💰 총 손익: ${self.trading_results['total_pnl']:+,.2f}")
-            print(f"  📈 총 거래: {self.trading_results['total_trades']}회")
-            print(f"  ✅ 성공 거래: {self.trading_results['winning_trades']}회")
-            print(f"  ❌ 실패 거래: {self.trading_results['losing_trades']}회")
-            success_rate = (self.trading_results['winning_trades'] / max(1, self.trading_results['total_trades'])) * 100
-            print(f"  🎯 성공률: {success_rate:.1f}%")
-            print(f"  📊 전체 수익률: {((self.trading_results['current_capital'] - self.trading_results['initial_capital']) / self.trading_results['initial_capital']) * 100:+.2f}%")
-            
-            # 실제 포지션 정보 표시
-            active_positions = self.trading_results["active_positions"]
-            print(f"\n📊 실제 포지션 ({len(active_positions)}개):")
-            if active_positions:
-                for symbol, pos in list(active_positions.items())[:5]:
-                    side = "LONG" if pos['amount'] > 0 else "SHORT"
-                    pnl_status = "📈" if pos['unrealized_pnl'] > 0 else "📉" if pos['unrealized_pnl'] < 0 else "➡️"
-                    print(f"  {symbol}: {side} {abs(pos['amount'])} | 진입: ${pos['entry_price']:.4f} | PnL: {pnl_status} {pos['unrealized_pnl']:+.4f}")
-            else:
-                print("  열린 포지션 없음")
-            
-            # 최근 거래 내역
-            recent_trades = self.trading_results["real_orders"][-3:] if self.trading_results["real_orders"] else []
-            print(f"\n📋 최근 선물 거래 내역:")
-            if recent_trades:
-                for trade in recent_trades:
-                    status_icon = "✅" if trade["status"] == "FILLED" else "⏳" if trade["status"] == "NEW" else "❌" if trade["status"] == "FAILED" else "🚨"
-                    print(f"  {status_icon} {trade['strategy']} | {trade['symbol']} | {trade['side']} | ${trade['price']:.4f} | {trade['type']} | {trade['position_type']}")
-            else:
-                print("  정보 없음")
-            
-            # 진행 상태 바
-            progress_bar = "█" * int(progress / 2) + "░" * (50 - int(progress / 2))
-            print(f"\n🔄 진행 상태: [{progress_bar}] {progress:.1f}%")
-            print("="*80)
-            
-        except Exception as e:
-            self.log_system_error("상태 표시 오류", str(e))
-            print(f"❌ 상태 표시 오류: {e}")
-    
+        """Status output removed by request."""
+        return None
+
     def save_results(self):
-        """결과 저장"""
+        """Save trading results to disk."""
         try:
+            self.refresh_pending_orders()
+            self.recompute_trade_counters()
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = f"completely_fixed_auto_strategy_trading_{timestamp}.json"
-            
-            # 데이터 정리
             cleaned_data = self.clean_data_for_json(self.trading_results)
-            
+
             with open(filename, 'w', encoding='utf-8') as f:
                 json.dump(cleaned_data, f, indent=2, ensure_ascii=False)
-            
-            print(f"📁 완전 수정된 자동 전략 거래 결과 저장: {filename}")
-            
+
+            print(f"[INFO] Trading results saved: {filename}")
+
         except Exception as e:
-            self.log_system_error("결과 저장 오류", str(e))
-            print(f"❌ 결과 저장 오류: {e}")
-    
+            self.log_system_error("result_save_error", str(e))
+            print(f"[ERROR] Result save error: {e}")
+
     def clean_data_for_json(self, data):
-        """JSON 직렬화를 위한 데이터 정리"""
+        """Prepare data for JSON serialization."""
         if isinstance(data, dict):
             return {k: self.clean_data_for_json(v) for k, v in data.items()}
         elif isinstance(data, list):
@@ -850,42 +1836,57 @@ class CompletelyFixedAutoStrategyFuturesTrading:
             return data.isoformat()
         else:
             return data
-    
+
+    def periodic_sync(self):
+        """Periodically synchronize positions and balance."""
+        while self.running:
+            try:
+                self.refresh_pending_orders()
+                self.sync_positions()
+                self.sync_account_balance()
+                self.recompute_trade_counters()
+                self.trading_results["sync_status"] = "SYNCED"
+                time.sleep(60)
+            except Exception as e:
+                self.log_system_error("periodic_sync_error", str(e))
+                self.trading_results["sync_status"] = "SYNC_ERROR"
+                time.sleep(60)
+
     def run_trading(self):
-        """자동 거래 실행"""
-        print("🚀 완전 수정된 자동 전략 기반 선물 거래 시작!")
-        
+        """Run the main trading loop."""
+        print("[INFO] Auto futures trading started")
+
         try:
             while datetime.now() < self.end_time and self.running:
                 try:
-                    # 시장 데이터 업데이트
+                    self.refresh_symbol_universe()
                     self.update_market_data()
-                    
-                    # 각 전략 실행
-                    for strategy_name in self.strategies:
-                        # 랜덤하게 거래 실행 (30% 확률)
-                        if random.random() < 0.3:
+                    self.refresh_pending_orders()
+                    self.manage_open_positions()
+
+                    if self.can_open_new_positions():
+                        for strategy_name in self.strategies:
+                            if len(self.trading_results.get("active_positions", {})) >= self.max_open_positions:
+                                break
                             self.execute_strategy_trade(strategy_name)
-                    
-                    # 상태 표시
-                    self.display_status()
-                    
-                    # 30초 대기
+                    else:
+                        self.trading_results["sync_status"] = "ACCOUNT_DATA_UNAVAILABLE"
+
                     time.sleep(30)
-                    
+
                 except Exception as e:
-                    self.log_system_error("거래 실행 루프 오류", str(e))
-                    time.sleep(30)  # 오류 발생 시 30초 후 재시도
-                    
+                    self.log_system_error("trading_loop_error", str(e))
+                    time.sleep(30)
+
         except KeyboardInterrupt:
-            print("\n⚠️  자동 거래가 중단되었습니다.")
+            print("\n[WARN] Auto trading interrupted")
         except Exception as e:
-            self.log_system_error("거래 실행 오류", str(e))
-            print(f"\n❌ 거래 실행 오류: {e}")
+            self.log_system_error("result_save_error", str(e))
+            print(f"\n[ERROR] Trading runtime error: {e}")
         finally:
             self.running = False
             self.save_results()
-            print("🎉 완전 수정된 자동 전략 기반 선물 거래 완료!")
+            print("[INFO] Auto futures trading finished")
 
 if __name__ == "__main__":
     trading = CompletelyFixedAutoStrategyFuturesTrading()
