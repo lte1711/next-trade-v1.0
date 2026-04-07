@@ -16,6 +16,34 @@ def parse_symbol_list(raw_value: str) -> list[str]:
     return [symbol.strip().upper() for symbol in raw_value.split(",") if symbol.strip()]
 
 
+def parse_int_env(name: str, default: int) -> int:
+    raw_value = os.getenv(name, "").strip()
+    if not raw_value:
+        return default
+    return int(float(raw_value))
+
+
+def select_symbol_partition(symbols: list[str]) -> list[str]:
+    partition_count = parse_int_env("STRATEGY_SYMBOL_PARTITION_COUNT", 0)
+    partition_index = parse_int_env("STRATEGY_SYMBOL_PARTITION_INDEX", 0)
+    partition_size = parse_int_env("STRATEGY_SYMBOL_PARTITION_SIZE", 0)
+
+    if partition_count <= 0 and partition_size <= 0:
+        return symbols
+
+    if partition_count > 0:
+        if partition_index < 1 or partition_index > partition_count:
+            raise ValueError("STRATEGY_SYMBOL_PARTITION_INDEX must be between 1 and STRATEGY_SYMBOL_PARTITION_COUNT")
+        partition_size = max(1, (len(symbols) + partition_count - 1) // partition_count)
+
+    if partition_index < 1:
+        raise ValueError("STRATEGY_SYMBOL_PARTITION_INDEX must be at least 1 when partitioning is enabled")
+
+    start = (partition_index - 1) * partition_size
+    end = start + partition_size
+    return symbols[start:end]
+
+
 def main() -> None:
     module_name = os.getenv("STRATEGY_MODULE", "").strip()
     class_name = os.getenv("STRATEGY_CLASS", "CompletelyFixedAutoStrategyFuturesTrading").strip()
@@ -39,6 +67,9 @@ def main() -> None:
 
     if max_open_positions:
         strategy.max_open_positions = max(1, int(float(max_open_positions)))
+
+    if not symbol_list:
+        symbol_list = select_symbol_partition(list(getattr(strategy, "valid_symbols", [])))
 
     if symbol_list:
         strategy.managed_symbols = set(symbol_list)

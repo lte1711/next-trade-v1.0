@@ -1,0 +1,37 @@
+{
+  "generated_at": "2026-04-07T09:57:02.642862",
+  "manifest": "C:\\next-trade-ver1.0\\partition_test_logs\\three_way_partitioned_20260407_095254.json",
+  "period": "last_24h",
+  "results": [
+    {
+      "name": "original_partition1",
+      "source_file": "completely_fixed_auto_strategy_trading.py",
+      "symbol_count": 70,
+      "started_at": "2026-04-07T09:56:58.349021",
+      "finished_at": "2026-04-07T09:56:59.576632",
+      "returncode": 1,
+      "stdout_tail": "Running v2 five-year backtest without touching the live process.\n",
+      "stderr_tail": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\backtest_completely_fixed_auto_strategy_trading_v2_5y.py\", line 822, in <module>\n    main()\n  File \"C:\\next-trade-ver1.0\\backtest_completely_fixed_auto_strategy_trading_v2_5y.py\", line 813, in main\n    engine = BacktestEngine(module, EXIT_MODE, TIMEFRAME_MODE)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\next-trade-ver1.0\\backtest_completely_fixed_auto_strategy_trading_v2_5y.py\", line 200, in __init__\n    self._bind_methods(base_cls)\n  File \"C:\\next-trade-ver1.0\\backtest_completely_fixed_auto_strategy_trading_v2_5y.py\", line 231, in _bind_methods\n    setattr(self.obj, name, getattr(base_cls, name).__get__(self.obj, base_cls))\n                            ^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: type object 'CompletelyFixedAutoStrategyFuturesTrading' has no attribute 'get_session_policy'\n"
+    },
+    {
+      "name": "hybrid_partition2",
+      "source_file": "completely_fixed_auto_strategy_trading_hybrid.py",
+      "symbol_count": 70,
+      "started_at": "2026-04-07T09:56:59.588593",
+      "finished_at": "2026-04-07T09:57:01.128481",
+      "returncode": 1,
+      "stdout_tail": "Running v2 five-year backtest without touching the live process.\n[INFO] Dynamic strategies created: 7\n",
+      "stderr_tail": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\backtest_completely_fixed_auto_strategy_trading_v2_5y.py\", line 822, in <module>\n    main()\n  File \"C:\\next-trade-ver1.0\\backtest_completely_fixed_auto_strategy_trading_v2_5y.py\", line 814, in main\n    engine.load_data()\n  File \"C:\\next-trade-ver1.0\\backtest_completely_fixed_auto_strategy_trading_v2_5y.py\", line 327, in load_data\n    raise RuntimeError(f\"Insufficient 5m history for {symbol}\")\nRuntimeError: Insufficient 5m history for FHEUSDT\n"
+    },
+    {
+      "name": "scalping_partition3",
+      "source_file": "completely_fixed_auto_strategy_trading_scalping.py",
+      "symbol_count": 70,
+      "started_at": "2026-04-07T09:57:01.135458",
+      "finished_at": "2026-04-07T09:57:02.642862",
+      "returncode": 1,
+      "stdout_tail": "Running v2 five-year backtest without touching the live process.\n[INFO] Dynamic strategies created: 1\n",
+      "stderr_tail": "Traceback (most recent call last):\n  File \"C:\\next-trade-ver1.0\\backtest_completely_fixed_auto_strategy_trading_v2_5y.py\", line 822, in <module>\n    main()\n  File \"C:\\next-trade-ver1.0\\backtest_completely_fixed_auto_strategy_trading_v2_5y.py\", line 814, in main\n    engine.load_data()\n  File \"C:\\next-trade-ver1.0\\backtest_completely_fixed_auto_strategy_trading_v2_5y.py\", line 327, in load_data\n    raise RuntimeError(f\"Insufficient 5m history for {symbol}\")\nRuntimeError: Insufficient 5m history for COOKIEUSDT\n"
+    }
+  ]
+}

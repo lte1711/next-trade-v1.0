@@ -228,7 +228,42 @@ class BacktestEngine:
             "generate_strategy_signal",
         ]
         for name in method_names:
-            setattr(self.obj, name, getattr(base_cls, name).__get__(self.obj, base_cls))
+            if hasattr(base_cls, name):
+                setattr(self.obj, name, getattr(base_cls, name).__get__(self.obj, base_cls))
+        self._install_compatibility_methods()
+
+    def _install_compatibility_methods(self):
+        """Install compatibility helpers for older strategy sources."""
+        if not hasattr(self.obj, "get_market_session"):
+            def get_market_session():
+                current_time = getattr(self.obj, "backtest_current_time", datetime.now(timezone.utc))
+                hour = current_time.hour
+                if 19 <= hour < 21 or 22 <= hour < 24:
+                    return "US_PEAK"
+                if 16 <= hour < 18:
+                    return "EU_PEAK"
+                if 8 <= hour < 10:
+                    return "ASIA_PEAK"
+                if 2 <= hour < 7:
+                    return "DEAD_ZONE"
+                return "NORMAL"
+
+            self.obj.get_market_session = get_market_session
+
+        if not hasattr(self.obj, "get_session_policy"):
+            def get_session_policy(session_name=None):
+                session_name = session_name or self.obj.get_market_session()
+                if session_name == "DEAD_ZONE":
+                    return {"allow_new_entries": True, "position_size_multiplier": 0.5}
+                return {"allow_new_entries": True, "position_size_multiplier": 1.0}
+
+            self.obj.get_session_policy = get_session_policy
+
+        if not hasattr(self.obj, "get_strategy_entries_today"):
+            self.obj.get_strategy_entries_today = lambda strategy_name: 0
+
+        if not hasattr(self.obj, "has_reached_daily_entry_limit"):
+            self.obj.has_reached_daily_entry_limit = lambda strategy_name: False
 
     def _init_state(self):
         self.obj.running = False
@@ -312,22 +347,27 @@ class BacktestEngine:
     def load_data(self):
         end_dt = floor_time_to_five_minutes(datetime.now(timezone.utc))
         start_dt = end_dt - timedelta(days=int(365 * YEARS))
+        loaded_symbols = []
+        requested_days = max(1, int(365 * YEARS))
+        min_1m_history = min(5000, max(240, requested_days * 800))
+        min_5m_history = min(1000, max(120, requested_days * 160))
         for symbol in BACKTEST_SYMBOLS:
             if self.timeframe_config["base_interval"] == "1m":
                 rows_1m = fetch_klines(symbol, "1m", int(start_dt.timestamp() * 1000), int(end_dt.timestamp() * 1000))
-                if len(rows_1m) < 5000:
-                    raise RuntimeError(f"Insufficient 1m history for {symbol}")
+                if len(rows_1m) < min_1m_history:
+                    continue
                 self.data_1m[symbol] = rows_1m
                 self.data_5m[symbol] = aggregate_bars(rows_1m, 5)
                 self.data_15m[symbol] = aggregate_bars(rows_1m, 15)
                 self.data_1h[symbol] = aggregate_bars(rows_1m, 60)
             else:
                 rows_5m = fetch_klines(symbol, "5m", int(start_dt.timestamp() * 1000), int(end_dt.timestamp() * 1000))
-                if len(rows_5m) < 1000:
-                    raise RuntimeError(f"Insufficient 5m history for {symbol}")
+                if len(rows_5m) < min_5m_history:
+                    continue
                 self.data_5m[symbol] = rows_5m
                 self.data_15m[symbol] = aggregate_bars(rows_5m, 3)
                 self.data_1h[symbol] = aggregate_bars(rows_5m, 12)
+            loaded_symbols.append(symbol)
             if hasattr(self.obj, "sideways_strategy_name"):
                 frame = pd.DataFrame(
                     [
@@ -342,6 +382,11 @@ class BacktestEngine:
                     ]
                 )
                 self.sideways_features[symbol] = self.obj.sideways_engine.prepare_features(frame)
+        if not loaded_symbols:
+            raise RuntimeError("No symbols had enough history for this backtest period")
+        globals()["BACKTEST_SYMBOLS"] = loaded_symbols
+        self.obj.valid_symbols = list(loaded_symbols)
+        self.obj.strategies = self.obj.generate_dynamic_strategies()
 
     def _set_indexes_for_time(self, current_time_ms: int):
         if self.data_1m:

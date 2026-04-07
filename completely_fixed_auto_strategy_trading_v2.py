@@ -68,6 +68,10 @@ class CompletelyFixedAutoStrategyFuturesTrading:
         self.account_data_available = True
         self.position_entry_times = {}
         self.recently_closed_symbols = {}
+        self.signal_diagnostic_log_interval_sec = int(
+            self.safe_float_conversion(os.getenv("SIGNAL_DIAGNOSTIC_LOG_INTERVAL_SEC"), 300)
+        )
+        self.last_signal_diagnostic_log = {}
         self.trading_results = {
             "start_time": self.start_time.isoformat(),
             "end_time": self.end_time.isoformat(),
@@ -258,7 +262,9 @@ class CompletelyFixedAutoStrategyFuturesTrading:
                     if (
                         symbol_info["status"] == "TRADING" and
                         symbol_info["contractType"] == "PERPETUAL" and
-                        symbol_info["symbol"].endswith("USDT")
+                        symbol_info["symbol"].endswith("USDT") and
+                        symbol_info["symbol"].isascii() and
+                        symbol_info["symbol"].replace("USDT", "").isalnum()
                     ):
                         tradable_symbols.add(symbol_info["symbol"])
 
@@ -1922,8 +1928,10 @@ class CompletelyFixedAutoStrategyFuturesTrading:
             strategy = self.strategies[strategy_name]
             self.refresh_strategy_capital_allocations()
             if not self.can_open_new_positions():
+                self.emit_signal_diagnostic(strategy_name, "account_blocked", [])
                 return None
             if self.has_reached_daily_entry_limit(strategy_name):
+                self.emit_signal_diagnostic(strategy_name, "daily_entry_limit", [])
                 return None
 
             available_symbols = [s for s in strategy["preferred_symbols"] if s in self.valid_symbols]
@@ -1934,13 +1942,20 @@ class CompletelyFixedAutoStrategyFuturesTrading:
             available_symbols = [s for s in available_symbols if s not in active_positions]
             available_symbols = [s for s in available_symbols if not self.is_symbol_in_cooldown(s)]
             if not available_symbols:
+                self.emit_signal_diagnostic(strategy_name, "no_available_symbols", [])
                 return None
 
             candidate_limit = max(1, int(strategy.get("candidate_limit", 5)))
             candidate_evaluations = []
+            diagnostic_candidates = []
             for symbol in self.select_candidate_symbols(available_symbols, candidate_limit):
                 market_regime = self.analyze_market_regime(symbol)
                 signal = self.generate_strategy_signal(strategy_name, market_regime, symbol)
+                diagnostic_candidates.append({
+                    "symbol": symbol,
+                    "signal": signal,
+                    "market_regime": market_regime,
+                })
                 if not signal:
                     continue
                 candidate_evaluations.append({
@@ -1951,12 +1966,14 @@ class CompletelyFixedAutoStrategyFuturesTrading:
                 })
 
             if not candidate_evaluations:
+                self.emit_signal_diagnostic(strategy_name, "no_qualified_signal", diagnostic_candidates)
                 return None
 
             best_candidate = max(candidate_evaluations, key=lambda item: item["score"])
             self.trading_results["market_regime"] = best_candidate["market_regime"]["regime"]
             quantity = self.calculate_position_size(strategy_name, best_candidate["symbol"])
             if quantity <= 0:
+                self.emit_signal_diagnostic(strategy_name, "quantity_zero", [best_candidate])
                 return None
 
             return self.submit_order(
@@ -1970,6 +1987,78 @@ class CompletelyFixedAutoStrategyFuturesTrading:
         except Exception as e:
             self.log_system_error("trading_loop_error", str(e))
             return None
+
+    def emit_signal_diagnostic(self, strategy_name, reason, candidates):
+        """Log a throttled diagnostic summary when no trade can be opened."""
+        now = datetime.now()
+        key = f"{strategy_name}:{reason}"
+        last_logged = self.last_signal_diagnostic_log.get(key)
+        if last_logged and (now - last_logged).total_seconds() < self.signal_diagnostic_log_interval_sec:
+            return
+        self.last_signal_diagnostic_log[key] = now
+
+        summary = self.build_signal_diagnostic_summary(strategy_name, reason, candidates)
+        print(f"[DIAG] {json.dumps(summary, ensure_ascii=True, sort_keys=True)}")
+
+    def build_signal_diagnostic_summary(self, strategy_name, reason, candidates):
+        """Build a compact signal diagnostic payload for operations logs."""
+        session_name = self.get_market_session()
+        payload = {
+            "strategy": strategy_name,
+            "reason": reason,
+            "session": session_name,
+            "can_open": bool(self.can_open_new_positions()),
+            "account_data_available": bool(getattr(self, "account_data_available", False)),
+            "available_balance": round(self.safe_float_conversion(self.trading_results.get("available_balance"), 0.0), 6),
+            "active_positions": len(self.trading_results.get("active_positions", {})),
+            "candidate_count": len(candidates or []),
+            "regime_counts": {},
+            "trend_consensus_counts": {},
+            "signal_counts": {},
+            "sample": [],
+        }
+
+        for item in candidates or []:
+            market_regime = item.get("market_regime") or {}
+            signal = item.get("signal")
+            regime = market_regime.get("regime", "UNKNOWN")
+            consensus = str(market_regime.get("trend_consensus", "UNKNOWN"))
+            signal_key = str(signal) if signal else "None"
+            payload["regime_counts"][regime] = payload["regime_counts"].get(regime, 0) + 1
+            payload["trend_consensus_counts"][consensus] = payload["trend_consensus_counts"].get(consensus, 0) + 1
+            payload["signal_counts"][signal_key] = payload["signal_counts"].get(signal_key, 0) + 1
+
+            if len(payload["sample"]) < 3:
+                timeframe_data = market_regime.get("timeframes", {})
+                tf_5m = timeframe_data.get("5m", {})
+                tf_15m = timeframe_data.get("15m", {})
+                tf_1h = timeframe_data.get("1h", {})
+                payload["sample"].append({
+                    "symbol": item.get("symbol"),
+                    "signal": signal_key,
+                    "regime": regime,
+                    "trend_consensus": market_regime.get("trend_consensus"),
+                    "tf_5m": {
+                        "alignment": tf_5m.get("alignment"),
+                        "price_vs_ma": tf_5m.get("price_vs_ma"),
+                        "ha_trend": tf_5m.get("ha_trend"),
+                        "fractal_up": bool(tf_5m.get("fractal_breakout_up")),
+                        "fractal_down": bool(tf_5m.get("fractal_breakout_down")),
+                    },
+                    "tf_15m": {
+                        "alignment": tf_15m.get("alignment"),
+                        "price_vs_ma": tf_15m.get("price_vs_ma"),
+                        "ha_trend": tf_15m.get("ha_trend"),
+                        "fractal_up": bool(tf_15m.get("fractal_breakout_up")),
+                        "fractal_down": bool(tf_15m.get("fractal_breakout_down")),
+                    },
+                    "tf_1h": {
+                        "alignment": tf_1h.get("alignment"),
+                        "price_vs_ma": tf_1h.get("price_vs_ma"),
+                        "ha_trend": tf_1h.get("ha_trend"),
+                    },
+                })
+        return payload
 
     def select_candidate_symbols(self, available_symbols, candidate_limit):
         """Select candidate symbols evenly across the available universe."""

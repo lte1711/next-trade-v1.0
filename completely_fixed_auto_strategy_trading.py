@@ -65,6 +65,7 @@ class CompletelyFixedAutoStrategyFuturesTrading:
         self.account_data_available = True
         self.position_entry_times = {}
         self.recently_closed_symbols = {}
+        self.managed_symbols = None
         self.trading_results = {
             "start_time": self.start_time.isoformat(),
             "end_time": self.end_time.isoformat(),
@@ -254,7 +255,9 @@ class CompletelyFixedAutoStrategyFuturesTrading:
                     if (
                         symbol_info["status"] == "TRADING" and
                         symbol_info["contractType"] == "PERPETUAL" and
-                        symbol_info["symbol"].endswith("USDT")
+                        symbol_info["symbol"].endswith("USDT") and
+                        symbol_info["symbol"].isascii() and
+                        symbol_info["symbol"].replace("USDT", "").isalnum()
                     ):
                         tradable_symbols.add(symbol_info["symbol"])
 
@@ -1764,7 +1767,7 @@ class CompletelyFixedAutoStrategyFuturesTrading:
         """Manage open positions and exit on moving-average reversal."""
         try:
             self.sync_positions()
-            active_positions = self.trading_results.get("active_positions", {})
+            active_positions = self.get_managed_active_positions()
             if not active_positions:
                 return
             for symbol, position in list(active_positions.items()):
@@ -1777,7 +1780,7 @@ class CompletelyFixedAutoStrategyFuturesTrading:
 
                 if exit_reason and hold_ready:
                     self.close_position(symbol, position, exit_reason)
-            active_positions = self.trading_results.get("active_positions", {})
+            active_positions = self.get_managed_active_positions()
             if len(active_positions) > self.max_open_positions:
                 excess = len(active_positions) - self.max_open_positions
                 ranked = sorted(
@@ -1789,6 +1792,23 @@ class CompletelyFixedAutoStrategyFuturesTrading:
 
         except Exception as e:
             self.log_system_error("position_management_error", str(e))
+
+    def get_managed_symbols(self):
+        """Return the symbols this process is allowed to manage."""
+        configured = getattr(self, "managed_symbols", None)
+        if configured:
+            return {symbol for symbol in configured}
+        return set(getattr(self, "valid_symbols", []))
+
+    def get_managed_active_positions(self):
+        """Return active positions that belong to this process symbol partition."""
+        managed_symbols = self.get_managed_symbols()
+        active_positions = self.trading_results.get("active_positions", {})
+        return {
+            symbol: position
+            for symbol, position in active_positions.items()
+            if symbol in managed_symbols
+        }
 
     def update_market_data(self):
         """Refresh cached market prices."""
@@ -1866,7 +1886,7 @@ class CompletelyFixedAutoStrategyFuturesTrading:
 
                     if self.can_open_new_positions():
                         for strategy_name in self.strategies:
-                            if len(self.trading_results.get("active_positions", {})) >= self.max_open_positions:
+                            if len(self.get_managed_active_positions()) >= self.max_open_positions:
                                 break
                             self.execute_strategy_trade(strategy_name)
                     else:
