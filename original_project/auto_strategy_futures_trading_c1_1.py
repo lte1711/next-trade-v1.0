@@ -48,79 +48,40 @@ class AutoStrategyFuturesTrading:
         # 자동 전략 설정 (동적 생성)
         self.strategies = self.generate_dynamic_strategies()
         
-        # 캐시 설정
-        self.symbol_info_cache = {}
-        self.account_info_cache = {}
-        
         # 거래 결과 저장
         self.trading_results = {
             "start_time": self.start_time.isoformat(),
             "end_time": self.end_time.isoformat(),
-            "strategy_performance": {},
-            "market_data": {},
-            "total_pnl": 0,
-            "total_trades": 0,
-            "winning_trades": 0,
-            "losing_trades": 0,
-            "real_orders": [],
-            "balance_history": [],
-            "initial_capital": self.total_capital,
-            "current_capital": self.total_capital,
-            "active_positions": {},
-            "market_regime": "UNKNOWN"
+            "total_capital": self.total_capital,
+            "strategies": len(self.strategies),
+            "symbols": len(self.valid_symbols),
+            "trades": [],
+            "errors": [],
+            "performance": {}
         }
         
-        print("[START] 자동 전략 기반 선물 거래 시작!")
-        print(f"[TIME] 시작 시간: {self.start_time.strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"[CAPITAL] 초기 자본: ${self.total_capital:,.2f}")
-        print(f"[STRATEGY] 전략 수: {len(self.strategies)}개")
-        print(f"[SYMBOLS] 대상 심볼: {len(self.valid_symbols)}개")
-        print(f"[FILTER] 최소 거래량: {self.min_volume_threshold:,} USDT")
-        print(f"[FILTER] 최소 변동성: {self.min_volatility_threshold}%")
-        print("=" * 80)
-    
-    def adjust_filter_thresholds(self):
-        """시장 상태에 따른 동적 필터링 임계값 조정"""
-        # 현재 시장 변동성 계산
-        total_volatility = 0
-        count = 0
+        # 심볼 정보 캐시
+        self.symbol_info_cache = {}
         
-        for symbol in self.valid_symbols[:10]:
-            try:
-                response = requests.get(f"{self.base_url}/fapi/v1/ticker/24hr?symbol={symbol}", timeout=3)
-                if response.status_code == 200:
-                    ticker_data = response.json()
-                    price_change = float(ticker_data.get("priceChangePercent", 0))
-                    total_volatility += abs(price_change)
-                    count += 1
-            except:
-                continue
+        print(f"[OK] 실제 계정 잔고: ${self.total_capital:.2f}")
+        print(f"[OK] 거래 가능 심볼: {len(self.valid_symbols)}개 (필터링 제거됨)")
+        print(f"[ADJUST] 필터링 임계값 조정: 거래량={self.min_volume_threshold:,}, 변동성={self.min_volatility_threshold:.1%}")
+        print(f"[OK] 시장 가격: {len(self.current_prices)}개 심볼 (확장됨)")
+        print(f"[OK] 동적 전략 생성: {len(self.strategies)}개")
         
-        if count > 0:
-            avg_volatility = total_volatility / count
-            
-            # 시장 변동성에 따른 동적 조정
-            if avg_volatility < 0.3:  # 저변동성 시장
-                self.min_volume_threshold = 50000  # 5만 USDT
-                self.min_volatility_threshold = 0.05  # 0.05%
-            elif avg_volatility < 1.0:  # 중간 변동성
-                self.min_volume_threshold = 100000  # 10만 USDT
-                self.min_volatility_threshold = 0.1  # 0.1%
-            else:  # 고변동성 시장
-                self.min_volume_threshold = 200000  # 20만 USDT
-                self.min_volatility_threshold = 0.3  # 0.3%
-            
-            print(f"[ADJUST] 필터링 임계값 조정: 거래량={self.min_volume_threshold:,}, 변동성={self.min_volatility_threshold}%")
-    
     def get_account_balance(self):
         """실제 계정 잔고 가져오기"""
         try:
+            # 서버 시간
             server_time = self.get_server_time()
+            
+            # 계정 정보 요청 파라미터
             params = {
                 "timestamp": server_time,
                 "recvWindow": 5000
             }
             
+            # 서명 생성
             query_string = urllib.parse.urlencode(params)
             signature = hmac.new(
                 self.api_secret.encode("utf-8"),
@@ -128,6 +89,7 @@ class AutoStrategyFuturesTrading:
                 hashlib.sha256
             ).hexdigest()
             
+            # 계정 정보 요청
             url = f"{self.base_url}/fapi/v2/account?{query_string}&signature={signature}"
             headers = {"X-MBX-APIKEY": self.api_key}
             
@@ -135,91 +97,100 @@ class AutoStrategyFuturesTrading:
             
             if response.status_code == 200:
                 account_info = response.json()
-                balance = float(account_info['totalWalletBalance'])
-                print(f"[OK] 실제 계정 잔고: ${balance:,.2f}")
-                return balance
+                total_balance = float(account_info["totalWalletBalance"])
+                print(f"[OK] 실제 계정 잔고: ${total_balance:.2f}")
+                return total_balance
             else:
                 print(f"[ERROR] 계정 정보 가져오기 실패: {response.status_code}")
-                return 10000.0  # 기본값
+                return 10000.0  # fallback
+                
         except Exception as e:
-            print(f"[ERROR] 계정 잔고 오류: {e}")
-            return 10000.0  # 기본값
+            print(f"[ERROR] 계정 정보 가져오기 실패: {e}")
+            return 10000.0  # fallback
     
     def get_available_symbols(self):
-        """실제 거래 가능한 심볼 목록 가져오기 (필터링 제거)"""
+        """거래 가능 심볼 동적 가져오기"""
         try:
             response = requests.get(f"{self.base_url}/fapi/v1/exchangeInfo", timeout=10)
             
             if response.status_code == 200:
                 exchange_info = response.json()
-                symbols = []
                 
-                for symbol_info in exchange_info["symbols"]:
-                    if (symbol_info["status"] == "TRADING" and 
-                        symbol_info["contractType"] == "PERPETUAL" and
-                        symbol_info["symbol"].endswith("USDT")):
-                        symbols.append(symbol_info["symbol"])
+                # USDT 선물 심볼 필터링
+                usdt_symbols = [
+                    symbol["symbol"] 
+                    for symbol in exchange_info["symbols"]
+                    if symbol["symbol"].endswith("USDT") and symbol["status"] == "TRADING"
+                ]
                 
-                # 필터링 제거: 상위 20개만 선택
-                symbols = symbols[:20]
-                
-                print(f"[OK] 거래 가능 심볼: {len(symbols)}개 (필터링 제거됨)")
-                return symbols
-            else:
-                print(f"[ERROR] 심볼 정보 가져오기 실패: {response.status_code}")
-                # 기본 심볼 목록
-                default_symbols = [
-                    "BTCUSDT", "ETHUSDT", "SOLUSDT", "ADAUSDT", "DOTUSDT",
-                    "LINKUSDT", "BNBUSDT", "XRPUSDT", "LTCUSDT", "BCHUSDT",
+                # 상위 심볼 선택 (거래량 기준)
+                top_symbols = [
+                    "BTCUSDT", "ETHUSDT", "XRPUSDT", "ADAUSDT", "DOTUSDT",
+                    "LINKUSDT", "BNBUSDT", "SOLUSDT", "LTCUSDT", "BCHUSDT",
                     "AVAXUSDT", "MATICUSDT", "UNIUSDT", "ATOMUSDT", "FILUSDT",
                     "ETCUSDT", "ICPUSDT", "VETUSDT", "THETAUSDT", "FTMUSDT"
                 ]
-                return default_symbols
+                
+                # 필터링 제거 - 고정된 상위 20개 심볼 사용
+                valid_symbols = [s for s in top_symbols if s in usdt_symbols]
+                
+                print(f"[OK] 거래 가능 심볼: {len(valid_symbols)}개 (필터링 제거됨)")
+                return valid_symbols
+            
+            return ["BTCUSDT", "ETHUSDT", "XRPUSDT"]  # fallback
+            
         except Exception as e:
-            print(f"[ERROR] 심볼 정보 오류: {e}")
-            # 기본 심볼 목록
-            default_symbols = [
-                "BTCUSDT", "ETHUSDT", "SOLUSDT", "ADAUSDT", "DOTUSDT",
-                "LINKUSDT", "BNBUSDT", "XRPUSDT", "LTCUSDT", "BCHUSDT",
-                "AVAXUSDT", "MATICUSDT", "UNIUSDT", "ATOMUSDT", "FILUSDT",
-                "ETCUSDT", "ICPUSDT", "VETUSDT", "THETAUSDT", "FTMUSDT"
-            ]
-            return default_symbols
+            print(f"[ERROR] 심볼 정보 가져오기 실패: {e}")
+            return ["BTCUSDT", "ETHUSDT", "XRPUSDT"]  # fallback
     
-    def get_symbol_volume(self, symbol):
-        """심볼의 24시간 거래량 가져오기"""
+    def adjust_filter_thresholds(self):
+        """동적 필터링 임계값 조정"""
         try:
-            response = requests.get(f"{self.base_url}/fapi/v1/ticker/24hr?symbol={symbol}", timeout=5)
-            if response.status_code == 200:
-                ticker_data = response.json()
-                return float(ticker_data.get("volume", 0))
-            return 0
-        except:
-            return 0
+            # 시장 데이터 기반 동적 조정
+            if len(self.current_prices) > 0:
+                avg_volume = sum(self.current_prices.values()) / len(self.current_prices)
+                
+                # 거래량 임계값 조정 (평균의 50%)
+                self.min_volume_threshold = avg_volume * 0.5
+                
+                # 변동성 임계값 조정 (고정)
+                self.min_volatility_threshold = 0.1  # 0.1%
+                
+                print(f"[ADJUST] 필터링 임계값 조정: 거래량={self.min_volume_threshold:,}, 변동성={self.min_volatility_threshold:.1%}")
+            
+        except Exception as e:
+            print(f"[ERROR] 필터링 임계값 조정 실패: {e}")
     
     def get_current_prices(self):
-        """실시간 시장 가격 가져오기"""
-        prices = {}
-        
+        """실시간 시장 가격 동적 가져오기"""
         try:
-            # 상위 15개 심볼만 조회 (확장)
-            for symbol in self.valid_symbols[:15]:
-                response = requests.get(f"{self.base_url}/fapi/v1/ticker/price?symbol={symbol}", timeout=3)
-                
-                if response.status_code == 200:
-                    price_data = response.json()
-                    prices[symbol] = float(price_data["price"])
-                else:
+            # 여러 심볼의 가격을 한 번에 가져오기
+            prices = {}
+            
+            # 상위 심볼만 가격 조회 (API 제한 회피)
+            for symbol in self.valid_symbols[:15]:  # 15개로 제한
+                try:
+                    response = requests.get(f"{self.base_url}/fapi/v1/ticker/price?symbol={symbol}", timeout=3)
+                    if response.status_code == 200:
+                        ticker_data = response.json()
+                        prices[symbol] = float(ticker_data["price"])
+                except:
+                    continue
+            
+            # 가격이 없는 심볼은 기본값으로 설정
+            for symbol in self.valid_symbols:
+                if symbol not in prices:
                     prices[symbol] = 100.0  # 기본값
             
             print(f"[OK] 시장 가격: {len(prices)}개 심볼 (확장됨)")
             return prices
+            
         except Exception as e:
             print(f"[ERROR] 시장 가격 오류: {e}")
             return {symbol: 100.0 for symbol in self.valid_symbols[:15]}
     
     def get_available_strategies(self):
-        """사용 가능한 전략 목록 동적 생성"""
+        """사용 가능 전략 목록 동적 생성"""
         base_strategies = [
             "momentum_strategy",
             "mean_reversion_strategy", 
@@ -687,222 +658,253 @@ class AutoStrategyFuturesTrading:
             print(f"[ERROR] 손절/익절 주문 실패: {e}")
             return False
     
-    def execute_strategy_trade(self, strategy_name):
-        """전략 거래 실행"""
-        strategy = self.strategies[strategy_name]
-        
-        # 선호 심볼에서 선택
-        available_symbols = [s for s in strategy["preferred_symbols"] if s in self.valid_symbols]
-        if not available_symbols:
-            available_symbols = self.valid_symbols
-        
-        symbol = random.choice(available_symbols)
-        
-        # 시장 국면 분석
-        market_regime = self.analyze_market_regime(symbol)
-        
-        # 신호 생성
-        signal = self.generate_strategy_signal(strategy_name, market_regime, symbol)
-        
-        if signal:
-            # 포지션 타입 결정
-            position_type = "LONG" if signal == "BUY" else "SHORT"
-            
-            # 수량 계산
-            quantity = self.calculate_position_size(strategy_name, symbol)
-            
-            # 주문 제출
-            order_result = self.submit_order(strategy_name, symbol, signal, quantity)
-            
-            if order_result:
-                # 거래 기록
-                trade_record = {
-                    "strategy": strategy_name,
-                    "symbol": symbol,
-                    "side": signal,
-                    "quantity": quantity,
-                    "price": self.current_prices.get(symbol, 0),
-                    "timestamp": datetime.now().isoformat(),
-                    "status": "EXECUTED",
-                    "order_id": order_result.get("orderId", "UNKNOWN"),
-                    "market_regime": market_regime["regime"],
-                    "strategy_signal": signal,
-                    "position_type": position_type
-                }
-                
-                self.trading_results["real_orders"].append(trade_record)
-                self.trading_results["total_trades"] += 1
-                
-                print(f"[OK] {strategy_name} | {symbol} | {signal} | {quantity} | {position_type}")
-                return trade_record
-            else:
-                # 실패 기록
-                failed_record = {
-                    "strategy": strategy_name,
-                    "symbol": symbol,
-                    "side": signal,
-                    "quantity": quantity,
-                    "price": self.current_prices.get(symbol, 0),
-                    "timestamp": datetime.now().isoformat(),
-                    "status": "FAILED",
-                    "order_id": f"FAILED_{int(time.time())}_{random.randint(1000, 9999)}",
-                    "market_regime": market_regime["regime"],
-                    "strategy_signal": signal,
-                    "position_type": position_type
-                }
-                
-                self.trading_results["real_orders"].append(failed_record)
-                print(f"[ERROR] {strategy_name} | {symbol} | {signal} | {quantity} | {position_type}")
-                return failed_record
-        
-        return None
-    
     def calculate_position_size(self, strategy_name, symbol):
         """동적 포지션 크기 계산"""
         strategy = self.strategies[strategy_name]
-        capital = strategy["capital"]
         risk_per_trade = strategy["risk_per_trade"]
         leverage = strategy["leverage"]
         
         # 리스크 기반 포지션 크기
-        risk_amount = capital * risk_per_trade
-        position_value = risk_amount * leverage
+        risk_amount = self.total_capital * risk_per_trade
+        position_size = risk_amount * leverage
         
-        current_price = self.current_prices.get(symbol, 100.0)
-        quantity = position_value / current_price
+        # 최대 포지션 크기 제한
+        max_position = self.total_capital * 0.2  # 20%
+        position_size = min(position_size, max_position)
         
-        # 최소 수량 보장
-        min_quantities = {
-            "BTCUSDT": 0.001, "ETHUSDT": 0.01, "SOLUSDT": 0.1, "DOGEUSDT": 10,
-            "ADAUSDT": 1, "MATICUSDT": 1, "AVAXUSDT": 0.1, "DOTUSDT": 1,
-            "LINKUSDT": 0.1, "LTCUSDT": 0.01
-        }
-        
-        if symbol in min_quantities:
-            min_qty = min_quantities[symbol]
-            quantity = max(quantity, min_qty)
-        
-        return quantity
+        return position_size
     
-    def update_market_data(self):
-        """시장 데이터 업데이트"""
-        try:
-            # 가격 정보 업데이트
-            for symbol in self.valid_symbols[:10]:
-                response = requests.get(f"{self.base_url}/fapi/v1/ticker/price?symbol={symbol}", timeout=3)
-                if response.status_code == 200:
-                    price_data = response.json()
-                    self.current_prices[symbol] = float(price_data["price"])
-            
-            self.trading_results["market_data"] = self.current_prices.copy()
-            
-        except Exception as e:
-            print(f"[ERROR] 시장 데이터 업데이트 오류: {e}")
-    
-    def display_status(self):
-        """상태 표시"""
-        current_time = datetime.now()
-        elapsed = current_time - self.start_time
-        progress = (elapsed.total_seconds() / self.test_duration) * 100
-        remaining = self.test_duration - elapsed.total_seconds()
+    def run_strategy(self):
+        """전략 실행 메인 루프"""
+        print(f"[START] 자동 전략 기반 선물 거래 시작!")
+        print(f"[TIME] 시작 시간: {self.start_time}")
+        print(f"[CAPITAL] 초기 자본: ${self.total_capital:.2f}")
+        print(f"[STRATEGY] 전략 수: {len(self.strategies)}")
+        print(f"[SYMBOLS] 대상 심볼: {len(self.valid_symbols)}")
+        print(f"[FILTER] 최소 거래량: {self.min_volume_threshold:,} USDT")
+        print(f"[FILTER] 최소 변동성: {self.min_volatility_threshold:.1%}")
+        print("=" * 80)
         
-        # 시장 국면 분석
-        sample_symbol = self.valid_symbols[0] if self.valid_symbols else "BTCUSDT"
-        market_regime = self.analyze_market_regime(sample_symbol)
+        trade_count = 0
+        error_count = 0
         
-        print(f"\n{'='*80}")
-        print(f"[START] 자동 전략 기반 선물 거래 실행")
-        print(f"{'='*80}")
-        print(f"[TIME] 현재 시간: {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"[TIME]  경과 시간: {elapsed}")
-        print(f"[DATA] 진행률: {progress:.2f}%")
-        print(f"[TARGET] 남은 시간: {timedelta(seconds=int(remaining))}")
-        print(f"[API] API 상태:  바이낸스 테스트넷 선물 연결")
-        print(f"[CAPITAL] 계정 잔액: ${self.total_capital:,.2f}")
-        print(f"[UP] 시장 국면: {market_regime['regime']}")
-        
-        print(f"\n[UP] 실시간 시장 데이터:")
-        for symbol, price in list(self.current_prices.items())[:6]:
-            prev_price = self.trading_results["market_data"].get(symbol, price)
-            change = ((price - prev_price) / prev_price) * 100 if prev_price > 0 else 0
-            trend = "[UP]" if change > 0 else "[DOWN]" if change < 0 else "[SAME]"
-            print(f"  {symbol}: ${price:.4f} {trend} {change:+.2f}%")
-        
-        print(f"\n[TARGET] 자동 전략 성과:")
-        for strategy_name, strategy in self.strategies.items():
-            capital = strategy["capital"]
-            pnl = strategy.get("total_pnl", 0)
-            return_rate = (pnl / self.capital_per_strategy) * 100
-            leverage = strategy["leverage"]
-            strategy_type = strategy["strategy_type"]
-            market_bias = strategy["market_bias"]
-            print(f"  {strategy_name}: ${capital:,.2f} ({return_rate:+.2f}%) [DOWN] [{leverage:.1f}x] {strategy_type} | {market_bias}")
-        
-        print(f"\n[DATA] 선물 거래 요약:")
-        print(f"  [CAPITAL] 초기 자본: ${self.trading_results['initial_capital']:,.2f}")
-        print(f"  [CAPITAL] 현재 자본: ${self.trading_results['current_capital']:,.2f}")
-        print(f"  [CAPITAL] 총 손익: ${self.trading_results['total_pnl']:+,.2f}")
-        print(f"  [UP] 총 거래: {self.trading_results['total_trades']}회")
-        print(f"  [OK] 성공 거래: {self.trading_results['winning_trades']}회")
-        print(f"  [ERROR] 실패 거래: {self.trading_results['losing_trades']}회")
-        success_rate = (self.trading_results['winning_trades'] / max(1, self.trading_results['total_trades'])) * 100
-        print(f"  [TARGET] 성공률: {success_rate:.1f}%")
-        print(f"  [DATA] 전체 수익률: {((self.trading_results['current_capital'] - self.trading_results['initial_capital']) / self.trading_results['initial_capital']) * 100:+.2f}%")
-        
-        # 최근 거래 내역
-        recent_trades = self.trading_results["real_orders"][-3:] if self.trading_results["real_orders"] else []
-        print(f"\n[LIST] 최근 선물 거래 내역:")
-        if recent_trades:
-            for trade in recent_trades:
-                status_icon = "[OK]" if trade["status"] == "EXECUTED" else "[ERROR]"
-                print(f"  {status_icon} {trade['strategy']} | {trade['symbol']} | {trade['side']} | ${trade['price']:.4f} | 신호: {trade['strategy_signal']} | {trade['position_type']} | 국면: {trade['market_regime']}")
-        else:
-            print("  정보 없음")
-        
-        # 진행 상태 바
-        progress_bar = "█" * int(progress / 2) + "░" * (50 - int(progress / 2))
-        print(f"\n 진행 상태: [{progress_bar}] {progress:.1f}%")
-        print("="*80)
-    
-    def save_results(self):
-        """결과 저장"""
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"auto_strategy_futures_trading_{timestamp}.json"
-        
-        with open(filename, 'w', encoding='utf-8') as f:
-            json.dump(self.trading_results, f, indent=2, ensure_ascii=False)
-        
-        print(f" 자동 전략 거래 결과 저장: {filename}")
-    
-    def run_trading(self):
-        """자동 거래 실행"""
-        print("[START] 자동 전략 기반 선물 거래 시작!")
-        
-        try:
-            while datetime.now() < self.end_time:
-                # 시장 데이터 업데이트
-                self.update_market_data()
+        while datetime.now() < self.end_time:
+            try:
+                # 현재 시간 정보
+                current_time = datetime.now()
+                elapsed = current_time - self.start_time
+                progress = (elapsed.total_seconds() / self.test_duration) * 100
+                remaining = self.end_time - current_time
                 
-                # 각 전략 실행
-                for strategy_name in self.strategies:
-                    # 랜덤하게 거래 실행 (30% 확률)
-                    if random.random() < 0.3:
-                        self.execute_strategy_trade(strategy_name)
+                # 진행 상황 출력
+                print(f"[START] 자동 전략 기반 선물 거래 실행")
+                print(f"[TIME] 현재 시간: {current_time}")
+                print(f"[TIME]  경과 시간: {elapsed}")
+                print(f"[DATA] 진행률: {progress:.2f}%")
+                print(f"[TARGET] 남은 시간: {remaining}")
+                print(f"[API] API 상태:  바이낸스 테스트넷 선물 연결")
+                print(f"[CAPITAL] 계정 잔액: ${self.total_capital:.2f}")
                 
-                # 상태 표시
-                self.display_status()
+                # 시장 국면 분석
+                market_regime = self.analyze_market_regime("BTCUSDT")
+                print(f"[UP] 시장 국면: {market_regime['regime']}")
+                
+                # 실시간 시장 데이터 출력
+                print(f"[UP] 실시간 시장 데이터:")
+                for symbol in ["BTCUSDT", "ETHUSDT", "BCHUSDT", "XRPUSDT", "LTCUSDT", "TRXUSDT"]:
+                    if symbol in self.current_prices:
+                        price = self.current_prices[symbol]
+                        prev_price = self.current_prices.get(symbol, price)
+                        change = ((price - prev_price) / prev_price) * 100 if prev_price != price else 0
+                        trend = "UP" if change > 0.1 else "DOWN" if change < -0.1 else "SAME"
+                        print(f"  {symbol}: ${price:.4f} [{trend}] {change:+.2f}%")
+                
+                # 전략 성과 출력
+                print(f"[TARGET] 자동 전략 성과:")
+                for strategy_name, strategy in self.strategies.items():
+                    performance = strategy.get("performance", {})
+                    pnl = performance.get("pnl", 0)
+                    change_pct = (pnl / strategy["capital"]) * 100
+                    status = "UP" if change_pct > 0 else "DOWN"
+                    leverage = strategy.get("leverage", 1)
+                    bias = strategy.get("market_bias", "neutral")
+                    print(f"  {strategy_name}: ${strategy['capital']:.2f} ({change_pct:+.2f}) [{status}] [{leverage:.1f}x] {strategy['strategy_type']} | {bias}")
+                
+                # 각 전략에 대해 거래 신호 확인
+                for strategy_name, strategy in self.strategies.items():
+                    # 선호 심볼 중 랜덤 선택
+                    if strategy["preferred_symbols"]:
+                        symbol = random.choice(strategy["preferred_symbols"])
+                    else:
+                        symbol = random.choice(self.valid_symbols)
+                    
+                    # 시장 국면 분석
+                    market_regime = self.analyze_market_regime(symbol)
+                    
+                    # 전략 신호 생성
+                    signal = self.generate_strategy_signal(strategy_name, market_regime, symbol)
+                    
+                    if signal:
+                        # 포지션 크기 계산
+                        position_size = self.calculate_position_size(strategy_name, symbol)
+                        
+                        # 주문 제출
+                        result = self.submit_order(strategy_name, symbol, signal, position_size)
+                        
+                        if result:
+                            trade_count += 1
+                            
+                            # 거래 기록
+                            trade_record = {
+                                "timestamp": datetime.now().isoformat(),
+                                "strategy": strategy_name,
+                                "symbol": symbol,
+                                "signal": signal,
+                                "quantity": position_size,
+                                "order_id": result.get("orderId"),
+                                "market_regime": market_regime,
+                                "strategy_config": strategy
+                            }
+                            
+                            self.trading_results["trades"].append(trade_record)
+                            
+                            print(f"[OK] {strategy_name} | {symbol} | {signal} | {position_size} | {signal}")
+                            
+                            # 성과 업데이트
+                            if "performance" not in strategy:
+                                strategy["performance"] = {"pnl": 0, "trades": 0}
+                            
+                            strategy["performance"]["trades"] += 1
+                        else:
+                            error_count += 1
+                            error_record = {
+                                "timestamp": datetime.now().isoformat(),
+                                "strategy": strategy_name,
+                                "symbol": symbol,
+                                "signal": signal,
+                                "error": "주문 실패"
+                            }
+                            self.trading_results["errors"].append(error_record)
+                
+                # 선물 거래 요약 출력
+                print(f"[DATA] 선물 거래 요약:")
+                print(f"  [CAPITAL] 초기 자본: ${self.total_capital:.2f}")
+                print(f"  [TRADES] 총 거래: {trade_count}회")
+                print(f"  [ERRORS] 오류: {error_count}회")
+                print(f"  [SUCCESS] 성공률: {(trade_count/(trade_count+error_count)*100):.1f}%" if (trade_count+error_count) > 0 else "  [SUCCESS] 성공률: 0%")
+                
+                print("=" * 80)
                 
                 # 30초 대기
                 time.sleep(30)
                 
-        except KeyboardInterrupt:
-            print("\n⚠️  자동 거래가 중단되었습니다.")
+            except KeyboardInterrupt:
+                print(f"\n[STOP] 사용자 중단: {datetime.now()}")
+                break
+            except Exception as e:
+                print(f"[ERROR] 전략 실행 오류: {e}")
+                error_count += 1
+                time.sleep(10)
+        
+        # 최종 결과 저장
+        self.save_results()
+    
+    def save_results(self):
+        """최종 결과 저장"""
+        try:
+            # 결과 파일 경로
+            results_dir = Path("results")
+            results_dir.mkdir(exist_ok=True)
+            
+            # 파일명에 타임스탬프 추가
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"trading_results_{timestamp}.json"
+            filepath = results_dir / filename
+            
+            # 최종 성과 계산
+            self.trading_results["performance"] = {
+                "total_trades": len(self.trading_results["trades"]),
+                "total_errors": len(self.trading_results["errors"]),
+                "success_rate": len(self.trading_results["trades"]) / (len(self.trading_results["trades"]) + len(self.trading_results["errors"])) * 100 if (len(self.trading_results["trades"]) + len(self.trading_results["errors"])) > 0 else 0,
+                "end_time": datetime.now().isoformat()
+            }
+            
+            # JSON 파일로 저장
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump(self.trading_results, f, indent=2, ensure_ascii=False)
+            
+            print(f"[OK] 결과 저장 완료: {filepath}")
+            
+            # 요약 보고서 생성
+            self.generate_summary_report()
+            
         except Exception as e:
-            print(f"\n[ERROR] 거래 실행 오류: {e}")
-        finally:
-            self.save_results()
-            print(" 자동 전략 기반 선물 거래 완료!")
+            print(f"[ERROR] 결과 저장 실패: {e}")
+    
+    def generate_summary_report(self):
+        """요약 보고서 생성"""
+        try:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"trading_summary_{timestamp}.md"
+            filepath = Path("results") / filename
+            
+            report = f"""# 자동 전략 거래 요약 보고서
+
+## 실행 정보
+- **시작 시간**: {self.trading_results['start_time']}
+- **종료 시간**: {self.trading_results['performance']['end_time']}
+- **초기 자본**: ${self.trading_results['total_capital']:.2f}
+- **전략 수**: {self.trading_results['strategies']}개
+- **대상 심볼**: {self.trading_results['symbols']}개
+
+## 거래 성과
+- **총 거래**: {self.trading_results['performance']['total_trades']}회
+- **총 오류**: {self.trading_results['performance']['total_errors']}회
+- **성공률**: {self.trading_results['performance']['success_rate']:.1f}%
+
+## 전략별 성과
+"""
+            
+            for strategy_name, strategy in self.strategies.items():
+                performance = strategy.get("performance", {})
+                trades = performance.get("trades", 0)
+                pnl = performance.get("pnl", 0)
+                change_pct = (pnl / strategy["capital"]) * 100 if strategy["capital"] > 0 else 0
+                
+                report += f"""### {strategy_name}
+- **거래 횟수**: {trades}회
+- **손익**: ${pnl:.2f}
+- **수익률**: {change_pct:+.2f}%
+- **레버리지**: {strategy['leverage']:.1f}x
+- **시장 편향**: {strategy['market_bias']}
+
+"""
+            
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(report)
+            
+            print(f"[OK] 요약 보고서 생성 완료: {filepath}")
+            
+        except Exception as e:
+            print(f"[ERROR] 요약 보고서 생성 실패: {e}")
+
 
 if __name__ == "__main__":
-    trading = AutoStrategyFuturesTrading()
-    trading.run_trading()
+    print("[START] 자동 전략 기반 선물 거래 시작!")
+    print("=" * 80)
+    
+    try:
+        # 거래 시스템 초기화
+        trading_system = AutoStrategyFuturesTrading()
+        
+        # 전략 실행
+        trading_system.run_strategy()
+        
+    except KeyboardInterrupt:
+        print(f"\n[STOP] 사용자 중단: {datetime.now()}")
+    except Exception as e:
+        print(f"[ERROR] 시스템 오류: {e}")
+        import traceback
+        traceback.print_exc()
+    
+    print("[END] 자동 전략 기반 선물 거래 종료")

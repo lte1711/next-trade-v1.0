@@ -1,0 +1,60 @@
+{
+  "start_time": "2026-04-07T13:24:06.371512",
+  "end_time": "2026-04-08T13:24:06.371512",
+  "strategy_performance": {},
+  "market_data": {
+    "BTCUSDT": 68591.7,
+    "ETHUSDT": 2105.07,
+    "BCHUSDT": 431.58,
+    "XRPUSDT": 1.314,
+    "LTCUSDT": 53.4,
+    "TRXUSDT": 0.31601,
+    "ETCUSDT": 8.18,
+    "LINKUSDT": 8.764,
+    "XLMUSDT": 0.15585,
+    "ADAUSDT": 0.2446,
+    "DASHUSDT": 30.08,
+    "ZECUSDT": 254.12,
+    "XTZUSDT": 0.344,
+    "BNBUSDT": 598.72,
+    "ATOMUSDT": 1.692
+  },
+  "total_pnl": 0,
+  "total_trades": 1,
+  "winning_trades": 0,
+  "losing_trades": 0,
+  "real_orders": [
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "ETHUSDT",
+      "side": "SELL",
+      "quantity": 0.14743476487888038,
+      "price": 2105.07,
+      "timestamp": "2026-04-07T13:24:17.912838",
+      "status": "EXECUTED",
+      "order_id": 8633038415,
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    }
+  ],
+  "balance_history": [],
+  "initial_capital": 8868.94873323,
+  "current_capital": 8868.94873323,
+  "active_positions": {},
+  "market_regime": "UNKNOWN",
+  "stop_orders": [
+    {
+      "symbol": "ETHUSDT",
+      "side": "SELL",
+      "quantity": 0.147,
+      "entry_price": 2105.07,
+      "stop_price": 2225.045255320281,
+      "profit_price": 1770.199882902727,
+      "stop_loss_percent": 5.699347542850397,
+      "take_profit_percent": 15.907790101862322,
+      "timestamp": "2026-04-07T13:24:17.912737",
+      "type": "SIMULATION"
+    }
+  ]
+}
