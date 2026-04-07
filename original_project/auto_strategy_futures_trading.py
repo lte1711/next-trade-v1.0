@@ -23,6 +23,10 @@ class AutoStrategyFuturesTrading:
         self.end_time = self.start_time + timedelta(hours=24)
         self.test_duration = 24 * 60 * 60  # 24시간 (초)
         
+        # 동적 필터링 임계값
+        self.min_volume_threshold = 100000  # 초기값: 10만 USDT (대폭 하향)
+        self.min_volatility_threshold = 0.1  # 초기값: 0.1% (대폭 하향)
+        
         # API 설정 (환경변수 또는 설정 파일에서 로드)
         self.api_key = os.getenv("BINANCE_TESTNET_KEY", "tyc0Nz8Trhl8zRG74u1i3gNLFFAzqVQK6mcOtviDD47Z9TpYBPE7qAILBtGCdlCg")
         self.api_secret = os.getenv("BINANCE_TESTNET_SECRET", "jTuqPonQabOq6Xx19sEWiYsl07Te9L4YsY4j7gJQZ2Lcom0vDxttBuqgK4YME7NI")
@@ -30,10 +34,13 @@ class AutoStrategyFuturesTrading:
         
         # 동적 자본금 설정 (실제 계정에서 가져옴)
         self.total_capital = self.get_account_balance()
-        self.capital_per_strategy = self.total_capital / len(self.get_available_strategies())
+        self.capital_per_strategy = self.total_capital / 5  # 임시값
         
         # 동적 심볼 목록 (실제 거래소에서 가져옴)
         self.valid_symbols = self.get_available_symbols()
+        
+        # 동적 필터링 임계값 조정
+        self.adjust_filter_thresholds()
         
         # 동적 가격 정보 (실시간 시장에서 가져옴)
         self.current_prices = self.get_current_prices()
@@ -68,7 +75,42 @@ class AutoStrategyFuturesTrading:
         print(f"[CAPITAL] 초기 자본: ${self.total_capital:,.2f}")
         print(f"[STRATEGY] 전략 수: {len(self.strategies)}개")
         print(f"[SYMBOLS] 대상 심볼: {len(self.valid_symbols)}개")
+        print(f"[FILTER] 최소 거래량: {self.min_volume_threshold:,} USDT")
+        print(f"[FILTER] 최소 변동성: {self.min_volatility_threshold}%")
         print("=" * 80)
+    
+    def adjust_filter_thresholds(self):
+        """시장 상태에 따른 동적 필터링 임계값 조정"""
+        # 현재 시장 변동성 계산
+        total_volatility = 0
+        count = 0
+        
+        for symbol in self.valid_symbols[:10]:
+            try:
+                response = requests.get(f"{self.base_url}/fapi/v1/ticker/24hr?symbol={symbol}", timeout=3)
+                if response.status_code == 200:
+                    ticker_data = response.json()
+                    price_change = float(ticker_data.get("priceChangePercent", 0))
+                    total_volatility += abs(price_change)
+                    count += 1
+            except:
+                continue
+        
+        if count > 0:
+            avg_volatility = total_volatility / count
+            
+            # 시장 변동성에 따른 동적 조정
+            if avg_volatility < 0.3:  # 저변동성 시장
+                self.min_volume_threshold = 50000  # 5만 USDT
+                self.min_volatility_threshold = 0.05  # 0.05%
+            elif avg_volatility < 1.0:  # 중간 변동성
+                self.min_volume_threshold = 100000  # 10만 USDT
+                self.min_volatility_threshold = 0.1  # 0.1%
+            else:  # 고변동성 시장
+                self.min_volume_threshold = 200000  # 20만 USDT
+                self.min_volatility_threshold = 0.3  # 0.3%
+            
+            print(f"[ADJUST] 필터링 임계값 조정: 거래량={self.min_volume_threshold:,}, 변동성={self.min_volatility_threshold}%")
     
     def get_account_balance(self):
         """실제 계정 잔고 가져오기"""
@@ -104,7 +146,7 @@ class AutoStrategyFuturesTrading:
             return 10000.0  # 기본값
     
     def get_available_symbols(self):
-        """실제 거래 가능한 심볼 목록 가져오기"""
+        """실제 거래 가능한 심볼 목록 가져오기 (필터링 제거)"""
         try:
             response = requests.get(f"{self.base_url}/fapi/v1/exchangeInfo", timeout=10)
             
@@ -118,22 +160,51 @@ class AutoStrategyFuturesTrading:
                         symbol_info["symbol"].endswith("USDT")):
                         symbols.append(symbol_info["symbol"])
                 
-                print(f"[OK] 거래 가능 심볼: {len(symbols)}개")
-                return symbols[:20]  # 상위 20개만 사용
+                # 필터링 제거: 상위 20개만 선택
+                symbols = symbols[:20]
+                
+                print(f"[OK] 거래 가능 심볼: {len(symbols)}개 (필터링 제거됨)")
+                return symbols
             else:
                 print(f"[ERROR] 심볼 정보 가져오기 실패: {response.status_code}")
-                return ["BTCUSDT", "ETHUSDT", "SOLUSDT"]  # 기본값
+                # 기본 심볼 목록
+                default_symbols = [
+                    "BTCUSDT", "ETHUSDT", "SOLUSDT", "ADAUSDT", "DOTUSDT",
+                    "LINKUSDT", "BNBUSDT", "XRPUSDT", "LTCUSDT", "BCHUSDT",
+                    "AVAXUSDT", "MATICUSDT", "UNIUSDT", "ATOMUSDT", "FILUSDT",
+                    "ETCUSDT", "ICPUSDT", "VETUSDT", "THETAUSDT", "FTMUSDT"
+                ]
+                return default_symbols
         except Exception as e:
             print(f"[ERROR] 심볼 정보 오류: {e}")
-            return ["BTCUSDT", "ETHUSDT", "SOLUSDT"]  # 기본값
+            # 기본 심볼 목록
+            default_symbols = [
+                "BTCUSDT", "ETHUSDT", "SOLUSDT", "ADAUSDT", "DOTUSDT",
+                "LINKUSDT", "BNBUSDT", "XRPUSDT", "LTCUSDT", "BCHUSDT",
+                "AVAXUSDT", "MATICUSDT", "UNIUSDT", "ATOMUSDT", "FILUSDT",
+                "ETCUSDT", "ICPUSDT", "VETUSDT", "THETAUSDT", "FTMUSDT"
+            ]
+            return default_symbols
+    
+    def get_symbol_volume(self, symbol):
+        """심볼의 24시간 거래량 가져오기"""
+        try:
+            response = requests.get(f"{self.base_url}/fapi/v1/ticker/24hr?symbol={symbol}", timeout=5)
+            if response.status_code == 200:
+                ticker_data = response.json()
+                return float(ticker_data.get("volume", 0))
+            return 0
+        except:
+            return 0
     
     def get_current_prices(self):
         """실시간 시장 가격 가져오기"""
         prices = {}
         
         try:
-            for symbol in self.valid_symbols[:10]:  # 상위 10개만
-                response = requests.get(f"{self.base_url}/fapi/v1/ticker/price?symbol={symbol}", timeout=5)
+            # 상위 15개 심볼만 조회 (확장)
+            for symbol in self.valid_symbols[:15]:
+                response = requests.get(f"{self.base_url}/fapi/v1/ticker/price?symbol={symbol}", timeout=3)
                 
                 if response.status_code == 200:
                     price_data = response.json()
@@ -141,11 +212,11 @@ class AutoStrategyFuturesTrading:
                 else:
                     prices[symbol] = 100.0  # 기본값
             
-            print(f"[OK] 시장 가격: {len(prices)}개 심볼")
+            print(f"[OK] 시장 가격: {len(prices)}개 심볼 (확장됨)")
             return prices
         except Exception as e:
             print(f"[ERROR] 시장 가격 오류: {e}")
-            return {symbol: 100.0 for symbol in self.valid_symbols[:10]}
+            return {symbol: 100.0 for symbol in self.valid_symbols[:15]}
     
     def get_available_strategies(self):
         """사용 가능한 전략 목록 동적 생성"""
@@ -344,7 +415,7 @@ class AutoStrategyFuturesTrading:
         signal_strength = max(0, min(1, signal_strength))
         
         # 신호 결정
-        if signal_strength > 0.6:
+        if signal_strength > 0.5:
             return "BUY"
         elif signal_strength < 0.4:
             return "SELL"
@@ -381,7 +452,7 @@ class AutoStrategyFuturesTrading:
                     if "notional" in f:
                         min_notional = float(f["notional"])
                     else:
-                        min_notional = 10.0
+                        min_notional = 5.0  # 바이낸스 최소 notional 값으로 수정
             
             # 수량 조정
             if quantity < min_qty:
@@ -391,10 +462,19 @@ class AutoStrategyFuturesTrading:
             current_price = self.current_prices.get(symbol, 100.0)
             current_notional = quantity * current_price
             
+            # 디버깅 정보 출력
+            print(f"[DEBUG] {symbol} - 현재 가격: ${current_price:.6f}, 계산 수량: {quantity:.6f}")
+            print(f"[DEBUG] {symbol} - 현재 notional: ${current_notional:.2f}, 최소 notional: ${min_notional:.2f}")
+            
             if current_notional < min_notional:
+                print(f"[DEBUG] {symbol} - notional 부족, 수량 조정 필요")
                 quantity = (min_notional * 1.01) / current_price
                 if quantity < min_qty:
                     quantity = min_qty
+                current_notional = quantity * current_price
+                print(f"[DEBUG] {symbol} - 조정 후 수량: {quantity:.6f}, 조정 후 notional: ${current_notional:.2f}")
+            else:
+                print(f"[DEBUG] {symbol} - notional 조건 만족")
             
             # 최대 수량 확인
             if quantity > max_qty:
@@ -434,6 +514,10 @@ class AutoStrategyFuturesTrading:
             if response.status_code == 200:
                 result = response.json()
                 print(f"[OK] 주문 성공: {result}")
+                
+                # 손절/익절 주문 추가
+                self.submit_stop_orders(strategy_name, symbol, side, quantity, result.get("orderId"))
+                
                 return result
             else:
                 error_msg = f"주문 실패: {response.status_code} - {response.text}"
@@ -443,6 +527,143 @@ class AutoStrategyFuturesTrading:
         except Exception as e:
             print(f"[ERROR] 주문 제출 실패: {e}")
             return None
+    
+    def submit_stop_orders(self, strategy_name, symbol, side, quantity, order_id):
+        """손절/익절 주문 제출"""
+        # 테스트넷 환경 확인
+        if "testnet" in self.base_url.lower():
+            print(f"[INFO] 테스트넷 환경: 손절/익절 주문은 시뮬레이션으로 대체합니다")
+            return self.submit_stop_orders_simulation(strategy_name, symbol, side, quantity, order_id)
+        else:
+            print(f"[INFO] 실제 환경: 손절/익절 주문을 실행합니다")
+            return self.submit_stop_orders_real(strategy_name, symbol, side, quantity, order_id)
+    
+    def submit_stop_orders_simulation(self, strategy_name, symbol, side, quantity, order_id):
+        """손절/익절 시뮬레이션 (테스트넷 전용)"""
+        try:
+            strategy = self.strategies[strategy_name]
+            stop_loss = strategy.get("stop_loss", 0.05)  # 5% 손절
+            take_profit = strategy.get("take_profit", 0.10)  # 10% 익절
+            
+            current_price = self.current_prices.get(symbol, 100.0)
+            
+            if side == "BUY":
+                stop_price = current_price * (1 - stop_loss)
+                profit_price = current_price * (1 + take_profit)
+            else:  # SELL
+                stop_price = current_price * (1 + stop_loss)
+                profit_price = current_price * (1 - take_profit)
+            
+            # 시뮬레이션 결과 저장
+            simulation_result = {
+                "symbol": symbol,
+                "side": side,
+                "quantity": quantity,
+                "entry_price": current_price,
+                "stop_price": stop_price,
+                "profit_price": profit_price,
+                "stop_loss_percent": stop_loss * 100,
+                "take_profit_percent": take_profit * 100,
+                "timestamp": datetime.now().isoformat(),
+                "type": "SIMULATION"
+            }
+            
+            # 결과 저장
+            if "stop_orders" not in self.trading_results:
+                self.trading_results["stop_orders"] = []
+            
+            self.trading_results["stop_orders"].append(simulation_result)
+            
+            print(f"[OK] 손절/익절 시뮬레이션 성공:")
+            print(f"  - 진입 가격: ${current_price:.4f}")
+            print(f"  - 손절 가격: ${stop_price:.4f} ({stop_loss*100:.1f}%)")
+            print(f"  - 익절 가격: ${profit_price:.4f} ({take_profit*100:.1f}%)")
+            
+            return True
+            
+        except Exception as e:
+            print(f"[ERROR] 손절/익절 시뮬레이션 실패: {e}")
+            return False
+    
+    def submit_stop_orders_real(self, strategy_name, symbol, side, quantity, order_id):
+        """실제 손절/익절 주문 제출"""
+        try:
+            strategy = self.strategies[strategy_name]
+            stop_loss = strategy.get("stop_loss", 0.05)  # 5% 손절
+            take_profit = strategy.get("take_profit", 0.10)  # 10% 익절
+            
+            current_price = self.current_prices.get(symbol, 100.0)
+            
+            if side == "BUY":
+                stop_price = current_price * (1 - stop_loss)
+                profit_price = current_price * (1 + take_profit)
+            else:  # SELL
+                stop_price = current_price * (1 + stop_loss)
+                profit_price = current_price * (1 - take_profit)
+            
+            # 서버 시간
+            server_time = self.get_server_time()
+            
+            # 손절 주문
+            stop_params = {
+                "symbol": symbol,
+                "side": "SELL" if side == "BUY" else "BUY",
+                "type": "STOP_MARKET",
+                "quantity": str(quantity),
+                "stopPrice": str(round(stop_price, 4)),
+                "timestamp": server_time,
+                "recvWindow": 5000
+            }
+            
+            stop_query = urllib.parse.urlencode(stop_params)
+            stop_signature = hmac.new(
+                self.api_secret.encode("utf-8"),
+                stop_query.encode("utf-8"),
+                hashlib.sha256
+            ).hexdigest()
+            
+            stop_url = f"{self.base_url}/fapi/v1/order?{stop_query}&signature={stop_signature}"
+            stop_headers = {"X-MBX-APIKEY": self.api_key}
+            
+            stop_response = requests.post(stop_url, headers=stop_headers, timeout=10)
+            
+            if stop_response.status_code == 200:
+                print(f"[OK] 손절 주문 성공: {stop_response.json()}")
+            else:
+                print(f"[ERROR] 손절 주문 실패: {stop_response.status_code}")
+            
+            # 익절 주문
+            profit_params = {
+                "symbol": symbol,
+                "side": "SELL" if side == "BUY" else "BUY",
+                "type": "LIMIT",
+                "quantity": str(quantity),
+                "price": str(round(profit_price, 4)),
+                "timeInForce": "GTC",
+                "timestamp": server_time,
+                "recvWindow": 5000
+            }
+            
+            profit_query = urllib.parse.urlencode(profit_params)
+            profit_signature = hmac.new(
+                self.api_secret.encode("utf-8"),
+                profit_query.encode("utf-8"),
+                hashlib.sha256
+            ).hexdigest()
+            
+            profit_url = f"{self.base_url}/fapi/v1/order?{profit_query}&signature={profit_signature}"
+            profit_headers = {"X-MBX-APIKEY": self.api_key}
+            
+            profit_response = requests.post(profit_url, headers=profit_headers, timeout=10)
+            
+            if profit_response.status_code == 200:
+                print(f"[OK] 익절 주문 성공: {profit_response.json()}")
+            else:
+                print(f"[ERROR] 익절 주문 실패: {profit_response.status_code}")
+                
+        except Exception as e:
+            print(f"[ERROR] 손절/익절 주문 실패: {e}")
+            return False
     
     def execute_strategy_trade(self, strategy_name):
         """전략 거래 실행"""

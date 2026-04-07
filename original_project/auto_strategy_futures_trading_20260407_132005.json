@@ -1,0 +1,123 @@
+{
+  "start_time": "2026-04-07T13:19:51.119171",
+  "end_time": "2026-04-08T13:19:51.119171",
+  "strategy_performance": {},
+  "market_data": {
+    "BTCUSDT": 68592.1,
+    "ETHUSDT": 2102.82,
+    "BCHUSDT": 431.99,
+    "XRPUSDT": 1.3135,
+    "LTCUSDT": 53.39,
+    "TRXUSDT": 0.3159,
+    "ETCUSDT": 8.27,
+    "LINKUSDT": 8.772,
+    "XLMUSDT": 0.1557,
+    "ADAUSDT": 0.245,
+    "DASHUSDT": 30.08,
+    "ZECUSDT": 254.11,
+    "XTZUSDT": 0.344,
+    "BNBUSDT": 598.72,
+    "ATOMUSDT": 1.693
+  },
+  "total_pnl": 0,
+  "total_trades": 3,
+  "winning_trades": 0,
+  "losing_trades": 0,
+  "real_orders": [
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "ATOMUSDT",
+      "side": "SELL",
+      "quantity": 327.1364026991881,
+      "price": 1.693,
+      "timestamp": "2026-04-07T13:20:02.213819",
+      "status": "EXECUTED",
+      "order_id": 255645676,
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "mean_reversion_strategy_2",
+      "symbol": "TRXUSDT",
+      "side": "BUY",
+      "quantity": 1355.0090916133795,
+      "price": 0.3159,
+      "timestamp": "2026-04-07T13:20:03.265136",
+      "status": "EXECUTED",
+      "order_id": 687087729,
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG"
+    },
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "DASHUSDT",
+      "side": "SELL",
+      "quantity": 17.991485741216586,
+      "price": 30.08,
+      "timestamp": "2026-04-07T13:20:04.366510",
+      "status": "EXECUTED",
+      "order_id": 948019392,
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    },
+    {
+      "strategy": "trend_following_strategy_4",
+      "symbol": "IOTAUSDT",
+      "side": "SELL",
+      "quantity": 4.7161665427190265,
+      "price": 0,
+      "timestamp": "2026-04-07T13:20:05.454818",
+      "status": "FAILED",
+      "order_id": "FAILED_1775535605_8559",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    }
+  ],
+  "balance_history": [],
+  "initial_capital": 10000.0,
+  "current_capital": 10000.0,
+  "active_positions": {},
+  "market_regime": "UNKNOWN",
+  "stop_orders": [
+    {
+      "symbol": "ATOMUSDT",
+      "side": "SELL",
+      "quantity": 327.14,
+      "entry_price": 1.693,
+      "stop_price": 1.8055854525086115,
+      "profit_price": 1.4443251449319978,
+      "stop_loss_percent": 6.65005626158367,
+      "take_profit_percent": 14.688414357235816,
+      "timestamp": "2026-04-07T13:20:02.213615",
+      "type": "SIMULATION"
+    },
+    {
+      "symbol": "TRXUSDT",
+      "side": "BUY",
+      "quantity": 1355.0,
+      "entry_price": 0.3159,
+      "stop_price": 0.2958317808685925,
+      "profit_price": 0.3682156621969788,
+      "stop_loss_percent": 6.352712608865945,
+      "take_profit_percent": 16.56083007185148,
+      "timestamp": "2026-04-07T13:20:03.263110",
+      "type": "SIMULATION"
+    },
+    {
+      "symbol": "DASHUSDT",
+      "side": "SELL",
+      "quantity": 17.991,
+      "entry_price": 30.08,
+      "stop_price": 32.69779234239733,
+      "profit_price": 24.11560691810656,
+      "stop_loss_percent": 8.702767095735798,
+      "take_profit_percent": 19.828434447784034,
+      "timestamp": "2026-04-07T13:20:04.366510",
+      "type": "SIMULATION"
+    }
+  ]
+}

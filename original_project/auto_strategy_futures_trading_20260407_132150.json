@@ -1,0 +1,46 @@
+{
+  "start_time": "2026-04-07T13:21:39.347612",
+  "end_time": "2026-04-08T13:21:39.347612",
+  "strategy_performance": {},
+  "market_data": {
+    "BTCUSDT": 68591.7,
+    "ETHUSDT": 2104.44,
+    "BCHUSDT": 431.94,
+    "XRPUSDT": 1.3138,
+    "LTCUSDT": 53.39,
+    "TRXUSDT": 0.31595,
+    "ETCUSDT": 8.271,
+    "LINKUSDT": 8.769,
+    "XLMUSDT": 0.15572,
+    "ADAUSDT": 0.2444,
+    "DASHUSDT": 30.07,
+    "ZECUSDT": 254.12,
+    "XTZUSDT": 0.343,
+    "BNBUSDT": 598.68,
+    "ATOMUSDT": 1.693
+  },
+  "total_pnl": 0,
+  "total_trades": 0,
+  "winning_trades": 0,
+  "losing_trades": 0,
+  "real_orders": [
+    {
+      "strategy": "volatility_strategy_3",
+      "symbol": "IOTAUSDT",
+      "side": "SELL",
+      "quantity": 3.4908350011770084,
+      "price": 0,
+      "timestamp": "2026-04-07T13:21:50.566801",
+      "status": "FAILED",
+      "order_id": "FAILED_1775535710_3680",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    }
+  ],
+  "balance_history": [],
+  "initial_capital": 8868.93411429,
+  "current_capital": 8868.93411429,
+  "active_positions": {},
+  "market_regime": "UNKNOWN"
+}

@@ -1,0 +1,46 @@
+{
+  "start_time": "2026-04-07T12:46:17.485045",
+  "end_time": "2026-04-08T12:46:17.485045",
+  "strategy_performance": {},
+  "market_data": {
+    "BTCUSDT": 68740.1,
+    "ETHUSDT": 2107.48,
+    "BCHUSDT": 432.64,
+    "XRPUSDT": 1.3157,
+    "LTCUSDT": 53.46,
+    "TRXUSDT": 0.31592,
+    "ETCUSDT": 8.4,
+    "LINKUSDT": 8.783,
+    "XLMUSDT": 0.15562,
+    "ADAUSDT": 0.2452,
+    "DASHUSDT": 30.1,
+    "ZECUSDT": 254.78,
+    "XTZUSDT": 0.344,
+    "BNBUSDT": 599.54,
+    "ATOMUSDT": 1.699
+  },
+  "total_pnl": 0,
+  "total_trades": 1,
+  "winning_trades": 0,
+  "losing_trades": 0,
+  "real_orders": [
+    {
+      "strategy": "trend_following_strategy_4",
+      "symbol": "BTCUSDT",
+      "side": "SELL",
+      "quantity": 0.004996330722645053,
+      "price": 68740.1,
+      "timestamp": "2026-04-07T12:46:29.571195",
+      "status": "EXECUTED",
+      "order_id": 13023364854,
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT"
+    }
+  ],
+  "balance_history": [],
+  "initial_capital": 8872.4954632,
+  "current_capital": 8872.4954632,
+  "active_positions": {},
+  "market_regime": "UNKNOWN"
+}

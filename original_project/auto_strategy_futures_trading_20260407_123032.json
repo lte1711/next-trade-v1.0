@@ -1,0 +1,16 @@
+{
+  "start_time": "2026-04-07T12:30:31.457212",
+  "end_time": "2026-04-08T12:30:31.457212",
+  "strategy_performance": {},
+  "market_data": {},
+  "total_pnl": 0,
+  "total_trades": 0,
+  "winning_trades": 0,
+  "losing_trades": 0,
+  "real_orders": [],
+  "balance_history": [],
+  "initial_capital": 8872.82506142,
+  "current_capital": 8872.82506142,
+  "active_positions": {},
+  "market_regime": "UNKNOWN"
+}
