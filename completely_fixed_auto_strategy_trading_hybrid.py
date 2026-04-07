@@ -30,7 +30,7 @@ class HybridAutoStrategyFuturesTrading(CompletelyFixedAutoStrategyFuturesTrading
 
     def __init__(self):
         self.sideways_engine = self.create_sideways_engine()
-        self.sideways_min_confidence = 0.45
+        self.sideways_min_confidence = 0.35
         self.sideways_signal_cache = {}
         super().__init__()
 
@@ -39,11 +39,11 @@ class HybridAutoStrategyFuturesTrading(CompletelyFixedAutoStrategyFuturesTrading
         """Create the tuned sideways-market engine."""
         return SidewaysMarketStrategyV3(
             strategy_config=StrategyConfig(
-                ranging_adx_threshold=23.0,
+                ranging_adx_threshold=20.0,
                 bandwidth_ranging_quantile=0.55,
                 rsi_overbought=65.0,
                 rsi_oversold=35.0,
-                z_entry_threshold=1.60,
+                z_entry_threshold=1.20,
                 low_volume_factor=0.50,
                 tr_spike_atr_mult=2.30,
                 realized_vol_spike_mult=2.00,
@@ -84,8 +84,8 @@ class HybridAutoStrategyFuturesTrading(CompletelyFixedAutoStrategyFuturesTrading
         if strategy_name == "pullback_confirmation_strategy":
             profile.update({
                 "risk_per_trade": 0.009,
-                "required_alignment_count": 3,
-                "consensus_threshold": 2,
+                "required_alignment_count": 1,
+                "consensus_threshold": 1,
                 "exit_signal_threshold": 3,
                 "daily_entry_limit": 4,
                 "require_ha_alignment": True,
@@ -95,8 +95,8 @@ class HybridAutoStrategyFuturesTrading(CompletelyFixedAutoStrategyFuturesTrading
         elif strategy_name == "balanced_rotation_strategy":
             profile.update({
                 "risk_per_trade": 0.006,
-                "required_alignment_count": 3,
-                "consensus_threshold": 2,
+                "required_alignment_count": 1,
+                "consensus_threshold": 1,
                 "daily_entry_limit": 3,
                 "fractal_intervals": ["5m", "15m"],
                 "candidate_limit": 6,
