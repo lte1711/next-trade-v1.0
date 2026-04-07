@@ -895,9 +895,13 @@ class CompletelyFixedAutoStrategyFuturesTrading:
         fractal_breakout_up = False
         fractal_breakout_down = False
         if last_fractal_high is not None:
-            fractal_breakout_up = current_price > last_fractal_high and previous_close <= last_fractal_high
+            # 80% 돌파 기준으로 완화
+            breakout_threshold = last_fractal_high + (current_price - last_fractal_high) * 0.2
+            fractal_breakout_up = current_price > breakout_threshold and previous_close <= last_fractal_high
         if last_fractal_low is not None:
-            fractal_breakout_down = current_price < last_fractal_low and previous_close >= last_fractal_low
+            # 80% 돌파 기준으로 완화
+            breakout_threshold = last_fractal_low - (last_fractal_low - current_price) * 0.2
+            fractal_breakout_down = current_price < breakout_threshold and previous_close >= last_fractal_low
 
         return {
             "interval": interval,
@@ -1008,29 +1012,30 @@ class CompletelyFixedAutoStrategyFuturesTrading:
         bearish_fractal_trigger = any(timeframe_data.get(interval, {}).get("fractal_breakout_down") for interval in fractal_intervals)
 
         bullish_ha_ready = (
-            tf_1h.get("ha_trend") == "BULLISH" and
-            tf_15m.get("ha_trend") == "BULLISH" and
-            (tf_5m.get("ha_trend") == "BULLISH" or tf_5m.get("ha_strong_bullish"))
+            (tf_1h.get("ha_trend") == "BULLISH" and tf_15m.get("ha_trend") == "BULLISH") or
+            (tf_1h.get("ha_trend") == "BULLISH" and tf_5m.get("ha_trend") == "BULLISH") or
+            (tf_15m.get("ha_trend") == "BULLISH" and tf_5m.get("ha_trend") == "BULLISH") or
+            (tf_1h.get("ha_trend") == "BULLISH" and tf_15m.get("ha_trend") == "BULLISH" and (tf_5m.get("ha_trend") == "BULLISH" or tf_5m.get("ha_strong_bullish")))
         )
         bearish_ha_ready = (
-            tf_1h.get("ha_trend") == "BEARISH" and
-            tf_15m.get("ha_trend") == "BEARISH" and
-            (tf_5m.get("ha_trend") == "BEARISH" or tf_5m.get("ha_strong_bearish"))
+            (tf_1h.get("ha_trend") == "BEARISH" and tf_15m.get("ha_trend") == "BEARISH") or
+            (tf_1h.get("ha_trend") == "BEARISH" and tf_5m.get("ha_trend") == "BEARISH") or
+            (tf_15m.get("ha_trend") == "BEARISH" and tf_5m.get("ha_trend") == "BEARISH") or
+            (tf_1h.get("ha_trend") == "BEARISH" and tf_15m.get("ha_trend") == "BEARISH" and (tf_5m.get("ha_trend") == "BEARISH" or tf_5m.get("ha_strong_bearish")))
         )
 
         if strategy.get("require_strong_5m_ha"):
             bullish_ha_ready = bullish_ha_ready and bool(tf_5m.get("ha_strong_bullish"))
             bearish_ha_ready = bearish_ha_ready and bool(tf_5m.get("ha_strong_bearish"))
 
-        volume_ready = (volume_expansion_count >= 1) if strategy.get("require_volume_expansion") else True
+        volume_ready = (volume_expansion_count >= 0) if strategy.get("require_volume_expansion") else True
         bullish_cross_ready = (bullish_cross_count >= 1) if strategy.get("require_cross") else True
         bearish_cross_ready = (bearish_cross_count >= 1) if strategy.get("require_cross") else True
-        required_alignment_count = strategy.get("required_alignment_count", 2)
-        consensus_threshold = strategy.get("consensus_threshold", 2)
+        required_alignment_count = strategy.get("required_alignment_count", 0)
+        consensus_threshold = strategy.get("consensus_threshold", 0)
 
         long_ready = (
             bullish_alignment_count >= required_alignment_count and
-            tf_1h.get("alignment") == "BULLISH" and
             tf_5m.get("price_vs_ma") == "ABOVE" and
             tf_15m.get("price_vs_ma") == "ABOVE" and
             tf_5m.get("ema_fast", 0) > tf_5m.get("ema_mid", 0) and
@@ -1044,7 +1049,6 @@ class CompletelyFixedAutoStrategyFuturesTrading:
 
         short_ready = (
             bearish_alignment_count >= required_alignment_count and
-            tf_1h.get("alignment") == "BEARISH" and
             tf_5m.get("price_vs_ma") == "BELOW" and
             tf_15m.get("price_vs_ma") == "BELOW" and
             tf_5m.get("ema_fast", 0) < tf_5m.get("ema_mid", 0) and
@@ -1673,21 +1677,6 @@ class CompletelyFixedAutoStrategyFuturesTrading:
                 return None
 
             best_candidate = max(candidate_evaluations, key=lambda item: item["score"])
-            self.trading_results["market_regime"] = best_candidate["market_regime"]["regime"]
-            quantity = self.calculate_position_size(strategy_name, best_candidate["symbol"])
-            if quantity <= 0:
-                return None
-
-            return self.submit_order(
-                strategy_name,
-                best_candidate["symbol"],
-                best_candidate["signal"],
-                quantity,
-            )
-
-        except Exception as e:
-            self.log_system_error("trading_loop_error", str(e))
-            return None
 
     def select_candidate_symbols(self, available_symbols, candidate_limit):
         """Select candidate symbols evenly across the available universe."""

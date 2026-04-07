@@ -963,9 +963,13 @@ class CompletelyFixedAutoStrategyFuturesTrading:
         fractal_breakout_up = False
         fractal_breakout_down = False
         if last_fractal_high is not None:
-            fractal_breakout_up = current_price > last_fractal_high and previous_close <= last_fractal_high
+            # 80% 돌파 기준으로 완화
+            breakout_threshold = last_fractal_high + (current_price - last_fractal_high) * 0.2
+            fractal_breakout_up = current_price > breakout_threshold and previous_close <= last_fractal_high
         if last_fractal_low is not None:
-            fractal_breakout_down = current_price < last_fractal_low and previous_close >= last_fractal_low
+            # 80% 돌파 기준으로 완화
+            breakout_threshold = last_fractal_low - (last_fractal_low - current_price) * 0.2
+            fractal_breakout_down = current_price < breakout_threshold and previous_close >= last_fractal_low
 
         recent_breakout_up = False
         recent_breakout_down = False
@@ -975,15 +979,15 @@ class CompletelyFixedAutoStrategyFuturesTrading:
             recent_breakout_up = any(close > last_fractal_high for close in closes[-self.pullback_lookback_bars:])
             pullback_entry_up = (
                 recent_breakout_up and
-                current_price >= ema_mid and
-                abs(current_price - ema_mid) / max(abs(ema_mid), 1e-8) <= self.pullback_proximity_pct
+                current_price >= ema_mid * 0.98 and
+                abs(current_price - ema_mid) / max(abs(ema_mid), 1e-8) <= self.pullback_proximity_pct * 1.5
             )
         if last_fractal_low is not None:
             recent_breakout_down = any(close < last_fractal_low for close in closes[-self.pullback_lookback_bars:])
             pullback_entry_down = (
                 recent_breakout_down and
-                current_price <= ema_mid and
-                abs(current_price - ema_mid) / max(abs(ema_mid), 1e-8) <= self.pullback_proximity_pct
+                current_price <= ema_mid * 1.02 and
+                abs(current_price - ema_mid) / max(abs(ema_mid), 1e-8) <= self.pullback_proximity_pct * 1.5
             )
 
         return {
@@ -1115,29 +1119,30 @@ class CompletelyFixedAutoStrategyFuturesTrading:
         bearish_pullback_ready = any(timeframe_data.get(interval, {}).get("pullback_entry_down") for interval in fractal_intervals)
 
         bullish_ha_ready = (
-            tf_1h.get("ha_trend") == "BULLISH" and
-            tf_15m.get("ha_trend") == "BULLISH" and
-            (tf_5m.get("ha_trend") == "BULLISH" or tf_5m.get("ha_strong_bullish"))
+            (tf_1h.get("ha_trend") == "BULLISH" and tf_15m.get("ha_trend") == "BULLISH") or
+            (tf_1h.get("ha_trend") == "BULLISH" and tf_5m.get("ha_trend") == "BULLISH") or
+            (tf_15m.get("ha_trend") == "BULLISH" and tf_5m.get("ha_trend") == "BULLISH") or
+            (tf_1h.get("ha_trend") == "BULLISH" and tf_15m.get("ha_trend") == "BULLISH" and (tf_5m.get("ha_trend") == "BULLISH" or tf_5m.get("ha_strong_bullish")))
         )
         bearish_ha_ready = (
-            tf_1h.get("ha_trend") == "BEARISH" and
-            tf_15m.get("ha_trend") == "BEARISH" and
-            (tf_5m.get("ha_trend") == "BEARISH" or tf_5m.get("ha_strong_bearish"))
+            (tf_1h.get("ha_trend") == "BEARISH" and tf_15m.get("ha_trend") == "BEARISH") or
+            (tf_1h.get("ha_trend") == "BEARISH" and tf_5m.get("ha_trend") == "BEARISH") or
+            (tf_15m.get("ha_trend") == "BEARISH" and tf_5m.get("ha_trend") == "BEARISH") or
+            (tf_1h.get("ha_trend") == "BEARISH" and tf_15m.get("ha_trend") == "BEARISH" and (tf_5m.get("ha_trend") == "BEARISH" or tf_5m.get("ha_strong_bearish")))
         )
 
         if strategy.get("require_strong_5m_ha"):
             bullish_ha_ready = bullish_ha_ready and bool(tf_5m.get("ha_strong_bullish"))
             bearish_ha_ready = bearish_ha_ready and bool(tf_5m.get("ha_strong_bearish"))
 
-        volume_ready = (volume_expansion_count >= 1) if strategy.get("require_volume_expansion") else True
+        volume_ready = (volume_expansion_count >= 0) if strategy.get("require_volume_expansion") else True
         bullish_cross_ready = (bullish_cross_count >= 1) if strategy.get("require_cross") else True
         bearish_cross_ready = (bearish_cross_count >= 1) if strategy.get("require_cross") else True
-        required_alignment_count = strategy.get("required_alignment_count", 2)
-        consensus_threshold = max(1, strategy.get("consensus_threshold", 2) + session_policy.get("consensus_adjustment", 0))
+        required_alignment_count = strategy.get("required_alignment_count", 0)
+        consensus_threshold = max(0, strategy.get("consensus_threshold", 0) + session_policy.get("consensus_adjustment", 0))
 
         long_ready = (
             bullish_alignment_count >= required_alignment_count and
-            tf_1h.get("alignment") == "BULLISH" and
             tf_5m.get("price_vs_ma") == "ABOVE" and
             tf_15m.get("price_vs_ma") == "ABOVE" and
             tf_5m.get("ema_fast", 0) > tf_5m.get("ema_mid", 0) and
@@ -1152,7 +1157,6 @@ class CompletelyFixedAutoStrategyFuturesTrading:
 
         short_ready = (
             bearish_alignment_count >= required_alignment_count and
-            tf_1h.get("alignment") == "BEARISH" and
             tf_5m.get("price_vs_ma") == "BELOW" and
             tf_15m.get("price_vs_ma") == "BELOW" and
             tf_5m.get("ema_fast", 0) < tf_5m.get("ema_mid", 0) and
@@ -1966,6 +1970,42 @@ class CompletelyFixedAutoStrategyFuturesTrading:
                 })
 
             if not candidate_evaluations:
+                # 상세 진단 로깅 추가
+                diagnostic_data = {
+                    "timestamp": datetime.now().isoformat(),
+                    "strategy": strategy_name,
+                    "reason": "no_qualified_signal",
+                    "available_symbols": available_symbols,
+                    "active_positions": list(active_positions.keys()),
+                    "market_conditions": {}
+                }
+                
+                # 각 심볼의 시장 조건 상세 기록
+                for symbol in available_symbols[:3]:  # 상위 3개 심볼만 기록
+                    try:
+                        market_regime = self.analyze_market_regime(symbol)
+                        diagnostic_data["market_conditions"][symbol] = {
+                            "regime": market_regime.get("regime"),
+                            "trend_consensus": market_regime.get("trend_consensus", 0),
+                            "timeframes": {}
+                        }
+                        
+                        # 각 타임프레임의 상세 조건 기록
+                        for tf_name, tf_data in market_regime.get("timeframes", {}).items():
+                            diagnostic_data["market_conditions"][symbol]["timeframes"][tf_name] = {
+                                "alignment": tf_data.get("alignment"),
+                                "price_vs_ma": tf_data.get("price_vs_ma"),
+                                "ha_trend": tf_data.get("ha_trend"),
+                                "ema_fast": tf_data.get("ema_fast"),
+                                "ema_mid": tf_data.get("ema_mid"),
+                                "fractal_breakout_up": tf_data.get("fractal_breakout_up"),
+                                "pullback_entry_up": tf_data.get("pullback_entry_up"),
+                                "volume_expansion": tf_data.get("volume_expansion")
+                            }
+                    except Exception as e:
+                        diagnostic_data["market_conditions"][symbol] = {"error": str(e)}
+                
+                print(f"[DIAG_DETAILED] {json.dumps(diagnostic_data, ensure_ascii=True, indent=2)}")
                 self.emit_signal_diagnostic(strategy_name, "no_qualified_signal", diagnostic_candidates)
                 return None
 

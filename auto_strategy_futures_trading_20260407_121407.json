@@ -1,0 +1,27 @@
+{
+  "start_time": "2026-04-07T12:14:00.690905",
+  "end_time": "2026-04-08T12:14:00.690905",
+  "strategy_performance": {},
+  "market_data": {
+    "BTCUSDT": 68628.8,
+    "ETHUSDT": 2105.52,
+    "BCHUSDT": 432.77,
+    "XRPUSDT": 1.3157,
+    "LTCUSDT": 53.56,
+    "TRXUSDT": 0.31639,
+    "ETCUSDT": 8.391,
+    "LINKUSDT": 8.776,
+    "XLMUSDT": 0.1554,
+    "ADAUSDT": 0.2449
+  },
+  "total_pnl": 0,
+  "total_trades": 0,
+  "winning_trades": 0,
+  "losing_trades": 0,
+  "real_orders": [],
+  "balance_history": [],
+  "initial_capital": 8871.87815811,
+  "current_capital": 8871.87815811,
+  "active_positions": {},
+  "market_regime": "UNKNOWN"
+}

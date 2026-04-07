@@ -1,0 +1,40 @@
+{
+  "source": "C:\\next-trade-ver1.0\\completely_fixed_auto_strategy_trading_v2.py",
+  "exit_mode": "ma_trailing_ema21",
+  "exit_mode_label": "D_ma_exit_sl_2_0_no_tp_ema21_trailing",
+  "timeframe_mode": "standard",
+  "timeframe_mode_label": "current_5m_15m_1h",
+  "strategy_interval_map": {
+    "5m": "5m",
+    "15m": "15m",
+    "1h": "1h"
+  },
+  "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "XRPUSDT",
+    "ADAUSDT",
+    "DOTUSDT",
+    "LINKUSDT",
+    "BNBUSDT",
+    "SOLUSDT"
+  ],
+  "years": 0.0027397260273972603,
+  "evaluation_step_bars": 3,
+  "start_capital": 10000.0,
+  "end_capital": 10000.0,
+  "net_pnl": 0.0,
+  "entry_orders": 0,
+  "exit_orders": 0,
+  "partial_exit_orders": 0,
+  "winning_exits": 0,
+  "losing_exits": 0,
+  "win_rate": 0.0,
+  "session_entry_counts": {},
+  "entry_strategy_counts": {},
+  "exit_reason_counts": {},
+  "generated_at": "2026-04-07T02:43:31.152169+00:00",
+  "backtest_end_time": "2026-04-07T00:59:59.999000+00:00",
+  "recent_orders": [],
+  "total_order_records": 0
+}
