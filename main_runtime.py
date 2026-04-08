@@ -156,9 +156,6 @@ class TradingRuntime:
         # Load strategies
         self.load_strategies()
         
-        # Initialize trading components
-        # self._initialize_trading_system()  # Temporarily commented
-        
         # Load valid symbols
         self.valid_symbols = self.load_valid_symbols()
         
@@ -180,6 +177,33 @@ class TradingRuntime:
             self.total_capital = 0.0
         
         self.trading_results["available_balance"] = self.total_capital
+        
+        # Initialize trading components (after all attributes are set)
+        self._initialize_trading_system()
+    
+    def _initialize_trading_system(self):
+        """Initialize trading system components"""
+        try:
+            # 1. Update capital from actual account data
+            if self.account_service.periodic_sync(self.trading_results):
+                actual_balance = self.trading_results.get("available_balance", self.total_capital)
+                if actual_balance != self.total_capital:
+                    self.total_capital = actual_balance
+                    print(f"[INFO] Capital updated from account: ${self.total_capital:.2f}")
+            
+            # 2. Symbol information refresh
+            symbols_info = self.market_data_service.refresh_symbol_universe()
+            print(f"[INFO] Active strategies: {self.active_strategies}")
+            
+            # 3. Capital allocation initialization
+            self.allocation_service.refresh_strategy_capital_allocations(
+                self.total_capital, self.active_strategies, {}
+            )
+            
+            print(f"[INFO] Trading system initialized")
+            
+        except Exception as e:
+            self.log_system_error("system_init_error", str(e))
     
     def load_local_env_file(self):
         """환경 설정 파일 로드"""
@@ -237,6 +261,10 @@ class TradingRuntime:
                 "max_position_size_usdt": self.max_position_size_usdt * 0.8  # 80% of base size
             }
         }
+        
+        # Set active strategies
+        self.active_strategies = [s for s in self.trading_results["strategies"].keys() 
+                                if self.trading_results["strategies"][s].get("enabled", False)]
     
     def load_valid_symbols(self):
         """유효 심볼 로드"""
