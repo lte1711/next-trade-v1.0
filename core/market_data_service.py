@@ -97,21 +97,23 @@ class MarketDataService:
                 data = response.json()
                 if isinstance(data, list):
                     for item in data:
-                        symbol = item['symbol']
-                        price = float(item['price'])
+                        symbol = item.get('symbol')
+                        price = float(item.get('price', 0))
+                        if symbol and price > 0:
+                            cached_prices[symbol] = price
+                            self._price_cache[f"price_{symbol}"] = {
+                                'price': price,
+                                'timestamp': current_time
+                            }
+                else:
+                    symbol = data.get('symbol')
+                    price = float(data.get('price', 0))
+                    if symbol and price > 0:
                         cached_prices[symbol] = price
                         self._price_cache[f"price_{symbol}"] = {
                             'price': price,
                             'timestamp': current_time
                         }
-                else:
-                    symbol = data['symbol']
-                    price = float(data['price'])
-                    cached_prices[symbol] = price
-                    self._price_cache[f"price_{symbol}"] = {
-                        'price': price,
-                        'timestamp': current_time
-                    }
                 
                 return cached_prices
             else:

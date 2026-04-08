@@ -401,6 +401,23 @@ class TradingRuntime:
         except Exception as e:
             self.log_system_error("cycle_results_process", str(e))
     
+    def _process_cycle_results(self, cycle_results):
+        """Process cycle results and update trading statistics"""
+        try:
+            # Update trading results
+            self.trading_results.update(cycle_results)
+            
+            # Log cycle completion
+            signals = cycle_results.get('signals_generated', 0)
+            trades = cycle_results.get('trades_executed', 0)
+            errors = len(cycle_results.get('errors', []))
+            
+            if signals > 0 or trades > 0:
+                print(f"[INFO] Cycle completed - Signals: {signals}, Trades: {trades}, Errors: {errors}")
+            
+        except Exception as e:
+            self.log_system_error("cycle_results_process", str(e))
+    
     def _display_cycle_status(self, cycle_results):
         """사이클 상태 표시"""
         try:
