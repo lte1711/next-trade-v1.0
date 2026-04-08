@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "start_time": "2026-04-07T20:31:42.966129",
+    "end_time": "N/A",
+    "duration_hours": 1,
+    "testnet": true
+  },
+  "trades": [],
+  "performance": {
+    "momentum": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate": 0.0,
+      "avg_pnl": 0.0,
+      "total_pnl": 0
+    },
+    "mean_reversion": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate": 0.0,
+      "avg_pnl": 0.0,
+      "total_pnl": 0
+    },
+    "volatility": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate": 0.0,
+      "avg_pnl": 0.0,
+      "total_pnl": 0
+    },
+    "trend_following": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate": 0.0,
+      "avg_pnl": 0.0,
+      "total_pnl": 0
+    }
+  },
+  "summary": {
+    "end_time": "2026-04-07T20:31:50.766959",
+    "total_trades": 0,
+    "total_errors": 0,
+    "success_rate": 0.0,
+    "duration_hours": 1
+  }
+}

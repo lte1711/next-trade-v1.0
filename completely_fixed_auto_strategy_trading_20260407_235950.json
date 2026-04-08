@@ -1,0 +1,275 @@
+{
+  "start_time": "2026-04-07T23:40:27.864379",
+  "end_time": "2026-04-08T23:40:27.864379",
+  "strategy_performance": {},
+  "market_data": {
+    "BTCUSDT": 67935.8,
+    "ETHUSDT": 2073.0,
+    "BCHUSDT": 432.14,
+    "DOGEUSDT": 0.09031,
+    "XRPUSDT": 1.2984,
+    "BNBUSDT": 595.3,
+    "QUICKUSDT": 0.00989,
+    "LRCUSDT": 0.01743,
+    "BIDUSDT": 0.00878,
+    "VOXELUSDT": 0.01299,
+    "TOKENUSDT": 0.002509
+  },
+  "total_pnl": -2.4800276900004974,
+  "total_trades": 1,
+  "winning_trades": 0,
+  "losing_trades": 1,
+  "pending_trades": 0,
+  "closed_trades": 1,
+  "entry_failures": 0,
+  "real_orders": [
+    {
+      "strategy": "trend_following_strategy_5",
+      "symbol": "BCHUSDT",
+      "side": "SELL",
+      "quantity": 0.497,
+      "price": 431.72,
+      "order_id": 1331061869,
+      "status": "FILLED",
+      "executed_qty": 0.497,
+      "timestamp": "2026-04-07T23:41:21.217595",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT",
+      "market_session": "NORMAL",
+      "candidate_score": 15.842596,
+      "selected_regime": "SIDEWAYS_MARKET",
+      "trend_consensus": -1,
+      "entry_mode": "FAST_SHORT"
+    },
+    {
+      "strategy": "position_manager",
+      "symbol": "DOGEUSDT",
+      "side": "BUY",
+      "quantity": 2427.0,
+      "price": 0.09039,
+      "order_id": 768057170,
+      "status": "FILLED",
+      "executed_qty": 2427.0,
+      "timestamp": "2026-04-07T23:51:43.373473",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG",
+      "entry_price": 0.09029,
+      "close_reason": "ma_fractal_bullish_reversal",
+      "market_session": "NORMAL",
+      "reduce_only": true,
+      "realized_pnl": -0.24270000000000697
+    }
+  ],
+  "balance_history": [
+    {
+      "timestamp": "2026-04-07T23:40:42.017579",
+      "total_balance": 8592.3297452,
+      "total_pnl": -0.18656858999929682,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-07T23:41:24.833842",
+      "total_balance": 8592.95011173,
+      "total_pnl": 0.43379794000065885,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:41:43.742028",
+      "total_balance": 8592.9109104,
+      "total_pnl": 0.3945966100000078,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:42:45.467933",
+      "total_balance": 8592.92936123,
+      "total_pnl": 0.41304744000080973,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:43:47.614719",
+      "total_balance": 8592.17042544,
+      "total_pnl": -0.34588835000067775,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:44:49.567904",
+      "total_balance": 8592.46218426,
+      "total_pnl": -0.05412952999904519,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:45:51.295380",
+      "total_balance": 8592.14899997,
+      "total_pnl": -0.3673138199992536,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:46:53.006373",
+      "total_balance": 8594.32658194,
+      "total_pnl": 1.810268150000411,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:47:55.227117",
+      "total_balance": 8594.05228424,
+      "total_pnl": 1.5359704500006046,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:48:57.196366",
+      "total_balance": 8593.75332188,
+      "total_pnl": 1.2370080900000175,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:49:59.071140",
+      "total_balance": 8593.37604976,
+      "total_pnl": 0.8597359699997469,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:51:01.235416",
+      "total_balance": 8593.52813852,
+      "total_pnl": 1.0118247299997165,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:51:46.110100",
+      "total_balance": 8592.39636015,
+      "total_pnl": -0.11995363999994879,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:52:03.528435",
+      "total_balance": 8592.05628229,
+      "total_pnl": -0.4600315000006958,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:53:05.650365",
+      "total_balance": 8591.26864869,
+      "total_pnl": -1.2476650999997219,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:54:07.684190",
+      "total_balance": 8591.57607594,
+      "total_pnl": -0.9402378499999031,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:55:09.940441",
+      "total_balance": 8591.95848742,
+      "total_pnl": -0.5578263699990202,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:56:11.927488",
+      "total_balance": 8590.52759775,
+      "total_pnl": -1.9887160399994173,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:57:13.937019",
+      "total_balance": 8590.91113058,
+      "total_pnl": -1.6051832100001775,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:58:15.896811",
+      "total_balance": 8591.17657893,
+      "total_pnl": -1.3397348599992256,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:59:17.978690",
+      "total_balance": 8590.0362861,
+      "total_pnl": -2.4800276900004974,
+      "market_regime": "SIDEWAYS_MARKET"
+    }
+  ],
+  "initial_capital": 8592.51631379,
+  "current_capital": 8590.0362861,
+  "available_balance": 8297.29785992,
+  "active_positions": {
+    "LRCUSDT": {
+      "amount": -17602.0,
+      "entry_price": 0.01743,
+      "mark_price": 0.01743,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.0,
+      "entry_time": "2026-04-07T23:40:40.999521"
+    },
+    "ETHUSDT": {
+      "amount": -0.033,
+      "entry_price": 2073.3,
+      "mark_price": 2073.0,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.014469686007822403,
+      "entry_time": "2026-04-07T23:40:40.999521"
+    },
+    "QUICKUSDT": {
+      "amount": -11774.0,
+      "entry_price": 0.00993,
+      "mark_price": 0.00989,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.4028197381671712,
+      "entry_time": "2026-04-07T23:40:40.999521"
+    },
+    "BNBUSDT": {
+      "amount": -0.2,
+      "entry_price": 595.86,
+      "mark_price": 595.3,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.09398180780721295,
+      "entry_time": "2026-04-07T23:40:40.999521"
+    },
+    "XRPUSDT": {
+      "amount": -168.7,
+      "entry_price": 1.2997,
+      "mark_price": 1.2984,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.100023082249756,
+      "entry_time": "2026-04-07T23:40:40.999521"
+    },
+    "TOKENUSDT": {
+      "amount": -27158.0,
+      "entry_price": 0.002509,
+      "mark_price": 0.002509,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.0,
+      "entry_time": "2026-04-07T23:41:24.048853"
+    },
+    "BTCUSDT": {
+      "amount": -0.0032,
+      "entry_price": 68056.3,
+      "mark_price": 67935.8,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.177059287677996,
+      "entry_time": "2026-04-07T23:40:40.999521"
+    }
+  },
+  "market_regime": "SIDEWAYS_MARKET",
+  "market_session": "NORMAL",
+  "sync_status": "SYNCED",
+  "symbol_universe_updated_at": "2026-04-07T23:40:34.467196",
+  "system_errors": [
+    {
+      "timestamp": "2026-04-07T23:41:22.868047",
+      "error_type": "protective_order_error",
+      "message": "BCHUSDT STOP_MARKET: 400 {\"code\":-4120,\"msg\":\"Order type not supported for this endpoint. Please use the Algo Order API endpoints instead.\"}",
+      "traceback": null
+    }
+  ],
+  "error_count": 1,
+  "last_error": {
+    "timestamp": "2026-04-07T23:41:22.868047",
+    "error_type": "protective_order_error",
+    "message": "BCHUSDT STOP_MARKET: 400 {\"code\":-4120,\"msg\":\"Order type not supported for this endpoint. Please use the Algo Order API endpoints instead.\"}",
+    "traceback": null
+  }
+}

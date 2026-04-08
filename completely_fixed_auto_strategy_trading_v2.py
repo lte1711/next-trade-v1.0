@@ -1067,6 +1067,7 @@ class CompletelyFixedAutoStrategyFuturesTrading:
                 regime = "SIDEWAYS_MARKET"
 
             return {
+                "symbol": symbol,  # Add symbol for signal rejection tracking
                 "regime": regime,
                 "avg_change": avg_change,
                 "volatility": volatility,
@@ -1088,6 +1089,10 @@ class CompletelyFixedAutoStrategyFuturesTrading:
     def get_ma_trade_decision(self, strategy, market_regime):
         """Return a trade decision using the shared EMA + Heikin Ashi + fractal framework."""
         timeframe_data = market_regime.get("timeframes", {})
+        
+        # 🔍 STEP-BAEKSEOL-SIGNAL-REJECTION-TRACE-1
+        debug_reasons = []
+        symbol = market_regime.get("symbol", "UNKNOWN")
         tf_5m = timeframe_data.get("5m", {})
         tf_15m = timeframe_data.get("15m", {})
         tf_1h = timeframe_data.get("1h", {})
@@ -1141,6 +1146,48 @@ class CompletelyFixedAutoStrategyFuturesTrading:
         required_alignment_count = strategy.get("required_alignment_count", 0)
         consensus_threshold = max(0, strategy.get("consensus_threshold", 0) + session_policy.get("consensus_adjustment", 0))
 
+        # 🔍 STEP-BAEKSEOL-SIGNAL-REJECTION-TRACE-2: 조건별 실패 기록
+        
+        # 1. alignment 부족
+        if bullish_alignment_count < required_alignment_count:
+            debug_reasons.append("FAIL_ALIGNMENT")
+        
+        # 2. price vs MA 불일치 (LONG 기준)
+        if tf_5m.get("price_vs_ma") != "ABOVE" or tf_15m.get("price_vs_ma") != "ABOVE":
+            debug_reasons.append("FAIL_PRICE_MA")
+        
+        # 3. EMA 구조 불일치 (LONG 기준)
+        if not (tf_5m.get("ema_fast", 0) > tf_5m.get("ema_mid", 0) and tf_15m.get("ema_fast", 0) > tf_15m.get("ema_mid", 0)):
+            debug_reasons.append("FAIL_EMA_STRUCTURE")
+        
+        # 4. trend consensus 부족
+        if market_regime.get("trend_consensus", 0) < consensus_threshold:
+            debug_reasons.append("FAIL_TREND_CONSENSUS")
+        
+        # 5. HA 조건 실패 (long_ready 기준)
+        if not bullish_ha_ready:
+            debug_reasons.append("FAIL_HA")
+        
+        # 6. cross 조건 실패
+        if strategy.get("require_cross") and bullish_cross_count < 1:
+            debug_reasons.append("FAIL_CROSS")
+        
+        # 7. volume 조건 실패
+        if strategy.get("require_volume_expansion") and volume_expansion_count < 1:
+            debug_reasons.append("FAIL_VOLUME")
+        
+        # 8. breakout context 없음
+        if not bullish_breakout_context:
+            debug_reasons.append("FAIL_BREAKOUT")
+        
+        # 9. pullback 조건 없음
+        if not bullish_pullback_ready:
+            debug_reasons.append("FAIL_PULLBACK")
+        
+        # 10. cooldown 걸림
+        if self.is_symbol_in_cooldown(symbol):
+            debug_reasons.append("FAIL_COOLDOWN")
+
         long_ready = (
             bullish_alignment_count >= required_alignment_count and
             tf_5m.get("price_vs_ma") == "ABOVE" and
@@ -1169,10 +1216,21 @@ class CompletelyFixedAutoStrategyFuturesTrading:
             bearish_pullback_ready
         )
 
+        # 🔍 STEP-BAEKSEOL-SIGNAL-REJECTION-TRACE-3: 최종 로그 출력
+        
         if long_ready and not short_ready:
+            print(f"[SIGNAL_ACCEPTED] {symbol} LONG - All conditions passed")
             return "BUY"
         if short_ready and not long_ready:
+            print(f"[SIGNAL_ACCEPTED] {symbol} SHORT - All conditions passed")
             return "SELL"
+        
+        # 실패 이유 출력
+        if len(debug_reasons) > 0:
+            print(f"[SIGNAL_REJECTED] {symbol} reasons={debug_reasons}")
+        else:
+            print(f"[SIGNAL_REJECTED] {symbol} reasons=[UNKNOWN]")
+        
         return None
 
     def should_exit_position_ma(self, position, market_regime, strategy=None):

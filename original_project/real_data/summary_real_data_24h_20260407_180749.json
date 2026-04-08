@@ -1,0 +1,31 @@
+{
+  "generation_time": "2026-04-07T18:07:49.731363",
+  "total_symbols": 16,
+  "patterns_used": {
+    "trending_up": 2,
+    "volatile": 3,
+    "sideways": 3,
+    "trending_down": 2,
+    "mean_reverting": 2,
+    "breakout": 2,
+    "chaotic": 2
+  },
+  "price_changes": {
+    "BTCUSDT": 22.29244114346949,
+    "ETHUSDT": 3.6224774223174308,
+    "BNBUSDT": 4.970504718998109,
+    "SOLUSDT": -16.62013771521322,
+    "XRPUSDT": 0.0993884949022362,
+    "ADAUSDT": -4.044792289166159,
+    "DOGEUSDT": -1.8451584706858137,
+    "AVAXUSDT": 9.927152972018757,
+    "LINKUSDT": -1.7740609061111665,
+    "DOTUSDT": -10.778462069838955,
+    "LTCUSDT": 0.048765213846845415,
+    "BCHUSDT": 5.993914752545264,
+    "MATICUSDT": -9.337022181109173,
+    "ATOMUSDT": 0.737702569686474,
+    "UNIUSDT": -3.463396835244291,
+    "ETCUSDT": 12.355959347492181
+  }
+}

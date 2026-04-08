@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "start_time": "2026-04-07T16:39:40.008408",
+    "end_time": "2026-04-07T17:39:40.008408",
+    "total_capital": 10000.0,
+    "symbols": 16,
+    "testnet": true,
+    "initialized": true,
+    "version": "v3.0",
+    "config": "dynamic"
+  },
+  "trades": [],
+  "errors": [],
+  "summary": {
+    "end_time": "2026-04-07T17:00:45.551148",
+    "total_trades": 0,
+    "total_errors": 1,
+    "success_rate": 0.0,
+    "strategies": {
+      "momentum": {
+        "total_trades": 0,
+        "win_rate": 0.0,
+        "total_pnl": 0
+      },
+      "mean_reversion": {
+        "total_trades": 0,
+        "win_rate": 0.0,
+        "total_pnl": 0
+      },
+      "volatility": {
+        "total_trades": 0,
+        "win_rate": 0.0,
+        "total_pnl": 0
+      },
+      "trend_following": {
+        "total_trades": 0,
+        "win_rate": 0.0,
+        "total_pnl": 0
+      }
+    },
+    "final_config": {
+      "thresholds": {
+        "bull_threshold": 0.003,
+        "bear_threshold": -0.003,
+        "momentum_strong": 0.002,
+        "mean_rev_max": 0.0003954,
+        "vol_high_threshold": 0.025,
+        "trend_strong": 0.003,
+        "arb_spread_min": 0.1
+      },
+      "symbol_rankings": {
+        "BTCUSDT": 30.0,
+        "ETHUSDT": 30.0,
+        "BNBUSDT": 30.0,
+        "SOLUSDT": 30.0,
+        "XRPUSDT": 30.0,
+        "ADAUSDT": 30.0,
+        "DOGEUSDT": 30.0,
+        "AVAXUSDT": 30.0,
+        "LINKUSDT": 30.0,
+        "DOTUSDT": 30.0,
+        "LTCUSDT": 30.0,
+        "BCHUSDT": 30.0,
+        "MATICUSDT": 30.0,
+        "ATOMUSDT": 30.0,
+        "UNIUSDT": 30.0,
+        "ETCUSDT": 30.0
+      },
+      "performance_history": []
+    }
+  }
+}

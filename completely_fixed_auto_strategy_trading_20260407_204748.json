@@ -1,0 +1,250 @@
+{
+  "start_time": "2026-04-07T20:43:53.221724",
+  "end_time": "2026-04-08T20:43:53.221724",
+  "strategy_performance": {},
+  "market_data": {
+    "BTCUSDT": 68366.5,
+    "ETHUSDT": 2086.65,
+    "BCHUSDT": 431.54,
+    "DOGEUSDT": 0.09048,
+    "XRPUSDT": 1.3041,
+    "BNBUSDT": 597.44,
+    "QUICKUSDT": 0.01015,
+    "LRCUSDT": 0.0176,
+    "BIDUSDT": 0.00879,
+    "VOXELUSDT": 0.01298
+  },
+  "total_pnl": -0.22056782999970892,
+  "total_trades": 5,
+  "winning_trades": 0,
+  "losing_trades": 0,
+  "pending_trades": 0,
+  "closed_trades": 0,
+  "entry_failures": 0,
+  "real_orders": [
+    {
+      "strategy": "pullback_confirmation_strategy_2",
+      "symbol": "LRCUSDT",
+      "side": "SELL",
+      "quantity": 6646.0,
+      "price": 0.0176,
+      "order_id": 96570274,
+      "status": "FILLED",
+      "executed_qty": 6646.0,
+      "timestamp": "2026-04-07T20:44:27.150676",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "BEAR_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT",
+      "market_session": "NORMAL"
+    },
+    {
+      "strategy": "volatility_strategy_4",
+      "symbol": "XRPUSDT",
+      "side": "SELL",
+      "quantity": 93.5,
+      "price": 1.3047,
+      "order_id": 1594592400,
+      "status": "FILLED",
+      "executed_qty": 93.5,
+      "timestamp": "2026-04-07T20:44:50.095796",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "BEAR_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT",
+      "market_session": "NORMAL"
+    },
+    {
+      "strategy": "trend_following_strategy_5",
+      "symbol": "BTCUSDT",
+      "side": "SELL",
+      "quantity": 0.0032,
+      "price": 68377.3,
+      "order_id": 13023644627,
+      "status": "FILLED",
+      "executed_qty": 0.0032,
+      "timestamp": "2026-04-07T20:45:02.525746",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "BEAR_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT",
+      "market_session": "NORMAL"
+    },
+    {
+      "strategy": "balanced_rotation_strategy_6",
+      "symbol": "DOGEUSDT",
+      "side": "SELL",
+      "quantity": 755.0,
+      "price": 0.09051,
+      "order_id": 767967073,
+      "status": "FILLED",
+      "executed_qty": 755.0,
+      "timestamp": "2026-04-07T20:45:18.526988",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "BEAR_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT",
+      "market_session": "NORMAL"
+    },
+    {
+      "strategy": "pullback_confirmation_strategy_2",
+      "symbol": "BNBUSDT",
+      "side": "SELL",
+      "quantity": 0.2,
+      "price": 598.09,
+      "order_id": 1334142283,
+      "status": "FILLED",
+      "executed_qty": 0.2,
+      "timestamp": "2026-04-07T20:46:12.263124",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "SIDEWAYS_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT",
+      "market_session": "NORMAL"
+    }
+  ],
+  "balance_history": [
+    {
+      "timestamp": "2026-04-07T20:44:04.144447",
+      "total_balance": 8604.83254867,
+      "total_pnl": -0.10509597000054782,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-07T20:44:30.383540",
+      "total_balance": 8604.96065625,
+      "total_pnl": 0.02301160999923013,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T20:44:52.813365",
+      "total_balance": 8604.96187877,
+      "total_pnl": 0.02423412999996799,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T20:45:05.527711",
+      "total_balance": 8605.00936749,
+      "total_pnl": 0.07172284999978729,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T20:45:05.828581",
+      "total_balance": 8605.00936749,
+      "total_pnl": 0.07172284999978729,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T20:45:21.443282",
+      "total_balance": 8604.89852848,
+      "total_pnl": -0.039116160000048694,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T20:46:07.476227",
+      "total_balance": 8604.9621519,
+      "total_pnl": 0.024507259999154485,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T20:46:15.025372",
+      "total_balance": 8605.11403292,
+      "total_pnl": 0.17638828000053763,
+      "market_regime": "SIDEWAYS_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T20:47:08.953238",
+      "total_balance": 8604.71707681,
+      "total_pnl": -0.22056782999970892,
+      "market_regime": "SIDEWAYS_MARKET"
+    }
+  ],
+  "initial_capital": 8604.93764464,
+  "current_capital": 8604.71707681,
+  "available_balance": 8397.47275777,
+  "active_positions": {
+    "LRCUSDT": {
+      "amount": -6646.0,
+      "entry_price": 0.0176,
+      "mark_price": 0.0176,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.0,
+      "entry_time": "2026-04-07T20:44:27.150676"
+    },
+    "BNBUSDT": {
+      "amount": -0.2,
+      "entry_price": 598.09,
+      "mark_price": 597.44,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.10867929575815967,
+      "entry_time": "2026-04-07T20:46:12.263124"
+    },
+    "DOGEUSDT": {
+      "amount": -755.0,
+      "entry_price": 0.09051,
+      "mark_price": 0.09048,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.033145508783546974,
+      "entry_time": "2026-04-07T20:45:18.526988"
+    },
+    "XRPUSDT": {
+      "amount": -93.5,
+      "entry_price": 1.3047,
+      "mark_price": 1.3041,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.045987583352489765,
+      "entry_time": "2026-04-07T20:44:50.095796"
+    },
+    "BTCUSDT": {
+      "amount": -0.0032,
+      "entry_price": 68377.3,
+      "mark_price": 68366.5,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.015794715497691354,
+      "entry_time": "2026-04-07T20:45:02.525746"
+    }
+  },
+  "market_regime": "SIDEWAYS_MARKET",
+  "market_session": "NORMAL",
+  "sync_status": "SYNCED",
+  "symbol_universe_updated_at": "2026-04-07T20:43:58.327990",
+  "system_errors": [
+    {
+      "timestamp": "2026-04-07T20:44:28.482631",
+      "error_type": "protective_order_error",
+      "message": "LRCUSDT STOP_MARKET: 400 {\"code\":-4120,\"msg\":\"Order type not supported for this endpoint. Please use the Algo Order API endpoints instead.\"}",
+      "traceback": null
+    },
+    {
+      "timestamp": "2026-04-07T20:44:51.469744",
+      "error_type": "protective_order_error",
+      "message": "XRPUSDT STOP_MARKET: 400 {\"code\":-4120,\"msg\":\"Order type not supported for this endpoint. Please use the Algo Order API endpoints instead.\"}",
+      "traceback": null
+    },
+    {
+      "timestamp": "2026-04-07T20:45:03.920426",
+      "error_type": "protective_order_error",
+      "message": "BTCUSDT STOP_MARKET: 400 {\"code\":-4120,\"msg\":\"Order type not supported for this endpoint. Please use the Algo Order API endpoints instead.\"}",
+      "traceback": null
+    },
+    {
+      "timestamp": "2026-04-07T20:45:19.950971",
+      "error_type": "protective_order_error",
+      "message": "DOGEUSDT STOP_MARKET: 400 {\"code\":-4120,\"msg\":\"Order type not supported for this endpoint. Please use the Algo Order API endpoints instead.\"}",
+      "traceback": null
+    },
+    {
+      "timestamp": "2026-04-07T20:46:13.634346",
+      "error_type": "protective_order_error",
+      "message": "BNBUSDT STOP_MARKET: 400 {\"code\":-4120,\"msg\":\"Order type not supported for this endpoint. Please use the Algo Order API endpoints instead.\"}",
+      "traceback": null
+    }
+  ],
+  "error_count": 5,
+  "last_error": {
+    "timestamp": "2026-04-07T20:46:13.634346",
+    "error_type": "protective_order_error",
+    "message": "BNBUSDT STOP_MARKET: 400 {\"code\":-4120,\"msg\":\"Order type not supported for this endpoint. Please use the Algo Order API endpoints instead.\"}",
+    "traceback": null
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "start_time": "2026-04-07T22:44:54.735665",
+  "end_time": "2026-04-08T22:44:54.735665",
+  "strategy_performance": {},
+  "market_data": {
+    "BTCUSDT": 68387.1,
+    "ETHUSDT": 2078.71,
+    "BCHUSDT": 432.57,
+    "DOGEUSDT": 0.0905,
+    "XRPUSDT": 1.3058,
+    "BNBUSDT": 597.74,
+    "QUICKUSDT": 0.00998,
+    "LRCUSDT": 0.01759,
+    "BIDUSDT": 0.00878,
+    "VOXELUSDT": 0.01299
+  },
+  "total_pnl": 1.0073690699991857,
+  "total_trades": 0,
+  "winning_trades": 0,
+  "losing_trades": 0,
+  "pending_trades": 0,
+  "closed_trades": 0,
+  "entry_failures": 0,
+  "real_orders": [],
+  "balance_history": [
+    {
+      "timestamp": "2026-04-07T22:45:08.647388",
+      "total_balance": 8599.33903739,
+      "total_pnl": 0.3761644599999272,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-07T22:46:10.786411",
+      "total_balance": 8598.99557491,
+      "total_pnl": 0.03270198000063829,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-07T22:47:13.021253",
+      "total_balance": 8598.94657686,
+      "total_pnl": -0.016296069999953033,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-07T22:48:15.068449",
+      "total_balance": 8598.32782072,
+      "total_pnl": -0.6350522100001399,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-07T22:49:16.943169",
+      "total_balance": 8597.93214733,
+      "total_pnl": -1.0307255999996414,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-07T22:50:19.035536",
+      "total_balance": 8599.26419708,
+      "total_pnl": 0.30132414999934554,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-07T22:51:20.895390",
+      "total_balance": 8599.63907988,
+      "total_pnl": 0.6762069500000507,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-07T22:52:22.606723",
+      "total_balance": 8599.35104818,
+      "total_pnl": 0.3881752500001312,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-07T22:53:24.448376",
+      "total_balance": 8599.970242,
+      "total_pnl": 1.0073690699991857,
+      "market_regime": "UNKNOWN"
+    }
+  ],
+  "initial_capital": 8598.96287293,
+  "current_capital": 8599.970242,
+  "available_balance": 8599.970242,
+  "active_positions": {},
+  "market_regime": "UNKNOWN",
+  "market_session": "NORMAL",
+  "sync_status": "SYNCED",
+  "symbol_universe_updated_at": "2026-04-07T22:45:01.240401",
+  "system_errors": [],
+  "error_count": 0,
+  "last_error": null
+}

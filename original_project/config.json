@@ -1,0 +1,10 @@
+{
+  "binance": {
+    "testnet": {
+      "api_key": "tyc0Nz8Trhl8zRG74u1i3gNLFFAzqVQK6mcOtviDD47Z9TpYBPE7qAILBtGCdlCg",
+      "api_secret": "jTuqPonQabOq6Xx19sEWiYsl07Te9L4YsY4j7gJQZ2Lcom0vDxttBuqgK4YME7NI",
+      "base_url": "https://testnet.binancefuture.com"
+    },
+    "testnet_initial_equity": 10000.0
+  }
+}

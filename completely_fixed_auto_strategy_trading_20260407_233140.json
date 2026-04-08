@@ -1,0 +1,380 @@
+{
+  "start_time": "2026-04-07T23:03:01.772148",
+  "end_time": "2026-04-08T23:03:01.772148",
+  "strategy_performance": {},
+  "market_data": {
+    "BTCUSDT": 68013.3,
+    "ETHUSDT": 2075.81,
+    "BCHUSDT": 432.49,
+    "DOGEUSDT": 0.0904,
+    "XRPUSDT": 1.3032,
+    "BNBUSDT": 596.36,
+    "QUICKUSDT": 0.00993,
+    "LRCUSDT": 0.0174,
+    "BIDUSDT": 0.00879,
+    "VOXELUSDT": 0.01299
+  },
+  "total_pnl": -2.3708352200010268,
+  "total_trades": 3,
+  "winning_trades": 1,
+  "losing_trades": 0,
+  "pending_trades": 0,
+  "closed_trades": 1,
+  "entry_failures": 0,
+  "real_orders": [
+    {
+      "strategy": "balanced_rotation_strategy_6",
+      "symbol": "DOGEUSDT",
+      "side": "SELL",
+      "quantity": 756.0,
+      "price": 0.09017,
+      "order_id": 768035977,
+      "status": "FILLED",
+      "executed_qty": 756.0,
+      "timestamp": "2026-04-07T23:06:42.718041",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "BEAR_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT",
+      "market_session": "NORMAL"
+    },
+    {
+      "strategy": "balanced_rotation_strategy_6",
+      "symbol": "XRPUSDT",
+      "side": "SELL",
+      "quantity": 52.5,
+      "price": 1.2999,
+      "order_id": 1594628378,
+      "status": "FILLED",
+      "executed_qty": 52.5,
+      "timestamp": "2026-04-07T23:16:26.785911",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "BEAR_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT",
+      "market_session": "NORMAL"
+    },
+    {
+      "strategy": "momentum_strategy_1",
+      "symbol": "ETHUSDT",
+      "side": "SELL",
+      "quantity": 0.149,
+      "price": 2065.71,
+      "order_id": 8633286693,
+      "status": "FILLED",
+      "executed_qty": 0.149,
+      "timestamp": "2026-04-07T23:17:18.726178",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "BEAR_MARKET",
+      "strategy_signal": "SELL",
+      "position_type": "SHORT",
+      "market_session": "NORMAL"
+    },
+    {
+      "strategy": "position_manager",
+      "symbol": "BNBUSDT",
+      "side": "BUY",
+      "quantity": 0.2,
+      "price": 596.92,
+      "order_id": 1334175765,
+      "status": "FILLED",
+      "executed_qty": 0.2,
+      "timestamp": "2026-04-07T23:26:32.749731",
+      "type": "ACTUAL_TRADE",
+      "market_regime": "BEAR_MARKET",
+      "strategy_signal": "BUY",
+      "position_type": "LONG",
+      "entry_price": 596.93,
+      "close_reason": "ema21_trailing_exit",
+      "market_session": "NORMAL",
+      "reduce_only": true,
+      "realized_pnl": 0.001999999999998181
+    }
+  ],
+  "balance_history": [
+    {
+      "timestamp": "2026-04-07T23:03:14.872163",
+      "total_balance": 8598.36284023,
+      "total_pnl": -0.058509110000159126,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-07T23:04:17.020800",
+      "total_balance": 8597.453564,
+      "total_pnl": -0.9677853400007734,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-07T23:05:19.085651",
+      "total_balance": 8597.33848677,
+      "total_pnl": -1.0828625699996337,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-07T23:06:21.215383",
+      "total_balance": 8596.38817387,
+      "total_pnl": -2.03317547000006,
+      "market_regime": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-04-07T23:06:46.221267",
+      "total_balance": 8595.76404208,
+      "total_pnl": -2.6573072600003798,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:07:23.448274",
+      "total_balance": 8595.03391,
+      "total_pnl": -3.387439340000128,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:08:25.466200",
+      "total_balance": 8593.91370012,
+      "total_pnl": -4.5076492200005305,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:09:27.482442",
+      "total_balance": 8594.33506811,
+      "total_pnl": -4.086281230000168,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:10:29.106692",
+      "total_balance": 8594.69935885,
+      "total_pnl": -3.7219904899993708,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:11:31.101595",
+      "total_balance": 8595.02203371,
+      "total_pnl": -3.399315630000274,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:12:32.820521",
+      "total_balance": 8594.9893432,
+      "total_pnl": -3.43200613999943,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:13:35.046036",
+      "total_balance": 8594.5271751,
+      "total_pnl": -3.8941742400002113,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:14:36.687636",
+      "total_balance": 8594.7842335,
+      "total_pnl": -3.637115839999751,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:15:38.749466",
+      "total_balance": 8594.71243868,
+      "total_pnl": -3.708910659999674,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:16:30.858957",
+      "total_balance": 8594.92576951,
+      "total_pnl": -3.4955798299997696,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:16:40.432656",
+      "total_balance": 8595.26640658,
+      "total_pnl": -3.1549427600002673,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:17:22.209309",
+      "total_balance": 8595.0392903,
+      "total_pnl": -3.382059040000968,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:17:42.531683",
+      "total_balance": 8594.90145002,
+      "total_pnl": -3.519899320001059,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:18:44.729534",
+      "total_balance": 8593.96006728,
+      "total_pnl": -4.461282059999576,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:19:46.838510",
+      "total_balance": 8594.22670538,
+      "total_pnl": -4.1946439599996665,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:20:48.741971",
+      "total_balance": 8594.82747837,
+      "total_pnl": -3.593870970000353,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:21:50.492746",
+      "total_balance": 8595.43392901,
+      "total_pnl": -2.987420330000532,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:22:52.830357",
+      "total_balance": 8595.91085262,
+      "total_pnl": -2.5104967200004467,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:23:54.811509",
+      "total_balance": 8596.21379693,
+      "total_pnl": -2.207552410000062,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:24:56.967401",
+      "total_balance": 8595.91329186,
+      "total_pnl": -2.5080574799994793,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:25:58.593137",
+      "total_balance": 8596.0791917,
+      "total_pnl": -2.342157639999641,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:26:35.875194",
+      "total_balance": 8595.73826963,
+      "total_pnl": -2.6830797100010386,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:27:00.992749",
+      "total_balance": 8595.39685138,
+      "total_pnl": -3.0244979600010993,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:28:03.160223",
+      "total_balance": 8595.34475325,
+      "total_pnl": -3.0765960900007485,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:29:04.875639",
+      "total_balance": 8594.92737422,
+      "total_pnl": -3.493975119999959,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:30:07.302320",
+      "total_balance": 8596.33910125,
+      "total_pnl": -2.0822480900005758,
+      "market_regime": "BEAR_MARKET"
+    },
+    {
+      "timestamp": "2026-04-07T23:31:09.699403",
+      "total_balance": 8596.05051412,
+      "total_pnl": -2.3708352200010268,
+      "market_regime": "BEAR_MARKET"
+    }
+  ],
+  "initial_capital": 8598.42134934,
+  "current_capital": 8596.05051412,
+  "available_balance": 7779.75389331,
+  "active_positions": {
+    "LRCUSDT": {
+      "amount": -12517.0,
+      "entry_price": 0.01751,
+      "mark_price": 0.0174,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.6282124500285692,
+      "entry_time": "2026-04-07T23:21:49.673072"
+    },
+    "ETHUSDT": {
+      "amount": -0.298,
+      "entry_price": 2065.71,
+      "mark_price": 2075.81,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.4889360074744233,
+      "entry_time": "2026-04-07T23:17:18.726178"
+    },
+    "BCHUSDT": {
+      "amount": -0.712,
+      "entry_price": 430.63,
+      "mark_price": 432.49,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.4319253187190892,
+      "entry_time": "2026-04-07T23:20:47.757392"
+    },
+    "BNBUSDT": {
+      "amount": -0.2,
+      "entry_price": 596.36,
+      "mark_price": 596.36,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.0,
+      "entry_time": "2026-04-07T23:29:03.981723"
+    },
+    "DOGEUSDT": {
+      "amount": -756.0,
+      "entry_price": 0.09017,
+      "mark_price": 0.0904,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.25507374958411233,
+      "entry_time": "2026-04-07T23:06:42.718041"
+    },
+    "XRPUSDT": {
+      "amount": -105.1,
+      "entry_price": 1.2999,
+      "mark_price": 1.3032,
+      "unrealized_pnl": 0.0,
+      "percentage": -0.2538656819755257,
+      "entry_time": "2026-04-07T23:16:26.785911"
+    },
+    "BTCUSDT": {
+      "amount": -0.0018,
+      "entry_price": 68249.7,
+      "mark_price": 68013.3,
+      "unrealized_pnl": 0.0,
+      "percentage": 0.3463751489017449,
+      "entry_time": "2026-04-07T23:03:13.747925"
+    }
+  },
+  "market_regime": "BEAR_MARKET",
+  "market_session": "NORMAL",
+  "sync_status": "SYNCED",
+  "symbol_universe_updated_at": "2026-04-07T23:03:07.589450",
+  "system_errors": [
+    {
+      "timestamp": "2026-04-07T23:06:44.414816",
+      "error_type": "protective_order_error",
+      "message": "DOGEUSDT STOP_MARKET: 400 {\"code\":-4120,\"msg\":\"Order type not supported for this endpoint. Please use the Algo Order API endpoints instead.\"}",
+      "traceback": null
+    },
+    {
+      "timestamp": "2026-04-07T23:16:28.686747",
+      "error_type": "protective_order_error",
+      "message": "XRPUSDT STOP_MARKET: 400 {\"code\":-4120,\"msg\":\"Order type not supported for this endpoint. Please use the Algo Order API endpoints instead.\"}",
+      "traceback": null
+    },
+    {
+      "timestamp": "2026-04-07T23:17:20.441668",
+      "error_type": "protective_order_error",
+      "message": "ETHUSDT STOP_MARKET: 400 {\"code\":-4120,\"msg\":\"Order type not supported for this endpoint. Please use the Algo Order API endpoints instead.\"}",
+      "traceback": null
+    }
+  ],
+  "error_count": 3,
+  "last_error": {
+    "timestamp": "2026-04-07T23:17:20.441668",
+    "error_type": "protective_order_error",
+    "message": "ETHUSDT STOP_MARKET: 400 {\"code\":-4120,\"msg\":\"Order type not supported for this endpoint. Please use the Algo Order API endpoints instead.\"}",
+    "traceback": null
+  }
+}
