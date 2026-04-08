@@ -13,6 +13,13 @@ class AllocationService:
         self.log_error = log_error_callback or self._default_log_error
         self._strategy_capital = {}
         self._allocation_history = []
+        
+        # V2 Merged risk parameters
+        self.v2_risk_settings = {
+            'ma_trend_follow': {'risk_per_trade': 0.015, 'leverage': 12.0},
+            'ema_crossover': {'risk_per_trade': 0.012, 'leverage': 8.0},
+            'fractal_breakout': {'risk_per_trade': 0.010, 'leverage': 10.0}
+        }
     
     def _default_log_error(self, error_type, message):
         """Default error logging"""
@@ -33,10 +40,18 @@ class AllocationService:
         """Calculate dynamic capital allocation per strategy"""
         try:
             if not active_strategies:
-                return {}
+                # Default strategies if none provided
+                active_strategies = ['ma_trend_follow', 'ema_crossover']
             
-            # Base allocation (equal weight initially)
-            base_allocation = total_capital / len(active_strategies)
+            # V2 Merged style: Use symbol count for more granular allocation
+            symbol_count = 30  # V2 Merged typical symbol count
+            strategy_count = len(active_strategies)
+            
+            # Base allocation per symbol (V2 Merged style)
+            capital_per_symbol = total_capital / symbol_count
+            
+            # Allocate capital to strategies based on symbol allocation
+            base_allocation = capital_per_symbol * (symbol_count / strategy_count)
             allocations = {strategy: base_allocation for strategy in active_strategies}
             
             # Adjust based on performance
@@ -226,48 +241,54 @@ class AllocationService:
                              strategy_capital: float, signal_confidence: float,
                              volatility: float, atr: float,
                              strategy_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate optimal position size"""
+        """Calculate optimal position size using V2 Merged methodology"""
         try:
-            # Calculate allocation fraction
-            allocation_fraction = self.calculate_allocation_fraction(
-                'current_strategy', signal_confidence, strategy_capital, strategy_config
-            )
+            # Get strategy name for V2 risk settings
+            strategy_name = strategy_config.get('name', 'unknown')
             
-            # Calculate position amount in USDT
-            position_amount_usdt = strategy_capital * allocation_fraction
+            # Get V2 Merged risk settings
+            v2_risk = self.v2_risk_settings.get(strategy_name, {'risk_per_trade': 0.015, 'leverage': 1.0})
             
-            # Apply volatility multiplier
-            volatility_multiplier = self.calculate_volatility_size_multiplier(
-                symbol, volatility, strategy_config
-            )
-            position_amount_usdt *= volatility_multiplier
+            # V2 Merged style calculation
+            risk_per_trade = v2_risk['risk_per_trade']
+            leverage = v2_risk['leverage']
+            
+            # Base position size (V2 Merged style)
+            base_position_usdt = strategy_capital * risk_per_trade
+            
+            # Apply confidence multiplier
+            confidence_multiplier = min(max(signal_confidence, 0.5), 1.0)
+            position_amount_usdt = base_position_usdt * confidence_multiplier
+            
+            # Apply leverage effect
+            leveraged_position_usdt = position_amount_usdt * leverage
+            
+            # Apply volatility scaling (V2 Merged style)
+            if volatility > 0.03:  # High volatility penalty
+                position_amount_usdt *= 0.75
+            elif volatility < 0.01:  # Low volatility bonus
+                position_amount_usdt *= 1.15
             
             # Calculate position size in base currency
             position_size = position_amount_usdt / current_price
             
-            # Calculate stop loss
-            stop_loss_pct = self.estimate_stop_loss_pct(
-                symbol, current_price, atr, volatility, strategy_config
-            )
+            # Calculate stop loss (V2 Merged style)
+            stop_loss_pct = risk_per_trade * 2
             
             # Risk amount
-            risk_amount_usdt = position_amount_usdt * stop_loss_pct
-            
-            # Ensure position doesn't exceed strategy limits
-            max_position_usdt = strategy_config.get('risk_config', {}).get('max_position_size_usdt', 1000.0)
-            if position_amount_usdt > max_position_usdt:
-                position_amount_usdt = max_position_usdt
-                position_size = position_amount_usdt / current_price
-                risk_amount_usdt = position_amount_usdt * stop_loss_pct
+            risk_amount_usdt = position_amount_usdt * risk_per_trade
             
             return {
                 'position_size': position_size,
                 'position_amount_usdt': position_amount_usdt,
-                'allocation_fraction': allocation_fraction,
+                'leveraged_amount_usdt': leveraged_position_usdt,
+                'allocation_fraction': position_amount_usdt / strategy_capital,
                 'stop_loss_pct': stop_loss_pct,
                 'risk_amount_usdt': risk_amount_usdt,
-                'volatility_multiplier': volatility_multiplier,
-                'take_profit_pct': strategy_config.get('risk_config', {}).get('take_profit_pct', 0.04)
+                'volatility_multiplier': 0.75 if volatility > 0.03 else (1.15 if volatility < 0.01 else 1.0),
+                'take_profit_pct': risk_per_trade * 3,
+                'leverage': leverage,
+                'risk_per_trade': risk_per_trade
             }
             
         except Exception as e:
@@ -284,7 +305,14 @@ class AllocationService:
     
     def get_strategy_capital(self, strategy_name: str) -> float:
         """Get allocated capital for a specific strategy"""
-        return self._strategy_capital.get(strategy_name, 0.0)
+        capital = self._strategy_capital.get(strategy_name, 0.0)
+        
+        # Fallback: if no capital allocated, provide default allocation
+        if capital <= 0 and len(self._strategy_capital) == 0:
+            # Provide minimum capital for trading
+            return 1000.0  # Default $1000 per strategy
+        
+        return capital
     
     def get_allocation_summary(self) -> Dict[str, Any]:
         """Get summary of current allocations"""

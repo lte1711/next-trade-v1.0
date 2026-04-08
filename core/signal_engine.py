@@ -106,14 +106,39 @@ class SignalEngine:
             # Get MA decision
             ma_decision = self.get_ma_trade_decision(ma_analysis, current_price)
             
-            # Heikin Ashi analysis
+            # Calculate V2 Merged style alignment count and consensus
+            bullish_alignment_count = 0
+            bearish_alignment_count = 0
+            
+            # MA alignment
+            if ma_decision.get('ma_trend') == 'BULLISH':
+                bullish_alignment_count += 1
+            elif ma_decision.get('ma_trend') == 'BEARISH':
+                bearish_alignment_count += 1
+            
+            # Heikin Ashi alignment
             ha_signal = self._analyze_ha_signal(ha_analysis, -1)
+            if ha_signal.get('signal') == 'BUY':
+                bullish_alignment_count += 1
+            elif ha_signal.get('signal') == 'SELL':
+                bearish_alignment_count += 1
             
-            # Fractal analysis
+            # Fractal alignment
             fractal_signal = self._analyze_fractal_signal(fractals, -1)
+            if fractal_signal.get('signal') == 'BUY':
+                bullish_alignment_count += 1
+            elif fractal_signal.get('signal') == 'SELL':
+                bearish_alignment_count += 1
             
-            # RSI analysis
+            # RSI alignment
             rsi_signal = self._analyze_rsi_signal(rsi, -1)
+            if rsi_signal.get('signal') == 'BUY':
+                bullish_alignment_count += 1
+            elif rsi_signal.get('signal') == 'SELL':
+                bearish_alignment_count += 1
+            
+            # Calculate consensus
+            trend_consensus = bullish_alignment_count - bearish_alignment_count
             
             # ATR for risk management
             current_atr = atr[-1] if atr and atr[-1] is not None else 0.0
@@ -131,14 +156,31 @@ class SignalEngine:
             }
             
             # Weighted signal combination
-            signal_weights = strategy_config.get('signal_weights', {
-                'ma': 0.4,
-                'ha': 0.3,
-                'fractal': 0.2,
-                'rsi': 0.1
-            })
+            weights = strategy_config.get('signal_weights', {'ma': 0.4, 'ha': 0.3, 'fractal': 0.2, 'rsi': 0.1})
+            combined_signal = self._combine_signals(signals, weights)
             
-            combined_signal = self._combine_signals(signals, signal_weights)
+            # Get entry filters
+            entry_filters = strategy_config.get('entry_filters', {})
+            required_alignment_count = entry_filters.get('required_alignment_count', 1)
+            consensus_threshold = entry_filters.get('consensus_threshold', 1)
+            
+            # V2 Merged style entry conditions
+            long_ready = (
+                bullish_alignment_count >= required_alignment_count and
+                trend_consensus >= consensus_threshold and
+                combined_signal.get('signal') == 'BUY'
+            )
+            
+            short_ready = (
+                bearish_alignment_count >= required_alignment_count and
+                trend_consensus <= -consensus_threshold and
+                combined_signal.get('signal') == 'SELL'
+            )
+            
+            # Apply V2 Merged entry conditions
+            if not long_ready and not short_ready:
+                combined_signal['signal'] = 'HOLD'
+                combined_signal['reason'] += f' | V2 filter: alignment({bullish_alignment_count}/{bearish_alignment_count}) < {required_alignment_count} or consensus({trend_consensus}) < {consensus_threshold}'
             
             # Apply regime filter
             if market_regime == 'RANGING' and combined_signal['confidence'] < 0.7:

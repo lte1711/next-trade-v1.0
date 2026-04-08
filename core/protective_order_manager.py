@@ -1,5 +1,5 @@
 """
-Protective Order Manager - 보호주문 관리 전담 모듈
+Protective Order Manager - Protective Order Management Module
 """
 
 import requests
@@ -10,7 +10,7 @@ from decimal import Decimal, ROUND_DOWN, ROUND_UP
 
 
 class ProtectiveOrderManager:
-    """보호주문 생성, 취소, 상태 관리 전담"""
+    """Protective order creation, cancellation, and status management"""
     
     def __init__(self, api_key, api_secret, base_url, trading_results, symbol_info_getter, log_error_callback):
         self.api_key = api_key
@@ -22,7 +22,7 @@ class ProtectiveOrderManager:
         self.managed_stop_prices = {}
     
     def submit_protective_order(self, symbol, side, order_type, stop_price):
-        """보호주문 제출"""
+        """Submit protective order"""
         try:
             server_time = self.get_server_time()
             if not server_time:
@@ -72,7 +72,7 @@ class ProtectiveOrderManager:
         return None
     
     def get_open_orders(self, symbol):
-        """특정 심볼의 미체결 주문 조회"""
+        """Get pending orders for specific symbol"""
         try:
             server_time = self.get_server_time()
             if not server_time:
@@ -104,7 +104,7 @@ class ProtectiveOrderManager:
             return []
     
     def cancel_order(self, symbol, order_id):
-        """주문 취소"""
+        """Cancel order"""
         try:
             server_time = self.get_server_time()
             if not server_time:
@@ -135,7 +135,7 @@ class ProtectiveOrderManager:
             return False
     
     def cancel_symbol_protective_orders(self, symbol):
-        """심볼별 보호주문 전체 취소"""
+        """Cancel all protective orders for symbol"""
         open_orders = self.get_open_orders(symbol)
         for order in open_orders:
             order_id = order.get("orderId")
@@ -143,7 +143,7 @@ class ProtectiveOrderManager:
                 self.cancel_order(symbol, order_id)
     
     def place_protective_orders(self, strategy_name, symbol, entry_side, entry_price):
-        """보호주문 설치"""
+        """Install protective orders"""
         strategy = self.trading_results.get("strategies", {}).get(strategy_name, {})
         stop_loss_pct = self.safe_float_conversion(strategy.get("stop_loss_pct"), 0.02)
         take_profit_pct = self.safe_float_conversion(strategy.get("take_profit_pct"), 0.0)
@@ -156,22 +156,22 @@ class ProtectiveOrderManager:
             stop_price = entry_price * (1 + stop_loss_pct)
             take_price = entry_price * (1 - take_profit_pct) if take_profit_pct and take_profit_pct > 0 else None
         
-        # 기존 보호주문 취소
+        # Cancel existing protective orders
         self.cancel_symbol_protective_orders(symbol)
         
-        # STOP 주문 설치
+        # Install STOP order
         print(f"[TRACE] PROTECTIVE_ORDER_SUBMIT | {symbol} | STOP_MARKET | price={stop_price}")
         stop_result = self.submit_protective_order(symbol, exit_side, "STOP_MARKET", stop_price)
         if stop_result:
             self.managed_stop_prices[symbol] = stop_price
         
-        # TAKE_PROFIT 주문 설치
+        # Install TAKE_PROFIT order
         if take_price is not None:
             print(f"[TRACE] PROTECTIVE_ORDER_SUBMIT | {symbol} | TAKE_PROFIT_MARKET | price={take_price}")
             self.submit_protective_order(symbol, exit_side, "TAKE_PROFIT_MARKET", take_price)
     
     def update_stop_loss(self, symbol, new_stop_price, amount):
-        """기존 STOP_MARKET 보호주문을 취소하고 새 stop loss를 재설치"""
+        """Cancel existing STOP_MARKET protective order and reinstall new stop loss"""
         try:
             exit_side = "SELL" if amount > 0 else "BUY"
 
@@ -199,7 +199,7 @@ class ProtectiveOrderManager:
             return False
     
     def get_server_time(self):
-        """서버 시간 조회"""
+        """Get server time"""
         try:
             response = requests.get(f"{self.base_url}/fapi/v1/time", timeout=5)
             if response.status_code == 200:
@@ -209,7 +209,7 @@ class ProtectiveOrderManager:
         return None
     
     def safe_float_conversion(self, value, default=0.0):
-        """안전한 float 변환"""
+        """Safe float conversion"""
         try:
             return float(value) if value is not None else default
         except (ValueError, TypeError):

@@ -170,10 +170,11 @@ class AccountService:
             return False
     
     def sync_positions(self, trading_results: Dict[str, Any]) -> bool:
-        """Synchronize positions with exchange while preserving local position metadata"""
+        """V2 Merged: Synchronize positions with exchange while preserving local position metadata"""
         try:
             current_time = time.time()
-            if current_time - self._last_position_sync_time < self._sync_interval:
+            # V2 Merged: Reduced sync interval for better responsiveness
+            if current_time - self._last_position_sync_time < 5:  # 5 seconds instead of 30
                 return True
             
             positions = self.get_positions()
@@ -187,6 +188,7 @@ class AccountService:
                 symbol = position['symbol']
                 existing = existing_positions.get(symbol, {})
                 
+                # V2 Merged: Enhanced position metadata
                 active_positions[symbol] = {
                     'symbol': symbol,
                     'amount': position['amount'],
@@ -201,6 +203,8 @@ class AccountService:
                     'signal_confidence': existing.get('signal_confidence'),
                     'stop_loss_pct': existing.get('stop_loss_pct'),
                     'take_profit_pct': existing.get('take_profit_pct'),
+                    'partial_tp_state': existing.get('partial_tp_state', {}),
+                    'managed_stop_price': existing.get('managed_stop_price'),
                     'last_sync': int(current_time * 1000)
                 }
             

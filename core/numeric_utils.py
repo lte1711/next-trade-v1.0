@@ -1,12 +1,12 @@
 """
-Numeric Utils - 수치 관련 유틸 함수 모듈
+Numeric Utils - Numeric Utility Functions Module
 """
 
 from decimal import Decimal, ROUND_DOWN, ROUND_UP
 
 
 def safe_float_conversion(value, default=0.0):
-    """안전한 float 변환"""
+    """Safe float conversion"""
     try:
         return float(value) if value is not None else default
     except (ValueError, TypeError):
@@ -14,7 +14,7 @@ def safe_float_conversion(value, default=0.0):
 
 
 def round_to_step(value, step_size, rounding_mode=ROUND_DOWN):
-    """스텝 사이즈에 맞춰 반올림/내림"""
+    """Round to step size"""
     try:
         if step_size <= 0:
             return round(value, 8)

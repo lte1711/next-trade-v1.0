@@ -411,6 +411,74 @@ class PositionManager:
         except Exception as e:
             self.log_error("positions_manage", str(e))
     
+    def clear_position_management_state(self, symbol):
+        """V2 Merged: Clear position management state"""
+        try:
+            # Clear partial take profit state
+            if symbol in self.trading_results["partial_take_profit_state"]:
+                del self.trading_results["partial_take_profit_state"][symbol]
+            
+            # Clear managed stop prices
+            if symbol in self.trading_results["managed_stop_prices"]:
+                del self.trading_results["managed_stop_prices"][symbol]
+            
+            # Clear position entry times
+            if hasattr(self, 'position_entry_times') and symbol in self.position_entry_times:
+                del self.position_entry_times[symbol]
+            
+            # Clear recently closed symbols
+            if symbol in self.trading_results["recently_closed_symbols"]:
+                del self.trading_results["recently_closed_symbols"][symbol]
+                
+        except Exception as e:
+            self.log_error("clear_position_state", str(e))
+    
+    def get_position_management_state(self, symbol):
+        """V2 Merged: Get position management state"""
+        try:
+            return {
+                'partial_tp_state': self.trading_results["partial_take_profit_state"].get(symbol, {}),
+                'managed_stop_price': self.trading_results["managed_stop_prices"].get(symbol),
+                'entry_time': getattr(self, 'position_entry_times', {}).get(symbol),
+                'recently_closed': symbol in self.trading_results["recently_closed_symbols"]
+            }
+        except Exception:
+            return {}
+    
+    def should_exit_position_ma(self, position, market_regime, strategy=None):
+        """V2 Merged: Determine whether a position should exit on MA reversal conditions"""
+        try:
+            amount = position.get("amount", 0.0)
+            if amount == 0:
+                return None
+            
+            entry_price = position.get("entry_price", 0.0)
+            current_price = position.get("mark_price", 0.0)
+            
+            if entry_price <= 0 or current_price <= 0:
+                return None
+            
+            # Simple MA reversal check (V2 Merged style)
+            timeframe_data = market_regime.get("timeframes", {})
+            tf_5m = timeframe_data.get("5m", {})
+            tf_15m = timeframe_data.get("15m", {})
+            
+            # Check for MA reversal
+            if amount > 0:  # Long position
+                if (tf_5m.get("price_vs_ma") == "BELOW" and 
+                    tf_15m.get("price_vs_ma") == "BELOW"):
+                    return "MA_REVERSAL_LONG"
+            else:  # Short position
+                if (tf_5m.get("price_vs_ma") == "ABOVE" and 
+                    tf_15m.get("price_vs_ma") == "ABOVE"):
+                    return "MA_REVERSAL_SHORT"
+            
+            return None
+            
+        except Exception as e:
+            self.log_error("position_exit_check", str(e))
+            return None
+    
     def get_position_summary(self) -> Dict[str, Any]:
         """Get summary of all positions"""
         try:

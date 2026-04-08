@@ -24,6 +24,82 @@ class MarketDataService:
         """Default error logging"""
         print(f"[ERROR] {error_type}: {message}")
     
+    def get_available_symbols(self):
+        """V2 Merged: Fetch ranked tradable symbols using liquidity and volatility"""
+        try:
+            url = f"{self.base_url}/fapi/v1/exchangeInfo"
+            response = requests.get(url, timeout=10)
+            
+            if response.status_code == 200:
+                exchange_info = response.json()
+                symbols = []
+                
+                for symbol_info in exchange_info['symbols']:
+                    if (symbol_info['status'] == 'TRADING' and 
+                        symbol_info['quoteAsset'] == 'USDT' and
+                        symbol_info['contractType'] == 'PERPETUAL'):
+                        
+                        symbols.append({
+                            'symbol': symbol_info['symbol'],
+                            'base_asset': symbol_info['baseAsset'],
+                            'quote_asset': symbol_info['quoteAsset'],
+                            'status': symbol_info['status'],
+                            'contract_type': symbol_info['contractType']
+                        })
+                
+                # V2 Merged: Rank symbols by liquidity and volatility
+                ranked_symbols = self.rank_symbols_by_liquidity(symbols)
+                return ranked_symbols[:50]  # Top 50 symbols
+            else:
+                self.log_error("symbols_fetch", f"Failed to fetch symbols: {response.status_code}")
+                return []
+                
+        except Exception as e:
+            self.log_error("get_available_symbols", str(e))
+            return []
+    
+    def rank_symbols_by_liquidity(self, symbols):
+        """V2 Merged: Rank symbols by liquidity and volatility"""
+        try:
+            # Get 24hr ticker data for volume ranking
+            url = f"{self.base_url}/fapi/v1/ticker/24hr"
+            response = requests.get(url, timeout=10)
+            
+            if response.status_code == 200:
+                ticker_data = response.json()
+                volume_map = {}
+                
+                for ticker in ticker_data:
+                    symbol = ticker['symbol']
+                    volume = float(ticker['volume']) * float(ticker['lastPrice'])
+                    price_change_percent = abs(float(ticker['priceChangePercent']))
+                    
+                    volume_map[symbol] = {
+                        'volume': volume,
+                        'volatility': price_change_percent,
+                        'price': float(ticker['lastPrice'])
+                    }
+                
+                # Combine and rank symbols
+                ranked_symbols = []
+                for symbol_info in symbols:
+                    symbol = symbol_info['symbol']
+                    if symbol in volume_map:
+                        symbol_info.update(volume_map[symbol])
+                        ranked_symbols.append(symbol_info)
+                
+                # Sort by volume (descending) then by volatility (descending)
+                ranked_symbols.sort(key=lambda x: (x.get('volume', 0), x.get('volatility', 0)), reverse=True)
+                
+                return ranked_symbols
+            else:
+                self.log_error("ticker_fetch", f"Failed to fetch ticker data: {response.status_code}")
+                return symbols
+                
+        except Exception as e:
+            self.log_error("rank_symbols_liquidity", str(e))
+            return symbols
+    
     def get_klines(self, symbol, interval, limit=500):
         """Get kline data for symbol"""
         try:

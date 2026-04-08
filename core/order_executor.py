@@ -1,5 +1,5 @@
 """
-Order Executor - 주문 실행 전담 모듈
+Order Executor - Order Execution Module
 """
 
 import requests
@@ -11,7 +11,7 @@ from decimal import Decimal, ROUND_DOWN, ROUND_UP
 
 
 class OrderExecutor:
-    """주문 실행, 수량 검증, 재시도 로직 전담"""
+    """Order execution, quantity validation, and retry logic"""
     
     def __init__(self, api_key, api_secret, base_url, trading_results, symbol_info_getter, 
                  log_error_callback, safe_float_conversion, round_to_step, capital_getter=None):
@@ -26,7 +26,7 @@ class OrderExecutor:
         self.get_total_capital = capital_getter
     
     def submit_order(self, strategy_name, symbol, side, quantity, reduce_only=False, metadata=None):
-        """주문 실행 및 검증"""
+        """Execute and validate order"""
         try:
             metadata = metadata or {}
             metadata.setdefault("market_session", self.get_market_session())
@@ -64,7 +64,7 @@ class OrderExecutor:
             if min_notional <= 0:
                 min_notional = 5.0
             
-            # reduce_only일 때는 수량 증액 금지
+            # Prevent quantity increase for reduce_only orders
             if not reduce_only:
                 if quantity < min_qty:
                     quantity = min_qty
@@ -210,7 +210,7 @@ class OrderExecutor:
             return None
     
     def _process_order_result(self, result, strategy_name, symbol, side, quantity, reduce_only, metadata):
-        """주문 결과 처리"""
+        """Process order result"""
         try:
             order_id = result.get("orderId", "UNKNOWN")
             status = result.get("status", "UNKNOWN")
@@ -263,7 +263,7 @@ class OrderExecutor:
             return None
     
     def _create_signature(self, query_string):
-        """서명 생성"""
+        """Create signature"""
         return hmac.new(
             self.api_secret.encode('utf-8'),
             query_string.encode('utf-8'),
@@ -271,7 +271,7 @@ class OrderExecutor:
         ).hexdigest()
     
     def get_server_time(self):
-        """서버 시간 조회"""
+        """Get server time"""
         try:
             response = requests.get(f"{self.base_url}/fapi/v1/time", timeout=5)
             if response.status_code == 200:
@@ -281,7 +281,7 @@ class OrderExecutor:
         return None
     
     def get_current_price(self, symbol, default_price=0.0):
-        """현재 가격 조회"""
+        """Get current price"""
         try:
             current_prices = self.trading_results.get("market_data", {})
             return current_prices.get(symbol, default_price)
@@ -289,7 +289,7 @@ class OrderExecutor:
             return default_price
     
     def get_market_session(self):
-        """마켓 세션 조회"""
+        """Get market session"""
         try:
             server_time = self.get_server_time()
             if not server_time:

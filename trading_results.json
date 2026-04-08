@@ -1,0 +1,52 @@
+{
+  "strategies": {
+    "ma_trend_follow": {
+      "name": "MA Trend Following",
+      "enabled": true,
+      "stop_loss_pct": 0.02,
+      "take_profit_pct": 0.04,
+      "position_hold_minutes": 30,
+      "max_position_size_usdt": 1000.0,
+      "performance": {
+        "win_rate": 0.0,
+        "avg_return": 0.0,
+        "total_trades": 0
+      },
+      "last_signal": null,
+      "last_trade": null
+    },
+    "ema_crossover": {
+      "name": "EMA Crossover",
+      "enabled": true,
+      "stop_loss_pct": 0.015,
+      "take_profit_pct": 0.03,
+      "position_hold_minutes": 30,
+      "max_position_size_usdt": 800.0,
+      "performance": {
+        "win_rate": 0.0,
+        "avg_return": 0.0,
+        "total_trades": 0
+      },
+      "last_signal": null,
+      "last_trade": null
+    }
+  },
+  "active_positions": {},
+  "pending_trades": [],
+  "closed_trades": [],
+  "real_orders": [],
+  "total_trades": 0,
+  "entry_failures": 0,
+  "available_balance": 0.0,
+  "total_capital": 0.0,
+  "last_error": null,
+  "error_count": 0,
+  "system_errors": [],
+  "entry_mode_performance": {},
+  "recently_closed_symbols": {},
+  "position_entry_times": {},
+  "partial_take_profit_state": {},
+  "managed_stop_prices": {},
+  "last_cycle": null,
+  "reset_time": "2026-04-08T16:57:21.896342"
+}

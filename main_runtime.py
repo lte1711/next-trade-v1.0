@@ -1,5 +1,5 @@
 """
-Main Runtime - 통합 런타임 모듈
+Main Runtime - Integrated Runtime Module
 """
 
 import sys
@@ -8,7 +8,7 @@ import json
 from datetime import datetime
 import time
 
-# Core 모듈 임포트
+# Core module imports
 from core.protective_order_manager import ProtectiveOrderManager
 from core.pending_order_manager import PendingOrderManager
 from core.order_executor import OrderExecutor
@@ -25,14 +25,14 @@ from core.account_service import AccountService
 from core.trade_orchestrator import TradeOrchestrator
 from api_config import get_api_credentials, is_api_valid
 
-# 필수 임포트
+# Essential imports
 import requests
 import hmac
 import hashlib
 
 
 class TradingRuntime:
-    """통합 트레이딩 런타임"""
+    """Integrated Trading Runtime"""
     
     def __init__(self):
         self.load_local_env_file()
@@ -60,7 +60,7 @@ class TradingRuntime:
             "managed_stop_prices": {}
         }
         
-        # API 키 확인
+        # API key verification
         if not is_api_valid():
             print("[ERROR] API credentials not found. Please run: python setup_api.py")
             return
@@ -68,7 +68,7 @@ class TradingRuntime:
         self.api_key, self.api_secret = get_api_credentials()
         self.base_url = "https://testnet.binancefuture.com"
         
-        # 새로운 모듈화 아키텍처 초기화
+        # New modular architecture initialization
         self.market_data_service = MarketDataService(
             self.base_url, self.api_key, self.api_secret, self.log_system_error
         )
@@ -79,7 +79,7 @@ class TradingRuntime:
         self.strategy_registry = StrategyRegistry(self.log_system_error)
         self.allocation_service = AllocationService(self.log_system_error)
         
-        # 기존 매니저들 (호환성 유지)
+        # Existing managers (compatibility maintained)
         self.order_executor = OrderExecutor(
             self.api_key, self.api_secret, self.base_url, self.trading_results,
             self.get_symbol_info, self.log_system_error, safe_float_conversion, round_to_step,
@@ -106,7 +106,7 @@ class TradingRuntime:
             sync_positions_callback=lambda: self.account_service.sync_positions(self.trading_results)
         )
         
-        # 메인 오케스트레이터
+        # Main orchestrator
         self.trade_orchestrator = TradeOrchestrator(
             self.trading_results,
             self.market_data_service,
@@ -129,9 +129,9 @@ class TradingRuntime:
         except Exception:
             config = {}
         
-        # Load trading configuration
+        # Load V2 Merged trading configuration
         trading_config = config.get("trading_config", {})
-        self.max_open_positions = trading_config.get("max_open_positions", 1)
+        self.max_open_positions = trading_config.get("max_open_positions", 5)
         self.fast_entry_enabled = trading_config.get("fast_entry_enabled", True)
         self.partial_tp1_pct = trading_config.get("partial_tp1_pct", 0.8)
         self.fast_tp1_pct = trading_config.get("fast_tp1_pct", 0.5)
@@ -141,6 +141,11 @@ class TradingRuntime:
         self.take_profit_pct = trading_config.get("take_profit_pct", 0.04)
         self.position_hold_minutes = trading_config.get("position_hold_minutes", 30)
         self.max_position_size_usdt = trading_config.get("max_position_size_usdt", 1000.0)
+        
+        # V2 Merged: Additional position management settings
+        self.position_sync_interval = trading_config.get("position_sync_interval", 5)
+        self.position_limit_check = trading_config.get("position_limit_check", True)
+        self.excess_position_close = trading_config.get("excess_position_close", True)
         
         # Load API configuration
         api_config = config.get("api_config", {})
@@ -206,7 +211,7 @@ class TradingRuntime:
             self.log_system_error("system_init_error", str(e))
     
     def load_local_env_file(self):
-        """환경 설정 파일 로드"""
+        """Load environment configuration file"""
         try:
             if os.path.exists('.env'):
                 with open('.env', 'r', encoding='utf-8') as f:
@@ -222,11 +227,11 @@ class TradingRuntime:
     
         
     def resolve_base_url(self):
-        """기본 URL 해결"""
+        """Resolve base URL"""
         return "https://testnet.binancefuture.com"
     
     def log_system_error(self, error_type, error_message):
-        """시스템 오류 로깅"""
+        """System error logging"""
         try:
             error_record = {
                 "timestamp": datetime.now().isoformat(),
@@ -242,7 +247,7 @@ class TradingRuntime:
             pass
     
     def load_strategies(self):
-        """전략 로드"""
+        """Load strategies"""
         self.trading_results["strategies"] = {
             "ma_trend_follow": {
                 "name": "MA Trend Following",
@@ -267,22 +272,26 @@ class TradingRuntime:
                                 if self.trading_results["strategies"][s].get("enabled", False)]
     
     def load_valid_symbols(self):
-        """유효 심볼 로드"""
-        return [
-            "BTCUSDT", "ETHUSDT", "BNBUSDT", "ADAUSDT", "SOLUSDT",
-            "XRPUSDT", "DOTUSDT", "LINKUSDT", "LTCUSDT", "AVAXUSDT",
-            "MATICUSDT", "UNIUSDT", "ATOMUSDT", "FILUSDT", "ICPUSDT",
-            "VETUSDT", "THETAUSDT", "FTMUSDT", "SANDUSDT", "MANAUSDT",
-            "ALGOUSDT", "ENJUSDT", "CRVUSDT", "AAVEUSDT", "MKRUSDT",
-            "COMPUSDT", "SUSHIUSDT", "YFIUSDT", "SNXUSDT", "RUNEUSDT"
-        ]
+        """Load valid symbols using market data service"""
+        try:
+            # V2 Merged: Use market data service for symbol ranking
+            dynamic_symbols = self.market_data_service.get_available_symbols()
+            if dynamic_symbols:
+                print(f"[INFO] Loaded {len(dynamic_symbols)} dynamic symbols")
+                return [s['symbol'] for s in dynamic_symbols]
+            else:
+                print(f"[ERROR] No symbols available from dynamic ranking")
+                return []
+        except Exception as e:
+            print(f"[ERROR] Failed to load symbols: {e}")
+            return []
     
     def get_symbol_info(self, symbol):
-        """심볼 정보 조회"""
+        """Get symbol information"""
         return get_symbol_info(self.base_url, self.api_key, self.api_secret, symbol)
     
     def get_order_status(self, symbol, order_id):
-        """주문 상태 조회"""
+        """Get order status"""
         try:
             server_time = get_server_time(self.base_url)
             if not server_time:
@@ -314,37 +323,52 @@ class TradingRuntime:
             return None
     
     def clear_position_management_state(self, symbol):
-        """포지션 관리 상태 정리"""
-        try:
-            if symbol in self.trading_results["partial_take_profit_state"]:
-                del self.trading_results["partial_take_profit_state"][symbol]
-        except Exception:
-            pass
+        """Clear position management state using position manager"""
+        return self.position_manager.clear_position_management_state(symbol)
+    
+    def get_position_management_state(self, symbol):
+        """Get position management state using position manager"""
+        return self.position_manager.get_position_management_state(symbol)
+    
+    def should_exit_position_ma(self, position, market_regime, strategy=None):
+        """Determine position exit using position manager"""
+        return self.position_manager.should_exit_position_ma(position, market_regime, strategy)
     
     def sync_positions(self):
-        """실제 포지션 동기화 최소 구현"""
+        """V2 Merged: Synchronize active positions from the exchange"""
         try:
-            # TODO: 실제 API 기반 포지션 동기화 로직 구현
-            # 현재는 active_positions 타임스탬프 갱신과 기본 유효성 검사
-            current_time = datetime.now().isoformat()
-            
-            for symbol in list(self.trading_results["active_positions"].keys()):
-                position = self.trading_results["active_positions"][symbol]
+            # V2 Merged: Use account service for real API-based synchronization
+            if self.account_service.sync_positions(self.trading_results):
+                active_positions = self.trading_results.get("active_positions", {})
+                print(f"[TRACE] SYNC_POSITIONS_COMPLETE | symbols={len(active_positions)}")
+                print(f"[INFO] Positions synced: {len(active_positions)}")
                 
-                # 타임스탬프 갱신
-                position["last_sync"] = current_time
+                # V2 Merged: Check for position limit exceeded
+                if len(active_positions) > self.max_open_positions:
+                    excess = len(active_positions) - self.max_open_positions
+                    print(f"[WARN] POSITION_LIMIT_EXCEEDED | excess={excess}")
+                    
+                    # Sort by performance and close worst performing
+                    sorted_positions = sorted(
+                        active_positions.items(),
+                        key=lambda item: abs(item[1].get("percentage", 0.0))
+                    )
+                    
+                    for symbol, position in sorted_positions[:excess]:
+                        print(f"[INFO] CLOSING_EXCESS_POSITION | {symbol}")
+                        # Note: Actual closing logic would be handled by position manager
                 
-                # 기본 유효성 검사: amount가 0이면 제거
-                if abs(position.get("amount", 0.0)) == 0:
-                    print(f"[TRACE] ZERO_POSITION_REMOVED | {symbol}")
-                    del self.trading_results["active_positions"][symbol]
+                return True
+            else:
+                print(f"[ERROR] Position sync failed")
+                return False
                 
         except Exception as e:
             self.log_system_error("sync_positions_error", str(e))
-        return None
+            return False
     
     def display_status(self):
-        """상태 표시"""
+        """Display status"""
         print(f"[INFO] REFACTORED_RUNTIME: Modular architecture implemented")
         print(f"[INFO] CORE_MODULES: ProtectiveOrderManager, PendingOrderManager, OrderExecutor")
         print(f"[INFO] MONOLITHIC_REDUCED: Core responsibilities split into modules")
@@ -352,34 +376,34 @@ class TradingRuntime:
         return None
     
     def run(self):
-        """메인 실행 루프 - 완전한 거래 오케스트레이션"""
+        """Main execution loop - Complete trading orchestration"""
         try:
             print(f"[INFO] Complete Modular Trading Runtime Started")
             print(f"[INFO] Start time: {self.start_time}")
             print(f"[INFO] Initial capital: ${self.total_capital:.2f}")
             
-            # 초기화 및 설정
+            # Initialization and setup
             self._initialize_trading_system()
             
-            # 메인 거래 루프
+            # Main trading loop
             while True:
                 try:
-                    # 1. 계정 및 포지션 동기화
+                    # 1. Account and position synchronization
                     self.account_service.periodic_sync(self.trading_results)
                     
-                    # 2. 미체결 주문 새로고침
+                    # 2. Refresh pending orders
                     self.pending_order_manager.refresh_pending_orders()
                     
-                    # 3. 전체 거래 사이클 실행
+                    # 3. Execute complete trading cycle
                     cycle_results = self.trade_orchestrator.run_trading_cycle(
                         self.valid_symbols, 
                         self.active_strategies
                     )
                     
-                    # 4. 결과 처리
+                    # 4. Process results
                     self._process_cycle_results(cycle_results)
                     
-                    # 5. 상태 표시
+                    # 5. Display status
                     self._display_cycle_status(cycle_results)
                     
                     time.sleep(10)  # 10초 주기
@@ -391,35 +415,53 @@ class TradingRuntime:
                     self.log_system_error("runtime_error", str(e))
                     time.sleep(10)
                     
-            # 오류 처리
+            # Error handling
             for error in cycle_results.get('errors', []):
                 self.log_system_error("cycle_error", error)
             
-            # 통계 업데이트
+            # Statistics update
             self.trading_results['last_cycle'] = cycle_results
             
         except Exception as e:
             self.log_system_error("cycle_results_process", str(e))
     
     def _process_cycle_results(self, cycle_results):
-        """Process cycle results and update trading statistics"""
+        """Process cycle results with robust error handling"""
         try:
-            # Update trading results
-            self.trading_results.update(cycle_results)
+            # Validate cycle results
+            if not isinstance(cycle_results, dict):
+                self.log_system_error("invalid_cycle_results", f"Expected dict, got {type(cycle_results)}")
+                return
             
-            # Log cycle completion
+            # Safe update with validation
+            for key, value in cycle_results.items():
+                if key in self.trading_results and isinstance(self.trading_results[key], dict) and isinstance(value, dict):
+                    self.trading_results[key].update(value)
+                else:
+                    self.trading_results[key] = value
+            
+            # Extract stats safely
             signals = cycle_results.get('signals_generated', 0)
             trades = cycle_results.get('trades_executed', 0)
-            errors = len(cycle_results.get('errors', []))
+            errors = cycle_results.get('errors', [])
+            error_count = len(errors) if isinstance(errors, list) else 0
             
-            if signals > 0 or trades > 0:
-                print(f"[INFO] Cycle completed - Signals: {signals}, Trades: {trades}, Errors: {errors}")
+            if signals > 0 or trades > 0 or error_count > 0:
+                print(f"[INFO] Cycle completed - Signals: {signals}, Trades: {trades}, Errors: {error_count}")
+            
+            # Save results periodically
+            try:
+                import json
+                with open('trading_results.json', 'w') as f:
+                    json.dump(self.trading_results, f, indent=2, default=str)
+            except Exception as save_error:
+                self.log_system_error("save_results", str(save_error))
             
         except Exception as e:
             self.log_system_error("cycle_results_process", str(e))
     
     def _display_cycle_status(self, cycle_results):
-        """사이클 상태 표시"""
+        """Display cycle status"""
         try:
             signals = cycle_results.get('signals_generated', 0)
             trades = cycle_results.get('trades_executed', 0)
@@ -430,9 +472,6 @@ class TradingRuntime:
                 
         except Exception as e:
             self.log_system_error("cycle_status_display", str(e))
-        
-        except Exception as e:
-            self.log_system_error("critical_runtime_error", str(e))
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 """
-Pending Order Manager - 미체결 주문 관리 전담 모듈
+Pending Order Manager - Pending Order Management Module
 """
 
 import time
@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 class PendingOrderManager:
-    """미체결 주문 상태 추적, 전환 처리, 카운터 관리 전담"""
+    """Pending order status tracking, conversion processing, and counter management"""
     
     def __init__(self, trading_results, get_order_status_callback, log_error_callback, 
                  position_entry_times, protective_order_manager, clear_position_state_callback, sync_positions_callback=None):
@@ -20,7 +20,7 @@ class PendingOrderManager:
         self.sync_positions = sync_positions_callback
     
     def refresh_pending_orders(self):
-        """미체결 주문 상태 새로고침 및 전환 처리"""
+        """Refresh pending order status and handle conversions"""
         for trade in self.trading_results.get("real_orders", []):
             if trade.get("status") not in {"NEW", "PARTIALLY_FILLED"}:
                 continue
@@ -54,12 +54,12 @@ class PendingOrderManager:
             elif trade["status"] == "FILLED":
                 trade["type"] = "ACTUAL_TRADE"
                 
-                # 진입 주문이 지연/부분체결 후 FILLED로 바뀐 경우 보호주문 재설치
+                # Reinstall protective orders when entry order changes from delayed/partial fill to FILLED
                 if (not trade.get("reduce_only")) and old_status in {"NEW", "PARTIALLY_FILLED"}:
                     print(f"[TRACE] PENDING_TO_FILLED | {symbol} | old={old_status} | new={trade['status']}")
                     self.position_entry_times[symbol] = trade.get("timestamp", datetime.now().isoformat())
                     
-                    # 중복 보호주문 방지: 기존 보호주문 먼저 정리 후 재설치
+                    # Prevent duplicate protective orders: cancel existing orders first, then reinstall
                     self.protective_order_manager.cancel_symbol_protective_orders(symbol)
                     self.protective_order_manager.place_protective_orders(
                         trade.get("strategy"),
@@ -74,14 +74,14 @@ class PendingOrderManager:
                 if trade["status"] == "FILLED":
                     trade["realized_pnl"] = self.estimate_realized_pnl(trade)
                     
-                    # 완전청산 판정 직전 포지션 동기화
+                    # Synchronize positions just before determining full exit
                     if callable(self.sync_positions):
                         self.sync_positions()
                     
-                    # 완전청산 여부 확인
+                    # Check for full exit
                     remaining_position = self.trading_results["active_positions"].get(symbol)
                     
-                    # 완전청산일 때만 상태 초기화 + 보호주문 취소
+                    # Only initialize state and cancel protective orders on full exit
                     if not remaining_position or abs(remaining_position.get("amount", 0.0)) == 0:
                         print(f"[TRACE] FULL_EXIT_CONFIRMED | {symbol}")
                         self.trading_results["recently_closed_symbols"][symbol] = datetime.now().isoformat()
@@ -94,7 +94,7 @@ class PendingOrderManager:
         self.recompute_trade_counters()
     
     def estimate_realized_pnl(self, trade):
-        """실현 손익 추정"""
+        """Estimate realized profit/loss"""
         try:
             entry_price = self.safe_float_conversion(trade.get("entry_price"), 0.0)
             exit_price = self.safe_float_conversion(trade.get("price"), 0.0)
@@ -110,14 +110,14 @@ class PendingOrderManager:
         return 0.0
     
     def safe_float_conversion(self, value, default=0.0):
-        """안전한 float 변환"""
+        """Safe float conversion"""
         try:
             return float(value) if value is not None else default
         except (ValueError, TypeError):
             return default
     
     def recompute_trade_counters(self):
-        """거래 카운터 재계산"""
+        """Recalculate trade counters"""
         try:
             real_orders = self.trading_results.get("real_orders", [])
             pending_trades = [t for t in real_orders if t.get("type") == "PENDING_TRADE"]

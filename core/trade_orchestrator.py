@@ -6,6 +6,9 @@ from typing import List, Dict, Optional, Any, Tuple
 from decimal import Decimal
 import json
 from datetime import datetime
+from core.position_manager import PositionManager
+from core.account_service import AccountService
+from core.partial_take_profit_manager import PartialTakeProfitManager
 
 class TradeOrchestrator:
     """Main trading execution orchestration"""
@@ -13,8 +16,8 @@ class TradeOrchestrator:
     def __init__(self, trading_results: Dict[str, Any],
                  market_data_service, indicator_service, market_regime_service,
                  signal_engine, strategy_registry, allocation_service,
-                 position_manager, order_executor, account_service,
-                 protective_order_manager,
+                 position_manager: PositionManager, order_executor, account_service: AccountService,
+                 protective_order_manager, partial_take_profit_manager: PartialTakeProfitManager,
                  log_error_callback=None):
         self.trading_results = trading_results
         self.market_data_service = market_data_service
@@ -27,6 +30,7 @@ class TradeOrchestrator:
         self.order_executor = order_executor
         self.account_service = account_service
         self.protective_order_manager = protective_order_manager
+        self.partial_take_profit_manager = partial_take_profit_manager
         self.log_error = log_error_callback or self._default_log_error
     
     def _default_log_error(self, error_type, message):
@@ -68,7 +72,8 @@ class TradeOrchestrator:
                 return {'success': False, 'reason': f'Confidence {confidence:.2f} below threshold {min_confidence}'}
             
             # Check if we can open new positions
-            if not self.account_service.can_open_new_positions(self.trading_results):
+            max_positions = strategy_config.get('risk_config', {}).get('max_open_positions', 1)
+            if not self.account_service.can_open_new_positions(self.trading_results, max_positions):
                 return {'success': False, 'reason': 'Cannot open new positions (limit or balance)'}
             
             # Calculate position size
@@ -174,24 +179,47 @@ class TradeOrchestrator:
     
     def _place_protective_orders(self, symbol: str, position_info: Dict[str, Any],
                                strategy_config: Dict[str, Any]):
-        """Place protective orders for a position"""
+        """Place protective orders for a position using V2 Merged methodology"""
         try:
             entry_price = position_info.get('entry_price', 0.0)
             amount = position_info.get('amount', 0.0)
-            stop_loss_pct = position_info.get('stop_loss_pct', 0.02)
-            take_profit_pct = position_info.get('take_profit_pct', 0.04)
+            strategy_name = strategy_config.get('name', 'unknown')
+            
+            # Get V2 Merged risk config
+            risk_config = strategy_config.get('risk_config', {})
+            stop_loss_pct = risk_config.get('stop_loss_pct', 0.02)
+            take_profit_pct = risk_config.get('take_profit_pct', 0.04)
+            
+            # V2 Merged: Apply session multipliers
+            session_multipliers = risk_config.get('session_multipliers', {})
+            current_session = self._get_market_session()
+            session_multiplier = session_multipliers.get(current_session, {'stop': 1.0, 'take': 1.0})
+            
+            # Apply session-based adjustments
+            adjusted_stop_loss_pct = stop_loss_pct * session_multiplier.get('stop', 1.0)
+            adjusted_take_profit_pct = take_profit_pct * session_multiplier.get('take', 1.0)
+            
+            # V2 Merged: Check for fast entry tight stop
+            entry_mode = position_info.get('entry_mode', 'NORMAL')
+            fast_tight_stop_loss_pct = risk_config.get('fast_tight_stop_loss_pct', 0.003)
+            if entry_mode in {'FAST_LONG', 'FAST_SHORT'} and fast_tight_stop_loss_pct > 0:
+                adjusted_stop_loss_pct = min(adjusted_stop_loss_pct, fast_tight_stop_loss_pct)
             
             if entry_price <= 0:
                 return
             
             if amount > 0:  # Long position
-                stop_loss_price = entry_price * (1 - stop_loss_pct)
-                take_profit_price = entry_price * (1 + take_profit_pct)
+                stop_loss_price = entry_price * (1 - adjusted_stop_loss_pct)
+                take_profit_price = entry_price * (1 + adjusted_take_profit_pct)
             else:  # Short position
-                stop_loss_price = entry_price * (1 + stop_loss_pct)
-                take_profit_price = entry_price * (1 - take_profit_pct)
+                stop_loss_price = entry_price * (1 + adjusted_stop_loss_pct)
+                take_profit_price = entry_price * (1 - adjusted_take_profit_pct)
+            
+            # Cancel existing protective orders
+            self.protective_order_manager.cancel_symbol_protective_orders(symbol)
             
             # Place stop loss order
+            print(f"[TRACE] PROTECTIVE_ORDER_SUBMIT | {symbol} | STOP_MARKET | price={stop_loss_price}")
             self.protective_order_manager.submit_protective_order(
                 symbol=symbol,
                 side='SELL' if amount > 0 else 'BUY',
@@ -200,15 +228,42 @@ class TradeOrchestrator:
             )
             
             # Place take profit order
-            self.protective_order_manager.submit_protective_order(
-                symbol=symbol,
-                side='SELL' if amount > 0 else 'BUY',
-                order_type='TAKE_PROFIT_MARKET',
-                stop_price=take_profit_price
-            )
+            if take_profit_price is not None:
+                print(f"[TRACE] PROTECTIVE_ORDER_SUBMIT | {symbol} | TAKE_PROFIT_MARKET | price={take_profit_price}")
+                self.protective_order_manager.submit_protective_order(
+                    symbol=symbol,
+                    side='SELL' if amount > 0 else 'BUY',
+                    order_type='TAKE_PROFIT_MARKET',
+                    stop_price=take_profit_price
+                )
             
         except Exception as e:
             self.log_error("protective_orders_place", str(e))
+    
+    def _get_market_session(self):
+        """V2 Merged: Get current market session for time-based adjustments"""
+        try:
+            from datetime import datetime, timezone
+            now = datetime.now(timezone.utc)
+            hour = now.hour
+            
+            # V2 Merged session definitions
+            if 9 <= hour < 12:  # US morning peak
+                return 'US_PEAK'
+            elif 13 <= hour < 16:  # US afternoon
+                return 'US_PEAK'
+            elif 7 <= hour < 10:  # European morning
+                return 'EU_PEAK'
+            elif 0 <= hour < 3:  # Asian evening
+                return 'ASIA_PEAK'
+            elif 3 <= hour < 6:  # Dead zone
+                return 'DEAD_ZONE'
+            else:
+                return 'NORMAL'
+                
+        except Exception as e:
+            self.log_error("market_session_detection", str(e))
+            return 'NORMAL'
     
     def emit_signal_diagnostic(self, symbol: str, strategy_name: str, signal: Dict[str, Any],
                             market_data: Dict[str, Any], indicators: Dict[str, Any],
@@ -334,8 +389,21 @@ class TradeOrchestrator:
             if not self.account_service.periodic_sync(self.trading_results):
                 cycle_results['errors'].append('Account sync failed')
             
-            # 2. Update market data
+            # 2. Update market data and apply V2 Merged symbol selection
             market_data = self.market_data_service.update_market_data(symbols)
+            
+            # V2 Merged: Apply strategy-specific symbol selection
+            strategy_symbols = {}
+            for strategy_name in active_strategies:
+                # Get strategy-specific symbols
+                preferred_symbols = self.strategy_registry.select_preferred_symbols(
+                    strategy_name, 
+                    symbols, 
+                    max_symbols=10
+                )
+                strategy_symbols[strategy_name] = preferred_symbols
+                
+                print(f"[INFO] {strategy_name}: Selected {len(preferred_symbols)} symbols: {preferred_symbols[:3]}...")
             if not market_data:
                 cycle_results['errors'].append('Market data update failed')
                 return cycle_results
@@ -361,18 +429,21 @@ class TradeOrchestrator:
             all_diagnostics = []
             trade_candidates = []
             
-            for symbol in symbols:
-                symbol_data = market_data.get(symbol, {})
-                if not symbol_data:
-                    continue
+            # V2 Merged: Use strategy-specific symbols for signal generation
+            for strategy_name in active_strategies:
+                strategy_specific_symbols = strategy_symbols.get(strategy_name, symbols)
                 
-                # Calculate indicators
-                indicators = self._calculate_symbol_indicators(symbol_data)
-                if not indicators:
-                    continue
+                for symbol in strategy_specific_symbols:
+                    symbol_data = market_data.get(symbol, {})
+                    if not symbol_data:
+                        continue
                 
-                # Generate signals for each strategy
-                for strategy_name in active_strategies:
+                    # Calculate indicators
+                    indicators = self._calculate_symbol_indicators(symbol_data)
+                    if not indicators:
+                        continue
+                    
+                    # Generate signal for this strategy
                     signal = self.signal_engine.generate_strategy_signal(
                         symbol_data, indicators, regime_data.get(symbol, {}), 
                         self.strategy_registry.get_strategy_profile(strategy_name)

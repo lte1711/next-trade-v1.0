@@ -1,5 +1,5 @@
 """
-Exchange Utils - 바이낸스 API 관련 유틸 함수 모듈
+Exchange Utils - Binance API Utility Functions Module
 """
 
 import requests
@@ -8,7 +8,7 @@ import hashlib
 
 
 def create_signature(api_secret, query_string):
-    """서명 생성"""
+    """Create signature"""
     return hmac.new(
         api_secret.encode('utf-8'),
         query_string.encode('utf-8'),
@@ -17,12 +17,12 @@ def create_signature(api_secret, query_string):
 
 
 def create_query_string(params):
-    """쿼리 스트링 생성"""
+    """Create query string"""
     return "&".join([f"{k}={v}" for k, v in sorted(params.items())])
 
 
 def get_server_time(base_url):
-    """서버 시간 조회"""
+    """Get server time"""
     try:
         response = requests.get(f"{base_url}/fapi/v1/time", timeout=5)
         if response.status_code == 200:
@@ -33,7 +33,7 @@ def get_server_time(base_url):
 
 
 def get_symbol_info(base_url, api_key, api_secret, symbol):
-    """심볼 정보 조회"""
+    """Get symbol information"""
     try:
         url = f"{base_url}/fapi/v1/exchangeInfo"
         response = requests.get(url, timeout=10)
