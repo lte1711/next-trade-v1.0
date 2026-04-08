@@ -24,5 +24,10 @@
   "api_config": {
     "recv_window": 5000,
     "min_volume_threshold": 1000000
+  },
+  "binance": {
+    "api_key": "test_api_key_for_demo",
+    "api_secret": "test_api_secret_for_demo",
+    "testnet": true
   }
 }

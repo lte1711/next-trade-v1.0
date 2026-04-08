@@ -46,11 +46,37 @@ class TradeOrchestrator:
         except (ValueError, TypeError):
             return default
     
+    def _check_duplicate_entry(self, symbol: str, strategy_name: str) -> bool:
+        """Check if there's already a pending or active entry for this symbol"""
+        try:
+            # Check active positions
+            active_positions = self.trading_results.get('active_positions', {})
+            if symbol in active_positions:
+                self.logger.warning(f"Duplicate entry prevented: {symbol} already in active positions")
+                return True
+            
+            # Check pending trades
+            pending_trades = self.trading_results.get('pending_trades', [])
+            for trade in pending_trades:
+                if trade.get('symbol') == symbol:
+                    self.logger.warning(f"Duplicate entry prevented: {symbol} already in pending trades")
+                    return True
+            
+            return False
+            
+        except Exception as e:
+            self.logger.error(f"Error checking duplicate entry: {e}")
+            return False
+    
     def execute_strategy_trade(self, symbol: str, strategy_name: str,
                             market_data: Dict[str, Any], indicators: Dict[str, Any],
                             regime: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Execute a strategy trade for a symbol"""
         try:
+            # Check for duplicate entry
+            if self._check_duplicate_entry(symbol, strategy_name):
+                return {'success': False, 'reason': f'Duplicate entry prevented: {symbol} already has active or pending trade'}
+            
             # Get strategy configuration
             strategy_config = self.strategy_registry.get_strategy_profile(strategy_name)
             if not strategy_config:

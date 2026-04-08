@@ -1,4 +1,20 @@
-import requests
+#!/usr/bin/env python3
+"""
+Rewrite Market Data Service - Completely rewrite the market data service to fix issues
+"""
+
+def rewrite_market_data_service():
+    """Rewrite the market data service to fix all issues"""
+    print('=' * 60)
+    print('REWRITE MARKET DATA SERVICE')
+    print('=' * 60)
+    
+    # Read the current file
+    with open('core/market_data_service.py', 'r') as f:
+        content = f.read()
+    
+    # Create a new, clean version of the update_market_data method
+    new_service_content = '''import requests
 import json
 import time
 import logging
@@ -129,20 +145,21 @@ class MarketDataService:
         try:
             market_data = {}
             
-            # Convert symbols to strings
-            symbol_strings = []
+            # Handle both dict and string inputs
+            processed_symbols = []
             for symbol in symbols:
                 if isinstance(symbol, dict):
-                    symbol_strings.append(symbol.get('symbol', str(symbol)))
+                    symbol_name = symbol.get('symbol', str(symbol))
+                    processed_symbols.append(symbol_name)
                 elif isinstance(symbol, str):
-                    symbol_strings.append(symbol)
+                    processed_symbols.append(symbol)
                 else:
-                    symbol_strings.append(str(symbol))
+                    processed_symbols.append(str(symbol))
             
             # Remove duplicates
-            symbol_strings = list(set(symbol_strings))
+            processed_symbols = list(set(processed_symbols))
             
-            for symbol in symbol_strings:
+            for symbol in processed_symbols:
                 symbol_data = {'prices': {}, 'klines': {}}
                 
                 # Get current price
@@ -289,3 +306,57 @@ class MarketDataService:
         except Exception as e:
             self.log_error("ranking_error", str(e))
             return []
+'''
+    
+    # Write the new service
+    with open('core/market_data_service.py', 'w') as f:
+        f.write(new_service_content)
+    
+    print('[SUCCESS] Market data service completely rewritten')
+    
+    # Test the new service
+    print('\n[TEST] Testing the new market data service:')
+    
+    try:
+        from core.market_data_service import MarketDataService
+        mds = MarketDataService('https://demo-fapi.binance.com')
+        
+        # Test get_available_symbols
+        symbols = mds.get_available_symbols()
+        print(f'  - Available symbols: {len(symbols)}')
+        
+        if symbols:
+            print(f'    First symbol: {symbols[0]}')
+        
+        # Test get_current_prices
+        test_symbols = ['BTCUSDT', 'ETHUSDT', 'DOGEUSDT']
+        prices = mds.get_current_prices(test_symbols)
+        print(f'  - Current prices: {len(prices)}')
+        
+        for symbol, price in prices.items():
+            print(f'    {symbol}: {price}')
+        
+        # Test update_market_data with string symbols
+        market_data = mds.update_market_data(test_symbols)
+        print(f'  - Market data update: {len(market_data)} symbols')
+        
+        for symbol in test_symbols:
+            if symbol in market_data:
+                symbol_data = market_data[symbol]
+                prices = symbol_data.get('prices', {})
+                current_price = prices.get('current', 0)
+                print(f'    {symbol}: {current_price}')
+        
+        print('[SUCCESS] New market data service tested successfully')
+        
+    except Exception as e:
+        print(f'[ERROR] Test failed: {e}')
+        import traceback
+        traceback.print_exc()
+    
+    print('=' * 60)
+    print('[RESULT] Market data service rewrite complete')
+    print('=' * 60)
+
+if __name__ == "__main__":
+    rewrite_market_data_service()

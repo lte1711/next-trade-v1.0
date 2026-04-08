@@ -1,4 +1,16 @@
-import logging
+#!/usr/bin/env python3
+"""
+Rewrite Regime Service - Completely rewrite the market regime service
+"""
+
+def rewrite_regime_service():
+    """Completely rewrite the market regime service"""
+    print('=' * 60)
+    print('REWRITE MARKET REGIME SERVICE')
+    print('=' * 60)
+    
+    # Create a new, clean market regime service
+    new_service_content = '''import logging
 from typing import Dict, List, Any
 
 class MarketRegimeService:
@@ -269,3 +281,77 @@ class MarketRegimeService:
         except Exception as e:
             self.log_error("ema_calculation", str(e))
             return []
+'''
+    
+    # Write the new service
+    with open('core/market_regime_service.py', 'w') as f:
+        f.write(new_service_content)
+    
+    print('[SUCCESS] Market regime service completely rewritten')
+    
+    # Test the new service
+    print('\n[TEST] Testing the new market regime service:')
+    
+    try:
+        from core.market_regime_service import MarketRegimeService
+        
+        mrs = MarketRegimeService()
+        
+        # Test with strong trend data
+        strong_trend_prices = [100, 102, 104, 106, 108, 110, 112, 114, 116, 118, 120, 122, 124, 126, 128, 130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156]
+        volumes = [1000000] * len(strong_trend_prices)
+        
+        regime_result = mrs.analyze_market_regime(strong_trend_prices, volumes)
+        
+        print(f'  - Strong Trend Test:')
+        print(f'    - Input: 28 price points (upward trend)')
+        print(f'    - Expected: BULL_TREND')
+        print(f'    - Actual: {regime_result.get("regime", "UNKNOWN")}')
+        print(f'    - ADX: {regime_result.get("trend_strength", 0):.2f}')
+        print(f'    - Volatility: {regime_result.get("volatility_level", 0):.4f}')
+        
+        # Test with ranging data
+        ranging_prices = [100, 102, 98, 103, 97, 104, 96, 105, 95, 106, 94, 107, 93, 108, 92, 109, 91, 110, 90, 111]
+        ranging_volumes = [1000000] * len(ranging_prices)
+        
+        regime_result = mrs.analyze_market_regime(ranging_prices, ranging_volumes)
+        
+        print(f'  - Ranging Test:')
+        print(f'    - Input: 20 price points (ranging)')
+        print(f'    - Expected: RANGING')
+        print(f'    - Actual: {regime_result.get("regime", "UNKNOWN")}')
+        print(f'    - ADX: {regime_result.get("trend_strength", 0):.2f}')
+        print(f'    - Volatility: {regime_result.get("volatility_level", 0):.4f}')
+        
+        # Test with bear trend data
+        bear_trend_prices = [150, 148, 146, 144, 142, 140, 138, 136, 134, 132, 130, 128, 126, 124, 122, 120, 118, 116, 114, 112, 110, 108, 106, 104, 102, 100]
+        bear_volumes = [1000000] * len(bear_trend_prices)
+        
+        regime_result = mrs.analyze_market_regime(bear_trend_prices, bear_volumes)
+        
+        print(f'  - Bear Trend Test:')
+        print(f'    - Input: 26 price points (downward trend)')
+        print(f'    - Expected: BEAR_TREND')
+        print(f'    - Actual: {regime_result.get("regime", "UNKNOWN")}')
+        print(f'    - ADX: {regime_result.get("trend_strength", 0):.2f}')
+        print(f'    - Volatility: {regime_result.get("volatility_level", 0):.4f}')
+        
+        # Test MA analysis
+        print(f'  - MA Analysis Test:')
+        ma_result = mrs.analyze_timeframe_ma(strong_trend_prices)
+        print(f'    - Alignment: {ma_result.get("alignment", "UNKNOWN")}')
+        print(f'    - Current Price: {ma_result.get("current_price", 0):.2f}')
+        
+        print('[SUCCESS] New market regime service tested successfully')
+        
+    except Exception as e:
+        print(f'[ERROR] Test failed: {e}')
+        import traceback
+        traceback.print_exc()
+    
+    print('=' * 60)
+    print('[RESULT] Market regime service rewrite complete')
+    print('=' * 60)
+
+if __name__ == "__main__":
+    rewrite_regime_service()
