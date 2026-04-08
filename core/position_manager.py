@@ -393,6 +393,10 @@ class PositionManager:
                 
                 # Check various exit conditions
                 
+                # 3. Profit targets management
+                symbol_strategy_config = strategy_config.get(symbol, {}) if isinstance(strategy_config, dict) else {}
+                if symbol_strategy_config:
+                    self.manage_profit_targets(symbol, symbol_strategy_config)
                 
                 # 4. EMA21 trailing exit
                 ema_data = indicators.get(symbol, {}).get('ema_data', {})

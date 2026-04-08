@@ -76,7 +76,7 @@ class TradeOrchestrator:
             if strategy_capital <= 0:
                 return {'success': False, 'reason': f'No capital allocated for strategy {strategy_name}'}
             
-            current_price = market_data.get('current_price', 0.0)
+            current_price = market_data.get('prices', {}).get('current', 0.0)
             volatility = market_data.get('volatility', 0.0)
             atr = indicators.get('atr', [0])[-1] if indicators.get('atr') else 0.0
             
@@ -177,16 +177,20 @@ class TradeOrchestrator:
         """Place protective orders for a position"""
         try:
             current_price = position_info.get('current_price', 0.0)
+            entry_price = position_info.get('entry_price', 0.0)
             amount = position_info.get('amount', 0.0)
             stop_loss_pct = position_info.get('stop_loss_pct', 0.02)
             take_profit_pct = position_info.get('take_profit_pct', 0.04)
             
+            if entry_price <= 0:
+                return
+            
             if amount > 0:  # Long position
-                stop_loss_price = current_price * (1 - stop_loss_pct)
-                take_profit_price = current_price * (1 + take_profit_pct)
+                stop_loss_price = entry_price * (1 - stop_loss_pct)
+                take_profit_price = entry_price * (1 + take_profit_pct)
             else:  # Short position
-                stop_loss_price = current_price * (1 + stop_loss_pct)
-                take_profit_price = current_price * (1 - take_profit_pct)
+                stop_loss_price = entry_price * (1 + stop_loss_pct)
+                take_profit_price = entry_price * (1 - take_profit_pct)
             
             # Place stop loss order
             self.protective_order_manager.submit_protective_order(
@@ -331,6 +335,12 @@ class TradeOrchestrator:
             if not market_data:
                 cycle_results['errors'].append('Market data update failed')
                 return cycle_results
+            
+            # Store flat market data for OrderExecutor
+            self.trading_results["market_data"] = {
+                symbol: data.get("prices", {}).get("current", 0.0)
+                for symbol, data in market_data.items()
+            }
             
             # 3. Analyze market regime
             regime_data = {}

@@ -35,23 +35,8 @@ def get_server_time(base_url):
 def get_symbol_info(base_url, api_key, api_secret, symbol):
     """심볼 정보 조회"""
     try:
-        server_time = get_server_time(base_url)
-        if not server_time:
-            return None
-        
-        timestamp = int(server_time * 1000)
-        params = {
-            "symbol": symbol,
-            "timestamp": timestamp,
-            "recvWindow": 5000
-        }
-        
-        query_string = create_query_string(params)
-        signature = create_signature(api_secret, query_string)
-        
-        url = f"{base_url}/fapi/v1/exchangeInfo?{query_string}&signature={signature}"
-        headers = {"X-MBX-APIKEY": api_key}
-        response = requests.get(url, headers=headers, timeout=10)
+        url = f"{base_url}/fapi/v1/exchangeInfo"
+        response = requests.get(url, timeout=10)
         
         if response.status_code == 200:
             exchange_info = response.json()
