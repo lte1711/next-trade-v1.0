@@ -187,6 +187,14 @@ class TradingRuntime:
                 "take_profit_pct": self.take_profit_pct,
                 "position_hold_minutes": self.position_hold_minutes,
                 "max_position_size_usdt": self.max_position_size_usdt
+            },
+            "ema_crossover": {
+                "name": "EMA Crossover",
+                "enabled": True,
+                "stop_loss_pct": 0.015,
+                "take_profit_pct": 0.03,
+                "position_hold_minutes": self.position_hold_minutes,
+                "max_position_size_usdt": 800.0
             }
         }
     

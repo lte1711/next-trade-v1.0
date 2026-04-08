@@ -94,7 +94,7 @@ class SignalEngine:
         """Generate comprehensive trading signal"""
         try:
             symbol = market_data.get('symbol', 'UNKNOWN')
-            current_price = market_data.get('current_price', 0.0)
+            current_price = market_data.get('prices', {}).get('current', 0.0)
             
             # Extract indicator data
             ma_analysis = indicators.get('ma_analysis', {})

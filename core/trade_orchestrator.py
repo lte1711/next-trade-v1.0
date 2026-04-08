@@ -77,7 +77,7 @@ class TradeOrchestrator:
                 return {'success': False, 'reason': f'No capital allocated for strategy {strategy_name}'}
             
             current_price = market_data.get('prices', {}).get('current', 0.0)
-            volatility = market_data.get('volatility', 0.0)
+            volatility = regime.get('volatility_level', 0.0)
             atr = indicators.get('atr', [0])[-1] if indicators.get('atr') else 0.0
             
             position_sizing = self.allocation_service.calculate_position_size(
@@ -176,7 +176,6 @@ class TradeOrchestrator:
                                strategy_config: Dict[str, Any]):
         """Place protective orders for a position"""
         try:
-            current_price = position_info.get('current_price', 0.0)
             entry_price = position_info.get('entry_price', 0.0)
             amount = position_info.get('amount', 0.0)
             stop_loss_pct = position_info.get('stop_loss_pct', 0.02)
@@ -211,42 +210,47 @@ class TradeOrchestrator:
         except Exception as e:
             self.log_error("protective_orders_place", str(e))
     
-    def emit_signal_diagnostic(self, symbol: str, signal: Dict[str, Any],
-                            market_data: Dict[str, Any], indicators: Dict[str, Any]):
+    def emit_signal_diagnostic(self, symbol: str, strategy_name: str, signal: Dict[str, Any],
+                            market_data: Dict[str, Any], indicators: Dict[str, Any],
+                            regime: Dict[str, Any]):
         """Emit detailed signal diagnostic information"""
         try:
+            klines_1h = market_data.get('klines', {}).get('1h', [])
+            latest_volume = klines_1h[-1].get('volume', 0.0) if klines_1h else 0.0
+
             diagnostic = {
                 'timestamp': int(datetime.now().timestamp() * 1000),
                 'symbol': symbol,
+                'strategy': strategy_name,
                 'signal': signal.get('signal', 'HOLD'),
                 'confidence': signal.get('confidence', 0.0),
                 'reason': signal.get('reason', ''),
-                'current_price': market_data.get('current_price', 0.0),
-                'market_regime': market_data.get('regime', 'UNKNOWN'),
-                'trend_strength': market_data.get('trend_strength', 0.0),
-                'volatility': market_data.get('volatility', 0.0),
-                'volume': market_data.get('volume', 0.0)
+                'current_price': market_data.get('prices', {}).get('current', 0.0),
+                'market_regime': regime.get('regime', 'UNKNOWN'),
+                'trend_strength': regime.get('trend_strength', 0.0),
+                'volatility': regime.get('volatility_level', 0.0),
+                'volume': latest_volume
             }
-            
-            # Add indicator details
+
             ma_analysis = indicators.get('ma_analysis', {})
             if ma_analysis:
                 diagnostic['ma_alignment'] = {
                     'fast_above_slow': ma_analysis.get('fast_above_slow', [])[-1] if ma_analysis.get('fast_above_slow') else False,
                     'ma_trend': ma_analysis.get('ma_trend', [])[-1] if ma_analysis.get('ma_trend') else False
                 }
-            
-            # Add signal breakdown
+
             if 'buy_strength' in signal and 'sell_strength' in signal:
                 diagnostic['signal_breakdown'] = {
                     'buy_strength': signal.get('buy_strength', 0.0),
                     'sell_strength': signal.get('sell_strength', 0.0)
                 }
-            
+
             print(f"[SIGNAL_DIAGNOSTIC] {json.dumps(diagnostic, indent=2)}")
-            
+            return diagnostic
+
         except Exception as e:
             self.log_error("signal_diagnostic", str(e))
+            return None
     
     def build_signal_diagnostic_summary(self, all_diagnostics: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Build summary of all signal diagnostics"""
@@ -377,12 +381,16 @@ class TradeOrchestrator:
                     cycle_results['signals_generated'] += 1
                     
                     # Emit diagnostic
-                    self.emit_signal_diagnostic(symbol, signal, symbol_data, indicators)
-                    all_diagnostics.append({
-                        'symbol': symbol,
-                        'strategy': strategy_name,
-                        'signal': signal
-                    })
+                    diagnostic = self.emit_signal_diagnostic(
+                        symbol,
+                        strategy_name,
+                        signal,
+                        symbol_data,
+                        indicators,
+                        regime_data.get(symbol, {})
+                    )
+                    if diagnostic:
+                        all_diagnostics.append(diagnostic)
                     
                     # Collect trade candidates
                     if signal.get('signal') != 'HOLD':
