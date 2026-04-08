@@ -395,10 +395,20 @@ class TradeOrchestrator:
             # V2 Merged: Apply strategy-specific symbol selection
             strategy_symbols = {}
             for strategy_name in active_strategies:
+                # Convert symbols to proper format for strategy registry
+                symbol_list = []
+                for symbol_data in symbols:
+                    if isinstance(symbol_data, dict):
+                        symbol_list.append(symbol_data.get('symbol', ''))
+                    elif isinstance(symbol_data, str):
+                        symbol_list.append(symbol_data)
+                    else:
+                        symbol_list.append(str(symbol_data))
+                
                 # Get strategy-specific symbols
                 preferred_symbols = self.strategy_registry.select_preferred_symbols(
                     strategy_name, 
-                    symbols, 
+                    symbol_list, 
                     max_symbols=10
                 )
                 strategy_symbols[strategy_name] = preferred_symbols

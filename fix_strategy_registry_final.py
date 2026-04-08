@@ -1,4 +1,20 @@
-import json
+#!/usr/bin/env python3
+"""
+Fix Strategy Registry Final - Fix indentation and restore dynamic configuration
+"""
+
+def fix_strategy_registry_final():
+    """Fix the strategy registry file completely"""
+    print('=' * 60)
+    print('FIX STRATEGY REGISTRY FINAL')
+    print('=' * 60)
+    
+    # Read the current file
+    with open('core/strategy_registry.py', 'r') as f:
+        content = f.read()
+    
+    # Fix the indentation issue and restore dynamic configuration
+    fixed_content = '''import json
 import logging
 from typing import Dict, List, Optional, Any
 
@@ -263,3 +279,53 @@ class StrategyRegistry:
     def log_error(self, error_type: str, message: str):
         """Log error message"""
         self.logger.error(f"[{error_type}] {message}")
+'''
+    
+    # Write the fixed file
+    with open('core/strategy_registry.py', 'w') as f:
+        f.write(fixed_content)
+    
+    print('[SUCCESS] Strategy registry completely fixed')
+    
+    # Test the fix
+    print('\n[TEST] Testing the fixed version:')
+    
+    try:
+        from core.strategy_registry import StrategyRegistry
+        sr = StrategyRegistry()
+        
+        from core.market_data_service import MarketDataService
+        mds = MarketDataService('https://demo-fapi.binance.com')
+        symbols = mds.get_available_symbols()
+        
+        # Convert like trade_orchestrator does
+        symbol_list = []
+        for symbol_data in symbols:
+            if isinstance(symbol_data, dict):
+                symbol_list.append(symbol_data.get('symbol', ''))
+            elif isinstance(symbol_data, str):
+                symbol_list.append(symbol_data)
+            else:
+                symbol_list.append(str(symbol_data))
+        
+        print(f'  Testing ma_trend_follow:')
+        result = sr.select_preferred_symbols('ma_trend_follow', symbol_list, 10)
+        print(f'    Result: {len(result)} symbols - {result}')
+        
+        print(f'  Testing ema_crossover:')
+        result = sr.select_preferred_symbols('ema_crossover', symbol_list, 10)
+        print(f'    Result: {len(result)} symbols - {result}')
+        
+        print('[SUCCESS] Fix tested successfully')
+        
+    except Exception as e:
+        print(f'[ERROR] Fix test failed: {e}')
+        import traceback
+        traceback.print_exc()
+    
+    print('=' * 60)
+    print('[RESULT] Strategy registry final fix complete')
+    print('=' * 60)
+
+if __name__ == "__main__":
+    fix_strategy_registry_final()

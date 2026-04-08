@@ -1,0 +1,38 @@
+{
+  "pre_reboot_summary": {
+    "timestamp": "2026-04-08T16:59:41.318091",
+    "system_status": "READY_FOR_REBOOT",
+    "v2_merged_integration": "COMPLETE",
+    "error_cleanup": "COMPLETE",
+    "core_modules_count": 12,
+    "active_strategies": [
+      "ma_trend_follow",
+      "ema_crossover"
+    ],
+    "max_positions": 5,
+    "sync_interval": 5,
+    "binance_testnet_connected": true,
+    "account_balance": "8633.84 USDT",
+    "dynamic_symbols_loaded": 50,
+    "error_count": 0,
+    "last_error": null
+  },
+  "integration_status": {
+    "symbol_ranking": "market_data_service.py",
+    "position_management": "position_manager.py",
+    "account_sync": "account_service.py",
+    "strategy_selection": "strategy_registry.py",
+    "main_runtime": "simplified_orchestrator"
+  },
+  "files_created": [
+    "check_trading_status.py",
+    "reset_trading_system.py",
+    "post_reboot_check.py",
+    "system_state.json"
+  ],
+  "post_reboot_instructions": {
+    "step1": "python post_reboot_check.py",
+    "step2": "python main_runtime.py",
+    "step3": "python check_trading_status.py"
+  }
+}

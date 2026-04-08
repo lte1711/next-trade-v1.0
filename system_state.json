@@ -1,0 +1,9 @@
+{
+  "reboot_time": "2026-04-08T16:59:12.199651",
+  "system_status": "PREPARING_REBOOT",
+  "v2_merged_integration": "COMPLETE",
+  "core_modules": "STABLE",
+  "binance_testnet": "CONNECTED",
+  "error_status": "CLEAN",
+  "ready_for_reboot": true
+}
