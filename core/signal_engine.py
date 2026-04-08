@@ -175,8 +175,10 @@ class SignalEngine:
             
             # Risk-adjusted scoring
             trend_strength = signal.get('trend_strength', 0.0)
-            volatility = market_data.get('volatility', 0.0)
-            volume = market_data.get('volume', 0.0)
+            volatility = signal.get('volatility', 0.0)
+
+            klines_1h = market_data.get('klines', {}).get('1h', [])
+            volume = klines_1h[-1].get('volume', 0.0) if klines_1h else 0.0
             
             # Adjust score based on trend strength
             trend_bonus = min(trend_strength / 50.0, 0.3)  # Max 0.3 bonus
@@ -188,7 +190,7 @@ class SignalEngine:
             
             # Volume bonus
             volume_bonus = 0.0
-            if volume > risk_config.get('min_volume_threshold', 1000000):
+            if volume > risk_config.get('min_volume_threshold', getattr(self, 'min_volume_threshold', 1000000)):
                 volume_bonus = 0.1
             
             # Final score

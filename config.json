@@ -4,7 +4,22 @@
     "api_secret": "ll6wie0zfs8uNcL1Ch4lHGiuGlTo54koEqoAZPlmUxkmLgRZIFZcsPUE1vY2jVTU",
     "base_url": "https://demo-fapi.binance.com"
   },
-  "testnet_initial_equity": 10119.13907373,
   "binance_execution_mode": "testnet",
-  "binance_probe_mode": "enabled"
+  "binance_probe_mode": "enabled",
+  "trading_config": {
+    "max_open_positions": 1,
+    "fast_entry_enabled": true,
+    "partial_tp1_pct": 0.8,
+    "fast_tp1_pct": 0.5,
+    "fast_tp2_pct": 1.2,
+    "partial_tp2_pct": 2.0,
+    "stop_loss_pct": 0.02,
+    "take_profit_pct": 0.04,
+    "position_hold_minutes": 30,
+    "max_position_size_usdt": 1000.0
+  },
+  "api_config": {
+    "recv_window": 5000,
+    "min_volume_threshold": 1000000
+  }
 }

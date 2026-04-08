@@ -66,9 +66,9 @@ class StrategyRegistry:
                     'signal_period': 9
                 },
                 'risk_config': {
-                    'stop_loss_pct': 0.015,
-                    'take_profit_pct': 0.03,
-                    'max_position_size_usdt': 800.0,
+                    'stop_loss_pct': 0.02 * 0.75,  # 75% of base stop loss
+                    'take_profit_pct': 0.04 * 0.75,  # 75% of base take profit
+                    'max_position_size_usdt': 1000.0 * 0.8,  # 80% of base size
                     'leverage': 1.0
                 },
                 'entry_filters': {
@@ -180,7 +180,7 @@ class StrategyRegistry:
                 
                 # Prefer high volume symbols
                 volume = symbol_info.get('volume', 0)
-                if volume < 1000000:  # Minimum volume threshold
+                if volume < getattr(self, 'min_volume_threshold', 1000000):  # Minimum volume threshold
                     continue
                 
                 # Prefer major pairs for trend following

@@ -4,6 +4,7 @@ Main Runtime - 통합 런타임 모듈
 
 import sys
 import os
+import json
 from datetime import datetime
 import time
 
@@ -121,24 +122,63 @@ class TradingRuntime:
             self.log_system_error
         )
         
-        # 설정값 초기화
-        self.max_open_positions = 1
-        self.fast_entry_enabled = True
-        self.partial_tp1_pct = 0.8
-        self.fast_tp1_pct = 0.5
-        self.fast_tp2_pct = 1.2
-        self.partial_tp2_pct = 2.0
-        self.stop_loss_pct = 0.02
-        self.take_profit_pct = 0.04
-        self.position_hold_minutes = 30
-        self.max_position_size_usdt = 1000.0
+        # Load configuration and initialize
+        try:
+            with open('config.json', 'r') as f:
+                config = json.load(f)
+        except Exception:
+            config = {}
         
-        # 설정 로드
-        self.load_strategies()
+        # Load trading configuration
+        trading_config = config.get("trading_config", {})
+        self.max_open_positions = trading_config.get("max_open_positions", 1)
+        self.fast_entry_enabled = trading_config.get("fast_entry_enabled", True)
+        self.partial_tp1_pct = trading_config.get("partial_tp1_pct", 0.8)
+        self.fast_tp1_pct = trading_config.get("fast_tp1_pct", 0.5)
+        self.fast_tp2_pct = trading_config.get("fast_tp2_pct", 1.2)
+        self.partial_tp2_pct = trading_config.get("partial_tp2_pct", 2.0)
+        self.stop_loss_pct = trading_config.get("stop_loss_pct", 0.02)
+        self.take_profit_pct = trading_config.get("take_profit_pct", 0.04)
+        self.position_hold_minutes = trading_config.get("position_hold_minutes", 30)
+        self.max_position_size_usdt = trading_config.get("max_position_size_usdt", 1000.0)
+        
+        # Load API configuration
+        api_config = config.get("api_config", {})
+        self.recv_window = api_config.get("recv_window", 5000)
+        self.min_volume_threshold = api_config.get("min_volume_threshold", 1000000)
+        
+        self.api_key = config.get("binance_testnet", {}).get("api_key")
+        self.api_secret = config.get("binance_testnet", {}).get("api_secret")
+        self.base_url = config.get("binance_testnet", {}).get("base_url")
+        
         self.valid_symbols = self.load_valid_symbols()
         
-        # 초기 자본
-        self.total_capital = 10000.0
+        # Load strategies
+        self.load_strategies()
+        
+        # Initialize trading components
+        # self._initialize_trading_system()  # Temporarily commented
+        
+        # Load valid symbols
+        self.valid_symbols = self.load_valid_symbols()
+        
+        # Initial capital from real-time API data only
+        try:
+            # Get real-time account balance
+            if self.account_service.periodic_sync(self.trading_results):
+                actual_balance = self.trading_results.get("available_balance", 0.0)
+                if actual_balance > 0:
+                    self.total_capital = actual_balance
+                else:
+                    print(f"[ERROR] Failed to get real-time balance, using 0.0")
+                    self.total_capital = 0.0
+            else:
+                print(f"[ERROR] Failed to sync account, using 0.0")
+                self.total_capital = 0.0
+        except Exception as e:
+            print(f"[ERROR] Exception getting real-time balance: {e}, using 0.0")
+            self.total_capital = 0.0
+        
         self.trading_results["available_balance"] = self.total_capital
     
     def load_local_env_file(self):
@@ -191,10 +231,10 @@ class TradingRuntime:
             "ema_crossover": {
                 "name": "EMA Crossover",
                 "enabled": True,
-                "stop_loss_pct": 0.015,
-                "take_profit_pct": 0.03,
+                "stop_loss_pct": self.stop_loss_pct * 0.75,  # 75% of base stop loss
+                "take_profit_pct": self.take_profit_pct * 0.75,  # 75% of base take profit
                 "position_hold_minutes": self.position_hold_minutes,
-                "max_position_size_usdt": 800.0
+                "max_position_size_usdt": self.max_position_size_usdt * 0.8  # 80% of base size
             }
         }
     
@@ -323,35 +363,6 @@ class TradingRuntime:
                     self.log_system_error("runtime_error", str(e))
                     time.sleep(10)
                     
-        except Exception as e:
-            self.log_system_error("runtime_init_error", str(e))
-            print(f"[ERROR] Runtime initialization failed: {e}")
-    
-    def _initialize_trading_system(self):
-        """거래 시스템 초기화"""
-        try:
-            # 1. 심볼 정보 새로고침
-            symbols_info = self.market_data_service.refresh_symbol_universe()
-            self.valid_symbols = [s['symbol'] for s in symbols_info[:10]]  # 상위 10개 심볼
-            
-            # 2. 활성 전략 설정
-            self.active_strategies = ['ma_trend_follow', 'ema_crossover']
-            
-            # 3. 자본 배분 초기화
-            self.allocation_service.refresh_strategy_capital_allocations(
-                self.total_capital, self.active_strategies, {}
-            )
-            
-            print(f"[INFO] Trading system initialized")
-            print(f"[INFO] Active symbols: {len(self.valid_symbols)}")
-            print(f"[INFO] Active strategies: {self.active_strategies}")
-            
-        except Exception as e:
-            self.log_system_error("system_init_error", str(e))
-    
-    def _process_cycle_results(self, cycle_results):
-        """거래 사이클 결과 처리"""
-        try:
             # 오류 처리
             for error in cycle_results.get('errors', []):
                 self.log_system_error("cycle_error", error)

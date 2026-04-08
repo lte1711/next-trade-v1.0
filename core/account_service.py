@@ -49,7 +49,7 @@ class AccountService:
             timestamp = int(time.time() * 1000)
             params = {
                 'timestamp': timestamp,
-                'recvWindow': 5000
+                'recvWindow': getattr(self, 'recv_window', 5000)
             }
             query_string = '&'.join([f'{k}={v}' for k, v in sorted(params.items())])
             signature = self._create_signature(query_string)

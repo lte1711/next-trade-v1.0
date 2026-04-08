@@ -28,7 +28,9 @@ class ProtectiveOrderManager:
             if not server_time:
                 return None
             
-            timestamp = int(server_time * 1000)
+            # Use server time with buffer to avoid timestamp ahead error
+            server_time_ms = int(server_time)
+            timestamp = server_time_ms - 100  # Subtract 100ms buffer
             symbol_info = self.get_symbol_info(symbol)
             if not symbol_info:
                 self.log_error("symbol_info_missing", f"No symbol metadata found for {symbol}")
@@ -48,7 +50,7 @@ class ProtectiveOrderManager:
                 "reduceOnly": "true",
                 "closePosition": "true",
                 "timestamp": timestamp,
-                "recvWindow": 5000
+                "recvWindow": getattr(self, 'recv_window', 5000)
             }
             
             query_string = "&".join([f"{k}={v}" for k, v in sorted(params.items())])
@@ -76,11 +78,11 @@ class ProtectiveOrderManager:
             if not server_time:
                 return []
             
-            timestamp = int(server_time * 1000)
+            timestamp = int(server_time) - 100
             params = {
                 "symbol": symbol,
                 "timestamp": timestamp,
-                "recvWindow": 5000
+                "recvWindow": getattr(self, 'recv_window', 5000)
             }
             
             query_string = "&".join([f"{k}={v}" for k, v in sorted(params.items())])
@@ -108,12 +110,12 @@ class ProtectiveOrderManager:
             if not server_time:
                 return False
             
-            timestamp = int(server_time * 1000)
+            timestamp = int(server_time) - 100
             params = {
                 "symbol": symbol,
                 "orderId": order_id,
                 "timestamp": timestamp,
-                "recvWindow": 5000
+                "recvWindow": getattr(self, 'recv_window', 5000)
             }
             
             query_string = "&".join([f"{k}={v}" for k, v in sorted(params.items())])

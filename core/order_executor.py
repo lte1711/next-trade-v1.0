@@ -140,14 +140,20 @@ class OrderExecutor:
                 self.log_error("server_time_unavailable", f"Failed to get server time for {symbol}")
                 return None
             
-            timestamp = int(server_time * 1000)
+            # Add small buffer to avoid timestamp ahead of server time
+            local_time = int(time.time() * 1000)
+            server_time_ms = int(server_time)
+            time_offset = server_time_ms - local_time
+            
+            # Use server time with small adjustment to avoid being ahead
+            timestamp = server_time_ms - 100  # Subtract 100ms buffer
             params = {
                 "symbol": symbol,
                 "side": side,
                 "type": "MARKET",
                 "quantity": f"{quantity:.6f}",
                 "timestamp": timestamp,
-                "recvWindow": 5000
+                "recvWindow": getattr(self, 'recv_window', 5000)
             }
             
             if reduce_only:
