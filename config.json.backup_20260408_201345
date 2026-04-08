@@ -30,36 +30,7 @@
       16
     ],
     "funding_countdown_enabled": true,
-    "funding_monitoring_enabled": true,
-    "symbol_config": {
-      "symbol_source": "expanded_list",
-      "total_symbols": 20,
-      "symbol_list": [
-        "BTCUSDT",
-        "ETHUSDT",
-        "BNBUSDT",
-        "DOGEUSDT",
-        "XRPUSDT",
-        "ADAUSDT",
-        "DOTUSDT",
-        "LINKUSDT",
-        "SOLUSDT",
-        "MATICUSDT",
-        "AVAXUSDT",
-        "ATOMUSDT",
-        "LTCUSDT",
-        "UNIUSDT",
-        "FILUSDT",
-        "ETCUSDT",
-        "XLMUSDT",
-        "VETUSDT",
-        "THETAUSDT",
-        "ICPUSDT"
-      ],
-      "last_updated": "2026-04-08T20:17:14.422983",
-      "dynamic_loading": false,
-      "future_dynamic": true
-    }
+    "funding_monitoring_enabled": true
   },
   "api_config": {
     "recv_window": 5000,

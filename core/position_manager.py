@@ -2,7 +2,8 @@
 Position Manager - Active position management and profit/loss control
 """
 
-from typing import List, Dict, Optional, Any, Tuple
+from datetime import timezone
+from typing import List, Dict, Any, Optional, Any, Tuple
 from decimal import Decimal
 import json
 from datetime import datetime
@@ -479,6 +480,169 @@ class PositionManager:
             self.log_error("position_exit_check", str(e))
             return None
     
+
+    def get_next_funding_time_utc(self, now=None):
+        """Return the next expected Binance perpetual funding timestamp in UTC."""
+        try:
+            now = now or datetime.now(timezone.utc)
+            aligned = now.replace(minute=0, second=0, microsecond=0)
+            
+            # Get funding hours from config
+            funding_hours = self.config.get('trading_config', {}).get('funding_hours', [0, 8, 16])
+            
+            for hour in funding_hours:
+                candidate = aligned.replace(hour=hour)
+                if candidate > now:
+                    return candidate
+            
+            # If no times today, return tomorrow's first funding
+            return (aligned + timedelta(days=1)).replace(hour=funding_hours[0])
+            
+        except Exception as e:
+            self.log_error("funding_time_calculation", str(e))
+            return None
+    
+    def is_funding_close_window(self, now=None):
+        """Return whether the current time is within the pre-funding close window."""
+        try:
+            funding_config = self.config.get('trading_config', {})
+            
+            if not funding_config.get('funding_countdown_enabled', False):
+                return False
+            
+            if not funding_config.get('force_close_before_funding', True):
+                return False
+            
+            now = now or datetime.now(timezone.utc)
+            next_funding = self.get_next_funding_time_utc(now)
+            
+            if not next_funding:
+                return False
+            
+            lead_minutes = funding_config.get('funding_close_lead_minutes', 10)
+            seconds_to_funding = (next_funding - now).total_seconds()
+            
+            return 0 <= seconds_to_funding <= (lead_minutes * 60)
+            
+        except Exception as e:
+            self.log_error("funding_window_check", str(e))
+            return False
+    
+    def get_funding_countdown(self, now=None):
+        """Get time remaining until next funding in minutes."""
+        try:
+            now = now or datetime.now(timezone.utc)
+            next_funding = self.get_next_funding_time_utc(now)
+            
+            if not next_funding:
+                return None
+            
+            seconds_until = (next_funding - now).total_seconds()
+            return max(0, int(seconds_until / 60))
+            
+        except Exception as e:
+            self.log_error("funding_countdown", str(e))
+            return None
+    
+    def should_force_close_for_funding_enhanced(self, symbol: str, position=None, funding_rate: float = 0.0):
+        """Enhanced funding closure check with time-based logic."""
+        try:
+            funding_config = self.config.get('trading_config', {})
+            
+            # Check if funding countdown is enabled
+            if not funding_config.get('funding_countdown_enabled', False):
+                return self.should_force_close_for_funding(symbol, funding_rate)
+            
+            # Check time-based closure
+            if self.is_funding_close_window():
+                # Check minimum hold time (30 seconds)
+                hold_seconds = self.get_position_hold_seconds(symbol, position)
+                if hold_seconds < 30:
+                    return False
+                
+                # Return closure reason
+                entry_mode = self.get_position_entry_mode(symbol, position)
+                if entry_mode in {"FAST_LONG", "FAST_SHORT"}:
+                    return "fast_pre_funding_close"
+                else:
+                    return "pre_funding_close"
+            
+            # Check rate-based closure
+            return self.should_force_close_for_funding(symbol, funding_rate)
+            
+        except Exception as e:
+            self.log_error("enhanced_funding_close", str(e))
+            return False
+    
+    def get_funding_status(self, symbol: str, position=None):
+        """Get comprehensive funding status for a position."""
+        try:
+            funding_config = self.config.get('trading_config', {})
+            
+            status = {
+                'symbol': symbol,
+                'next_funding_time': None,
+                'countdown_minutes': None,
+                'is_close_window': False,
+                'force_close_reason': None,
+                'funding_rate_threshold_long': funding_config.get('funding_rate_threshold_long', -0.001),
+                'funding_rate_threshold_short': funding_config.get('funding_rate_threshold_short', 0.001),
+                'funding_countdown_enabled': funding_config.get('funding_countdown_enabled', False)
+            }
+            
+            if funding_config.get('funding_countdown_enabled', False):
+                next_funding = self.get_next_funding_time_utc()
+                status['next_funding_time'] = next_funding.isoformat() if next_funding else None
+                status['countdown_minutes'] = self.get_funding_countdown()
+                status['is_close_window'] = self.is_funding_close_window()
+            
+            # Check closure reason
+            closure_reason = self.should_force_close_for_funding_enhanced(symbol, position)
+            status['force_close_reason'] = closure_reason
+            
+            return status
+            
+        except Exception as e:
+            self.log_error("funding_status", str(e))
+            return {'error': str(e)}
+    
+    def update_should_force_close_for_funding(self):
+        """Update the original method to use config values."""
+        try:
+            funding_config = self.config.get('trading_config', {})
+            
+            # Get thresholds from config
+            threshold_long = funding_config.get('funding_rate_threshold_long', -0.001)
+            threshold_short = funding_config.get('funding_rate_threshold_short', 0.001)
+            
+            # Update the original method logic
+            def enhanced_should_force_close_for_funding(symbol: str, funding_rate: float = 0.0) -> bool:
+                """Check if position should be closed due to unfavorable funding rate"""
+                try:
+                    if funding_rate == 0.0:
+                        return False
+                    
+                    position = self.trading_results.get("active_positions", {}).get(symbol, {})
+                    amount = position.get("amount", 0.0)
+                    
+                    # Use config thresholds
+                    if amount > 0 and funding_rate < threshold_long:
+                        return True
+                    elif amount < 0 and funding_rate > threshold_short:
+                        return True
+                    
+                    return False
+                    
+                except Exception as e:
+                    self.log_error("funding_close_check", str(e))
+                    return False
+            
+            # Replace the method
+            self.should_force_close_for_funding = enhanced_should_force_close_for_funding
+            
+        except Exception as e:
+            self.log_error("update_funding_method", str(e))
+
     def get_position_summary(self) -> Dict[str, Any]:
         """Get summary of all positions"""
         try:
