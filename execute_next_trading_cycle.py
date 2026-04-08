@@ -52,7 +52,7 @@ def execute_next_trading_cycle():
         mds = MarketDataService('https://demo-fapi.binance.com')
         
         # Get expanded symbols
-        top_symbols = ['BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'DOGEUSDT', 'XRPUSDT', 'ADAUSDT', 'DOTUSDT', 'LINKUSDT', 'SOLUSDT', 'MATICUSDT', 'AVAXUSDT', 'ATOMUSDT', 'LTCUSDT', 'UNIUSDT', 'FILUSDT', 'ETCUSDT', 'XLMUSDT', 'VETUSDT', 'THETAUSDT', 'ICPUSDT']  # Use expanded symbol list
+        top_symbols = ['XPINUSDT', 'BOMEUSDT', 'QUICKUSDT', 'HIPPOUSDT', 'DOGEUSDT', 'NEIROUSDT', 'TOSHIUSDT', 'NOTUSDT', 'SWELLUSDT', 'LRCUSDT', '1000CHEEMSUSDT', 'TOKENUSDT', 'DOGSUSDT', 'HMSTRUSDT', 'SPELLUSDT', 'AKEUSDT', 'VOXELUSDT', 'BIDUSDT', 'CUDISUSDT', 'SKATEUSDT']  # DYNAMICALLY SELECTED  # Use expanded symbol list
         
         print(f'  - Updating market data for {len(top_symbols)} dynamic symbols...')
         
