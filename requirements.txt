@@ -17,3 +17,6 @@ win10toast-click>=0.1.2
 
 # PHASE 12: Production Hardening
 redis>=7.0.0
+
+# Technical Analysis and Indicators
+numpy>=1.24.0

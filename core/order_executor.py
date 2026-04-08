@@ -232,6 +232,10 @@ class OrderExecutor:
             trade_record.update(metadata)
             if reduce_only:
                 trade_record["reduce_only"] = True
+                trade_record["entry_price"] = self.safe_float_conversion(
+                    metadata.get("entry_price"),
+                    trade_record.get("price", 0.0)
+                )
             
             # real_orders 리스트 제한으로 메모리 증가 방지
             if len(self.trading_results["real_orders"]) > 500:
@@ -302,11 +306,11 @@ class OrderExecutor:
     def estimate_realized_pnl(self, trade):
         """실현 손익 추정"""
         try:
-            entry_price = trade.get("price", 0.0)
-            exit_price = trade.get("executed_qty", 0.0) * trade.get("price", 0.0)
-            quantity = trade.get("executed_qty", 0.0)
-            
-            if entry_price > 0 and quantity > 0:
+            entry_price = self.safe_float_conversion(trade.get("entry_price"), 0.0)
+            exit_price = self.safe_float_conversion(trade.get("price"), 0.0)
+            quantity = self.safe_float_conversion(trade.get("executed_qty"), 0.0)
+
+            if entry_price > 0 and exit_price > 0 and quantity > 0:
                 if trade.get("side") == "BUY":
                     return (exit_price - entry_price) * quantity
                 else:

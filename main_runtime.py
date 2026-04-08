@@ -13,6 +13,15 @@ from core.pending_order_manager import PendingOrderManager
 from core.order_executor import OrderExecutor
 from core.numeric_utils import safe_float_conversion, round_to_step
 from core.exchange_utils import get_server_time, get_symbol_info
+from core.market_data_service import MarketDataService
+from core.indicator_service import IndicatorService
+from core.market_regime_service import MarketRegimeService
+from core.signal_engine import SignalEngine
+from core.strategy_registry import StrategyRegistry
+from core.allocation_service import AllocationService
+from core.position_manager import PositionManager
+from core.account_service import AccountService
+from core.trade_orchestrator import TradeOrchestrator
 from api_config import get_api_credentials, is_api_valid
 
 # 필수 임포트
@@ -58,23 +67,58 @@ class TradingRuntime:
         self.api_key, self.api_secret = get_api_credentials()
         self.base_url = "https://testnet.binancefuture.com"
         
-        # 코어 매니저 초기화
+        # 새로운 모듈화 아키텍처 초기화
+        self.market_data_service = MarketDataService(
+            self.base_url, self.api_key, self.api_secret, self.log_system_error
+        )
+        
+        self.indicator_service = IndicatorService(self.log_system_error)
+        self.market_regime_service = MarketRegimeService(self.log_system_error)
+        self.signal_engine = SignalEngine(self.log_system_error)
+        self.strategy_registry = StrategyRegistry(self.log_system_error)
+        self.allocation_service = AllocationService(self.log_system_error)
+        
+        # 기존 매니저들 (호환성 유지)
+        self.order_executor = OrderExecutor(
+            self.api_key, self.api_secret, self.base_url, self.trading_results,
+            self.get_symbol_info, self.log_system_error, safe_float_conversion, round_to_step,
+            capital_getter=lambda: self.total_capital
+        )
+        
         self.protective_order_manager = ProtectiveOrderManager(
             self.api_key, self.api_secret, self.base_url, self.trading_results,
             self.get_symbol_info, self.log_system_error
+        )
+        
+        self.account_service = AccountService(
+            self.base_url, self.api_key, self.api_secret, self.log_system_error
+        )
+        
+        self.position_manager = PositionManager(
+            self.trading_results, self.order_executor, self.protective_order_manager, self.log_system_error
         )
         
         self.position_entry_times = {}
         self.pending_order_manager = PendingOrderManager(
             self.trading_results, self.get_order_status, self.log_system_error,
             self.position_entry_times, self.protective_order_manager, self.clear_position_management_state,
-            sync_positions_callback=self.sync_positions
+            sync_positions_callback=lambda: self.account_service.sync_positions(self.trading_results)
         )
         
-        self.order_executor = OrderExecutor(
-            self.api_key, self.api_secret, self.base_url, self.trading_results,
-            self.get_symbol_info, self.log_system_error, safe_float_conversion, round_to_step,
-            capital_getter=lambda: self.total_capital
+        # 메인 오케스트레이터
+        self.trade_orchestrator = TradeOrchestrator(
+            self.trading_results,
+            self.market_data_service,
+            self.indicator_service,
+            self.market_regime_service,
+            self.signal_engine,
+            self.strategy_registry,
+            self.allocation_service,
+            self.position_manager,
+            self.order_executor,
+            self.account_service,
+            self.protective_order_manager,
+            self.log_system_error
         )
         
         # 설정값 초기화
@@ -232,21 +276,37 @@ class TradingRuntime:
         return None
     
     def run(self):
-        """메인 실행 루프"""
+        """메인 실행 루프 - 완전한 거래 오케스트레이션"""
         try:
-            print(f"[INFO] Modular trading runtime started")
+            print(f"[INFO] Complete Modular Trading Runtime Started")
             print(f"[INFO] Start time: {self.start_time}")
             print(f"[INFO] Initial capital: ${self.total_capital:.2f}")
             
+            # 초기화 및 설정
+            self._initialize_trading_system()
+            
+            # 메인 거래 루프
             while True:
                 try:
-                    # 미체결 주문 새로고침
+                    # 1. 계정 및 포지션 동기화
+                    self.account_service.periodic_sync(self.trading_results)
+                    
+                    # 2. 미체결 주문 새로고침
                     self.pending_order_manager.refresh_pending_orders()
                     
-                    # 여기에 실제 거래 로직 추가될 예정
-                    # strategy execution logic would go here
+                    # 3. 전체 거래 사이클 실행
+                    cycle_results = self.trade_orchestrator.run_trading_cycle(
+                        self.valid_symbols, 
+                        self.active_strategies
+                    )
                     
-                    time.sleep(5)
+                    # 4. 결과 처리
+                    self._process_cycle_results(cycle_results)
+                    
+                    # 5. 상태 표시
+                    self._display_cycle_status(cycle_results)
+                    
+                    time.sleep(10)  # 10초 주기
                     
                 except KeyboardInterrupt:
                     print(f"[INFO] Trading runtime stopped by user")
@@ -254,6 +314,58 @@ class TradingRuntime:
                 except Exception as e:
                     self.log_system_error("runtime_error", str(e))
                     time.sleep(10)
+                    
+        except Exception as e:
+            self.log_system_error("runtime_init_error", str(e))
+            print(f"[ERROR] Runtime initialization failed: {e}")
+    
+    def _initialize_trading_system(self):
+        """거래 시스템 초기화"""
+        try:
+            # 1. 심볼 정보 새로고침
+            symbols_info = self.market_data_service.refresh_symbol_universe()
+            self.valid_symbols = [s['symbol'] for s in symbols_info[:10]]  # 상위 10개 심볼
+            
+            # 2. 활성 전략 설정
+            self.active_strategies = ['ma_trend_follow', 'ema_crossover']
+            
+            # 3. 자본 배분 초기화
+            self.allocation_service.refresh_strategy_capital_allocations(
+                self.total_capital, self.active_strategies, {}
+            )
+            
+            print(f"[INFO] Trading system initialized")
+            print(f"[INFO] Active symbols: {len(self.valid_symbols)}")
+            print(f"[INFO] Active strategies: {self.active_strategies}")
+            
+        except Exception as e:
+            self.log_system_error("system_init_error", str(e))
+    
+    def _process_cycle_results(self, cycle_results):
+        """거래 사이클 결과 처리"""
+        try:
+            # 오류 처리
+            for error in cycle_results.get('errors', []):
+                self.log_system_error("cycle_error", error)
+            
+            # 통계 업데이트
+            self.trading_results['last_cycle'] = cycle_results
+            
+        except Exception as e:
+            self.log_system_error("cycle_results_process", str(e))
+    
+    def _display_cycle_status(self, cycle_results):
+        """사이클 상태 표시"""
+        try:
+            signals = cycle_results.get('signals_generated', 0)
+            trades = cycle_results.get('trades_executed', 0)
+            errors = len(cycle_results.get('errors', []))
+            
+            if signals > 0 or trades > 0 or errors > 0:
+                print(f"[CYCLE] Signals: {signals}, Trades: {trades}, Errors: {errors}")
+                
+        except Exception as e:
+            self.log_system_error("cycle_status_display", str(e))
         
         except Exception as e:
             self.log_system_error("critical_runtime_error", str(e))

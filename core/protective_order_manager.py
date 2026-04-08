@@ -168,6 +168,34 @@ class ProtectiveOrderManager:
             print(f"[TRACE] PROTECTIVE_ORDER_SUBMIT | {symbol} | TAKE_PROFIT_MARKET | price={take_price}")
             self.submit_protective_order(symbol, exit_side, "TAKE_PROFIT_MARKET", take_price)
     
+    def update_stop_loss(self, symbol, new_stop_price, amount):
+        """기존 STOP_MARKET 보호주문을 취소하고 새 stop loss를 재설치"""
+        try:
+            exit_side = "SELL" if amount > 0 else "BUY"
+
+            open_orders = self.get_open_orders(symbol)
+            for order in open_orders:
+                if order.get("type") == "STOP_MARKET":
+                    order_id = order.get("orderId")
+                    if order_id:
+                        self.cancel_order(symbol, order_id)
+
+            result = self.submit_protective_order(
+                symbol=symbol,
+                side=exit_side,
+                order_type="STOP_MARKET",
+                stop_price=new_stop_price
+            )
+
+            if result:
+                self.managed_stop_prices[symbol] = new_stop_price
+                return True
+            return False
+
+        except Exception as e:
+            self.log_error("update_stop_loss_error", f"{symbol}: {e}")
+            return False
+    
     def get_server_time(self):
         """서버 시간 조회"""
         try:
