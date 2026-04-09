@@ -89,5 +89,36 @@
     "dynamic_manager_removed": true,
     "api_independent": true,
     "coverage_increase": "150%"
-  }
+  },
+  "background_trading": {
+    "last_cycle": {
+      "cycle_number": 1,
+      "start_time": "2026-04-08T20:47:19.383046",
+      "end_time": "2026-04-08T20:47:59.068332",
+      "duration": 39.685286,
+      "status": "completed"
+    },
+    "total_cycles": 1,
+    "process_start": "2026-04-08T20:47:59.069328"
+  },
+  "system_errors": [
+    {
+      "timestamp": "2026-04-08T21:00:39.284512",
+      "error_type": "runtime_critical_error",
+      "error_message": "MarketDataService.__init__() takes from 1 to 2 positional arguments but 5 were given",
+      "status": "error"
+    },
+    {
+      "timestamp": "2026-04-08T21:13:19.642633",
+      "error_type": "runtime_critical_error",
+      "error_message": "MarketDataService.__init__() takes from 1 to 2 positional arguments but 5 were given",
+      "status": "error"
+    },
+    {
+      "timestamp": "2026-04-08T21:18:23.092464",
+      "error_type": "runtime_critical_error",
+      "error_message": "SignalEngine.__init__() takes 1 positional argument but 2 were given",
+      "status": "error"
+    }
+  ]
 }
