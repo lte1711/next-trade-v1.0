@@ -1,4 +1,4 @@
-"""Main Runtime - Integrated Runtime Module - FIXED VERSION"""
+"""Main Runtime - Integrated Runtime Module"""
 
 import sys
 import os
@@ -30,7 +30,7 @@ import hashlib
 
 
 class TradingRuntime:
-    """Integrated Trading Runtime - FIXED VERSION"""
+    """Integrated Trading Runtime"""
     
     def __init__(self):
         self.load_local_env_file()
@@ -66,14 +66,14 @@ class TradingRuntime:
         self.api_key, self.api_secret = get_api_credentials()
         self.base_url = "https://testnet.binancefuture.com"
         
-        # New modular architecture initialization - FIXED
-        self.market_data_service = MarketDataService(self.base_url)  # FIXED: Only base_url
+        # New modular architecture initialization
+        self.market_data_service = MarketDataService(self.base_url)  # FIXED: Only base_url parameter
         
-        self.indicator_service = IndicatorService()  # FIXED: No parameters
-        self.market_regime_service = MarketRegimeService()  # FIXED: No parameters
-        self.signal_engine = SignalEngine()  # FIXED: No parameters
-        self.strategy_registry = StrategyRegistry()  # FIXED: No parameters
-        self.allocation_service = AllocationService()  # FIXED: No parameters
+        self.indicator_service = IndicatorService(self.log_system_error)
+        self.market_regime_service = MarketRegimeService(self.log_system_error)
+        self.signal_engine = SignalEngine(self.log_system_error)
+        self.strategy_registry = StrategyRegistry(self.log_system_error)
+        self.allocation_service = AllocationService(self.log_system_error)
         
         # Existing managers (compatibility maintained)
         self.order_executor = OrderExecutor(

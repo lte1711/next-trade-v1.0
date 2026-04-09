@@ -1,124 +1,27 @@
 {
-  "timestamp": "2026-04-08T19:18:53.631621",
-  "active_positions": {},
-  "pending_trades": [],
-  "completed_trades": [],
-  "trading_history": [],
-  "system_status": "CLEANED_AND_RESTARTED",
-  "last_cleanup": "2026-04-08T19:18:53.632566",
-  "equity": {
-    "total_equity": 10000.0,
-    "available_balance": 10000.0,
-    "used_balance": 0.0,
-    "unrealized_pnl": 0.0
-  },
-  "performance": {
-    "total_trades": 0,
-    "winning_trades": 0,
-    "losing_trades": 0,
-    "total_pnl": 0.0,
-    "win_rate": 0.0
-  },
-  "signal_engine_replacement": {
-    "status": "CLEANED",
-    "new_engine_installed": true,
-    "last_test": "2026-04-08T19:18:53.632566"
-  },
-  "threshold_optimization": {
-    "status": "CLEANED",
-    "timestamp": "2026-04-08T19:18:53.632566"
-  },
-  "funding_management": {
-    "timestamp": "2026-04-08T19:18:53.632566",
-    "configuration_updated": true,
-    "position_manager_enhanced": true,
-    "dashboard_created": true,
-    "features_implemented": [
-      "funding_time_calculation",
-      "countdown_timer",
-      "configurable_lead_time",
-      "enhanced_closure_logic",
-      "funding_dashboard"
-    ],
-    "status": "CLEANED"
-  },
-  "forced_minimal_thresholds": {
-    "timestamp": "2026-04-08T19:20:10.134101",
-    "signal_engine": "ENHANCED_WITH_MINIMAL_THRESHOLDS",
-    "strategy_registry": "ENHANCED_WITH_MINIMAL_THRESHOLDS",
-    "thresholds_applied": {
-      "min_confidence": 0.1,
-      "min_trend_strength": 1.0,
-      "max_volatility": 1.0,
-      "required_alignment_count": 0,
-      "consensus_threshold": 0
+  "start_time": "2026-04-09T11:33:59.644247",
+  "total_cycles": 14,
+  "total_trades": 11,
+  "active_positions": {
+    "BTCUSDT": {
+      "symbol": "BTCUSDT",
+      "side": "LONG",
+      "amount": 0.001,
+      "entry_price": 50000.0,
+      "entry_time": "2026-04-09T11:36:22.721779",
+      "unrealized_pnl": 0.0
     },
-    "test_signals_generated": 2,
-    "status": "FORCED_MINIMAL_THRESHOLDS_APPLIED",
-    "backup_files": [
-      "core/signal_engine_backup.py",
-      "core/strategy_registry_backup.py"
-    ]
-  },
-  "symbol_expansion_fix": {
-    "timestamp": "2026-04-08T20:20:02.696819",
-    "status": "EXPANDED_LIST_FIXED",
-    "symbol_count": 20,
-    "symbol_list": [
-      "BTCUSDT",
-      "ETHUSDT",
-      "BNBUSDT",
-      "DOGEUSDT",
-      "XRPUSDT",
-      "ADAUSDT",
-      "DOTUSDT",
-      "LINKUSDT",
-      "SOLUSDT",
-      "MATICUSDT",
-      "AVAXUSDT",
-      "ATOMUSDT",
-      "LTCUSDT",
-      "UNIUSDT",
-      "FILUSDT",
-      "ETCUSDT",
-      "XLMUSDT",
-      "VETUSDT",
-      "THETAUSDT",
-      "ICPUSDT"
-    ],
-    "dynamic_manager_removed": true,
-    "api_independent": true,
-    "coverage_increase": "150%"
-  },
-  "background_trading": {
-    "last_cycle": {
-      "cycle_number": 1,
-      "start_time": "2026-04-08T20:47:19.383046",
-      "end_time": "2026-04-08T20:47:59.068332",
-      "duration": 39.685286,
-      "status": "completed"
-    },
-    "total_cycles": 1,
-    "process_start": "2026-04-08T20:47:59.069328"
-  },
-  "system_errors": [
-    {
-      "timestamp": "2026-04-08T21:00:39.284512",
-      "error_type": "runtime_critical_error",
-      "error_message": "MarketDataService.__init__() takes from 1 to 2 positional arguments but 5 were given",
-      "status": "error"
-    },
-    {
-      "timestamp": "2026-04-08T21:13:19.642633",
-      "error_type": "runtime_critical_error",
-      "error_message": "MarketDataService.__init__() takes from 1 to 2 positional arguments but 5 were given",
-      "status": "error"
-    },
-    {
-      "timestamp": "2026-04-08T21:18:23.092464",
-      "error_type": "runtime_critical_error",
-      "error_message": "SignalEngine.__init__() takes 1 positional argument but 2 were given",
-      "status": "error"
+    "ETHUSDT": {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "amount": 0.001,
+      "entry_price": 50000.0,
+      "entry_time": "2026-04-09T11:36:22.721779",
+      "unrealized_pnl": 0.0
     }
-  ]
+  },
+  "pending_trades": [],
+  "system_errors": [],
+  "last_cycle_time": "2026-04-09T11:36:22.721779",
+  "status": "running"
 }
