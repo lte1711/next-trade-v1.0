@@ -179,30 +179,36 @@ class MarketDataService:
             if response.status_code == 200:
                 exchange_info = response.json()
                 symbols = []
+                ticker_url = f"{self.base_url}/fapi/v1/ticker/24hr"
+                ticker_response = requests.get(ticker_url, timeout=10)
+                if ticker_response.status_code != 200:
+                    self.log_error("symbols_fetch", f"Failed to fetch 24hr tickers: {ticker_response.status_code}")
+                    return []
+
+                ticker_lookup = {
+                    item.get('symbol'): item
+                    for item in ticker_response.json()
+                    if isinstance(item, dict) and item.get('symbol')
+                }
                 
                 for symbol_info in exchange_info['symbols']:
                     if (symbol_info['status'] == 'TRADING' and 
                         symbol_info['contractType'] == 'PERPETUAL' and
                         symbol_info['quoteAsset'] == 'USDT'):
-                        
-                        # Get 24hr ticker data for volume and price
-                        ticker_url = f"{self.base_url}/fapi/v1/ticker/24hr"
-                        ticker_params = {'symbol': symbol_info['symbol']}
-                        ticker_response = requests.get(ticker_url, params=ticker_params, timeout=5)
-                        
-                        if ticker_response.status_code == 200:
-                            ticker_data = ticker_response.json()
-                            
-                            symbols.append({
-                                'symbol': symbol_info['symbol'],
-                                'base_asset': symbol_info['baseAsset'],
-                                'quote_asset': symbol_info['quoteAsset'],
-                                'status': symbol_info['status'],
-                                'contract_type': symbol_info['contractType'],
-                                'volume': float(ticker_data.get('volume', 0)),
-                                'volatility': 0.0,  # Will be calculated later
-                                'price': float(ticker_data.get('lastPrice', 0))
-                            })
+                        ticker_data = ticker_lookup.get(symbol_info['symbol'])
+                        if not ticker_data:
+                            continue
+
+                        symbols.append({
+                            'symbol': symbol_info['symbol'],
+                            'base_asset': symbol_info['baseAsset'],
+                            'quote_asset': symbol_info['quoteAsset'],
+                            'status': symbol_info['status'],
+                            'contract_type': symbol_info['contractType'],
+                            'volume': float(ticker_data.get('volume', 0)),
+                            'volatility': 0.0,  # Will be calculated later
+                            'price': float(ticker_data.get('lastPrice', 0))
+                        })
                 
                 # Sort by volume and limit to top 50
                 symbols.sort(key=lambda x: x['volume'], reverse=True)

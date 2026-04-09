@@ -8,6 +8,7 @@ import hashlib
 import time
 from typing import Dict, List, Optional, Any
 from decimal import Decimal
+from core.exchange_utils import get_server_time
 
 class AccountService:
     """Binance Futures account information and synchronization"""
@@ -46,7 +47,9 @@ class AccountService:
     def get_account_info(self) -> Optional[Dict[str, Any]]:
         """Get account information"""
         try:
-            timestamp = int(time.time() * 1000)
+            timestamp = get_server_time(self.base_url)
+            if not timestamp:
+                timestamp = int(time.time() * 1000)
             params = {
                 'timestamp': timestamp,
                 'recvWindow': getattr(self, 'recv_window', 5000)

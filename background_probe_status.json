@@ -1,0 +1,14 @@
+{
+  "started_at": "2026-04-09T12:37:44.942381+09:00",
+  "pid": 2460,
+  "status": "running",
+  "cycles": [],
+  "errors": [],
+  "initialized": true,
+  "base_url": "https://demo-fapi.binance.com",
+  "valid_symbol_count": 50,
+  "active_strategies": [
+    "ma_trend_follow",
+    "ema_crossover"
+  ]
+}

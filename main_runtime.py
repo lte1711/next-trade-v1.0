@@ -21,6 +21,7 @@ from core.allocation_service import AllocationService
 from core.position_manager import PositionManager
 from core.account_service import AccountService
 from core.trade_orchestrator import TradeOrchestrator
+from core.partial_take_profit_manager import PartialTakeProfitManager
 from api_config import get_api_credentials, is_api_valid
 
 # Essential imports
@@ -35,6 +36,8 @@ class TradingRuntime:
     def __init__(self):
         self.load_local_env_file()
         self.start_time = datetime.now()
+        self.initialized = False
+        self._system_initialized_once = False
         
         # 초기화
         self.trading_results = {
@@ -58,72 +61,27 @@ class TradingRuntime:
             "managed_stop_prices": {}
         }
         
-        # API key verification
-        if not is_api_valid():
-            print("[ERROR] API credentials not found. Please run: python setup_api.py")
-            return
-        
-        self.api_key, self.api_secret = get_api_credentials()
-        self.base_url = "https://testnet.binancefuture.com"
-        
-        # New modular architecture initialization - FIXED
-        self.market_data_service = MarketDataService(self.base_url)  # FIXED: Only base_url
-        
-        self.indicator_service = IndicatorService()  # FIXED: No parameters
-        self.market_regime_service = MarketRegimeService()  # FIXED: No parameters
-        self.signal_engine = SignalEngine()  # FIXED: No parameters
-        self.strategy_registry = StrategyRegistry()  # FIXED: No parameters
-        self.allocation_service = AllocationService()  # FIXED: No parameters
-        
-        # Existing managers (compatibility maintained)
-        self.order_executor = OrderExecutor(
-            self.api_key, self.api_secret, self.base_url, self.trading_results,
-            self.get_symbol_info, self.log_system_error, safe_float_conversion, round_to_step,
-            capital_getter=lambda: self.total_capital
-        )
-        
-        self.protective_order_manager = ProtectiveOrderManager(
-            self.api_key, self.api_secret, self.base_url, self.trading_results,
-            self.get_symbol_info, self.log_system_error
-        )
-        
-        self.account_service = AccountService(
-            self.base_url, self.api_key, self.api_secret, self.log_system_error
-        )
-        
-        self.position_manager = PositionManager(
-            self.trading_results, self.order_executor, self.protective_order_manager, self.log_system_error
-        )
-        
-        self.position_entry_times = {}
-        self.pending_order_manager = PendingOrderManager(
-            self.trading_results, self.get_order_status, self.log_system_error,
-            self.position_entry_times, self.protective_order_manager, self.clear_position_management_state,
-            sync_positions_callback=lambda: self.account_service.sync_positions(self.trading_results)
-        )
-        
-        # Main orchestrator
-        self.trade_orchestrator = TradeOrchestrator(
-            self.trading_results,
-            self.market_data_service,
-            self.indicator_service,
-            self.market_regime_service,
-            self.signal_engine,
-            self.strategy_registry,
-            self.allocation_service,
-            self.position_manager,
-            self.order_executor,
-            self.account_service,
-            self.protective_order_manager,
-            self.log_system_error
-        )
-        
         # Load configuration and initialize
         try:
             with open('config.json', 'r') as f:
                 config = json.load(f)
         except Exception:
             config = {}
+
+        # Resolve API credentials and runtime endpoint before service creation
+        config_api_key = config.get("binance_testnet", {}).get("api_key", "")
+        config_api_secret = config.get("binance_testnet", {}).get("api_secret", "")
+        config_base_url = config.get("binance_testnet", {}).get("base_url", "")
+
+        runtime_api_key, runtime_api_secret = get_api_credentials()
+        self.api_key = runtime_api_key or config_api_key
+        self.api_secret = runtime_api_secret or config_api_secret
+        self.base_url = config_base_url or "https://testnet.binancefuture.com"
+
+        # API key verification
+        if not self.api_key or not self.api_secret or not is_api_valid():
+            print("[ERROR] API credentials not found. Please run: python setup_api.py")
+            return
         
         # Load V2 Merged trading configuration
         trading_config = config.get("trading_config", {})
@@ -147,18 +105,63 @@ class TradingRuntime:
         api_config = config.get("api_config", {})
         self.recv_window = api_config.get("recv_window", 5000)
         self.min_volume_threshold = api_config.get("min_volume_threshold", 1000000)
-        
-        self.api_key = config.get("binance_testnet", {}).get("api_key")
-        self.api_secret = config.get("binance_testnet", {}).get("api_secret")
-        self.base_url = config.get("binance_testnet", {}).get("base_url")
-        
+
+        # New modular architecture initialization
+        self.market_data_service = MarketDataService(self.base_url)
+        self.indicator_service = IndicatorService()
+        self.market_regime_service = MarketRegimeService()
+        self.signal_engine = SignalEngine()
+        self.strategy_registry = StrategyRegistry()
+        self.allocation_service = AllocationService()
+
+        self.order_executor = OrderExecutor(
+            self.api_key, self.api_secret, self.base_url, self.trading_results,
+            self.get_symbol_info, self.log_system_error, safe_float_conversion, round_to_step,
+            capital_getter=lambda: self.total_capital
+        )
+
+        self.protective_order_manager = ProtectiveOrderManager(
+            self.api_key, self.api_secret, self.base_url, self.trading_results,
+            self.get_symbol_info, self.log_system_error
+        )
+
+        self.account_service = AccountService(
+            self.base_url, self.api_key, self.api_secret, self.log_system_error
+        )
+        self.account_service.recv_window = self.recv_window
+
+        self.position_manager = PositionManager(
+            self.trading_results, self.order_executor, self.protective_order_manager, self.log_system_error
+        )
+
+        self.partial_take_profit_manager = PartialTakeProfitManager(self.log_system_error)
+        self.position_entry_times = {}
+        self.pending_order_manager = PendingOrderManager(
+            self.trading_results, self.get_order_status, self.log_system_error,
+            self.position_entry_times, self.protective_order_manager, self.clear_position_management_state,
+            sync_positions_callback=lambda: self.account_service.sync_positions(self.trading_results)
+        )
+
         self.valid_symbols = self.load_valid_symbols()
         
         # Load strategies
         self.load_strategies()
-        
-        # Load valid symbols
-        self.valid_symbols = self.load_valid_symbols()
+
+        self.trade_orchestrator = TradeOrchestrator(
+            self.trading_results,
+            self.market_data_service,
+            self.indicator_service,
+            self.market_regime_service,
+            self.signal_engine,
+            self.strategy_registry,
+            self.allocation_service,
+            self.position_manager,
+            self.order_executor,
+            self.account_service,
+            self.protective_order_manager,
+            self.partial_take_profit_manager,
+            self.log_system_error
+        )
         
         # Initial capital from real-time API data only
         try:
@@ -181,10 +184,14 @@ class TradingRuntime:
         
         # Initialize trading components (after all attributes are set)
         self._initialize_trading_system()
+        self.initialized = True
     
     def _initialize_trading_system(self):
         """Initialize trading system components"""
         try:
+            if self._system_initialized_once:
+                return
+
             # 1. Update capital from actual account data
             if self.account_service.periodic_sync(self.trading_results):
                 actual_balance = self.trading_results.get("available_balance", self.total_capital)
@@ -192,8 +199,11 @@ class TradingRuntime:
                     self.total_capital = actual_balance
                     print(f"[INFO] Capital updated from account: ${self.total_capital:.2f}")
             
-            # 2. Symbol information refresh
-            symbols_info = self.market_data_service.refresh_symbol_universe()
+            # 2. Refresh valid symbols
+            if not self.valid_symbols:
+                refreshed_symbols = self.load_valid_symbols()
+                if refreshed_symbols:
+                    self.valid_symbols = refreshed_symbols
             print(f"[INFO] Active strategies: {self.active_strategies}")
             
             # 3. Capital allocation initialization
@@ -202,6 +212,7 @@ class TradingRuntime:
             )
             
             print(f"[INFO] Trading system initialized")
+            self._system_initialized_once = True
             
         except Exception as e:
             self.log_system_error("system_init_error", str(e))
@@ -220,12 +231,6 @@ class TradingRuntime:
                                 self.api_secret = value.strip()
         except Exception:
             pass
-        
-        
-    def resolve_base_url(self):
-        """Resolve base URL"""
-        return "https://testnet.binancefuture.com"
-    
     def log_system_error(self, error_type, error_message):
         """System error logging"""
         try:
@@ -293,7 +298,7 @@ class TradingRuntime:
             if not server_time:
                 return None
             
-            timestamp = int(server_time * 1000)
+            timestamp = int(server_time)
             params = {
                 "symbol": symbol,
                 "orderId": order_id,
@@ -363,23 +368,21 @@ class TradingRuntime:
             self.log_system_error("sync_positions_error", str(e))
             return False
     
-    def display_status(self):
-        """Display status"""
-        print(f"[INFO] REFACTORED_RUNTIME: Modular architecture implemented")
-        print(f"[INFO] CORE_MODULES: ProtectiveOrderManager, PendingOrderManager, OrderExecutor")
-        print(f"[INFO] MONOLITHIC_REDUCED: Core responsibilities split into modules")
-        print(f"[INFO] MAINTAINABILITY: Significantly improved")
-        return None
-    
     def run(self):
         """Main execution loop - Complete trading orchestration"""
         try:
+            if not self.initialized:
+                self.log_system_error("runtime_not_initialized", "Trading runtime was not initialized successfully")
+                return
             print(f"[INFO] Complete Modular Trading Runtime Started")
             print(f"[INFO] Start time: {self.start_time}")
             print(f"[INFO] Initial capital: ${self.total_capital:.2f}")
             
-            # Initialization and setup
-            self._initialize_trading_system()
+            cycle_results = {
+                'signals_generated': 0,
+                'trades_executed': 0,
+                'errors': []
+            }
             
             # Main trading loop
             while True:
@@ -410,13 +413,6 @@ class TradingRuntime:
                 except Exception as e:
                     self.log_system_error("runtime_error", str(e))
                     time.sleep(10)
-                    
-            # Error handling
-            for error in cycle_results.get('errors', []):
-                self.log_system_error("cycle_error", error)
-            
-            # Statistics update
-            self.trading_results['last_cycle'] = cycle_results
             
         except Exception as e:
             self.log_system_error("cycle_results_process", str(e))
@@ -447,7 +443,6 @@ class TradingRuntime:
             
             # Save results periodically
             try:
-                import json
                 with open('trading_results.json', 'w') as f:
                     json.dump(self.trading_results, f, indent=2, default=str)
             except Exception as save_error:
@@ -472,4 +467,7 @@ class TradingRuntime:
 
 if __name__ == "__main__":
     runtime = TradingRuntime()
-    runtime.run()
+    if runtime.initialized:
+        runtime.run()
+    else:
+        sys.exit(1)

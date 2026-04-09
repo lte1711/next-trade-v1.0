@@ -40,15 +40,14 @@ class ProtectiveOrderManager:
             stop_price_str = f"{float(stop_price):.{max(0, price_precision)}f}"
             
             params = {
+                "algoType": "CONDITIONAL",
                 "symbol": symbol,
                 "side": side,
                 "type": order_type,
-                "quantity": "0",
-                "price": "0",
-                "stopPrice": stop_price_str,
+                "triggerPrice": stop_price_str,
                 "timeInForce": "GTC",
-                "reduceOnly": "true",
                 "closePosition": "true",
+                "workingType": "CONTRACT_PRICE",
                 "timestamp": timestamp,
                 "recvWindow": getattr(self, 'recv_window', 5000)
             }
@@ -60,7 +59,7 @@ class ProtectiveOrderManager:
                 hashlib.sha256
             ).hexdigest()
             
-            url = f"{self.base_url}/fapi/v1/order?{query_string}&signature={signature}"
+            url = f"{self.base_url}/fapi/v1/algoOrder?{query_string}&signature={signature}"
             headers = {"X-MBX-APIKEY": self.api_key}
             response = requests.post(url, headers=headers, timeout=10)
             
@@ -80,6 +79,7 @@ class ProtectiveOrderManager:
             
             timestamp = int(server_time) - 100
             params = {
+                "algoType": "CONDITIONAL",
                 "symbol": symbol,
                 "timestamp": timestamp,
                 "recvWindow": getattr(self, 'recv_window', 5000)
@@ -92,7 +92,7 @@ class ProtectiveOrderManager:
                 hashlib.sha256
             ).hexdigest()
             
-            url = f"{self.base_url}/fapi/v1/openOrders?{query_string}&signature={signature}"
+            url = f"{self.base_url}/fapi/v1/openAlgoOrders?{query_string}&signature={signature}"
             headers = {"X-MBX-APIKEY": self.api_key}
             response = requests.get(url, headers=headers, timeout=10)
             
@@ -112,8 +112,7 @@ class ProtectiveOrderManager:
             
             timestamp = int(server_time) - 100
             params = {
-                "symbol": symbol,
-                "orderId": order_id,
+                "algoId": order_id,
                 "timestamp": timestamp,
                 "recvWindow": getattr(self, 'recv_window', 5000)
             }
@@ -125,7 +124,7 @@ class ProtectiveOrderManager:
                 hashlib.sha256
             ).hexdigest()
             
-            url = f"{self.base_url}/fapi/v1/order?{query_string}&signature={signature}"
+            url = f"{self.base_url}/fapi/v1/algoOrder?{query_string}&signature={signature}"
             headers = {"X-MBX-APIKEY": self.api_key}
             response = requests.delete(url, headers=headers, timeout=10)
             
@@ -138,7 +137,7 @@ class ProtectiveOrderManager:
         """Cancel all protective orders for symbol"""
         open_orders = self.get_open_orders(symbol)
         for order in open_orders:
-            order_id = order.get("orderId")
+            order_id = order.get("algoId") or order.get("orderId")
             if order_id:
                 self.cancel_order(symbol, order_id)
     

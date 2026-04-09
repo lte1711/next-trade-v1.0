@@ -3,8 +3,8 @@ Trade Orchestrator - Main trading execution orchestration
 """
 
 from typing import List, Dict, Optional, Any, Tuple
-from decimal import Decimal
 import json
+import logging
 from datetime import datetime
 from core.position_manager import PositionManager
 from core.account_service import AccountService
@@ -32,6 +32,7 @@ class TradeOrchestrator:
         self.protective_order_manager = protective_order_manager
         self.partial_take_profit_manager = partial_take_profit_manager
         self.log_error = log_error_callback or self._default_log_error
+        self.logger = logging.getLogger(__name__)
     
     def _default_log_error(self, error_type, message):
         """Default error logging"""

@@ -2,10 +2,8 @@
 Position Manager - Active position management and profit/loss control
 """
 
-from datetime import timezone
-from typing import List, Dict, Any, Optional, Any, Tuple
-from decimal import Decimal
-import json
+from datetime import timezone, timedelta
+from typing import List, Dict, Any, Optional, Tuple
 from datetime import datetime
 
 class PositionManager:
@@ -19,6 +17,8 @@ class PositionManager:
         self.protective_order_manager = protective_order_manager
         self.log_error = log_error_callback or self._default_log_error
         self._position_states = {}
+        self.config = {}
+        self.position_entry_times = self.trading_results.setdefault("position_entry_times", {})
     
     def _default_log_error(self, error_type, message):
         """Default error logging"""
@@ -68,11 +68,13 @@ class PositionManager:
                 'current_price': current_price,
                 'unrealized_pnl': unrealized_pnl,
                 'pnl_pct': pnl_pct,
-                'entry_time': position.get("entry_time"),
-                'hold_seconds': self._get_position_hold_seconds(symbol),
+                'entry_time': position.get("entry_time") or self.position_entry_times.get(symbol),
+                'hold_seconds': self._get_position_hold_seconds(symbol, position),
                 'partial_take_profit_state': state.get('partial_take_profit_state', {}),
                 'stop_loss_adjusted': state.get('stop_loss_adjusted', False),
-                'trailing_active': state.get('trailing_active', False)
+                'trailing_active': state.get('trailing_active', False),
+                'managed_stop_price': self.trading_results.get("managed_stop_prices", {}).get(symbol),
+                'recently_closed': symbol in self.trading_results.get("recently_closed_symbols", {})
             }
             
         except Exception as e:
@@ -89,6 +91,17 @@ class PositionManager:
             partial_tp_state = self.trading_results.get("partial_take_profit_state", {})
             if symbol in partial_tp_state:
                 del partial_tp_state[symbol]
+
+            managed_stop_prices = self.trading_results.get("managed_stop_prices", {})
+            if symbol in managed_stop_prices:
+                del managed_stop_prices[symbol]
+
+            if symbol in self.position_entry_times:
+                del self.position_entry_times[symbol]
+
+            recently_closed = self.trading_results.get("recently_closed_symbols", {})
+            if symbol in recently_closed:
+                del recently_closed[symbol]
                 
         except Exception as e:
             self.log_error("position_state_clear", str(e))
@@ -102,27 +115,41 @@ class PositionManager:
             self.log_error("profit_pct_calc", str(e))
             return 0.0
     
-    def get_position_entry_mode(self, symbol: str) -> str:
+    def get_position_entry_mode(self, symbol: str, position=None) -> str:
         """Get position entry mode"""
         try:
-            position = self.trading_results.get("active_positions", {}).get(symbol, {})
+            if position is None:
+                position = self.trading_results.get("active_positions", {}).get(symbol, {})
             return position.get("entry_mode", "UNKNOWN")
         except Exception as e:
             self.log_error("entry_mode_get", str(e))
             return "UNKNOWN"
     
-    def get_position_hold_seconds(self, symbol: str) -> int:
+    def get_position_hold_seconds(self, symbol: str, position=None) -> int:
         """Get how long position has been held in seconds"""
-        return self._get_position_hold_seconds(symbol)
+        return self._get_position_hold_seconds(symbol, position)
     
-    def _get_position_hold_seconds(self, symbol: str) -> int:
+    def _get_position_hold_seconds(self, symbol: str, position=None) -> int:
         """Internal calculation of position hold time"""
         try:
-            position = self.trading_results.get("active_positions", {}).get(symbol, {})
-            entry_time = position.get("entry_time")
+            if position is None:
+                position = self.trading_results.get("active_positions", {}).get(symbol, {})
+            entry_time = position.get("entry_time") or self.position_entry_times.get(symbol)
             
             if entry_time:
                 current_time = int(datetime.now().timestamp() * 1000)
+
+                if isinstance(entry_time, str):
+                    try:
+                        parsed_entry_time = datetime.fromisoformat(entry_time.replace("Z", "+00:00"))
+                        entry_time = int(parsed_entry_time.timestamp() * 1000)
+                    except ValueError:
+                        return 0
+                elif isinstance(entry_time, (int, float)):
+                    entry_time = int(entry_time)
+                else:
+                    return 0
+
                 hold_seconds = (current_time - entry_time) // 1000
                 return max(0, hold_seconds)
             
@@ -283,8 +310,8 @@ class PositionManager:
         except Exception as e:
             self.log_error("profit_target_manage", str(e))
     
-    def should_exit_position_ma(self, symbol: str, ma_analysis: Dict[str, List[float]], 
-                              current_price: float, index: int = -1) -> bool:
+    def should_exit_position_fast_slow_ma(self, symbol: str, ma_analysis: Dict[str, List[float]], 
+                                        current_price: float, index: int = -1) -> bool:
         """Check if position should be closed based on MA crossover"""
         try:
             if not ma_analysis or index >= len(ma_analysis.get('fast_ma', [])):
@@ -411,40 +438,6 @@ class PositionManager:
                 
         except Exception as e:
             self.log_error("positions_manage", str(e))
-    
-    def clear_position_management_state(self, symbol):
-        """V2 Merged: Clear position management state"""
-        try:
-            # Clear partial take profit state
-            if symbol in self.trading_results["partial_take_profit_state"]:
-                del self.trading_results["partial_take_profit_state"][symbol]
-            
-            # Clear managed stop prices
-            if symbol in self.trading_results["managed_stop_prices"]:
-                del self.trading_results["managed_stop_prices"][symbol]
-            
-            # Clear position entry times
-            if hasattr(self, 'position_entry_times') and symbol in self.position_entry_times:
-                del self.position_entry_times[symbol]
-            
-            # Clear recently closed symbols
-            if symbol in self.trading_results["recently_closed_symbols"]:
-                del self.trading_results["recently_closed_symbols"][symbol]
-                
-        except Exception as e:
-            self.log_error("clear_position_state", str(e))
-    
-    def get_position_management_state(self, symbol):
-        """V2 Merged: Get position management state"""
-        try:
-            return {
-                'partial_tp_state': self.trading_results["partial_take_profit_state"].get(symbol, {}),
-                'managed_stop_price': self.trading_results["managed_stop_prices"].get(symbol),
-                'entry_time': getattr(self, 'position_entry_times', {}).get(symbol),
-                'recently_closed': symbol in self.trading_results["recently_closed_symbols"]
-            }
-        except Exception:
-            return {}
     
     def should_exit_position_ma(self, position, market_regime, strategy=None):
         """V2 Merged: Determine whether a position should exit on MA reversal conditions"""

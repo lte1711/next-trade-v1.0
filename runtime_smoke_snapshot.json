@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-04-09T12:31:03+09:00",
+  "initialized": true,
+  "base_url": "https://demo-fapi.binance.com",
+  "capital": 8626.34563444,
+  "active_strategies": [
+    "ma_trend_follow",
+    "ema_crossover"
+  ],
+  "valid_symbol_count": 50,
+  "trade_orchestrator_present": true,
+  "system_errors": 0,
+  "single_cycle_smoke": {
+    "symbols_analyzed": 5,
+    "signals_generated": 10,
+    "trades_executed": 0,
+    "errors": [],
+    "duration_ms": 8381
+  },
+  "supervised_run": {
+    "cycles_completed": 2,
+    "thread_alive_equivalent": true,
+    "active_positions_after_run": 0,
+    "pending_trades_after_run": 0,
+    "real_orders_after_run": 0,
+    "cycle_summaries": [
+      {
+        "cycle_no": 1,
+        "duration_sec": 96.764,
+        "signals_generated": 20,
+        "trades_executed": 0,
+        "error_count": 0,
+        "errors": []
+      },
+      {
+        "cycle_no": 2,
+        "duration_sec": 99.537,
+        "signals_generated": 20,
+        "trades_executed": 0,
+        "error_count": 0,
+        "errors": []
+      }
+    ]
+  },
+  "order_status_polling": {
+    "symbol": "BTCUSDT",
+    "order_id": 13025326781,
+    "placement_status": "NEW",
+    "polled_status": "NEW",
+    "cancelled": true,
+    "cancel_status": "CANCELED"
+  },
+  "protective_order_validation": {
+    "symbol": "BTCUSDT",
+    "entry_status_polled": "FILLED",
+    "protective_validation_passed": true,
+    "stop_algo_id": 1000000044842658,
+    "take_profit_algo_id": 1000000044842672,
+    "close_status_polled": "FILLED",
+    "reduce_only_recorded": true,
+    "cleanup_open_orders": 0
+  }
+}

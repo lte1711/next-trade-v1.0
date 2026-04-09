@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-04-09T12:20:52.806746+09:00",
+  "initialized": true,
+  "base_url": "https://demo-fapi.binance.com",
+  "symbol": "BTCUSDT",
+  "placed": true,
+  "order_id": 13025326781,
+  "placement_status": "NEW",
+  "polled_status": "NEW",
+  "cancelled": true,
+  "cancel_status": "CANCELED",
+  "errors": [],
+  "request": {
+    "current_price": "70951.30",
+    "limit_price": "35475.60",
+    "quantity": "0.0032",
+    "target_notional": "110.00"
+  },
+  "placement_http_status": 200,
+  "polled_order_type": "LIMIT",
+  "polled_orig_type": "LIMIT"
+}
