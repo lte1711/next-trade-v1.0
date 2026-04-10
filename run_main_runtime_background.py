@@ -7,6 +7,7 @@ import subprocess
 import sys
 import time
 import os
+import json
 from datetime import datetime
 
 def run_main_runtime_background():
@@ -36,7 +37,6 @@ def run_main_runtime_background():
         print('  - config.json: FOUND')
         
         # Check API configuration
-        import json
         with open('config.json', 'r') as f:
             config = json.load(f)
         
@@ -183,261 +183,23 @@ if __name__ == "__main__":
         print(f'  - ERROR creating background script: {e}')
         return False
     
-    # 3. Create Monitor Script for Main Runtime
-    print('\n[3] CREATE MONITOR SCRIPT FOR MAIN RUNTIME')
-    
-    monitor_script = '''import time
-import json
-import subprocess
-import os
-from datetime import datetime
+    # 3. Reuse existing monitor and stop scripts
+    print('\n[3] VERIFY MONITOR / STOP SCRIPTS')
 
-def monitor_main_runtime():
-    """Monitor main runtime background process"""
-    print("Main Runtime Monitor Started")
-    print(f"Monitor Process ID: {os.getpid()}")
-    
-    while True:
-        try:
-            # Check trading results
-            try:
-                with open('trading_results.json', 'r') as f:
-                    results = json.load(f)
-                
-                main_runtime_bg = results.get('main_runtime_background', {})
-                bg_trading = results.get('background_trading', {})
-                
-                print(f"\\n{'='*50}")
-                print(f"MAIN RUNTIME MONITORING REPORT")
-                print(f"{'='*50}")
-                print(f"Check Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-                
-                # Main runtime status
-                if main_runtime_bg:
-                    start_time = main_runtime_bg.get('start_time', '')
-                    total_cycles = main_runtime_bg.get('total_cycles', 0)
-                    status = main_runtime_bg.get('status', 'unknown')
-                    
-                    print(f"\\nMain Runtime Status:")
-                    print(f"  - Start Time: {start_time}")
-                    print(f"  - Total Cycles: {total_cycles}")
-                    print(f"  - Status: {status}")
-                else:
-                    print("\\nMain Runtime Status: NOT STARTED")
-                
-                # Background trading status (if also running)
-                if bg_trading:
-                    last_cycle = bg_trading.get('last_cycle', {})
-                    bg_total_cycles = bg_trading.get('total_cycles', 0)
-                    
-                    print(f"\\nBackground Trading Status:")
-                    print(f"  - Total Cycles: {bg_total_cycles}")
-                    
-                    if last_cycle:
-                        end_time = last_cycle.get('end_time', '')
-                        duration = last_cycle.get('duration', 0)
-                        
-                        print(f"  - Last Cycle End: {end_time}")
-                        print(f"  - Last Duration: {duration:.2f} seconds")
-                else:
-                    print("\\nBackground Trading Status: NOT RUNNING")
-                
-                # Check active positions
-                active_positions = results.get('active_positions', {})
-                pending_trades = results.get('pending_trades', [])
-                total_trades = results.get('total_trades', 0)
-                available_balance = results.get('available_balance', 0.0)
-                
-                print(f"\\nTrading Status:")
-                print(f"  - Active Positions: {len(active_positions)}")
-                print(f"  - Pending Trades: {len(pending_trades)}")
-                print(f"  - Total Trades: {total_trades}")
-                print(f"  - Available Balance: ${available_balance:.2f}")
-                
-                # Show active positions
-                if active_positions:
-                    print("\\nActive Positions:")
-                    for symbol, position in list(active_positions.items())[:5]:
-                        amount = position.get('amount', 0)
-                        entry_price = position.get('entry_price', 0)
-                        pnl = position.get('unrealized_pnl', 0)
-                        
-                        pos_type = "LONG" if amount > 0 else "SHORT"
-                        print(f"  - {symbol}: {pos_type} {abs(amount):.6f} @ {entry_price:.6f} (PnL: {pnl:+.4f})")
-                
-                # Check system errors
-                system_errors = results.get('system_errors', [])
-                if system_errors:
-                    print(f"\\nSystem Errors: {len(system_errors)}")
-                    for error in system_errors[-3:]:  # Show last 3 errors
-                        error_time = error.get('timestamp', '')
-                        error_type = error.get('error_type', '')
-                        error_message = error.get('error_message', '')
-                        print(f"  - {error_time}: {error_type} - {error_message}")
-                else:
-                    print("\\nSystem Errors: None")
-            
-            except FileNotFoundError:
-                print("\\nTrading results file not found")
-            except Exception as e:
-                print(f"\\nError reading trading results: {e}")
-            
-            # Check if main runtime process is running
-            try:
-                result = subprocess.run(['tasklist', '/FI', 'IMAGENAME eq python.exe'], 
-                                      capture_output=True, text=True)
-                
-                if 'python.exe' in result.stdout:
-                    python_lines = [line for line in result.stdout.split('\\n') if 'python.exe' in line]
-                    print(f"\\nPython Processes: {len(python_lines)}")
-                    
-                    for line in python_lines[:3]:  # Show first 3
-                        print(f"  - {line.strip()}")
-                    
-                    # Check for our main runtime process
-                    main_runtime_found = False
-                    for line in python_lines:
-                        if 'main_runtime_background_loop.py' in line:
-                            main_runtime_found = True
-                            break
-                    
-                    if main_runtime_found:
-                        print("\\nMain Runtime Process: RUNNING")
-                    else:
-                        print("\\nMain Runtime Process: NOT FOUND")
-                else:
-                    print("\\nNo Python processes found")
-            
-            except Exception as e:
-                print(f"\\nError checking processes: {e}")
-        
-        except Exception as e:
-            print(f"Error in monitoring: {e}")
-        
-        # Wait for next check (2 minutes)
-        print("\\nWaiting 2 minutes for next check...")
-        time.sleep(120)  # 2 minutes
-
-if __name__ == "__main__":
-    monitor_main_runtime()
-'''
-    
-    try:
-        with open('monitor_main_runtime.py', 'w') as f:
-            f.write(monitor_script)
-        
-        print('  - Monitor Script: CREATED')
+    if os.path.exists('monitor_main_runtime.py'):
+        print('  - Monitor Script: READY')
         print('    - File: monitor_main_runtime.py')
-        print('    - Features: Runtime monitoring, position tracking, error monitoring')
-        
-    except Exception as e:
-        print(f'  - ERROR creating monitor script: {e}')
-    
-    # 4. Create Stop Script for Main Runtime
-    print('\n[4] CREATE STOP SCRIPT FOR MAIN RUNTIME')
-    
-    stop_script = '''import subprocess
-import sys
-import os
-from datetime import datetime
+    else:
+        print('  - WARNING: monitor_main_runtime.py not found')
 
-def stop_main_runtime():
-    """Stop main runtime background process"""
-    print("Stopping Main Runtime Background Process...")
-    
-    stopped_processes = []
-    
-    # Find and stop main runtime processes
-    try:
-        result = subprocess.run(['tasklist', '/FI', 'IMAGENAME eq python.exe'], 
-                              capture_output=True, text=True)
-        
-        if 'python.exe' in result.stdout:
-            python_lines = [line for line in result.stdout.split('\\n') if 'python.exe' in line]
-            
-            for line in python_lines:
-                if 'main_runtime_background_loop.py' in line:
-                    # Extract PID from the line
-                    parts = line.split()
-                    if len(parts) >= 2:
-                        pid = parts[1]
-                        try:
-                            # Terminate the process
-                            subprocess.run(['taskkill', '/PID', pid, '/F'], 
-                                          capture_output=True)
-                            stopped_processes.append(pid)
-                            print(f"  - Stopped Process ID: {pid}")
-                        except Exception as e:
-                            print(f"  - Error stopping process {pid}: {e}")
-        
-        # Wait for processes to terminate
-        time.sleep(2)
-        
-        # Check if any processes are still running
-        remaining_processes = []
-        result = subprocess.run(['tasklist', '/FI', 'IMAGENAME eq python.exe'], 
-                              capture_output=True, text=True)
-        
-        if 'python.exe' in result.stdout:
-            python_lines = [line for line in result.stdout.split('\\n') if 'python.exe' in line]
-            for line in python_lines:
-                if 'main_runtime_background_loop.py' in line:
-                    parts = line.split()
-                    if len(parts) >= 2:
-                        remaining_processes.append(parts[1])
-        
-        if remaining_processes:
-            print(f"  - WARNING: {len(remaining_processes)} processes still running")
-            for pid in remaining_processes:
-                print(f"    - Process ID: {pid}")
-        else:
-            print("  - All main runtime processes stopped successfully")
-    
-    except Exception as e:
-        print(f"  - Error stopping processes: {e}")
-    
-    # Update trading results
-    try:
-        with open('trading_results.json', 'r') as f:
-            results = json.load(f)
-        
-        # Update main runtime background status
-        if 'main_runtime_background' not in results:
-            results['main_runtime_background'] = {}
-        
-        results['main_runtime_background']['stopped_at'] = datetime.now().isoformat()
-        results['main_runtime_background']['stopped_processes'] = stopped_processes
-        results['main_runtime_background']['status'] = 'stopped'
-        
-        with open('trading_results.json', 'w') as f:
-            json.dump(results, f, indent=2)
-        
-        print("  - Trading results updated")
-    
-    except Exception as e:
-        print(f"  - Error updating results: {e}")
-    
-    print(f"\\nMain Runtime Stop Complete")
-    print(f"Stopped Processes: {len(stopped_processes)}")
-    print(f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-
-if __name__ == "__main__":
-    stop_main_runtime()
-'''
-    
-    try:
-        with open('stop_main_runtime.py', 'w') as f:
-            f.write(stop_script)
-        
-        print('  - Stop Script: CREATED')
+    if os.path.exists('stop_main_runtime.py'):
+        print('  - Stop Script: READY')
         print('    - File: stop_main_runtime.py')
-        print('    - Features: Process termination, status update')
-        
-    except Exception as e:
-        print(f'  - ERROR creating stop script: {e}')
+    else:
+        print('  - WARNING: stop_main_runtime.py not found')
     
-    # 5. Start Main Runtime Background
-    print('\n[5] START MAIN RUNTIME BACKGROUND')
+    # 4. Start Main Runtime Background
+    print('\n[4] START MAIN RUNTIME BACKGROUND')
     
     try:
         print('  - Starting Main Runtime Background...')
@@ -469,8 +231,8 @@ if __name__ == "__main__":
         print(f'  - ERROR starting main runtime background: {e}')
         return False
     
-    # 6. Wait and Check Initial Status
-    print('\n[6] WAIT AND CHECK INITIAL STATUS')
+    # 5. Wait and Check Initial Status
+    print('\n[5] WAIT AND CHECK INITIAL STATUS')
     
     try:
         print('  - Waiting 10 seconds for initialization...')
@@ -503,8 +265,8 @@ if __name__ == "__main__":
     except Exception as e:
         print(f'  - ERROR checking initial status: {e}')
     
-    # 7. Final Instructions
-    print('\n[7] FINAL INSTRUCTIONS')
+    # 6. Final Instructions
+    print('\n[6] FINAL INSTRUCTIONS')
     
     print('  - Main Runtime Background Setup Complete!')
     print()
@@ -542,8 +304,8 @@ if __name__ == "__main__":
     print('    - Error monitoring and reporting')
     print('    - Process health checking')
     
-    # 8. Final Status
-    print('\n[8] FINAL STATUS')
+    # 7. Final Status
+    print('\n[7] FINAL STATUS')
     
     print('  - Main Runtime Background Status: ACTIVE')
     print('  - Process Type: Windows Background Process')

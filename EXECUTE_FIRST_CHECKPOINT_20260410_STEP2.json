@@ -1,0 +1,213 @@
+{
+  "started_at": "2026-04-10T09:40:13.853309+09:00",
+  "finished_at": "2026-04-10T09:42:34.394122+09:00",
+  "duration_sec": 140.541,
+  "initialized": true,
+  "base_url": "https://demo-fapi.binance.com",
+  "signals_generated": 20,
+  "trades_executed": 0,
+  "errors": [],
+  "skips": [
+    "Trade skipped for AKEUSDT: Duplicate entry prevented: AKEUSDT already has active or pending trade",
+    "Trade skipped for AKEUSDT: Duplicate entry prevented: AKEUSDT already has active or pending trade",
+    "Trade skipped for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade"
+  ],
+  "system_errors_before": 0,
+  "system_errors_after": 0,
+  "new_system_errors": [],
+  "active_symbols_before": [
+    "AKEUSDT",
+    "HIPPOUSDT"
+  ],
+  "active_symbols_after": [
+    "AKEUSDT",
+    "HIPPOUSDT"
+  ],
+  "coverage_before": {
+    "HIPPOUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1,
+      "orders": [
+        [
+          "STOP_MARKET",
+          "0.0002020"
+        ],
+        [
+          "TAKE_PROFIT_MARKET",
+          "0.0001890"
+        ]
+      ]
+    },
+    "AKEUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1,
+      "orders": [
+        [
+          "STOP_MARKET",
+          "0.0004324"
+        ],
+        [
+          "TAKE_PROFIT_MARKET",
+          "0.0004590"
+        ]
+      ]
+    }
+  },
+  "coverage_after": {
+    "HIPPOUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1,
+      "orders": [
+        [
+          "STOP_MARKET",
+          "0.0002010"
+        ],
+        [
+          "TAKE_PROFIT_MARKET",
+          "0.0001890"
+        ]
+      ]
+    },
+    "AKEUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1,
+      "orders": [
+        [
+          "STOP_MARKET",
+          "0.0004324"
+        ],
+        [
+          "TAKE_PROFIT_MARKET",
+          "0.0004590"
+        ]
+      ]
+    }
+  },
+  "realized_pnl_journal_count_before": 4,
+  "realized_pnl_journal_count_after": 4,
+  "new_realized_pnl_events": [],
+  "symbol_performance": {
+    "NEIROUSDT": {
+      "trade_count": 2,
+      "win_count": 0,
+      "loss_count": 1,
+      "net_realized_pnl": -0.5957577,
+      "last_realized_pnl": 0.0,
+      "last_strategy": "ma_trend_follow",
+      "last_updated": "2026-04-09T18:21:38.172602"
+    },
+    "ZRCUSDT": {
+      "trade_count": 1,
+      "win_count": 0,
+      "loss_count": 1,
+      "net_realized_pnl": -0.2468,
+      "last_realized_pnl": -0.24680000000000066,
+      "last_strategy": "ma_trend_follow",
+      "last_updated": "2026-04-09T18:04:14.593819"
+    },
+    "AKEUSDT": {
+      "trade_count": 1,
+      "win_count": 1,
+      "loss_count": 0,
+      "net_realized_pnl": 0.2360488,
+      "last_realized_pnl": 0.2360487996109993,
+      "last_strategy": "ma_trend_follow",
+      "last_updated": "2026-04-09T18:34:39.086463"
+    }
+  },
+  "available_balance": 8540.0922071,
+  "diagnostic_summary": {
+    "total_signals": 20,
+    "buy_signals": 6,
+    "sell_signals": 6,
+    "hold_signals": 8,
+    "high_confidence_signals": 0,
+    "average_confidence": 0.35999999999999993,
+    "regime_distribution": {
+      "RANGING": 16,
+      "BULL_TREND": 2,
+      "BEAR_TREND": 2
+    },
+    "top_candidates": [
+      {
+        "symbol": "AKEUSDT",
+        "signal": "BUY",
+        "confidence": 0.6,
+        "reason": "Price 20.36% above SMA with volume and volume present"
+      },
+      {
+        "symbol": "AKEUSDT",
+        "signal": "BUY",
+        "confidence": 0.6,
+        "reason": "Price 20.36% above SMA with volume and volume present",
+        "price_vs_sma_pct": 20.355478014339063,
+        "distance_to_entry_pct": 20.25547801433906
+      },
+      {
+        "symbol": "HIPPOUSDT",
+        "signal": "SELL",
+        "confidence": 0.6,
+        "reason": "Price -1.94% below SMA with volume and volume present"
+      },
+      {
+        "symbol": "HIPPOUSDT",
+        "signal": "SELL",
+        "confidence": 0.6,
+        "reason": "Price -1.94% below SMA with volume and volume present",
+        "price_vs_sma_pct": -1.9412643106022964,
+        "distance_to_entry_pct": 1.8412643106022963
+      },
+      {
+        "symbol": "ZRCUSDT",
+        "signal": "SELL",
+        "confidence": 0.6,
+        "reason": "Price -0.28% below SMA with volume and volume present"
+      }
+    ],
+    "hold_reasons": {
+      "No signal conditions met": 8
+    },
+    "closest_to_entry": [
+      {
+        "symbol": "PORT3USDT",
+        "signal": "HOLD",
+        "confidence": 0.0,
+        "reason": "No signal conditions met",
+        "price_vs_sma_pct": 0.08092797410305903,
+        "distance_to_entry_pct": 0.019072025896940972
+      },
+      {
+        "symbol": "PORT3USDT",
+        "signal": "HOLD",
+        "confidence": 0.0,
+        "reason": "No signal conditions met",
+        "price_vs_sma_pct": 0.08092797410305903,
+        "distance_to_entry_pct": 0.019072025896940972
+      },
+      {
+        "symbol": "REIUSDT",
+        "signal": "BUY",
+        "confidence": 0.6,
+        "reason": "Price 0.15% above SMA with volume and volume present",
+        "price_vs_sma_pct": 0.15060240963855245,
+        "distance_to_entry_pct": 0.05060240963855245
+      },
+      {
+        "symbol": "REIUSDT",
+        "signal": "BUY",
+        "confidence": 0.6,
+        "reason": "Price 0.15% above SMA with volume and volume present",
+        "price_vs_sma_pct": 0.15060240963855245,
+        "distance_to_entry_pct": 0.05060240963855245
+      },
+      {
+        "symbol": "EPTUSDT",
+        "signal": "HOLD",
+        "confidence": 0.0,
+        "reason": "No signal conditions met",
+        "price_vs_sma_pct": 0.04491354143275524,
+        "distance_to_entry_pct": 0.05508645856724476
+      }
+    ]
+  }
+}

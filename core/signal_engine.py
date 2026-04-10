@@ -25,13 +25,14 @@ class SignalEngine:
                                strategy_config: Dict[str, Any]) -> Dict[str, Any]:
         """Generate strategy signal with minimal thresholds"""
         try:
-            # Use minimal thresholds instead of strategy config
-            entry_filters = self.minimal_thresholds
-            
             # Get basic indicators
             current_price = indicators.get('price', 0)
             volume = indicators.get('volume', 0)
             sma_10 = indicators.get('sma_10', 0)
+            volume_ratio = float(indicators.get('volume_ratio', 1.0) or 1.0)
+            trend_strength = float(regime.get('trend_strength', 0.0) or 0.0)
+            volatility_level = float(regime.get('volatility_level', 0.0) or 0.0)
+            market_regime = regime.get('regime', 'UNKNOWN')
             
             # Simple signal logic with minimal thresholds
             signal = 'HOLD'
@@ -45,18 +46,28 @@ class SignalEngine:
                 # BUY if price is above SMA (even by 0.1%)
                 if price_vs_sma > 0.001:  # 0.1% above SMA
                     signal = 'BUY'
-                    confidence = 0.5  # Fixed confidence
+                    confidence = self._calculate_dynamic_confidence(
+                        signal, price_vs_sma, volume_ratio, trend_strength, volatility_level, market_regime
+                    )
                     reason = f'Price {price_vs_sma*100:.2f}% above SMA with volume'
                 
                 # SELL if price is below SMA (even by 0.1%)
                 elif price_vs_sma < -0.001:  # 0.1% below SMA
                     signal = 'SELL'
-                    confidence = 0.5  # Fixed confidence
+                    confidence = self._calculate_dynamic_confidence(
+                        signal, price_vs_sma, volume_ratio, trend_strength, volatility_level, market_regime
+                    )
                     reason = f'Price {price_vs_sma*100:.2f}% below SMA with volume'
+            else:
+                missing_inputs = []
+                if current_price <= 0:
+                    missing_inputs.append('price')
+                if sma_10 <= 0:
+                    missing_inputs.append('sma_10')
+                reason = f"Missing baseline inputs: {', '.join(missing_inputs)}"
             
             # Volume check (very relaxed)
             if volume > 0 and signal != 'HOLD':
-                confidence = min(0.8, confidence + 0.1)  # Boost confidence slightly
                 reason += ' and volume present'
             
             # Ensure minimum confidence is met (very low threshold)
@@ -67,13 +78,18 @@ class SignalEngine:
                     'reason': reason,
                     'timestamp': datetime.now().isoformat(),
                     'indicators': indicators,
-                    'regime': regime
+                    'regime': regime,
+                    'buy_strength': confidence if signal == 'BUY' else 0.0,
+                    'sell_strength': confidence if signal == 'SELL' else 0.0,
+                    'volume_ratio': round(volume_ratio, 4),
+                    'market_alignment': self._market_alignment_score(signal, market_regime),
+                    'volatility_penalty': self._volatility_penalty(volatility_level)
                 }
             else:
                 return {
                     'signal': 'HOLD',
                     'confidence': 0.0,
-                    'reason': 'Confidence below minimal threshold',
+                    'reason': reason if reason else 'Confidence below minimal threshold',
                     'timestamp': datetime.now().isoformat(),
                     'indicators': indicators,
                     'regime': regime
@@ -89,6 +105,39 @@ class SignalEngine:
                 'indicators': indicators,
                 'regime': regime
             }
+
+    def _calculate_dynamic_confidence(self, signal: str, price_vs_sma: float,
+                                      volume_ratio: float, trend_strength: float,
+                                      volatility_level: float, market_regime: str) -> float:
+        """Calculate confidence from market quality instead of a fixed value."""
+        deviation_score = min(abs(price_vs_sma) * 20.0, 0.22)
+        volume_score = min(max(volume_ratio - 1.0, 0.0) * 0.08, 0.12)
+        trend_score = min(trend_strength / 100.0, 0.18)
+        alignment_score = self._market_alignment_score(signal, market_regime)
+        volatility_penalty = self._volatility_penalty(volatility_level)
+
+        confidence = 0.42 + deviation_score + volume_score + trend_score + alignment_score - volatility_penalty
+        return round(max(0.0, min(confidence, 0.95)), 4)
+
+    def _market_alignment_score(self, signal: str, market_regime: str) -> float:
+        """Reward signals that align with the classified market regime."""
+        if signal == 'BUY' and market_regime == 'BULL_TREND':
+            return 0.12
+        if signal == 'SELL' and market_regime == 'BEAR_TREND':
+            return 0.12
+        if signal in {'BUY', 'SELL'} and market_regime == 'RANGING':
+            return 0.02
+        if signal == 'BUY' and market_regime == 'BEAR_TREND':
+            return -0.08
+        if signal == 'SELL' and market_regime == 'BULL_TREND':
+            return -0.08
+        return 0.0
+
+    def _volatility_penalty(self, volatility_level: float) -> float:
+        """Penalize very noisy symbols while allowing normal crypto volatility."""
+        if volatility_level <= 0.02:
+            return 0.0
+        return min((volatility_level - 0.02) * 2.0, 0.12)
     
     def generate_signals(self, market_data: Dict[str, Any], 
                         strategies: List[str]) -> Dict[str, Any]:
@@ -146,11 +195,63 @@ class SignalEngine:
                 'total_signals': 0,
                 'error': str(e)
             }
+
+    def score_trade_candidate(self, signal: Dict[str, Any],
+                            market_data: Dict[str, Any],
+                            risk_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Score a trade candidate for ranking within the cycle"""
+        try:
+            confidence = float(signal.get('confidence', 0.0) or 0.0)
+            signal_type = signal.get('signal', 'HOLD')
+            indicators = signal.get('indicators', {}) or {}
+            regime = signal.get('regime', {}) or {}
+            current_price = indicators.get('price') or market_data.get('prices', {}).get('current', 0.0)
+            sma_10 = indicators.get('sma_10', 0.0)
+            volume_ratio = float(indicators.get('volume_ratio', 1.0) or 1.0)
+            trend_strength = float(regime.get('trend_strength', 0.0) or 0.0)
+            volatility_level = float(regime.get('volatility_level', 0.0) or 0.0)
+            price_vs_sma = 0.0
+            if current_price and sma_10:
+                price_vs_sma = abs((current_price - sma_10) / sma_10)
+
+            direction_bonus = 0.1 if signal_type in {'BUY', 'SELL'} else 0.0
+            deviation_score = min(price_vs_sma * 100.0, 0.3)
+            volume_score = min(max(volume_ratio - 1.0, 0.0) * 0.05, 0.1)
+            regime_score = min(trend_strength / 150.0, 0.18)
+            volatility_penalty = min(max(volatility_level - 0.02, 0.0) * 1.5, 0.12)
+            risk_bonus = 0.05 if risk_config else 0.0
+            final_score = round(
+                confidence + direction_bonus + deviation_score + volume_score + regime_score + risk_bonus - volatility_penalty,
+                6
+            )
+
+            return {
+                'final_score': final_score,
+                'confidence_score': confidence,
+                'deviation_score': deviation_score,
+                'volume_score': volume_score,
+                'regime_score': regime_score,
+                'volatility_penalty': volatility_penalty,
+                'direction_bonus': direction_bonus,
+                'risk_bonus': risk_bonus,
+                'signal': signal_type
+            }
+        except Exception as e:
+            self.logger.error(f"Trade candidate scoring error: {e}")
+            return {
+                'final_score': 0.0,
+                'confidence_score': 0.0,
+                'deviation_score': 0.0,
+                'direction_bonus': 0.0,
+                'risk_bonus': 0.0,
+                'signal': signal.get('signal', 'HOLD') if isinstance(signal, dict) else 'HOLD',
+                'error': str(e)
+            }
     
     def get_signal_statistics(self) -> Dict[str, Any]:
         """Get signal generation statistics"""
         return {
             'minimal_thresholds': self.minimal_thresholds,
-            'engine_type': 'ENHANCED_WITH_MINIMAL_THRESHOLDS',
+            'engine_type': 'DYNAMIC_MARKET_QUALITY_SCORING',
             'timestamp': datetime.now().isoformat()
         }

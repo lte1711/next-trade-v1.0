@@ -4,6 +4,40 @@ import subprocess
 import os
 from datetime import datetime
 
+
+def _find_main_runtime_processes():
+    """Find python processes whose command line includes the runtime loop script."""
+    try:
+        ps_command = (
+            "Get-CimInstance Win32_Process "
+            "| Where-Object { $_.Name -eq 'python.exe' -and $_.CommandLine -like '*main_runtime_background_loop.py*' } "
+            "| Select-Object ProcessId, CommandLine "
+            "| ConvertTo-Json -Compress"
+        )
+        result = subprocess.run(
+            ['powershell', '-NoProfile', '-Command', ps_command],
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode != 0 or not result.stdout.strip():
+            return []
+
+        parsed = json.loads(result.stdout)
+        if isinstance(parsed, dict):
+            parsed = [parsed]
+
+        processes = []
+        for item in parsed:
+            pid = item.get('ProcessId')
+            if pid:
+                processes.append({
+                    'pid': str(pid),
+                    'command_line': item.get('CommandLine', ''),
+                })
+        return processes
+    except Exception:
+        return []
+
 def monitor_main_runtime():
     """Monitor main runtime background process"""
     print("Main Runtime Monitor Started")
@@ -96,29 +130,16 @@ def monitor_main_runtime():
             
             # Check if main runtime process is running
             try:
-                result = subprocess.run(['tasklist', '/FI', 'IMAGENAME eq python.exe'], 
-                                      capture_output=True, text=True)
+                runtime_processes = _find_main_runtime_processes()
+                print(f"\nMain Runtime Matching Processes: {len(runtime_processes)}")
                 
-                if 'python.exe' in result.stdout:
-                    python_lines = [line for line in result.stdout.split('\n') if 'python.exe' in line]
-                    print(f"\nPython Processes: {len(python_lines)}")
-                    
-                    for line in python_lines[:3]:  # Show first 3
-                        print(f"  - {line.strip()}")
-                    
-                    # Check for our main runtime process
-                    main_runtime_found = False
-                    for line in python_lines:
-                        if 'main_runtime_background_loop.py' in line:
-                            main_runtime_found = True
-                            break
-                    
-                    if main_runtime_found:
-                        print("\nMain Runtime Process: RUNNING")
-                    else:
-                        print("\nMain Runtime Process: NOT FOUND")
+                for process in runtime_processes[:3]:
+                    print(f"  - PID {process['pid']}: {process['command_line']}")
+                
+                if runtime_processes:
+                    print("\nMain Runtime Process: RUNNING")
                 else:
-                    print("\nNo Python processes found")
+                    print("\nMain Runtime Process: NOT FOUND")
             
             except Exception as e:
                 print(f"\nError checking processes: {e}")

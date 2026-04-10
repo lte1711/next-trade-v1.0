@@ -10,10 +10,11 @@ from typing import Dict, Any, Optional
 class PartialTakeProfitManager:
     """V2 Merged style partial take profit management"""
     
-    def __init__(self, log_error_callback=None):
+    def __init__(self, trading_results=None, log_error_callback=None):
+        self.trading_results = trading_results if isinstance(trading_results, dict) else {}
         self.log_error = log_error_callback or self._default_log_error
-        self.partial_take_profit_state = {}
-        self.managed_stop_prices = {}
+        self.partial_take_profit_state = self.trading_results.setdefault("partial_take_profit_state", {})
+        self.managed_stop_prices = self.trading_results.setdefault("managed_stop_prices", {})
     
     def _default_log_error(self, error_type, message):
         """Default error logging"""

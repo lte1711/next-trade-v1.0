@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-09T12:31:03+09:00",
+  "timestamp": "2026-04-09T12:43:47+09:00",
   "initialized": true,
   "base_url": "https://demo-fapi.binance.com",
   "capital": 8626.34563444,
@@ -59,5 +59,38 @@
     "close_status_polled": "FILLED",
     "reduce_only_recorded": true,
     "cleanup_open_orders": 0
+  },
+  "background_supervised_probe": {
+    "status": "completed",
+    "started_at": "2026-04-09T12:37:44.942381+09:00",
+    "completed_at": "2026-04-09T12:43:47.211804+09:00",
+    "cycles_completed": 3,
+    "system_errors": 0,
+    "active_positions": 0,
+    "pending_trades": 0,
+    "real_orders": 0,
+    "cycle_summaries": [
+      {
+        "cycle_no": 1,
+        "duration_sec": 112.478,
+        "signals_generated": 20,
+        "trades_executed": 0,
+        "errors": []
+      },
+      {
+        "cycle_no": 2,
+        "duration_sec": 99.098,
+        "signals_generated": 20,
+        "trades_executed": 0,
+        "errors": []
+      },
+      {
+        "cycle_no": 3,
+        "duration_sec": 99.223,
+        "signals_generated": 20,
+        "trades_executed": 0,
+        "errors": []
+      }
+    ]
   }
 }

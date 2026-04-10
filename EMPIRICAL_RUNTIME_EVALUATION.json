@@ -1,0 +1,129 @@
+{
+  "generated_at": "2026-04-09T18:20:00+09:00",
+  "environment": {
+    "name": "Binance Futures Demo Testnet",
+    "base_url": "https://demo-fapi.binance.com"
+  },
+  "final_gate": {
+    "status": "passed",
+    "passed_runs": 8,
+    "completed_at": "2026-04-09T15:57:19.806563+09:00"
+  },
+  "historical_live_demo": {
+    "source_file": "unattended_live_demo_status.json",
+    "status": "running_snapshot",
+    "started_at": "2026-04-09T17:05:32.370344+09:00",
+    "observed_completed_cycles": 13,
+    "signals_generated": 260,
+    "trades_executed": 10,
+    "max_active_positions": 4,
+    "historical_system_error_peak": 1,
+    "ending_balance": 8533.98269042,
+    "notes": [
+      "This session contains legacy semantics from before duplicate and preflight blocks were fully separated into skips.",
+      "Observed real entries prove the runtime moved beyond all-HOLD behavior after baseline indicator wiring was fixed."
+    ]
+  },
+  "skip_separation_probe": {
+    "source_file": "supervised_skip_probe_status.json",
+    "status": "completed",
+    "completed_at": "2026-04-09T17:41:22.523990+09:00",
+    "completed_cycles": 2,
+    "signals_generated": 40,
+    "trades_executed": 0,
+    "cycles_with_errors": 0,
+    "system_errors": 2,
+    "total_skips": 6,
+    "sample_skips": [
+      "1000WHYUSDT current price 0.0000022000 below preflight floor 0.00001",
+      "HIPPOUSDT duplicate entry prevented",
+      "NEIROUSDT duplicate entry prevented"
+    ],
+    "notes": [
+      "This probe confirmed skip classification worked.",
+      "At this stage preflight blocks were still mirrored into system_errors, so this file should be read as an intermediate validation point."
+    ]
+  },
+  "preflight_event_probe": {
+    "source_file": "supervised_preflight_event_probe.json",
+    "status": "completed",
+    "completed_at": "2026-04-09T17:45:59.264741+09:00",
+    "completed_cycles": 1,
+    "signals_generated": 20,
+    "trades_executed": 1,
+    "cycles_with_errors": 0,
+    "system_errors": 0,
+    "notes": [
+      "This probe confirmed intended blocks no longer polluted system_errors.",
+      "In this run, skips were duplicate-entry skips only; preflight classification had already been cleaned up in code."
+    ]
+  },
+  "restart_resilience_probe": {
+    "status": "passed",
+    "executed_at": "2026-04-09T18:19:00+09:00",
+    "initialized": true,
+    "valid_symbol_count": 50,
+    "contains_1000WHYUSDT": false,
+    "journal_keys": [
+      "HIPPOUSDT",
+      "NEIROUSDT"
+    ],
+    "restored_positions": {
+      "HIPPOUSDT": {
+        "strategy": "ma_trend_follow",
+        "entry_time": 1775723212379,
+        "stop_loss_pct": 0.03,
+        "take_profit_pct": 0.045,
+        "managed_stop_price": 0.000209
+      },
+      "NEIROUSDT": {
+        "strategy": "ma_trend_follow",
+        "entry_time": 1775722060663,
+        "stop_loss_pct": 0.03,
+        "take_profit_pct": 0.045,
+        "managed_stop_price": 0.000057
+      },
+      "ZRCUSDT": {
+        "strategy": "ma_trend_follow",
+        "entry_time": 1775724356161,
+        "stop_loss_pct": 0.03,
+        "take_profit_pct": 0.045,
+        "managed_stop_price": 0.00184
+      }
+    },
+    "notes": [
+      "Managed stop prices were reconstructed from live open algo orders.",
+      "Entry metadata was reconstructed from journal, local state, and exchange fallback."
+    ]
+  },
+  "current_probe_snapshot": {
+    "source_file": "trading_results.json",
+    "active_positions": 3,
+    "pending_trades": 0,
+    "system_errors": 0,
+    "errors": 0,
+    "skips": 2,
+    "notes": [
+      "trading_results.json is probe-local and reflects the latest fresh run rather than the full historical ledger."
+    ]
+  },
+  "assessment": {
+    "demo_runtime_readiness": "GO",
+    "core_runtime_stability": "PASS",
+    "order_lifecycle_validation": "PASS",
+    "skip_error_classification": "PASS",
+    "restart_resilience": "PASS",
+    "observation_quality": "IMPROVED",
+    "remaining_gaps": [
+      "Historical unattended session evidence still includes legacy error semantics in its cycle records.",
+      "Strategy quality and candidate selection quality are now the main bottlenecks, not runtime plumbing."
+    ]
+  },
+  "next_evolution_recommendation": {
+    "recommended_step": "adaptive_signal_quality_layer",
+    "why": [
+      "Core runtime, protective lifecycle, stop tightening, skip separation, and restart resilience are already empirically validated.",
+      "The next leverage comes from improving candidate quality, symbol quality, and entry selectivity rather than adding more execution plumbing."
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "started_at": "2026-04-09T17:43:53.798932+09:00",
+  "completed_at": "2026-04-09T17:45:59.264741+09:00",
+  "pid": 9252,
+  "status": "completed",
+  "requested_cycles": 1,
+  "completed_cycles": 1,
+  "sleep_seconds": 1,
+  "errors": [],
+  "cycles": [
+    {
+      "cycle_no": 1,
+      "started_at": "2026-04-09T17:44:15.496273+09:00",
+      "finished_at": "2026-04-09T17:45:59.264741+09:00",
+      "duration_sec": 103.768,
+      "signals_generated": 20,
+      "trades_executed": 1,
+      "errors": [],
+      "skips": [
+        "Trade skipped for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+        "Trade skipped for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade"
+      ],
+      "available_balance": 8536.56744302,
+      "active_positions": 3,
+      "pending_trades": 0,
+      "real_orders": 1,
+      "system_errors": 0
+    }
+  ],
+  "aggregate": {
+    "signals_generated": 20,
+    "trades_executed": 1,
+    "cycles_with_errors": 0,
+    "max_active_positions": 3,
+    "max_pending_trades": 0
+  },
+  "next_evolution_targets": [
+    "Extend to a multi-hour supervised session with the same evidence format."
+  ],
+  "initialized": true,
+  "base_url": "https://demo-fapi.binance.com",
+  "valid_symbol_count": 50,
+  "active_strategies": [
+    "ma_trend_follow",
+    "ema_crossover"
+  ],
+  "starting_balance": 8536.56744302,
+  "ending_balance": 8536.56744302,
+  "system_errors": 0
+}

@@ -1,0 +1,71 @@
+{
+  "started_at": "2026-04-09T17:37:31.584614+09:00",
+  "completed_at": "2026-04-09T17:41:22.523990+09:00",
+  "pid": 5500,
+  "status": "completed",
+  "requested_cycles": 2,
+  "completed_cycles": 2,
+  "sleep_seconds": 5,
+  "errors": [],
+  "cycles": [
+    {
+      "cycle_no": 1,
+      "started_at": "2026-04-09T17:37:53.324108+09:00",
+      "finished_at": "2026-04-09T17:39:34.639143+09:00",
+      "duration_sec": 101.315,
+      "signals_generated": 20,
+      "trades_executed": 0,
+      "errors": [],
+      "skips": [
+        "Trade skipped for 1000WHYUSDT: 1000WHYUSDT current price 0.0000022000 below preflight floor 0.00001",
+        "Trade skipped for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+        "Trade skipped for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade"
+      ],
+      "available_balance": 8533.74343959,
+      "active_positions": 2,
+      "pending_trades": 0,
+      "real_orders": 1,
+      "system_errors": 1
+    },
+    {
+      "cycle_no": 2,
+      "started_at": "2026-04-09T17:39:39.640425+09:00",
+      "finished_at": "2026-04-09T17:41:22.522989+09:00",
+      "duration_sec": 102.883,
+      "signals_generated": 20,
+      "trades_executed": 0,
+      "errors": [],
+      "skips": [
+        "Trade skipped for 1000WHYUSDT: 1000WHYUSDT current price 0.0000022000 below preflight floor 0.00001",
+        "Trade skipped for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+        "Trade skipped for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade"
+      ],
+      "available_balance": 8535.59567357,
+      "active_positions": 2,
+      "pending_trades": 0,
+      "real_orders": 1,
+      "system_errors": 2
+    }
+  ],
+  "aggregate": {
+    "signals_generated": 40,
+    "trades_executed": 0,
+    "cycles_with_errors": 0,
+    "max_active_positions": 2,
+    "max_pending_trades": 0
+  },
+  "next_evolution_targets": [
+    "Extend to a multi-hour supervised session with the same evidence format.",
+    "Induce more real non-HOLD trading scenarios to validate entry/exit diversity."
+  ],
+  "initialized": true,
+  "base_url": "https://demo-fapi.binance.com",
+  "valid_symbol_count": 50,
+  "active_strategies": [
+    "ma_trend_follow",
+    "ema_crossover"
+  ],
+  "starting_balance": 8533.74343959,
+  "ending_balance": 8535.59567357,
+  "system_errors": 2
+}

@@ -1,0 +1,36 @@
+{
+  "started_at": "2026-04-09T15:55:27.111914+09:00",
+  "completed_at": "2026-04-09T15:55:46.801294+09:00",
+  "status": "completed",
+  "cases": [
+    {
+      "name": "long_trailing_above_2pct",
+      "symbol": "TRAIL_LONG",
+      "profit_pct": 0.03,
+      "updated": true,
+      "managed_stop_price": 101.97,
+      "expected_direction": "raise_long_stop"
+    },
+    {
+      "name": "short_trailing_above_2pct",
+      "symbol": "TRAIL_SHORT",
+      "profit_pct": 0.03,
+      "updated": true,
+      "managed_stop_price": 97.97,
+      "expected_direction": "lower_short_stop"
+    },
+    {
+      "name": "long_trailing_below_threshold",
+      "symbol": "TRAIL_LONG_LOW",
+      "profit_pct": 0.015,
+      "updated": false,
+      "managed_stop_price": null,
+      "expected_direction": "no_update"
+    }
+  ],
+  "system_errors": 0,
+  "next_evolution_targets": [
+    "Add a live scenario that tightens actual protective algo stop orders after profit expansion.",
+    "Promote the trailing-stop probe into the regression gate summary for routine demo validation."
+  ]
+}

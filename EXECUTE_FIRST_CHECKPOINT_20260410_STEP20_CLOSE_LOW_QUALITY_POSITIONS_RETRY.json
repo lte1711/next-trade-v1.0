@@ -1,0 +1,146 @@
+{
+  "started_at": "2026-04-10T11:17:40.728474+09:00",
+  "finished_at": "2026-04-10T11:18:29.646970+09:00",
+  "duration_sec": 48.918,
+  "evolution_step": "close_low_quality_active_positions_v1_retry_price_fallback",
+  "active_symbols_before": [
+    "HIPPOUSDT",
+    "MYROUSDT",
+    "NEIROUSDT",
+    "REIUSDT",
+    "ZRCUSDT"
+  ],
+  "quality_by_symbol": {
+    "HIPPOUSDT": {
+      "eligible_for_new_entry": true,
+      "reason": "thin_recent_volume",
+      "price_vs_sma_pct": -1.352028,
+      "volume_ratio": 0.000602,
+      "trend_strength": 23.360955,
+      "volatility": 0.01607975,
+      "market_regime": "RANGING",
+      "side": "SHORT",
+      "amount": -195206.0,
+      "entry_price": 0.000197,
+      "current_price": 0.000197
+    },
+    "NEIROUSDT": {
+      "eligible_for_new_entry": true,
+      "reason": "thin_recent_volume",
+      "price_vs_sma_pct": -0.661129,
+      "volume_ratio": 0.022001,
+      "trend_strength": 17.229577,
+      "volatility": 0.01387192,
+      "market_regime": "RANGING",
+      "side": "SHORT",
+      "amount": -657812.0,
+      "entry_price": 5.84e-05,
+      "current_price": 5.86e-05
+    },
+    "REIUSDT": {
+      "eligible_for_new_entry": true,
+      "reason": "quality_ok",
+      "price_vs_sma_pct": -0.100402,
+      "volume_ratio": 0.207446,
+      "trend_strength": 9.18199,
+      "volatility": 0.00125471,
+      "market_regime": "RANGING",
+      "side": "LONG",
+      "amount": 11075.0,
+      "entry_price": 0.00399,
+      "current_price": 0.00399
+    },
+    "ZRCUSDT": {
+      "eligible_for_new_entry": true,
+      "reason": "quality_ok",
+      "price_vs_sma_pct": 0.334448,
+      "volume_ratio": 0.208278,
+      "trend_strength": 8.90118,
+      "volatility": 0.00277078,
+      "market_regime": "RANGING",
+      "side": "LONG",
+      "amount": 24549.0,
+      "entry_price": 0.0018,
+      "current_price": 0.0018
+    },
+    "MYROUSDT": {
+      "eligible_for_new_entry": false,
+      "reason": "flat_price_vs_sma,weak_trend_strength,very_low_volatility",
+      "price_vs_sma_pct": -0.0,
+      "volume_ratio": 0.32866,
+      "trend_strength": 7.667605,
+      "volatility": 0.00079177,
+      "market_regime": "RANGING",
+      "side": "SHORT",
+      "amount": -11690.0,
+      "entry_price": 0.00379,
+      "current_price": 0.00379
+    }
+  },
+  "symbols_selected_for_close": [
+    "MYROUSDT"
+  ],
+  "close_results": [
+    {
+      "symbol": "MYROUSDT",
+      "close_submitted": false,
+      "quality": {
+        "eligible_for_new_entry": false,
+        "reason": "flat_price_vs_sma,weak_trend_strength,very_low_volatility",
+        "price_vs_sma_pct": -0.0,
+        "volume_ratio": 0.32866,
+        "trend_strength": 7.667605,
+        "volatility": 0.00079177,
+        "market_regime": "RANGING",
+        "side": "SHORT",
+        "amount": -11690.0,
+        "entry_price": 0.00379,
+        "current_price": 0.00379
+      }
+    }
+  ],
+  "new_orders": [],
+  "active_symbols_after_submit": [
+    "HIPPOUSDT",
+    "MYROUSDT",
+    "NEIROUSDT",
+    "REIUSDT",
+    "ZRCUSDT"
+  ],
+  "pending_after_submit": [],
+  "coverage_after_submit": {
+    "HIPPOUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    },
+    "NEIROUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    },
+    "REIUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    },
+    "ZRCUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    },
+    "MYROUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    }
+  },
+  "unprotected_symbols_after_submit": [],
+  "system_errors_before": 0,
+  "system_errors_after": 1,
+  "new_system_errors": [
+    {
+      "timestamp": "2026-04-10T11:18:23.163452",
+      "type": "order_submission_failed",
+      "message": "Order failed after 3 attempts: 400 {\"code\":-4131,\"msg\":\"The counterparty's best price does not meet the PERCENT_PRICE filter limit.\"}"
+    }
+  ],
+  "realized_pnl_journal_count_before": 25,
+  "realized_pnl_journal_count_after_submit": 25,
+  "new_realized_pnl_events_after_submit": []
+}

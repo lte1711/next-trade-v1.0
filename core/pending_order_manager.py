@@ -58,6 +58,11 @@ class PendingOrderManager:
                 if (not trade.get("reduce_only")) and old_status in {"NEW", "PARTIALLY_FILLED"}:
                     print(f"[TRACE] PENDING_TO_FILLED | {symbol} | old={old_status} | new={trade['status']}")
                     self.position_entry_times[symbol] = trade.get("timestamp", datetime.now().isoformat())
+
+                    active_position = self.trading_results.get("active_positions", {}).get(symbol)
+                    if not active_position or abs(active_position.get("amount", 0.0)) == 0:
+                        print(f"[TRACE] SKIP_PROTECTIVE_REINSTALL_NO_POSITION | {symbol}")
+                        continue
                     
                     # Prevent duplicate protective orders: cancel existing orders first, then reinstall
                     self.protective_order_manager.cancel_symbol_protective_orders(symbol)
@@ -73,6 +78,7 @@ class PendingOrderManager:
             if trade.get("reduce_only"):
                 if trade["status"] == "FILLED":
                     trade["realized_pnl"] = self.estimate_realized_pnl(trade)
+                    self._record_realized_pnl_event(trade)
                     
                     # Synchronize positions just before determining full exit
                     if callable(self.sync_positions):
@@ -101,9 +107,10 @@ class PendingOrderManager:
             quantity = self.safe_float_conversion(trade.get("executed_qty"), 0.0)
 
             if entry_price > 0 and exit_price > 0 and quantity > 0:
-                if trade.get("side") == "BUY":
+                exit_side = trade.get("side")
+                if exit_side == "SELL":
                     return (exit_price - entry_price) * quantity
-                else:
+                if exit_side == "BUY":
                     return (entry_price - exit_price) * quantity
         except Exception:
             pass
@@ -115,6 +122,60 @@ class PendingOrderManager:
             return float(value) if value is not None else default
         except (ValueError, TypeError):
             return default
+
+    def _record_realized_pnl_event(self, trade):
+        """Persist realized PnL events for audit and adaptive ranking."""
+        try:
+            order_id = trade.get("order_id")
+            if not order_id or order_id == "UNKNOWN":
+                return
+
+            journal = self.trading_results.setdefault("realized_pnl_journal", [])
+            if any(entry.get("order_id") == order_id for entry in journal):
+                return
+
+            realized_pnl = self.safe_float_conversion(trade.get("realized_pnl"), 0.0)
+            symbol = trade.get("symbol")
+            strategy = trade.get("strategy") or "unknown"
+            journal.append({
+                "timestamp": trade.get("timestamp"),
+                "order_id": order_id,
+                "symbol": symbol,
+                "strategy": strategy,
+                "side": trade.get("side"),
+                "entry_price": self.safe_float_conversion(trade.get("entry_price"), 0.0),
+                "exit_price": self.safe_float_conversion(trade.get("price"), 0.0),
+                "executed_qty": self.safe_float_conversion(trade.get("executed_qty"), 0.0),
+                "realized_pnl": realized_pnl,
+                "exit_reason": trade.get("exit_reason"),
+            })
+            if len(journal) > 500:
+                self.trading_results["realized_pnl_journal"] = journal[-250:]
+
+            performance_map = self.trading_results.setdefault("symbol_performance", {})
+            symbol_stats = performance_map.setdefault(symbol, {
+                "trade_count": 0,
+                "win_count": 0,
+                "loss_count": 0,
+                "net_realized_pnl": 0.0,
+                "last_realized_pnl": 0.0,
+                "last_strategy": strategy,
+                "last_updated": None,
+            })
+            symbol_stats["trade_count"] += 1
+            if realized_pnl > 0:
+                symbol_stats["win_count"] += 1
+            elif realized_pnl < 0:
+                symbol_stats["loss_count"] += 1
+            symbol_stats["net_realized_pnl"] = round(
+                self.safe_float_conversion(symbol_stats.get("net_realized_pnl"), 0.0) + realized_pnl,
+                8,
+            )
+            symbol_stats["last_realized_pnl"] = realized_pnl
+            symbol_stats["last_strategy"] = strategy
+            symbol_stats["last_updated"] = trade.get("timestamp")
+        except Exception:
+            pass
     
     def recompute_trade_counters(self):
         """Recalculate trade counters"""

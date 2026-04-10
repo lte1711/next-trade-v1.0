@@ -1,8 +1,30 @@
 {
-  "started_at": "2026-04-09T12:37:44.942381+09:00",
-  "pid": 2460,
-  "status": "running",
-  "cycles": [],
+  "started_at": "2026-04-09T15:39:26.362918+09:00",
+  "pid": 5152,
+  "status": "completed",
+  "cycles": [
+    {
+      "cycle_no": 1,
+      "duration_sec": 91.285,
+      "signals_generated": 20,
+      "trades_executed": 0,
+      "errors": []
+    },
+    {
+      "cycle_no": 2,
+      "duration_sec": 93.841,
+      "signals_generated": 20,
+      "trades_executed": 0,
+      "errors": []
+    },
+    {
+      "cycle_no": 3,
+      "duration_sec": 93.473,
+      "signals_generated": 20,
+      "trades_executed": 0,
+      "errors": []
+    }
+  ],
   "errors": [],
   "initialized": true,
   "base_url": "https://demo-fapi.binance.com",
@@ -10,5 +32,10 @@
   "active_strategies": [
     "ma_trend_follow",
     "ema_crossover"
-  ]
+  ],
+  "completed_at": "2026-04-09T15:44:44.585405+09:00",
+  "system_errors": 0,
+  "active_positions": 0,
+  "pending_trades": 0,
+  "real_orders": 0
 }

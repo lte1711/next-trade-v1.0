@@ -1,0 +1,235 @@
+{
+  "started_at": "2026-04-10T11:29:23.378371+09:00",
+  "finished_at": "2026-04-10T11:30:09.381743+09:00",
+  "duration_sec": 46.003,
+  "mode": "strict_symbol_quality_filter_close_all_problematic",
+  "active_symbols_before": [
+    "HIPPOUSDT",
+    "NEIROUSDT",
+    "REIUSDT",
+    "ZRCUSDT"
+  ],
+  "quality_by_symbol": {
+    "HIPPOUSDT": {
+      "eligible_for_new_entry": false,
+      "eligible_for_hold": false,
+      "reason": "thin_recent_volume",
+      "critical_reason": "critically_thin_recent_volume",
+      "price_vs_sma_pct": -1.352028,
+      "volume_ratio": 0.000658,
+      "trend_strength": 23.360955,
+      "volatility": 0.01607975,
+      "market_regime": "RANGING",
+      "side": "SHORT",
+      "amount": -195206.0,
+      "entry_price": 0.000197,
+      "current_price": 0.000197
+    },
+    "NEIROUSDT": {
+      "eligible_for_new_entry": false,
+      "eligible_for_hold": true,
+      "reason": "thin_recent_volume",
+      "critical_reason": "",
+      "price_vs_sma_pct": -0.508475,
+      "volume_ratio": 0.174282,
+      "trend_strength": 17.383411,
+      "volatility": 0.01387192,
+      "market_regime": "RANGING",
+      "side": "SHORT",
+      "amount": -657812.0,
+      "entry_price": 5.84e-05,
+      "current_price": 5.86e-05
+    },
+    "REIUSDT": {
+      "eligible_for_new_entry": false,
+      "eligible_for_hold": false,
+      "reason": "flat_price_vs_sma,weak_trend_strength,very_low_volatility",
+      "critical_reason": "",
+      "price_vs_sma_pct": -0.100402,
+      "volume_ratio": 0.342874,
+      "trend_strength": 9.18199,
+      "volatility": 0.00125471,
+      "market_regime": "RANGING",
+      "side": "LONG",
+      "amount": 11075.0,
+      "entry_price": 0.00399,
+      "current_price": 0.00399
+    },
+    "ZRCUSDT": {
+      "eligible_for_new_entry": false,
+      "eligible_for_hold": true,
+      "reason": "weak_trend_strength",
+      "critical_reason": "",
+      "price_vs_sma_pct": 0.334448,
+      "volume_ratio": 0.340095,
+      "trend_strength": 8.90118,
+      "volatility": 0.00277078,
+      "market_regime": "RANGING",
+      "side": "LONG",
+      "amount": 24549.0,
+      "entry_price": 0.0018,
+      "current_price": 0.0018
+    }
+  },
+  "symbols_selected_for_close": [
+    "HIPPOUSDT",
+    "REIUSDT"
+  ],
+  "close_results": [
+    {
+      "symbol": "HIPPOUSDT",
+      "market_close_submitted": true,
+      "fallback_attempted": false,
+      "fallback": null,
+      "quality": {
+        "eligible_for_new_entry": false,
+        "eligible_for_hold": false,
+        "reason": "thin_recent_volume",
+        "critical_reason": "critically_thin_recent_volume",
+        "price_vs_sma_pct": -1.352028,
+        "volume_ratio": 0.000658,
+        "trend_strength": 23.360955,
+        "volatility": 0.01607975,
+        "market_regime": "RANGING",
+        "side": "SHORT",
+        "amount": -195206.0,
+        "entry_price": 0.000197,
+        "current_price": 0.000197
+      },
+      "market_orders": [
+        {
+          "strategy": "ma_trend_follow",
+          "symbol": "HIPPOUSDT",
+          "side": "BUY",
+          "quantity": 195206.0,
+          "price": 0.000198,
+          "status": "FILLED",
+          "order_id": 94751257,
+          "executed_qty": 195206.0,
+          "timestamp": "2026-04-10T11:30:02.141451",
+          "type": "ACTUAL_TRADE",
+          "market_regime": {},
+          "strategy_signal": "BUY",
+          "position_type": "LONG",
+          "exit_reason": "strict_symbol_quality_filter",
+          "entry_price": 0.000197,
+          "market_session": "EUROPEAN",
+          "reduce_only": true,
+          "realized_pnl": -0.19520599999999946
+        }
+      ]
+    },
+    {
+      "symbol": "REIUSDT",
+      "market_close_submitted": true,
+      "fallback_attempted": false,
+      "fallback": null,
+      "quality": {
+        "eligible_for_new_entry": false,
+        "eligible_for_hold": false,
+        "reason": "flat_price_vs_sma,weak_trend_strength,very_low_volatility",
+        "critical_reason": "",
+        "price_vs_sma_pct": -0.100402,
+        "volume_ratio": 0.342874,
+        "trend_strength": 9.18199,
+        "volatility": 0.00125471,
+        "market_regime": "RANGING",
+        "side": "LONG",
+        "amount": 11075.0,
+        "entry_price": 0.00399,
+        "current_price": 0.00399
+      },
+      "market_orders": [
+        {
+          "strategy": "ma_trend_follow",
+          "symbol": "REIUSDT",
+          "side": "SELL",
+          "quantity": 11075.0,
+          "price": 0.00398,
+          "status": "FILLED",
+          "order_id": 111041168,
+          "executed_qty": 11075.0,
+          "timestamp": "2026-04-10T11:30:04.235446",
+          "type": "ACTUAL_TRADE",
+          "market_regime": {},
+          "strategy_signal": "SELL",
+          "position_type": "SHORT",
+          "exit_reason": "strict_symbol_quality_filter",
+          "entry_price": 0.00399,
+          "market_session": "EUROPEAN",
+          "reduce_only": true,
+          "realized_pnl": -0.11074999999999549
+        }
+      ]
+    }
+  ],
+  "new_orders": [
+    {
+      "symbol": "HIPPOUSDT",
+      "side": "BUY",
+      "status": "FILLED",
+      "order_id": 94751257,
+      "reduce_only": true,
+      "quantity": 195206.0,
+      "executed_qty": 195206.0,
+      "exit_reason": "strict_symbol_quality_filter"
+    },
+    {
+      "symbol": "REIUSDT",
+      "side": "SELL",
+      "status": "FILLED",
+      "order_id": 111041168,
+      "reduce_only": true,
+      "quantity": 11075.0,
+      "executed_qty": 11075.0,
+      "exit_reason": "strict_symbol_quality_filter"
+    }
+  ],
+  "active_symbols_after_submit": [
+    "NEIROUSDT",
+    "ZRCUSDT"
+  ],
+  "pending_after_submit": [],
+  "coverage_after_submit": {
+    "NEIROUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    },
+    "ZRCUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    }
+  },
+  "unprotected_symbols_after_submit": [],
+  "system_errors_before": 0,
+  "system_errors_after": 0,
+  "new_system_errors": [],
+  "realized_pnl_journal_count_before": 25,
+  "realized_pnl_journal_count_after_submit": 27,
+  "new_realized_pnl_events_after_submit": [
+    {
+      "timestamp": "2026-04-10T11:30:02.141451",
+      "order_id": 94751257,
+      "symbol": "HIPPOUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "BUY",
+      "entry_price": 0.000197,
+      "exit_price": 0.000198,
+      "executed_qty": 195206.0,
+      "realized_pnl": -0.19520599999999946,
+      "exit_reason": "strict_symbol_quality_filter"
+    },
+    {
+      "timestamp": "2026-04-10T11:30:04.235446",
+      "order_id": 111041168,
+      "symbol": "REIUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.00399,
+      "exit_price": 0.00398,
+      "executed_qty": 11075.0,
+      "realized_pnl": -0.11074999999999549,
+      "exit_reason": "strict_symbol_quality_filter"
+    }
+  ]
+}

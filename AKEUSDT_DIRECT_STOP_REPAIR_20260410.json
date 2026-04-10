@@ -1,0 +1,62 @@
+{
+  "started_at": "2026-04-10T10:13:02.299225+09:00",
+  "symbol": "AKEUSDT",
+  "position": {
+    "symbol": "AKEUSDT",
+    "amount": 72047.0,
+    "entry_price": 0.0003582,
+    "mark_price": 0.0,
+    "current_price": 0.0003999,
+    "unrealized_pnl": 0.0,
+    "percentage": 0.0,
+    "side": "LONG",
+    "strategy": "ma_trend_follow",
+    "entry_time": 1775783468669,
+    "signal_confidence": 0.6,
+    "stop_loss_pct": 0.03,
+    "take_profit_pct": 0.045,
+    "partial_tp_state": {},
+    "managed_stop_price": null,
+    "last_sync": 1775783580054
+  },
+  "exchange_current_price": 0.0003513,
+  "attempted_stop_price": 0.00028104,
+  "stop_result": {
+    "algoId": 1000000045484052,
+    "clientAlgoId": "TozX4UOwGSlxKzg63PzIrS",
+    "algoType": "CONDITIONAL",
+    "orderType": "STOP_MARKET",
+    "symbol": "AKEUSDT",
+    "side": "SELL",
+    "positionSide": "BOTH",
+    "timeInForce": "GTE_GTC",
+    "quantity": "0",
+    "algoStatus": "NEW",
+    "triggerPrice": "0.0002810",
+    "price": "0.0000000",
+    "icebergQuantity": null,
+    "selfTradePreventionMode": "EXPIRE_MAKER",
+    "workingType": "CONTRACT_PRICE",
+    "priceMatch": "NONE",
+    "closePosition": true,
+    "priceProtect": false,
+    "reduceOnly": true,
+    "createTime": 1775783581981,
+    "updateTime": 1775783582000,
+    "triggerTime": 0,
+    "goodTillDate": 0
+  },
+  "orders_after": [
+    [
+      "TAKE_PROFIT_MARKET",
+      "0.0003726"
+    ],
+    [
+      "STOP_MARKET",
+      "0.0002810"
+    ]
+  ],
+  "stop_count_after": 1,
+  "take_profit_count_after": 1,
+  "finished_at": "2026-04-10T10:13:05.360303+09:00"
+}

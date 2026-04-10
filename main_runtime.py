@@ -46,20 +46,25 @@ class TradingRuntime:
             "pending_trades": [],
             "closed_trades": [],
             "real_orders": [],
+            "realized_pnl_journal": [],
+            "symbol_performance": {},
             "total_trades": 0,
             "entry_failures": 0,
             "available_balance": 0.0,
             "market_regime": {},
             "market_data": {},
             "system_errors": [],
+            "operational_events": [],
             "error_count": 0,
             "last_error": None,
             "entry_mode_performance": {},
             "recently_closed_symbols": {},
             "position_entry_times": {},
+            "position_state_journal": {},
             "partial_take_profit_state": {},
             "managed_stop_prices": {}
         }
+        self._load_persisted_trading_results()
         
         # Load configuration and initialize
         try:
@@ -85,7 +90,7 @@ class TradingRuntime:
         
         # Load V2 Merged trading configuration
         trading_config = config.get("trading_config", {})
-        self.max_open_positions = trading_config.get("max_open_positions", 5)
+        self.max_open_positions = trading_config.get("max_open_positions", 10)
         self.fast_entry_enabled = trading_config.get("fast_entry_enabled", True)
         self.partial_tp1_pct = trading_config.get("partial_tp1_pct", 0.8)
         self.fast_tp1_pct = trading_config.get("fast_tp1_pct", 0.5)
@@ -134,8 +139,11 @@ class TradingRuntime:
             self.trading_results, self.order_executor, self.protective_order_manager, self.log_system_error
         )
 
-        self.partial_take_profit_manager = PartialTakeProfitManager(self.log_system_error)
-        self.position_entry_times = {}
+        self.partial_take_profit_manager = PartialTakeProfitManager(
+            self.trading_results,
+            self.log_system_error,
+        )
+        self.position_entry_times = self.trading_results["position_entry_times"]
         self.pending_order_manager = PendingOrderManager(
             self.trading_results, self.get_order_status, self.log_system_error,
             self.position_entry_times, self.protective_order_manager, self.clear_position_management_state,
@@ -231,9 +239,51 @@ class TradingRuntime:
                                 self.api_secret = value.strip()
         except Exception:
             pass
+
+    def _load_persisted_trading_results(self):
+        """Restore persisted runtime state that helps restart resilience."""
+        try:
+            if not os.path.exists("trading_results.json"):
+                return
+
+            with open("trading_results.json", "r", encoding="utf-8") as file_handle:
+                persisted = json.load(file_handle)
+
+            for key in [
+                "real_orders",
+                "closed_trades",
+                "realized_pnl_journal",
+                "recently_closed_symbols",
+                "position_entry_times",
+                "position_state_journal",
+                "partial_take_profit_state",
+                "managed_stop_prices",
+                "operational_events",
+                "symbol_performance",
+            ]:
+                persisted_value = persisted.get(key)
+                if isinstance(self.trading_results.get(key), dict) and isinstance(persisted_value, dict):
+                    self.trading_results[key].update(persisted_value)
+                elif isinstance(self.trading_results.get(key), list) and isinstance(persisted_value, list):
+                    self.trading_results[key] = persisted_value[-500:]
+
+            if persisted.get("active_positions"):
+                self.trading_results["active_positions"] = persisted.get("active_positions", {})
+        except Exception:
+            pass
     def log_system_error(self, error_type, error_message):
         """System error logging"""
         try:
+            if error_type == "order_preflight_blocked":
+                event_record = {
+                    "timestamp": datetime.now().isoformat(),
+                    "type": error_type,
+                    "message": error_message
+                }
+                self.trading_results.setdefault("operational_events", []).append(event_record)
+                print(f"[INFO] {error_type} - {error_message}")
+                return
+
             error_record = {
                 "timestamp": datetime.now().isoformat(),
                 "type": error_type,
@@ -322,10 +372,17 @@ class TradingRuntime:
             return None
         except Exception:
             return None
+
+    def cancel_order(self, symbol, order_id):
+        """Cancel a standard futures order"""
+        return self.order_executor.cancel_order(symbol, order_id)
     
     def clear_position_management_state(self, symbol):
-        """Clear position management state using position manager"""
-        return self.position_manager.clear_position_management_state(symbol)
+        """Clear position management state across managers"""
+        self.position_manager.clear_position_management_state(symbol)
+        self.partial_take_profit_manager.clear_position_management_state(symbol)
+        self.trading_results.get("position_state_journal", {}).pop(symbol, None)
+        return True
     
     def get_position_management_state(self, symbol):
         """Get position management state using position manager"""
@@ -341,6 +398,8 @@ class TradingRuntime:
             # V2 Merged: Use account service for real API-based synchronization
             if self.account_service.sync_positions(self.trading_results):
                 active_positions = self.trading_results.get("active_positions", {})
+                self._rehydrate_position_metadata(active_positions)
+                self._restore_protective_state(active_positions)
                 print(f"[TRACE] SYNC_POSITIONS_COMPLETE | symbols={len(active_positions)}")
                 print(f"[INFO] Positions synced: {len(active_positions)}")
                 
@@ -367,6 +426,168 @@ class TradingRuntime:
         except Exception as e:
             self.log_system_error("sync_positions_error", str(e))
             return False
+
+    def _rehydrate_position_metadata(self, active_positions):
+        """Restore local position metadata from recent trade records after a restart."""
+        try:
+            if not active_positions:
+                return
+
+            position_journal = self.trading_results.get("position_state_journal", {})
+            recent_orders = list(reversed(self.trading_results.get("real_orders", [])))
+            for symbol, position in active_positions.items():
+                journal_entry = position_journal.get(symbol, {})
+                if journal_entry:
+                    position["strategy"] = position.get("strategy") or journal_entry.get("strategy")
+                    position["entry_time"] = position.get("entry_time") or journal_entry.get("entry_time")
+                    position["signal_confidence"] = position.get("signal_confidence") or journal_entry.get("signal_confidence")
+                    if position.get("stop_loss_pct") is None:
+                        position["stop_loss_pct"] = journal_entry.get("stop_loss_pct")
+                    if position.get("take_profit_pct") is None:
+                        position["take_profit_pct"] = journal_entry.get("take_profit_pct")
+                    for metadata_key in ["allocation_context", "position_amount_usdt", "risk_amount_usdt"]:
+                        if position.get(metadata_key) is None and journal_entry.get(metadata_key) is not None:
+                            position[metadata_key] = journal_entry.get(metadata_key)
+                    if symbol not in self.position_entry_times and journal_entry.get("entry_time"):
+                        self.position_entry_times[symbol] = journal_entry.get("entry_time")
+
+                if (
+                    position.get("strategy")
+                    and position.get("entry_time")
+                    and position.get("stop_loss_pct") is not None
+                    and position.get("take_profit_pct") is not None
+                ):
+                    continue
+
+                for order in recent_orders:
+                    if order.get("symbol") != symbol or order.get("reduce_only"):
+                        continue
+                    if order.get("status") not in {"FILLED", "NEW", "PARTIALLY_FILLED"}:
+                        continue
+
+                    position["strategy"] = position.get("strategy") or order.get("strategy")
+                    position["entry_time"] = position.get("entry_time") or order.get("timestamp")
+                    position["signal_confidence"] = position.get("signal_confidence") or order.get("signal_confidence")
+                    if position.get("stop_loss_pct") is None:
+                        position["stop_loss_pct"] = order.get("stop_loss_pct")
+                    if position.get("take_profit_pct") is None:
+                        position["take_profit_pct"] = order.get("take_profit_pct")
+                    for metadata_key in ["allocation_context", "position_amount_usdt", "risk_amount_usdt"]:
+                        if position.get(metadata_key) is None and order.get(metadata_key) is not None:
+                            position[metadata_key] = order.get(metadata_key)
+                    if symbol not in self.position_entry_times and order.get("timestamp"):
+                        self.position_entry_times[symbol] = order.get("timestamp")
+                    position_journal[symbol] = {
+                        "strategy": position.get("strategy"),
+                        "entry_time": position.get("entry_time"),
+                        "signal_confidence": position.get("signal_confidence"),
+                        "stop_loss_pct": position.get("stop_loss_pct"),
+                        "take_profit_pct": position.get("take_profit_pct"),
+                        "allocation_context": position.get("allocation_context"),
+                        "position_amount_usdt": position.get("position_amount_usdt"),
+                        "risk_amount_usdt": position.get("risk_amount_usdt"),
+                        "entry_price": position.get("entry_price"),
+                        "side": position.get("side"),
+                    }
+                    break
+
+                if position.get("strategy") and position.get("entry_time"):
+                    continue
+
+                exchange_order = self._fetch_recent_exchange_entry_order(symbol)
+                if not exchange_order:
+                    continue
+
+                position["strategy"] = position.get("strategy") or exchange_order.get("strategy")
+                position["entry_time"] = position.get("entry_time") or exchange_order.get("timestamp")
+                position["signal_confidence"] = position.get("signal_confidence") or exchange_order.get("signal_confidence")
+                if position.get("stop_loss_pct") is None:
+                    position["stop_loss_pct"] = exchange_order.get("stop_loss_pct")
+                if position.get("take_profit_pct") is None:
+                    position["take_profit_pct"] = exchange_order.get("take_profit_pct")
+                if symbol not in self.position_entry_times and exchange_order.get("timestamp"):
+                    self.position_entry_times[symbol] = exchange_order.get("timestamp")
+
+                position_journal[symbol] = {
+                    "strategy": position.get("strategy"),
+                    "entry_time": position.get("entry_time"),
+                    "signal_confidence": position.get("signal_confidence"),
+                    "stop_loss_pct": position.get("stop_loss_pct"),
+                    "take_profit_pct": position.get("take_profit_pct"),
+                    "entry_price": position.get("entry_price"),
+                    "side": position.get("side"),
+                }
+        except Exception as e:
+            self.log_system_error("rehydrate_position_metadata", str(e))
+
+    def _fetch_recent_exchange_entry_order(self, symbol):
+        """Fetch the latest non-reduce-only exchange order as a metadata fallback."""
+        try:
+            server_time = get_server_time(self.base_url)
+            if not server_time:
+                return None
+
+            params = {
+                "symbol": symbol,
+                "limit": 20,
+                "timestamp": int(server_time),
+                "recvWindow": self.recv_window,
+            }
+            query_string = "&".join([f"{k}={v}" for k, v in sorted(params.items())])
+            signature = hmac.new(
+                self.api_secret.encode("utf-8"),
+                query_string.encode("utf-8"),
+                hashlib.sha256,
+            ).hexdigest()
+            url = f"{self.base_url}/fapi/v1/allOrders?{query_string}&signature={signature}"
+            headers = {"X-MBX-APIKEY": self.api_key}
+            response = requests.get(url, headers=headers, timeout=10)
+            if response.status_code != 200:
+                return None
+
+            for order in reversed(response.json()):
+                if order.get("reduceOnly"):
+                    continue
+                if order.get("status") not in {"FILLED", "NEW", "PARTIALLY_FILLED"}:
+                    continue
+
+                side = order.get("side")
+                return {
+                    "strategy": "ma_trend_follow",
+                    "timestamp": int(order.get("time", 0)) or None,
+                    "signal_confidence": None,
+                    "stop_loss_pct": 0.03,
+                    "take_profit_pct": 0.045,
+                    "side": "LONG" if side == "BUY" else "SHORT",
+                }
+        except Exception:
+            return None
+        return None
+
+    def _restore_protective_state(self, active_positions):
+        """Rebuild managed stop prices from live algo orders after a restart."""
+        try:
+            managed_stop_prices = self.trading_results.setdefault("managed_stop_prices", {})
+            for symbol in list(managed_stop_prices.keys()):
+                if symbol not in active_positions:
+                    managed_stop_prices.pop(symbol, None)
+
+            for symbol in active_positions.keys():
+                if symbol in managed_stop_prices:
+                    continue
+
+                open_orders = self.protective_order_manager.get_open_orders(symbol)
+                for order in open_orders:
+                    order_type = order.get("orderType") or order.get("type")
+                    if order_type != "STOP_MARKET":
+                        continue
+                    trigger_price = safe_float_conversion(order.get("triggerPrice"), 0.0)
+                    if trigger_price > 0:
+                        managed_stop_prices[symbol] = trigger_price
+                        active_positions[symbol]["managed_stop_price"] = trigger_price
+                        break
+        except Exception as e:
+            self.log_system_error("restore_protective_state", str(e))
     
     def run(self):
         """Main execution loop - Complete trading orchestration"""
@@ -440,6 +661,11 @@ class TradingRuntime:
             
             if signals > 0 or trades > 0 or error_count > 0:
                 print(f"[INFO] Cycle completed - Signals: {signals}, Trades: {trades}, Errors: {error_count}")
+
+            reconciliation_summary = self.order_executor.reconcile_pending_reduce_only_fills()
+            if reconciliation_summary.get("filled") or reconciliation_summary.get("terminal"):
+                self.trading_results["last_reduce_only_reconciliation"] = reconciliation_summary
+                print(f"[INFO] Reduce-only reconciliation: {reconciliation_summary}")
             
             # Save results periodically
             try:

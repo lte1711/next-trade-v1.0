@@ -15,6 +15,7 @@ class MarketDataService:
         self._symbols_cache = None
         self._symbols_cache_time = 0
         self._symbols_cache_timeout = 300  # 5 minutes cache for symbols
+        self._min_symbol_price = 0.00001
     
     def log_error(self, error_type: str, message: str):
         """Log error message"""
@@ -199,6 +200,10 @@ class MarketDataService:
                         if not ticker_data:
                             continue
 
+                        last_price = float(ticker_data.get('lastPrice', 0))
+                        if last_price < self._min_symbol_price:
+                            continue
+
                         symbols.append({
                             'symbol': symbol_info['symbol'],
                             'base_asset': symbol_info['baseAsset'],
@@ -207,7 +212,7 @@ class MarketDataService:
                             'contract_type': symbol_info['contractType'],
                             'volume': float(ticker_data.get('volume', 0)),
                             'volatility': 0.0,  # Will be calculated later
-                            'price': float(ticker_data.get('lastPrice', 0))
+                            'price': last_price
                         })
                 
                 # Sort by volume and limit to top 50

@@ -1,0 +1,75 @@
+{
+  "started_at": "2026-04-09T15:55:47.160978+09:00",
+  "completed_at": "2026-04-09T15:56:33.211667+09:00",
+  "status": "completed",
+  "environment": "https://demo-fapi.binance.com",
+  "symbol": "BTCUSDT",
+  "snapshots": [
+    {
+      "label": "before_entry",
+      "timestamp": "2026-04-09T15:56:09.685392+09:00",
+      "active_amount": 0.0,
+      "entry_price": 0.0,
+      "current_price": 0.0,
+      "managed_stop_price": null,
+      "open_algo_order_count": 0,
+      "stop_algo_id": null,
+      "stop_trigger_price": null,
+      "take_algo_id": null,
+      "take_trigger_price": null
+    },
+    {
+      "label": "after_initial_protective_orders",
+      "timestamp": "2026-04-09T15:56:19.191109+09:00",
+      "active_amount": 0.0016,
+      "entry_price": 70912.5,
+      "current_price": 70912.5,
+      "managed_stop_price": 69494.25,
+      "open_algo_order_count": 2,
+      "stop_algo_id": 1000000044934272,
+      "stop_trigger_price": "69494.25",
+      "take_algo_id": 1000000044934280,
+      "take_trigger_price": "73749.00"
+    },
+    {
+      "label": "after_stop_tightening",
+      "timestamp": "2026-04-09T15:56:25.178861+09:00",
+      "active_amount": 0.0016,
+      "entry_price": 70912.5,
+      "current_price": 70937.9,
+      "managed_stop_price": 70583.2105,
+      "open_algo_order_count": 2,
+      "stop_algo_id": 1000000044934326,
+      "stop_trigger_price": "70583.21",
+      "take_algo_id": 1000000044934280,
+      "take_trigger_price": "73749.00"
+    },
+    {
+      "label": "after_cleanup",
+      "timestamp": "2026-04-09T15:56:31.887380+09:00",
+      "active_amount": 0.0,
+      "entry_price": 0.0,
+      "current_price": 0.0,
+      "managed_stop_price": null,
+      "open_algo_order_count": 0,
+      "stop_algo_id": null,
+      "stop_trigger_price": null,
+      "take_algo_id": null,
+      "take_trigger_price": null
+    }
+  ],
+  "stop_tightened": true,
+  "next_evolution_targets": [
+    "Drive stop tightening from real profit observations instead of injected current_price values.",
+    "Add a short-side live stop-tightening scenario and compare algo order replacement symmetry."
+  ],
+  "entry_order_id": 13025424050,
+  "initial_stop_algo_id": 1000000044934272,
+  "tightened_stop_algo_id": 1000000044934326,
+  "initial_stop_price": 69494.25,
+  "tightened_stop_price": 70583.2105,
+  "actual_market_price_before_tightening": 70937.9,
+  "close_order_id": 13025424200,
+  "close_status": "FILLED",
+  "system_errors": 0
+}

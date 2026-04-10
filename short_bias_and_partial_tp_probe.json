@@ -1,0 +1,122 @@
+{
+  "started_at": "2026-04-09T15:54:35.720943+09:00",
+  "completed_at": "2026-04-09T15:55:26.814406+09:00",
+  "status": "completed",
+  "environment": "https://demo-fapi.binance.com",
+  "errors": [],
+  "short_lifecycle": {
+    "symbol": "BTCUSDT",
+    "snapshots": [
+      {
+        "label": "before_entry",
+        "has_active_position": false,
+        "active_amount": 0.0,
+        "entry_price": 0.0,
+        "managed_stop_price": null,
+        "open_algo_order_count": 0,
+        "recently_closed": false
+      },
+      {
+        "label": "after_entry_fill",
+        "has_active_position": true,
+        "active_amount": -0.0016,
+        "entry_price": 70887.4,
+        "managed_stop_price": null,
+        "open_algo_order_count": 0,
+        "recently_closed": false
+      },
+      {
+        "label": "after_protective_orders",
+        "has_active_position": true,
+        "active_amount": -0.0016,
+        "entry_price": 70887.4,
+        "managed_stop_price": 72305.148,
+        "open_algo_order_count": 2,
+        "recently_closed": false
+      },
+      {
+        "label": "after_partial_close",
+        "has_active_position": true,
+        "active_amount": -0.0008,
+        "entry_price": 70887.4,
+        "managed_stop_price": 72305.148,
+        "open_algo_order_count": 2,
+        "recently_closed": false
+      },
+      {
+        "label": "after_full_close",
+        "has_active_position": false,
+        "active_amount": 0.0,
+        "entry_price": 0.0,
+        "managed_stop_price": null,
+        "open_algo_order_count": 0,
+        "recently_closed": true
+      }
+    ],
+    "entry_order_id": 13025423505,
+    "partial_close_order_id": 13025423593,
+    "partial_close_status": "FILLED",
+    "final_close_order_id": 13025423676,
+    "final_close_status": "FILLED",
+    "recently_closed_after_full_close": true
+  },
+  "partial_tp_cases": [
+    {
+      "name": "normal_long_tp1",
+      "executed": true,
+      "profit_pct": 0.01,
+      "state": {
+        "tp1_done": true,
+        "tp2_done": false,
+        "fast_tp1_done": false,
+        "fast_tp2_done": false,
+        "last_partial_close_at": "2026-04-09 15:55:25.457587"
+      },
+      "trailing_updated": false,
+      "managed_stop_price": null
+    },
+    {
+      "name": "fast_long_tp1",
+      "executed": true,
+      "profit_pct": 0.007,
+      "state": {
+        "tp1_done": false,
+        "tp2_done": false,
+        "fast_tp1_done": true,
+        "fast_tp2_done": false,
+        "last_partial_close_at": "2026-04-09 15:55:25.457587"
+      },
+      "trailing_updated": false,
+      "managed_stop_price": null
+    },
+    {
+      "name": "normal_short_tp1",
+      "executed": true,
+      "profit_pct": 0.012,
+      "state": {
+        "tp1_done": true,
+        "tp2_done": false,
+        "fast_tp1_done": false,
+        "fast_tp2_done": false,
+        "last_partial_close_at": "2026-04-09 15:55:25.457587"
+      },
+      "trailing_updated": false,
+      "managed_stop_price": null
+    },
+    {
+      "name": "fast_short_tp1",
+      "executed": true,
+      "profit_pct": 0.007,
+      "state": {
+        "tp1_done": false,
+        "tp2_done": false,
+        "fast_tp1_done": true,
+        "fast_tp2_done": false,
+        "last_partial_close_at": "2026-04-09 15:55:25.457587"
+      },
+      "trailing_updated": false,
+      "managed_stop_price": null
+    }
+  ],
+  "system_errors": 0
+}

@@ -1,0 +1,79 @@
+{
+  "started_at": "2026-04-10T11:34:50.258866+09:00",
+  "finished_at": "2026-04-10T11:35:13.531920+09:00",
+  "duration_sec": 23.273,
+  "mode": "strict_hold_quality_filter_sync_verify",
+  "active_symbols_after_sync_verify": [],
+  "strict_symbols_checked": [
+    "NEIROUSDT",
+    "ZRCUSDT"
+  ],
+  "order_statuses": [
+    {
+      "symbol": "NEIROUSDT",
+      "order_id": 75877349,
+      "submitted_status": "NEW",
+      "exchange_status": {
+        "orderId": 75877349,
+        "symbol": "NEIROUSDT",
+        "status": "FILLED",
+        "clientOrderId": "7eDrHtBFo6e4CtOwlEhL63",
+        "price": "0.00000000",
+        "avgPrice": "0.00005870",
+        "origQty": "657812",
+        "executedQty": "657812",
+        "cumQuote": "38.61356440",
+        "timeInForce": "GTC",
+        "type": "MARKET",
+        "reduceOnly": true,
+        "closePosition": false,
+        "side": "BUY",
+        "positionSide": "BOTH",
+        "stopPrice": "0.00000000",
+        "workingType": "CONTRACT_PRICE",
+        "priceProtect": false,
+        "origType": "MARKET",
+        "priceMatch": "NONE",
+        "selfTradePreventionMode": "EXPIRE_MAKER",
+        "goodTillDate": 0,
+        "time": 1775788426435,
+        "updateTime": 1775788426435
+      }
+    },
+    {
+      "symbol": "ZRCUSDT",
+      "order_id": 97201739,
+      "submitted_status": "NEW",
+      "exchange_status": {
+        "orderId": 97201739,
+        "symbol": "ZRCUSDT",
+        "status": "FILLED",
+        "clientOrderId": "6DUpowuc89qcqBxCiQDIVo",
+        "price": "0.0000000",
+        "avgPrice": "0.0017900",
+        "origQty": "24549",
+        "executedQty": "24549",
+        "cumQuote": "43.9427100",
+        "timeInForce": "GTC",
+        "type": "MARKET",
+        "reduceOnly": true,
+        "closePosition": false,
+        "side": "SELL",
+        "positionSide": "BOTH",
+        "stopPrice": "0.0000000",
+        "workingType": "CONTRACT_PRICE",
+        "priceProtect": false,
+        "origType": "MARKET",
+        "priceMatch": "NONE",
+        "selfTradePreventionMode": "EXPIRE_MAKER",
+        "goodTillDate": 0,
+        "time": 1775788428971,
+        "updateTime": 1775788428979
+      }
+    }
+  ],
+  "relevant_open_orders": [],
+  "all_open_order_count": 2,
+  "system_errors": [],
+  "realized_pnl_journal_count": 21
+}

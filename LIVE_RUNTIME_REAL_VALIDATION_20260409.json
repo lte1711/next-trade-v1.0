@@ -1,0 +1,140 @@
+{
+  "validated_date": "2026-04-09",
+  "environment": {
+    "name": "Binance Futures Demo Testnet",
+    "base_url": "https://demo-fapi.binance.com"
+  },
+  "pre_cycle_live_audit": {
+    "validated_at": "2026-04-09T18:01:12.468186+09:00",
+    "initialized": true,
+    "valid_symbol_count": 50,
+    "contains_1000WHYUSDT": false,
+    "active_position_count": 3,
+    "system_error_count": 0,
+    "skip_count": 0,
+    "error_count": 0,
+    "available_balance": 8533.28191117,
+    "positions": {
+      "HIPPOUSDT": {
+        "side": "SHORT",
+        "amount": -141396.0,
+        "entry_price": 0.000204,
+        "current_price": 0.000202,
+        "strategy": "ma_trend_follow",
+        "entry_time": 1775723212379,
+        "stop_loss_pct": 0.03,
+        "take_profit_pct": 0.045,
+        "managed_stop_price": 0.000209,
+        "algo_order_count": 2,
+        "stop_order_count": 1,
+        "take_profit_order_count": 1,
+        "protective_coverage_ok": true
+      },
+      "NEIROUSDT": {
+        "side": "LONG",
+        "amount": 661953.0,
+        "entry_price": 0.0000582,
+        "current_price": 0.0000578,
+        "strategy": "ma_trend_follow",
+        "entry_time": 1775722060663,
+        "stop_loss_pct": 0.03,
+        "take_profit_pct": 0.045,
+        "managed_stop_price": 0.000057,
+        "algo_order_count": 2,
+        "stop_order_count": 1,
+        "take_profit_order_count": 1,
+        "protective_coverage_ok": true
+      },
+      "ZRCUSDT": {
+        "side": "SHORT",
+        "amount": -24680.0,
+        "entry_price": 0.00179,
+        "current_price": 0.00179,
+        "strategy": "ma_trend_follow",
+        "entry_time": 1775724356161,
+        "stop_loss_pct": 0.03,
+        "take_profit_pct": 0.045,
+        "managed_stop_price": 0.00184,
+        "algo_order_count": 2,
+        "stop_order_count": 1,
+        "take_profit_order_count": 1,
+        "protective_coverage_ok": true
+      }
+    }
+  },
+  "live_cycle_execution": {
+    "started_at": "2026-04-09T18:02:22.273202+09:00",
+    "finished_at": "2026-04-09T18:04:14.609816+09:00",
+    "duration_sec": 112.337,
+    "initialized": true,
+    "signals_generated": 20,
+    "trades_executed": 1,
+    "errors": [],
+    "skips": [
+      "Trade skipped for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+      "Trade skipped for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade"
+    ],
+    "active_positions_after_cycle": 2,
+    "pending_trades_after_cycle": 0,
+    "real_orders_after_cycle": 4,
+    "system_errors_after_cycle": 0,
+    "available_balance_after_cycle": 8533.52987785,
+    "notable_transitions": [
+      "ZRCUSDT pending entry moved to FILLED and protective orders were installed.",
+      "AKEUSDT long entry was executed with protective stop and take-profit orders.",
+      "NEIROUSDT was closed by ema21_trailing path.",
+      "ZRCUSDT was closed by ema21_trailing path."
+    ],
+    "diagnostic_summary": {
+      "buy_signals": 8,
+      "sell_signals": 2,
+      "hold_signals": 10,
+      "top_candidate_examples": [
+        "HIPPOUSDT SELL confidence=0.6",
+        "ZRCUSDT BUY confidence=0.6",
+        "NEIROUSDT BUY confidence=0.6"
+      ],
+      "closest_to_entry_examples": [
+        "PORT3USDT distance_to_entry_pct=0.019072025896940972",
+        "REIUSDT distance_to_entry_pct=0.024755455229485857",
+        "EPTUSDT distance_to_entry_pct=0.06631862579993791"
+      ]
+    }
+  },
+  "post_cycle_live_audit": {
+    "validated_at": "2026-04-09T18:04:25.626602+09:00",
+    "active_position_count": 2,
+    "positions": {
+      "HIPPOUSDT": {
+        "side": "SHORT",
+        "amount": -141396.0,
+        "strategy": "ma_trend_follow",
+        "managed_stop_price": 0.000209,
+        "algo_order_count": 2,
+        "stop_order_count": 1,
+        "take_profit_order_count": 1
+      },
+      "AKEUSDT": {
+        "side": "LONG",
+        "amount": 155912.0,
+        "strategy": "ma_trend_follow",
+        "managed_stop_price": 0.0002413,
+        "algo_order_count": 2,
+        "stop_order_count": 1,
+        "take_profit_order_count": 1
+      }
+    }
+  },
+  "assessment": {
+    "result": "PASS",
+    "summary": [
+      "Current live state was readable and internally consistent.",
+      "Every observed active position had both stop and take-profit protective algo coverage.",
+      "A fresh live cycle executed successfully with 1 real entry, 0 runtime errors, and intended duplicate-entry skips.",
+      "Post-cycle protective coverage remained intact for all remaining active positions."
+    ],
+    "remaining_focus": [
+      "Next evolution should target strategy quality and candidate ranking, not order plumbing."
+    ]
+  }
+}

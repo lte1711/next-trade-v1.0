@@ -1,0 +1,151 @@
+{
+  "started_at": "2026-04-10T11:33:21.908022+09:00",
+  "finished_at": "2026-04-10T11:34:05.451750+09:00",
+  "duration_sec": 43.544,
+  "mode": "strict_hold_quality_filter_close_all_problematic",
+  "active_symbols_before": [
+    "NEIROUSDT",
+    "ZRCUSDT"
+  ],
+  "quality_by_symbol": {
+    "NEIROUSDT": {
+      "eligible_for_new_entry": false,
+      "eligible_for_hold": false,
+      "reason": "thin_recent_volume",
+      "critical_reason": "",
+      "price_vs_sma_pct": -0.508475,
+      "volume_ratio": 0.174452,
+      "trend_strength": 17.383411,
+      "volatility": 0.01387192,
+      "market_regime": "RANGING",
+      "side": "SHORT",
+      "amount": -657812.0,
+      "entry_price": 5.84e-05,
+      "current_price": 5.86e-05
+    },
+    "ZRCUSDT": {
+      "eligible_for_new_entry": false,
+      "eligible_for_hold": false,
+      "reason": "weak_trend_strength",
+      "critical_reason": "",
+      "price_vs_sma_pct": -0.278552,
+      "volume_ratio": 0.392001,
+      "trend_strength": 8.802505,
+      "volatility": 0.00277078,
+      "market_regime": "RANGING",
+      "side": "LONG",
+      "amount": 24549.0,
+      "entry_price": 0.0018,
+      "current_price": 0.0018
+    }
+  },
+  "symbols_selected_for_close": [
+    "NEIROUSDT",
+    "ZRCUSDT"
+  ],
+  "close_results": [
+    {
+      "symbol": "NEIROUSDT",
+      "quality": {
+        "eligible_for_new_entry": false,
+        "eligible_for_hold": false,
+        "reason": "thin_recent_volume",
+        "critical_reason": "",
+        "price_vs_sma_pct": -0.508475,
+        "volume_ratio": 0.174452,
+        "trend_strength": 17.383411,
+        "volatility": 0.01387192,
+        "market_regime": "RANGING",
+        "side": "SHORT",
+        "amount": -657812.0,
+        "entry_price": 5.84e-05,
+        "current_price": 5.86e-05
+      },
+      "market_close_submitted": true,
+      "fallback_attempted": false,
+      "fallback": null,
+      "error": null
+    },
+    {
+      "symbol": "ZRCUSDT",
+      "quality": {
+        "eligible_for_new_entry": false,
+        "eligible_for_hold": false,
+        "reason": "weak_trend_strength",
+        "critical_reason": "",
+        "price_vs_sma_pct": -0.278552,
+        "volume_ratio": 0.392001,
+        "trend_strength": 8.802505,
+        "volatility": 0.00277078,
+        "market_regime": "RANGING",
+        "side": "LONG",
+        "amount": 24549.0,
+        "entry_price": 0.0018,
+        "current_price": 0.0018
+      },
+      "market_close_submitted": true,
+      "fallback_attempted": false,
+      "fallback": null,
+      "error": null
+    }
+  ],
+  "new_orders": [
+    {
+      "symbol": "NEIROUSDT",
+      "side": "BUY",
+      "status": "NEW",
+      "order_id": 75877349,
+      "reduce_only": true,
+      "quantity": 657812.0,
+      "executed_qty": 0.0,
+      "exit_reason": "strict_hold_quality_filter",
+      "fallback_close": null,
+      "realized_pnl": null
+    },
+    {
+      "symbol": "ZRCUSDT",
+      "side": "SELL",
+      "status": "NEW",
+      "order_id": 97201739,
+      "reduce_only": true,
+      "quantity": 24549.0,
+      "executed_qty": 0.0,
+      "exit_reason": "strict_hold_quality_filter",
+      "fallback_close": null,
+      "realized_pnl": null
+    }
+  ],
+  "active_symbols_after_sync": [],
+  "pending_after_sync": [
+    {
+      "symbol": "NEIROUSDT",
+      "side": "BUY",
+      "status": "NEW",
+      "order_id": 75877349,
+      "reduce_only": true,
+      "quantity": 657812.0,
+      "executed_qty": 0.0,
+      "exit_reason": "strict_hold_quality_filter",
+      "fallback_close": null
+    },
+    {
+      "symbol": "ZRCUSDT",
+      "side": "SELL",
+      "status": "NEW",
+      "order_id": 97201739,
+      "reduce_only": true,
+      "quantity": 24549.0,
+      "executed_qty": 0.0,
+      "exit_reason": "strict_hold_quality_filter",
+      "fallback_close": null
+    }
+  ],
+  "coverage_after_sync": {},
+  "unprotected_symbols_after_sync": [],
+  "system_errors_before": 0,
+  "system_errors_after": 0,
+  "new_system_errors": [],
+  "realized_pnl_journal_count_before": 21,
+  "realized_pnl_journal_count_after": 21,
+  "new_realized_pnl_events": []
+}

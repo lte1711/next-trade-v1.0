@@ -37,7 +37,15 @@ class ProtectiveOrderManager:
                 return None
             
             price_precision = int(symbol_info.get("pricePrecision", 4))
-            stop_price_str = f"{float(stop_price):.{max(0, price_precision)}f}"
+            tick_size = self._get_tick_size(symbol_info)
+            normalized_stop_price = self._normalize_trigger_price(
+                symbol=symbol,
+                side=side,
+                order_type=order_type,
+                stop_price=stop_price,
+                tick_size=tick_size
+            )
+            stop_price_str = f"{float(normalized_stop_price):.{max(0, price_precision)}f}"
             
             params = {
                 "algoType": "CONDITIONAL",
@@ -69,6 +77,89 @@ class ProtectiveOrderManager:
         except Exception as e:
             self.log_error("protective_order_error", f"{symbol} {order_type}: {e}")
         return None
+
+    def _get_tick_size(self, symbol_info):
+        """Extract symbol tick size from filters"""
+        try:
+            for symbol_filter in symbol_info.get("filters", []):
+                if symbol_filter.get("filterType") == "PRICE_FILTER":
+                    return float(symbol_filter.get("tickSize", 0.0))
+        except Exception:
+            pass
+        return 0.0
+
+    def _normalize_trigger_price(self, symbol, side, order_type, stop_price, tick_size):
+        """Round trigger price to tick size and push it away from current price if needed"""
+        normalized = self.safe_float_conversion(stop_price, 0.0)
+        current_price = self.safe_float_conversion(
+            self.trading_results.get("market_data", {}).get(symbol),
+            0.0
+        )
+        live_current_price = self._get_current_contract_price(symbol)
+        if live_current_price > 0:
+            current_price = live_current_price
+        if normalized <= 0:
+            return stop_price
+
+        if tick_size > 0:
+            normalized = self._round_price_to_tick(normalized, tick_size, side, order_type)
+
+        if current_price <= 0 or tick_size <= 0:
+            return normalized
+
+        buffer_ticks = 5
+        # Fast movers can cross a small buffer between calculation and submit.
+        # Keep at least ~10% distance from the latest local price to avoid
+        # exchange-side immediate-trigger rejection on volatile demo symbols.
+        buffer_size = max(tick_size * buffer_ticks, current_price * 0.10)
+        min_above = current_price + buffer_size
+        max_below = max(current_price - buffer_size, tick_size)
+
+        if order_type == "STOP_MARKET":
+            if side == "SELL":
+                normalized = min(normalized, max_below)
+            else:
+                normalized = max(normalized, min_above)
+        elif order_type == "TAKE_PROFIT_MARKET":
+            if side == "SELL":
+                normalized = max(normalized, min_above)
+            else:
+                normalized = min(normalized, max_below)
+
+        if tick_size > 0:
+            normalized = self._round_price_to_tick(normalized, tick_size, side, order_type)
+
+        return normalized
+
+    def _get_current_contract_price(self, symbol):
+        """Fetch the latest contract price to avoid stale local trigger checks."""
+        try:
+            response = requests.get(
+                f"{self.base_url}/fapi/v1/ticker/price",
+                params={"symbol": symbol},
+                timeout=5,
+            )
+            if response.status_code == 200:
+                return self.safe_float_conversion(response.json().get("price"), 0.0)
+        except Exception:
+            pass
+        return 0.0
+
+    def _round_price_to_tick(self, price, tick_size, side, order_type):
+        """Round price to exchange tick size with direction-aware rounding"""
+        price_decimal = Decimal(str(price))
+        tick_decimal = Decimal(str(tick_size))
+        if tick_decimal <= 0:
+            return float(price_decimal)
+
+        if order_type == "STOP_MARKET":
+            rounding = ROUND_DOWN if side == "SELL" else ROUND_UP
+        else:
+            rounding = ROUND_UP if side == "SELL" else ROUND_DOWN
+
+        ticks = (price_decimal / tick_decimal).quantize(Decimal("1"), rounding=rounding)
+        normalized = ticks * tick_decimal
+        return float(normalized)
     
     def get_open_orders(self, symbol):
         """Get pending orders for specific symbol"""
@@ -163,6 +254,7 @@ class ProtectiveOrderManager:
         stop_result = self.submit_protective_order(symbol, exit_side, "STOP_MARKET", stop_price)
         if stop_result:
             self.managed_stop_prices[symbol] = stop_price
+            self.trading_results.setdefault("managed_stop_prices", {})[symbol] = stop_price
         
         # Install TAKE_PROFIT order
         if take_price is not None:
@@ -176,8 +268,9 @@ class ProtectiveOrderManager:
 
             open_orders = self.get_open_orders(symbol)
             for order in open_orders:
-                if order.get("type") == "STOP_MARKET":
-                    order_id = order.get("orderId")
+                order_type = order.get("orderType") or order.get("type")
+                if order_type == "STOP_MARKET":
+                    order_id = order.get("algoId") or order.get("orderId")
                     if order_id:
                         self.cancel_order(symbol, order_id)
 
@@ -190,6 +283,7 @@ class ProtectiveOrderManager:
 
             if result:
                 self.managed_stop_prices[symbol] = new_stop_price
+                self.trading_results.setdefault("managed_stop_prices", {})[symbol] = new_stop_price
                 return True
             return False
 

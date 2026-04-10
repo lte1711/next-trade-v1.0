@@ -1,0 +1,34 @@
+{
+  "started_at": "2026-04-10T09:38:54.955800+09:00",
+  "repairs": {
+    "HIPPOUSDT": {
+      "action": "none",
+      "stop_count_before": 1,
+      "take_profit_count_before": 1
+    },
+    "AKEUSDT": {
+      "action": "reinstall_protective_orders",
+      "entry_side": "BUY",
+      "entry_price": 0.0004413,
+      "orders_before": [
+        [
+          "TAKE_PROFIT_MARKET",
+          "0.0004697"
+        ]
+      ],
+      "orders_after": [
+        [
+          "STOP_MARKET",
+          "0.0004324"
+        ],
+        [
+          "TAKE_PROFIT_MARKET",
+          "0.0004590"
+        ]
+      ],
+      "stop_count_after": 1,
+      "take_profit_count_after": 1
+    }
+  },
+  "finished_at": "2026-04-10T09:39:00.833369+09:00"
+}

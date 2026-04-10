@@ -1,0 +1,192 @@
+{
+  "started_at": "2026-04-10T11:13:04.801086+09:00",
+  "finished_at": "2026-04-10T11:13:38.396889+09:00",
+  "duration_sec": 33.596,
+  "mode": "symbol_quality_filter_v1_sync_verify",
+  "active_position_count": 5,
+  "active_symbols": [
+    "HIPPOUSDT",
+    "MYROUSDT",
+    "NEIROUSDT",
+    "REIUSDT",
+    "ZRCUSDT"
+  ],
+  "pending_orders": [],
+  "coverage": {
+    "HIPPOUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    },
+    "NEIROUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    },
+    "REIUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    },
+    "ZRCUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    },
+    "MYROUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    }
+  },
+  "unprotected_symbols": [],
+  "system_errors_count": 0,
+  "recent_system_errors": [],
+  "realized_pnl_journal_count_before": 21,
+  "realized_pnl_journal_count_after": 25,
+  "new_realized_pnl_events": [
+    {
+      "timestamp": "2026-04-10T11:12:30.946711",
+      "order_id": 129031414,
+      "symbol": "AKEUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0003872,
+      "exit_price": 0.0004151,
+      "executed_qty": 876.0,
+      "realized_pnl": 0.024440400000000025,
+      "exit_reason": "partial_tp_level_1"
+    },
+    {
+      "timestamp": "2026-04-10T11:12:32.722989",
+      "order_id": 129031417,
+      "symbol": "AKEUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0003872,
+      "exit_price": 0.0004151,
+      "executed_qty": 1753.0,
+      "realized_pnl": 0.04890870000000005,
+      "exit_reason": "partial_tp_level_2"
+    },
+    {
+      "timestamp": "2026-04-10T11:12:34.362015",
+      "order_id": 129031422,
+      "symbol": "AKEUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0003872,
+      "exit_price": 0.0004151,
+      "executed_qty": 877.0,
+      "realized_pnl": 0.024468300000000023,
+      "exit_reason": "partial_tp_level_3"
+    },
+    {
+      "timestamp": "2026-04-10T11:12:36.138564",
+      "order_id": 188542146,
+      "symbol": "FUNUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.000887,
+      "exit_price": 0.000895,
+      "executed_qty": 53624.0,
+      "realized_pnl": 0.4289919999999988,
+      "exit_reason": "ema21_trailing"
+    }
+  ],
+  "realized_pnl_journal_tail": [
+    {
+      "timestamp": "2026-04-10T11:01:50.312091",
+      "order_id": 129029599,
+      "symbol": "AKEUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0003872,
+      "exit_price": 0.000407,
+      "executed_qty": 4674.0,
+      "realized_pnl": 0.09254520000000022,
+      "exit_reason": "partial_tp_level_1"
+    },
+    {
+      "timestamp": "2026-04-10T11:01:52.142459",
+      "order_id": 188540258,
+      "symbol": "FUNUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.000887,
+      "exit_price": 0.000889,
+      "executed_qty": 32629.0,
+      "realized_pnl": 0.06525800000000159,
+      "exit_reason": "ema21_trailing"
+    },
+    {
+      "timestamp": "2026-04-10T11:05:41.492889",
+      "order_id": 129030278,
+      "symbol": "AKEUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0003872,
+      "exit_price": 0.0004148,
+      "executed_qty": 3505.0,
+      "realized_pnl": 0.09673800000000007,
+      "exit_reason": "partial_tp_level_1"
+    },
+    {
+      "timestamp": "2026-04-10T11:05:43.328956",
+      "order_id": 129030281,
+      "symbol": "AKEUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0003872,
+      "exit_price": 0.0004148,
+      "executed_qty": 7011.0,
+      "realized_pnl": 0.19350360000000014,
+      "exit_reason": "partial_tp_level_2"
+    },
+    {
+      "timestamp": "2026-04-10T11:12:30.946711",
+      "order_id": 129031414,
+      "symbol": "AKEUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0003872,
+      "exit_price": 0.0004151,
+      "executed_qty": 876.0,
+      "realized_pnl": 0.024440400000000025,
+      "exit_reason": "partial_tp_level_1"
+    },
+    {
+      "timestamp": "2026-04-10T11:12:32.722989",
+      "order_id": 129031417,
+      "symbol": "AKEUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0003872,
+      "exit_price": 0.0004151,
+      "executed_qty": 1753.0,
+      "realized_pnl": 0.04890870000000005,
+      "exit_reason": "partial_tp_level_2"
+    },
+    {
+      "timestamp": "2026-04-10T11:12:34.362015",
+      "order_id": 129031422,
+      "symbol": "AKEUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0003872,
+      "exit_price": 0.0004151,
+      "executed_qty": 877.0,
+      "realized_pnl": 0.024468300000000023,
+      "exit_reason": "partial_tp_level_3"
+    },
+    {
+      "timestamp": "2026-04-10T11:12:36.138564",
+      "order_id": 188542146,
+      "symbol": "FUNUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.000887,
+      "exit_price": 0.000895,
+      "executed_qty": 53624.0,
+      "realized_pnl": 0.4289919999999988,
+      "exit_reason": "ema21_trailing"
+    }
+  ],
+  "available_balance": 8532.93953876,
+  "total_balance": 2990.83087206
+}

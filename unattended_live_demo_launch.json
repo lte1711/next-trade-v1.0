@@ -1,0 +1,28 @@
+{
+  "launched_at": "2026-04-09T17:32:52.147158+09:00",
+  "pid": 9692,
+  "status_file": "unattended_live_demo_status.json",
+  "report_file": "UNATTENDED_LIVE_DEMO_REPORT.md",
+  "command": [
+    ".venv\\Scripts\\python.exe",
+    "supervised_long_session.py",
+    "--cycles",
+    "36",
+    "--sleep-seconds",
+    "10",
+    "--status-file",
+    "unattended_live_demo_status.json",
+    "--report-file",
+    "UNATTENDED_LIVE_DEMO_REPORT.md"
+  ],
+  "requested_cycles": 36,
+  "sleep_seconds": 10,
+  "status": "stopped",
+  "stopped_at": "2026-04-09T17:32:53.042617+09:00",
+  "stopped_pids": [
+    "11088",
+    "1964",
+    "9692",
+    "10460"
+  ]
+}

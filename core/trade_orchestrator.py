@@ -76,7 +76,11 @@ class TradeOrchestrator:
         try:
             # Check for duplicate entry
             if self._check_duplicate_entry(symbol, strategy_name):
-                return {'success': False, 'reason': f'Duplicate entry prevented: {symbol} already has active or pending trade'}
+                return {
+                    'success': False,
+                    'skipped': True,
+                    'reason': f'Duplicate entry prevented: {symbol} already has active or pending trade'
+                }
             
             # Get strategy configuration
             strategy_config = self.strategy_registry.get_strategy_profile(strategy_name)
@@ -101,7 +105,11 @@ class TradeOrchestrator:
             # Check if we can open new positions
             max_positions = strategy_config.get('risk_config', {}).get('max_open_positions', 1)
             if not self.account_service.can_open_new_positions(self.trading_results, max_positions):
-                return {'success': False, 'reason': 'Cannot open new positions (limit or balance)'}
+                return {
+                    'success': False,
+                    'skipped': True,
+                    'reason': 'Cannot open new positions (limit or balance)'
+                }
             
             # Calculate position size
             strategy_capital = self.allocation_service.get_strategy_capital(strategy_name)
@@ -111,10 +119,19 @@ class TradeOrchestrator:
             current_price = market_data.get('prices', {}).get('current', 0.0)
             volatility = regime.get('volatility_level', 0.0)
             atr = indicators.get('atr', [0])[-1] if indicators.get('atr') else 0.0
+            allocation_context = {
+                'signal_side': signal.get('signal'),
+                'market_regime': regime.get('regime', 'UNKNOWN'),
+                'trend_strength': regime.get('trend_strength', 0.0),
+                'volume_ratio': indicators.get('volume_ratio', 1.0),
+                'symbol_performance': self.trading_results.get('symbol_performance', {}).get(symbol, {}),
+                'active_position_count': len(self.trading_results.get('active_positions', {}) or {}),
+                'max_open_positions': strategy_config.get('risk_config', {}).get('max_open_positions', 10)
+            }
             
             position_sizing = self.allocation_service.calculate_position_size(
                 symbol, current_price, strategy_capital, confidence,
-                volatility, atr, strategy_config
+                volatility, atr, strategy_config, allocation_context
             )
             
             position_size = position_sizing.get('position_size', 0.0)
@@ -138,7 +155,10 @@ class TradeOrchestrator:
                 'stop_loss_pct': position_sizing.get('stop_loss_pct'),
                 'take_profit_pct': position_sizing.get('take_profit_pct'),
                 'atr': atr,
-                'volatility': volatility
+                'volatility': volatility,
+                'allocation_context': position_sizing.get('allocation_context', {}),
+                'position_amount_usdt': position_sizing.get('position_amount_usdt'),
+                'risk_amount_usdt': position_sizing.get('risk_amount_usdt')
             }
             
             order_result = self.order_executor.submit_order(
@@ -165,11 +185,27 @@ class TradeOrchestrator:
                     'strategy': strategy_name,
                     'signal_confidence': confidence,
                     'stop_loss_pct': position_sizing.get('stop_loss_pct'),
-                    'take_profit_pct': position_sizing.get('take_profit_pct')
+                    'take_profit_pct': position_sizing.get('take_profit_pct'),
+                    'allocation_context': position_sizing.get('allocation_context', {}),
+                    'position_amount_usdt': position_sizing.get('position_amount_usdt'),
+                    'risk_amount_usdt': position_sizing.get('risk_amount_usdt')
                 }
                 
                 # Add to active positions
                 self.trading_results.setdefault('active_positions', {})[symbol] = position_info
+                self.trading_results.setdefault('position_state_journal', {})[symbol] = {
+                    'strategy': strategy_name,
+                    'entry_time': position_info.get('entry_time'),
+                    'signal_confidence': confidence,
+                    'stop_loss_pct': position_sizing.get('stop_loss_pct'),
+                    'take_profit_pct': position_sizing.get('take_profit_pct'),
+                    'allocation_context': position_sizing.get('allocation_context', {}),
+                    'position_amount_usdt': position_sizing.get('position_amount_usdt'),
+                    'risk_amount_usdt': position_sizing.get('risk_amount_usdt'),
+                    'entry_price': filled_price,
+                    'side': 'LONG' if order_side == 'BUY' else 'SHORT'
+                }
+                self.trading_results.setdefault('position_entry_times', {})[symbol] = position_info.get('entry_time')
                 
                 # Place protective orders
                 self._place_protective_orders(symbol, position_info, strategy_config)
@@ -194,6 +230,12 @@ class TradeOrchestrator:
             else:
                 if not order_result:
                     return {'success': False, 'reason': 'Order failed'}
+                if order_result.get("status") == "BLOCKED":
+                    return {
+                        'success': False,
+                        'skipped': True,
+                        'reason': order_result.get('reason', 'Order preflight blocked')
+                    }
                 
                 return {
                     'success': False,
@@ -299,6 +341,11 @@ class TradeOrchestrator:
         try:
             klines_1h = market_data.get('klines', {}).get('1h', [])
             latest_volume = klines_1h[-1].get('volume', 0.0) if klines_1h else 0.0
+            current_price = indicators.get('price', market_data.get('prices', {}).get('current', 0.0))
+            sma_10 = indicators.get('sma_10', 0.0)
+            price_vs_sma_pct = 0.0
+            if current_price > 0 and sma_10 > 0:
+                price_vs_sma_pct = ((current_price - sma_10) / sma_10) * 100.0
 
             diagnostic = {
                 'timestamp': int(datetime.now().timestamp() * 1000),
@@ -307,11 +354,19 @@ class TradeOrchestrator:
                 'signal': signal.get('signal', 'HOLD'),
                 'confidence': signal.get('confidence', 0.0),
                 'reason': signal.get('reason', ''),
-                'current_price': market_data.get('prices', {}).get('current', 0.0),
+                'current_price': current_price,
+                'sma_10': sma_10,
+                'price_vs_sma_pct': price_vs_sma_pct,
                 'market_regime': regime.get('regime', 'UNKNOWN'),
                 'trend_strength': regime.get('trend_strength', 0.0),
                 'volatility': regime.get('volatility_level', 0.0),
-                'volume': latest_volume
+                'volume': indicators.get('volume', latest_volume),
+                'volume_ratio': indicators.get('volume_ratio', 1.0),
+                'thresholds': {
+                    'buy_trigger_pct': 0.1,
+                    'sell_trigger_pct': -0.1,
+                    'min_confidence': self.signal_engine.minimal_thresholds.get('min_confidence', 0.1)
+                }
             }
 
             ma_analysis = indicators.get('ma_analysis', {})
@@ -348,11 +403,16 @@ class TradeOrchestrator:
                 'high_confidence_signals': 0,
                 'average_confidence': 0.0,
                 'regime_distribution': {},
-                'top_candidates': []
+                'top_candidates': [],
+                'hold_reasons': {},
+                'closest_to_entry': []
             }
             
             total_confidence = 0.0
-            candidates = []
+            top_signal_candidates = []
+            proximity_candidates = []
+            seen_top_candidates = set()
+            seen_proximity_candidates = set()
             
             for diagnostic in all_diagnostics:
                 signal = diagnostic.get('signal', 'HOLD')
@@ -371,6 +431,9 @@ class TradeOrchestrator:
                     summary['high_confidence_signals'] += 1
                 
                 total_confidence += confidence
+                reason = diagnostic.get('reason', 'Unknown reason')
+                if signal == 'HOLD':
+                    summary['hold_reasons'][reason] = summary['hold_reasons'].get(reason, 0) + 1
                 
                 # Count regime distribution
                 regime = diagnostic.get('market_regime', 'UNKNOWN')
@@ -378,26 +441,127 @@ class TradeOrchestrator:
                 
                 # Collect candidates for top signals
                 if signal != 'HOLD' and confidence >= 0.6:
-                    candidates.append({
+                    candidate_key = (diagnostic.get('symbol'), signal)
+                    if candidate_key not in seen_top_candidates:
+                        top_signal_candidates.append({
+                            'symbol': diagnostic.get('symbol'),
+                            'signal': signal,
+                            'confidence': confidence,
+                            'reason': diagnostic.get('reason', ''),
+                            'market_regime': diagnostic.get('market_regime'),
+                            'trend_strength': diagnostic.get('trend_strength', 0.0),
+                            'volume_ratio': diagnostic.get('volume_ratio', 1.0)
+                        })
+                        seen_top_candidates.add(candidate_key)
+
+                distance_to_entry = abs(abs(diagnostic.get('price_vs_sma_pct', 0.0)) - 0.1)
+                proximity_key = (diagnostic.get('symbol'), signal)
+                if proximity_key not in seen_proximity_candidates:
+                    proximity_candidates.append({
                         'symbol': diagnostic.get('symbol'),
                         'signal': signal,
                         'confidence': confidence,
-                        'reason': diagnostic.get('reason', '')
+                        'reason': diagnostic.get('reason', ''),
+                        'price_vs_sma_pct': diagnostic.get('price_vs_sma_pct', 0.0),
+                        'distance_to_entry_pct': distance_to_entry,
+                        'market_regime': diagnostic.get('market_regime'),
+                        'trend_strength': diagnostic.get('trend_strength', 0.0),
+                        'volume_ratio': diagnostic.get('volume_ratio', 1.0)
                     })
+                    seen_proximity_candidates.add(proximity_key)
             
             # Calculate averages
             if len(all_diagnostics) > 0:
                 summary['average_confidence'] = total_confidence / len(all_diagnostics)
             
             # Sort and select top candidates
-            candidates.sort(key=lambda x: x['confidence'], reverse=True)
-            summary['top_candidates'] = candidates[:5]  # Top 5 candidates
+            top_signal_candidates.sort(key=lambda x: x['confidence'], reverse=True)
+            summary['top_candidates'] = top_signal_candidates[:5]
+            closest_candidates = sorted(
+                proximity_candidates,
+                key=lambda x: x.get('distance_to_entry_pct', float('inf'))
+            )
+            summary['closest_to_entry'] = closest_candidates[:5]
             
             return summary
             
         except Exception as e:
             self.log_error("diagnostic_summary", str(e))
             return {}
+
+    def _get_symbol_performance_bias(self, symbol: str) -> Dict[str, Any]:
+        """Build a lightweight performance bias for candidate ranking."""
+        stats = self.trading_results.get('symbol_performance', {}).get(symbol, {}) or {}
+        trade_count = int(stats.get('trade_count', 0) or 0)
+        win_count = int(stats.get('win_count', 0) or 0)
+        net_realized_pnl = self.safe_float_conversion(stats.get('net_realized_pnl'), 0.0)
+        last_realized_pnl = self.safe_float_conversion(stats.get('last_realized_pnl'), 0.0)
+        win_rate = (win_count / trade_count) if trade_count > 0 else 0.0
+
+        penalty = 0.0
+        bonus = 0.0
+        if trade_count > 0:
+            if net_realized_pnl < 0:
+                penalty += min(abs(net_realized_pnl) / 5.0, 0.2)
+            if win_rate < 0.5:
+                penalty += min((0.5 - win_rate) * 0.2, 0.1)
+            if last_realized_pnl > 0:
+                bonus += min(last_realized_pnl / 5.0, 0.05)
+
+        return {
+            'trade_count': trade_count,
+            'win_rate': round(win_rate, 4),
+            'net_realized_pnl': round(net_realized_pnl, 8),
+            'last_realized_pnl': round(last_realized_pnl, 8),
+            'penalty': round(penalty, 6),
+            'bonus': round(bonus, 6),
+        }
+
+    def _evaluate_symbol_quality(self, symbol: str, indicators: Dict[str, Any],
+                                 regime: Dict[str, Any]) -> Dict[str, Any]:
+        """Filter symbols that have too little usable movement for new entries."""
+        try:
+            price_vs_sma_pct = self.safe_float_conversion(indicators.get('price_vs_sma_pct'), 0.0)
+            volume_ratio = self.safe_float_conversion(indicators.get('volume_ratio'), 1.0)
+            trend_strength = self.safe_float_conversion(regime.get('trend_strength'), 0.0)
+            volatility = self.safe_float_conversion(regime.get('volatility_level'), 0.0)
+            market_regime = regime.get('regime', 'UNKNOWN')
+
+            reasons = []
+            critical_reasons = []
+            if abs(price_vs_sma_pct) < 0.12:
+                reasons.append('flat_price_vs_sma')
+            if volume_ratio < 0.30:
+                reasons.append('thin_recent_volume')
+                if volume_ratio < 0.05:
+                    critical_reasons.append('critically_thin_recent_volume')
+            if trend_strength < 10.0:
+                reasons.append('weak_trend_strength')
+            if volatility < 0.002:
+                reasons.append('very_low_volatility')
+            if market_regime == 'UNKNOWN':
+                reasons.append('unknown_market_regime')
+                critical_reasons.append('unknown_market_regime')
+
+            eligible_for_new_entry = len(reasons) == 0 and not critical_reasons
+            eligible_for_hold = len(reasons) == 0 and not critical_reasons
+            return {
+                'eligible_for_new_entry': eligible_for_new_entry,
+                'eligible_for_hold': eligible_for_hold,
+                'reason': ','.join(reasons) if reasons else 'quality_ok',
+                'critical_reason': ','.join(critical_reasons) if critical_reasons else '',
+                'price_vs_sma_pct': round(price_vs_sma_pct, 6),
+                'volume_ratio': round(volume_ratio, 6),
+                'trend_strength': round(trend_strength, 6),
+                'volatility': round(volatility, 8),
+                'market_regime': market_regime
+            }
+        except Exception as e:
+            self.log_error("symbol_quality_filter", str(e))
+            return {
+                'eligible_for_new_entry': False,
+                'reason': f'quality_filter_error:{str(e)}'
+            }
     
     def run_trading_cycle(self, symbols: List[str], active_strategies: List[str]) -> Dict[str, Any]:
         """Run a complete trading cycle"""
@@ -409,6 +573,8 @@ class TradeOrchestrator:
                 'signals_generated': 0,
                 'trades_executed': 0,
                 'errors': [],
+                'skips': [],
+                'low_quality_symbols': [],
                 'diagnostics': []
             }
             
@@ -465,6 +631,7 @@ class TradeOrchestrator:
             # 4. Generate and evaluate signals
             all_diagnostics = []
             trade_candidates = []
+            skipped_candidate_symbols = set()
             
             # V2 Merged: Use strategy-specific symbols for signal generation
             for strategy_name in active_strategies:
@@ -479,6 +646,24 @@ class TradeOrchestrator:
                     indicators = self._calculate_symbol_indicators(symbol_data)
                     if not indicators:
                         continue
+
+                    symbol_quality = self._evaluate_symbol_quality(
+                        symbol,
+                        indicators,
+                        regime_data.get(symbol, {})
+                    )
+                    if not symbol_quality.get('eligible_for_new_entry', True):
+                        low_quality_record = {
+                            'symbol': symbol,
+                            'strategy': strategy_name,
+                            **symbol_quality
+                        }
+                        cycle_results['low_quality_symbols'].append(low_quality_record)
+                        if symbol not in (self.trading_results.get('active_positions', {}) or {}):
+                            cycle_results['skips'].append(
+                                f"Candidate skipped for {symbol}: low quality symbol filter ({symbol_quality.get('reason')})"
+                            )
+                            continue
                     
                     # Generate signal for this strategy
                     signal = self.signal_engine.generate_strategy_signal(
@@ -502,6 +687,21 @@ class TradeOrchestrator:
                     
                     # Collect trade candidates
                     if signal.get('signal') != 'HOLD':
+                        active_positions = self.trading_results.get('active_positions', {})
+                        pending_symbols = {
+                            trade.get('symbol')
+                            for trade in self.trading_results.get('pending_trades', [])
+                            if trade.get('symbol')
+                        }
+                        if symbol in active_positions or symbol in pending_symbols:
+                            skip_key = (symbol, 'open_or_pending')
+                            if skip_key not in skipped_candidate_symbols:
+                                cycle_results['skips'].append(
+                                    f"Candidate skipped for {symbol}: already active or pending"
+                                )
+                                skipped_candidate_symbols.add(skip_key)
+                            continue
+
                         trade_candidates.append({
                             'symbol': symbol,
                             'strategy': strategy_name,
@@ -514,13 +714,23 @@ class TradeOrchestrator:
             # 5. Score and select candidates
             scored_candidates = []
             for candidate in trade_candidates:
-                score = self.signal_engine.score_trade_candidate(
+                base_score = self.signal_engine.score_trade_candidate(
                     candidate['signal'], candidate['market_data'], 
                     self.strategy_registry.get_strategy_profile(candidate['strategy']).get('risk_config', {})
                 )
+                performance_bias = self._get_symbol_performance_bias(candidate['symbol'])
                 scored_candidates.append({
                     **candidate,
-                    'score': score
+                    'score': {
+                        **base_score,
+                        'performance_bias': performance_bias,
+                        'final_score': round(
+                            self.safe_float_conversion(base_score.get('final_score'), 0.0)
+                            - performance_bias.get('penalty', 0.0)
+                            + performance_bias.get('bonus', 0.0),
+                            6
+                        )
+                    }
                 })
             
             # Sort by score and select top candidates
@@ -538,6 +748,10 @@ class TradeOrchestrator:
                 if result.get('success'):
                     cycle_results['trades_executed'] += 1
                     print(f"[TRADE_EXECUTED] {result}")
+                elif result.get('skipped'):
+                    cycle_results['skips'].append(
+                        f"Trade skipped for {candidate['symbol']}: {result.get('reason')}"
+                    )
                 else:
                     cycle_results['errors'].append(f"Trade failed for {candidate['symbol']}: {result.get('reason')}")
             
@@ -558,6 +772,7 @@ class TradeOrchestrator:
             )
             
             # 8. Build diagnostic summary
+            cycle_results['diagnostics'] = all_diagnostics[-20:]
             cycle_results['diagnostic_summary'] = self.build_signal_diagnostic_summary(all_diagnostics)
             cycle_results['end_time'] = int(datetime.now().timestamp() * 1000)
             cycle_results['duration_ms'] = cycle_results['end_time'] - cycle_results['start_time']
@@ -589,7 +804,19 @@ class TradeOrchestrator:
             highs_1h = [k['high'] for k in klines_1h]
             lows_1h = [k['low'] for k in klines_1h]
             opens_1h = [k['open'] for k in klines_1h]
-            
+            latest_price = symbol_data.get('prices', {}).get('current', closes_1h[-1] if closes_1h else 0.0)
+            latest_volume = klines_1h[-1].get('volume', 0.0) if klines_1h else 0.0
+            recent_volumes = [k.get('volume', 0.0) for k in klines_1h[-20:]]
+            avg_volume = sum(recent_volumes) / len(recent_volumes) if recent_volumes else 0.0
+
+            indicators['price'] = latest_price
+            indicators['volume'] = latest_volume
+            indicators['volume_sma_20'] = avg_volume
+            indicators['volume_ratio'] = (latest_volume / avg_volume) if avg_volume > 0 else 1.0
+            indicators['sma_10'] = sum(closes_1h[-10:]) / min(len(closes_1h), 10)
+            if indicators['sma_10'] > 0:
+                indicators['price_vs_sma_pct'] = ((latest_price - indicators['sma_10']) / indicators['sma_10']) * 100.0
+
             # Calculate indicators
             ma_analysis = self.market_regime_service.analyze_timeframe_ma(closes_1h)
             if ma_analysis:

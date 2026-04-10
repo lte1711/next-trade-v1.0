@@ -1,0 +1,119 @@
+{
+  "validated_at": "2026-04-09T18:10:10.575590+09:00",
+  "environment": {
+    "base_url": "https://demo-fapi.binance.com",
+    "runtime_initialized": true
+  },
+  "execution_validation": {
+    "fresh_live_cycle": {
+      "started_at": "2026-04-09T18:02:22.273202+09:00",
+      "finished_at": "2026-04-09T18:04:14.609816+09:00",
+      "duration_sec": 112.337,
+      "signals_generated": 20,
+      "trades_executed": 1,
+      "errors": [],
+      "skips": [
+        "Trade skipped for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+        "Trade skipped for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade"
+      ],
+      "system_errors": 0,
+      "notable_transitions": [
+        "AKEUSDT long entry filled at avgPrice 0.0002473",
+        "NEIROUSDT long position closed by reduce-only SELL",
+        "ZRCUSDT short position closed by reduce-only BUY"
+      ]
+    },
+    "current_live_state": {
+      "active_position_count": 2,
+      "open_positions": {
+        "HIPPOUSDT": {
+          "side": "SHORT",
+          "entry_price": 0.000204,
+          "current_price": 0.000204,
+          "managed_stop_price": 0.000209
+        },
+        "AKEUSDT": {
+          "side": "LONG",
+          "entry_price": 0.0002473440505,
+          "current_price": 0.0002463,
+          "managed_stop_price": null
+        }
+      }
+    }
+  },
+  "profit_validation": {
+    "account_snapshot": {
+      "total_balance": 2991.2132919,
+      "available_balance": 8535.87674471,
+      "exchange_reported_total_unrealized_pnl": 0.0
+    },
+    "local_position_pnl_snapshot": {
+      "total_unrealized_pnl": -0.1627800015559958,
+      "positions": [
+        {
+          "symbol": "HIPPOUSDT",
+          "side": "SHORT",
+          "entry_price": 0.000204,
+          "current_price": 0.000204,
+          "unrealized_pnl": 0.0,
+          "pnl_pct": 0.0
+        },
+        {
+          "symbol": "AKEUSDT",
+          "side": "LONG",
+          "entry_price": 0.0002473440505,
+          "current_price": 0.0002463,
+          "unrealized_pnl": -0.1627800015559958,
+          "pnl_pct": -0.004221045535113743
+        }
+      ]
+    },
+    "recent_realized_pnl_from_exchange_orders": {
+      "method": "paired entry and reduce-only exit orders from exchange allOrders",
+      "pairs": [
+        {
+          "symbol": "NEIROUSDT",
+          "position_side": "LONG",
+          "entry_order_id": 75714035,
+          "entry_price": 0.0000582,
+          "exit_order_id": 75722279,
+          "exit_price": 0.0000573,
+          "quantity": 661953.0,
+          "realized_pnl": -0.5957577
+        },
+        {
+          "symbol": "ZRCUSDT",
+          "position_side": "SHORT",
+          "entry_order_id": 96787900,
+          "entry_price": 0.00179,
+          "exit_order_id": 96794794,
+          "exit_price": 0.0018,
+          "quantity": 24680.0,
+          "realized_pnl": -0.2468
+        }
+      ],
+      "realized_pnl_sum": -0.8425577
+    },
+    "historical_balance_delta_reference": {
+      "source_file": "unattended_live_demo_status.json",
+      "starting_balance": 8546.54320412,
+      "ending_balance": 8533.98269042,
+      "delta": -12.560513700000229,
+      "warning": "This is not pure realized profit because available balance is affected by open margin and timing."
+    }
+  },
+  "evaluation": {
+    "runtime_status": "PASS",
+    "profit_status": "CURRENTLY_NEGATIVE",
+    "summary": [
+      "The runtime is operating correctly on the demo exchange and executed a fresh live cycle successfully.",
+      "The current open-position mark-to-market is slightly negative.",
+      "Recent realized profit reconstructed from exchange orders is negative by about 0.8426 USDT.",
+      "This is a strategy-performance issue, not a runtime-execution failure."
+    ],
+    "next_focus": [
+      "Improve candidate quality and entry selection.",
+      "Track realized PnL natively in local trade records so profit audits do not require exchange-order reconstruction."
+    ]
+  }
+}

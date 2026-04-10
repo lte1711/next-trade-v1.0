@@ -35,7 +35,8 @@ class StrategyRegistry:
                 'risk_config': {
                     'max_position_size': 0.02,
                     'stop_loss_pct': 0.02,
-                    'take_profit_pct': 0.04
+                    'take_profit_pct': 0.04,
+                    'max_open_positions': 10
                 },
                 'symbols': []  # Will be populated dynamically
             },
@@ -57,7 +58,8 @@ class StrategyRegistry:
                 'risk_config': {
                     'max_position_size': 0.02,
                     'stop_loss_pct': 0.02,
-                    'take_profit_pct': 0.04
+                    'take_profit_pct': 0.04,
+                    'max_open_positions': 10
                 },
                 'symbols': []  # Will be populated dynamically
             }

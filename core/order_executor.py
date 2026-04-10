@@ -134,6 +134,15 @@ class OrderExecutor:
                         quantity = self.round_to_step(quantity, step_size, ROUND_DOWN)
                     else:
                         quantity = round(quantity, qty_precision)
+
+            if not reduce_only:
+                percent_price_check = self._validate_market_order_preflight(symbol, side, symbol_info)
+                if not percent_price_check["allowed"]:
+                    self.log_error("order_preflight_blocked", percent_price_check["reason"])
+                    return {
+                        "status": "BLOCKED",
+                        "reason": percent_price_check["reason"],
+                    }
             
             server_time = self.get_server_time()
             if not server_time:
@@ -208,6 +217,85 @@ class OrderExecutor:
         except Exception as e:
             self.log_error("trading_runtime_error", str(e))
             return None
+
+    def _validate_market_order_preflight(self, symbol, side, symbol_info):
+        """Block market orders likely to fail exchange-side price filters."""
+        try:
+            current_price = self.get_current_price(symbol, 0.0)
+            min_trade_price = 0.00001
+            if current_price > 0 and current_price < min_trade_price:
+                return {
+                    "allowed": False,
+                    "reason": f"{symbol} current price {current_price:.10f} below preflight floor {min_trade_price:.5f}"
+                }
+
+            percent_filter = None
+            for symbol_filter in symbol_info.get("filters", []):
+                if symbol_filter.get("filterType") == "PERCENT_PRICE":
+                    percent_filter = symbol_filter
+                    break
+
+            if not percent_filter:
+                return {"allowed": True}
+
+            mark_price = self._get_mark_price(symbol)
+            book_price = self._get_book_ticker_price(symbol, side)
+            if mark_price <= 0 or book_price <= 0:
+                return {"allowed": True}
+
+            multiplier_up = self.safe_float_conversion(percent_filter.get("multiplierUp"), 0.0)
+            multiplier_down = self.safe_float_conversion(percent_filter.get("multiplierDown"), 0.0)
+            if multiplier_up <= 0 or multiplier_down <= 0:
+                return {"allowed": True}
+
+            upper_bound = mark_price * multiplier_up
+            lower_bound = mark_price * multiplier_down
+            if book_price > upper_bound or book_price < lower_bound:
+                return {
+                    "allowed": False,
+                    "reason": (
+                        f"{symbol} market order preflight blocked: "
+                        f"book_price={book_price:.10f}, mark_price={mark_price:.10f}, "
+                        f"allowed_range=[{lower_bound:.10f}, {upper_bound:.10f}]"
+                    ),
+                }
+
+            return {"allowed": True}
+        except Exception as e:
+            self.log_error("order_preflight_error", f"{symbol}: {e}")
+            return {"allowed": True}
+
+    def _get_mark_price(self, symbol):
+        """Fetch mark price for a symbol."""
+        try:
+            response = requests.get(
+                f"{self.base_url}/fapi/v1/premiumIndex",
+                params={"symbol": symbol},
+                timeout=5,
+            )
+            if response.status_code == 200:
+                return self.safe_float_conversion(response.json().get("markPrice"), 0.0)
+        except Exception:
+            pass
+        return 0.0
+
+    def _get_book_ticker_price(self, symbol, side):
+        """Fetch best executable book price for a side."""
+        try:
+            response = requests.get(
+                f"{self.base_url}/fapi/v1/ticker/bookTicker",
+                params={"symbol": symbol},
+                timeout=5,
+            )
+            if response.status_code != 200:
+                return 0.0
+            payload = response.json()
+            if side == "BUY":
+                return self.safe_float_conversion(payload.get("askPrice"), 0.0)
+            return self.safe_float_conversion(payload.get("bidPrice"), 0.0)
+        except Exception:
+            pass
+        return 0.0
     
     def _process_order_result(self, result, strategy_name, symbol, side, quantity, reduce_only, metadata):
         """Process order result"""
@@ -251,6 +339,7 @@ class OrderExecutor:
             
             if reduce_only and status == "FILLED":
                 trade_record["realized_pnl"] = self.estimate_realized_pnl(trade_record)
+                self._record_realized_pnl_event(trade_record)
             
             if reduce_only:
                 print(f"[CLOSE] {strategy_name} | {symbol} | {side} | {quantity} | {status}")
@@ -261,6 +350,137 @@ class OrderExecutor:
         except Exception as e:
             self.log_error("order_result_processing_error", str(e))
             return None
+
+    def reconcile_pending_reduce_only_fills(self):
+        """Refresh reduce-only close orders that were initially returned as pending."""
+        summary = {
+            "checked": 0,
+            "filled": 0,
+            "terminal": 0,
+            "errors": [],
+            "updated_orders": [],
+        }
+        try:
+            for trade_record in self.trading_results.get("real_orders", []):
+                if not trade_record.get("reduce_only"):
+                    continue
+                if trade_record.get("realized_pnl") is not None:
+                    continue
+                if trade_record.get("status") not in {"NEW", "PARTIALLY_FILLED"}:
+                    continue
+
+                symbol = trade_record.get("symbol")
+                order_id = trade_record.get("order_id")
+                if not symbol or not order_id or order_id == "UNKNOWN":
+                    continue
+
+                summary["checked"] += 1
+                exchange_order = self.get_order_status(symbol, order_id)
+                if not exchange_order:
+                    continue
+
+                exchange_status = exchange_order.get("status")
+                if exchange_status == "FILLED":
+                    self._apply_filled_reconciliation(trade_record, exchange_order)
+                    self._record_realized_pnl_event(trade_record)
+                    summary["filled"] += 1
+                    summary["updated_orders"].append({
+                        "symbol": symbol,
+                        "order_id": order_id,
+                        "status": exchange_status,
+                        "realized_pnl": trade_record.get("realized_pnl"),
+                    })
+                elif exchange_status in {"CANCELED", "EXPIRED", "REJECTED"}:
+                    trade_record["status"] = exchange_status
+                    trade_record["type"] = "TERMINAL_TRADE"
+                    trade_record["exchange_update_time"] = exchange_order.get("updateTime")
+                    summary["terminal"] += 1
+                    summary["updated_orders"].append({
+                        "symbol": symbol,
+                        "order_id": order_id,
+                        "status": exchange_status,
+                    })
+
+            if summary["checked"] or summary["filled"] or summary["terminal"]:
+                self.trading_results.setdefault("operational_events", []).append({
+                    "timestamp": datetime.now().isoformat(),
+                    "type": "reduce_only_fill_reconciliation",
+                    "summary": summary,
+                })
+            return summary
+        except Exception as e:
+            self.log_error("reduce_only_fill_reconciliation", str(e))
+            summary["errors"].append(str(e))
+            return summary
+
+    def _apply_filled_reconciliation(self, trade_record, exchange_order):
+        """Update a local close-order record from the exchange FILLED status."""
+        trade_record["status"] = "FILLED"
+        trade_record["type"] = "ACTUAL_TRADE"
+        trade_record["price"] = self.safe_float_conversion(
+            exchange_order.get("avgPrice"),
+            trade_record.get("price", 0.0)
+        )
+        trade_record["executed_qty"] = self.safe_float_conversion(
+            exchange_order.get("executedQty"),
+            trade_record.get("executed_qty", 0.0)
+        )
+        trade_record["exchange_update_time"] = exchange_order.get("updateTime")
+        trade_record["realized_pnl"] = self.estimate_realized_pnl(trade_record)
+
+    def _record_realized_pnl_event(self, trade_record):
+        """Persist realized PnL events for audit and adaptive ranking."""
+        try:
+            order_id = trade_record.get("order_id")
+            if not order_id or order_id == "UNKNOWN":
+                return
+
+            journal = self.trading_results.setdefault("realized_pnl_journal", [])
+            if any(entry.get("order_id") == order_id for entry in journal):
+                return
+
+            realized_pnl = self.safe_float_conversion(trade_record.get("realized_pnl"), 0.0)
+            symbol = trade_record.get("symbol")
+            strategy = trade_record.get("strategy") or "unknown"
+            journal.append({
+                "timestamp": trade_record.get("timestamp"),
+                "order_id": order_id,
+                "symbol": symbol,
+                "strategy": strategy,
+                "side": trade_record.get("side"),
+                "entry_price": self.safe_float_conversion(trade_record.get("entry_price"), 0.0),
+                "exit_price": self.safe_float_conversion(trade_record.get("price"), 0.0),
+                "executed_qty": self.safe_float_conversion(trade_record.get("executed_qty"), 0.0),
+                "realized_pnl": realized_pnl,
+                "exit_reason": trade_record.get("exit_reason"),
+            })
+            if len(journal) > 500:
+                self.trading_results["realized_pnl_journal"] = journal[-250:]
+
+            performance_map = self.trading_results.setdefault("symbol_performance", {})
+            symbol_stats = performance_map.setdefault(symbol, {
+                "trade_count": 0,
+                "win_count": 0,
+                "loss_count": 0,
+                "net_realized_pnl": 0.0,
+                "last_realized_pnl": 0.0,
+                "last_strategy": strategy,
+                "last_updated": None,
+            })
+            symbol_stats["trade_count"] += 1
+            if realized_pnl > 0:
+                symbol_stats["win_count"] += 1
+            elif realized_pnl < 0:
+                symbol_stats["loss_count"] += 1
+            symbol_stats["net_realized_pnl"] = round(
+                self.safe_float_conversion(symbol_stats.get("net_realized_pnl"), 0.0) + realized_pnl,
+                8,
+            )
+            symbol_stats["last_realized_pnl"] = realized_pnl
+            symbol_stats["last_strategy"] = strategy
+            symbol_stats["last_updated"] = trade_record.get("timestamp")
+        except Exception as e:
+            self.log_error("realized_pnl_event_record", str(e))
     
     def _create_signature(self, query_string):
         """Create signature"""
@@ -279,14 +499,95 @@ class OrderExecutor:
         except Exception:
             pass
         return None
+
+    def cancel_order(self, symbol, order_id):
+        """Cancel a standard futures order"""
+        try:
+            server_time = self.get_server_time()
+            if not server_time:
+                self.log_error("server_time_unavailable", f"Failed to cancel {symbol}/{order_id}")
+                return False
+
+            timestamp = int(server_time) - 100
+            params = {
+                "symbol": symbol,
+                "orderId": order_id,
+                "timestamp": timestamp,
+                "recvWindow": getattr(self, "recv_window", 5000)
+            }
+
+            query_string = "&".join([f"{k}={v}" for k, v in sorted(params.items())])
+            signature = self._create_signature(query_string)
+            url = f"{self.base_url}/fapi/v1/order?{query_string}&signature={signature}"
+            headers = {"X-MBX-APIKEY": self.api_key}
+            response = requests.delete(url, headers=headers, timeout=10)
+
+            if response.status_code == 200:
+                return True
+
+            self.log_error(
+                "cancel_order_failed",
+                f"{symbol}/{order_id}: {response.status_code} {response.text}"
+            )
+            return False
+        except Exception as e:
+            self.log_error("cancel_order_error", f"{symbol}/{order_id}: {e}")
+            return False
+
+    def get_order_status(self, symbol, order_id):
+        """Fetch a standard futures order status."""
+        try:
+            server_time = self.get_server_time()
+            if not server_time:
+                self.log_error("server_time_unavailable", f"Failed to query {symbol}/{order_id}")
+                return None
+
+            timestamp = int(server_time) - 100
+            params = {
+                "symbol": symbol,
+                "orderId": order_id,
+                "timestamp": timestamp,
+                "recvWindow": getattr(self, "recv_window", 5000)
+            }
+
+            query_string = "&".join([f"{k}={v}" for k, v in sorted(params.items())])
+            signature = self._create_signature(query_string)
+            url = f"{self.base_url}/fapi/v1/order?{query_string}&signature={signature}"
+            headers = {"X-MBX-APIKEY": self.api_key}
+            response = requests.get(url, headers=headers, timeout=10)
+
+            if response.status_code == 200:
+                return response.json()
+
+            self.log_error(
+                "order_status_query_failed",
+                f"{symbol}/{order_id}: {response.status_code} {response.text}"
+            )
+            return None
+        except Exception as e:
+            self.log_error("order_status_query_error", f"{symbol}/{order_id}: {e}")
+            return None
     
     def get_current_price(self, symbol, default_price=0.0):
         """Get current price"""
         try:
             current_prices = self.trading_results.get("market_data", {})
-            return current_prices.get(symbol, default_price)
+            current_price = self.safe_float_conversion(current_prices.get(symbol), 0.0)
+            if current_price > 0:
+                return current_price
+
+            response = requests.get(
+                f"{self.base_url}/fapi/v1/ticker/price",
+                params={"symbol": symbol},
+                timeout=5,
+            )
+            if response.status_code == 200:
+                live_price = self.safe_float_conversion(response.json().get("price"), default_price)
+                if live_price > 0:
+                    return live_price
         except Exception:
-            return default_price
+            pass
+        return default_price
     
     def get_market_session(self):
         """Get market session"""
@@ -317,9 +618,10 @@ class OrderExecutor:
             quantity = self.safe_float_conversion(trade.get("executed_qty"), 0.0)
 
             if entry_price > 0 and exit_price > 0 and quantity > 0:
-                if trade.get("side") == "BUY":
+                exit_side = trade.get("side")
+                if exit_side == "SELL":
                     return (exit_price - entry_price) * quantity
-                else:
+                if exit_side == "BUY":
                     return (entry_price - exit_price) * quantity
         except Exception:
             pass

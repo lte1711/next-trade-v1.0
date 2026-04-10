@@ -240,9 +240,11 @@ class AllocationService:
     def calculate_position_size(self, symbol: str, current_price: float,
                              strategy_capital: float, signal_confidence: float,
                              volatility: float, atr: float,
-                             strategy_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate optimal position size using V2 Merged methodology"""
+                             strategy_config: Dict[str, Any],
+                             allocation_context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """Calculate optimal position size using signal, market, and symbol quality."""
         try:
+            allocation_context = allocation_context or {}
             # Get strategy name for V2 risk settings
             strategy_name = strategy_config.get('name', 'unknown')
             
@@ -257,17 +259,82 @@ class AllocationService:
             base_position_usdt = strategy_capital * risk_per_trade
             
             # Apply confidence multiplier
-            confidence_multiplier = min(max(signal_confidence, 0.5), 1.0)
-            position_amount_usdt = base_position_usdt * confidence_multiplier
-            
-            # Apply leverage effect
-            leveraged_position_usdt = position_amount_usdt * leverage
+            confidence_multiplier = min(max(signal_confidence, 0.35), 1.0)
+
+            # Market quality multiplier
+            market_regime = allocation_context.get('market_regime', 'UNKNOWN')
+            signal_side = allocation_context.get('signal_side', 'HOLD')
+            trend_strength = self.safe_float_conversion(allocation_context.get('trend_strength'), 0.0)
+            volume_ratio = self.safe_float_conversion(allocation_context.get('volume_ratio'), 1.0)
+            active_position_count = int(allocation_context.get('active_position_count', 0) or 0)
+            max_open_positions = max(1, int(allocation_context.get('max_open_positions', 10) or 10))
+
+            regime_multiplier = 1.0
+            if signal_side == 'BUY' and market_regime == 'BULL_TREND':
+                regime_multiplier = 1.15
+            elif signal_side == 'SELL' and market_regime == 'BEAR_TREND':
+                regime_multiplier = 1.15
+            elif signal_side == 'BUY' and market_regime == 'BEAR_TREND':
+                regime_multiplier = 0.75
+            elif signal_side == 'SELL' and market_regime == 'BULL_TREND':
+                regime_multiplier = 0.75
+            elif market_regime == 'HIGH_VOLATILITY':
+                regime_multiplier = 0.8
+
+            trend_multiplier = 0.9 + min(trend_strength / 100.0, 0.25)
+            volume_multiplier = min(max(0.85 + (volume_ratio * 0.12), 0.75), 1.25)
+            exposure_multiplier = max(0.65, 1.0 - max(active_position_count - 5, 0) * 0.04)
+
+            # Symbol performance multiplier
+            performance = allocation_context.get('symbol_performance', {}) or {}
+            trade_count = int(performance.get('trade_count', 0) or 0)
+            win_count = int(performance.get('win_count', 0) or 0)
+            net_realized_pnl = self.safe_float_conversion(performance.get('net_realized_pnl'), 0.0)
+            last_realized_pnl = self.safe_float_conversion(performance.get('last_realized_pnl'), 0.0)
+            win_rate = (win_count / trade_count) if trade_count > 0 else 0.5
+
+            performance_multiplier = 1.0
+            if trade_count >= 2:
+                if net_realized_pnl < 0:
+                    performance_multiplier -= min(abs(net_realized_pnl) / 10.0, 0.25)
+                if win_rate < 0.4:
+                    performance_multiplier -= 0.1
+                if net_realized_pnl > 0 and win_rate >= 0.5:
+                    performance_multiplier += min(net_realized_pnl / 20.0, 0.15)
+            if last_realized_pnl > 0:
+                performance_multiplier += min(last_realized_pnl / 20.0, 0.05)
+            elif last_realized_pnl < 0:
+                performance_multiplier -= min(abs(last_realized_pnl) / 20.0, 0.05)
+            performance_multiplier = min(max(performance_multiplier, 0.55), 1.2)
+
+            quality_multiplier = (
+                confidence_multiplier
+                * regime_multiplier
+                * trend_multiplier
+                * volume_multiplier
+                * exposure_multiplier
+                * performance_multiplier
+            )
+            quality_multiplier = min(max(quality_multiplier, 0.25), 1.5)
+            position_amount_usdt = base_position_usdt * quality_multiplier
             
             # Apply volatility scaling (V2 Merged style)
             if volatility > 0.03:  # High volatility penalty
                 position_amount_usdt *= 0.75
             elif volatility < 0.01:  # Low volatility bonus
                 position_amount_usdt *= 1.15
+
+            risk_config = strategy_config.get('risk_config', {}) or {}
+            max_position_size_usdt = self.safe_float_conversion(risk_config.get('max_position_size_usdt'), 0.0)
+            if max_position_size_usdt <= 0:
+                legacy_max_position_size = self.safe_float_conversion(risk_config.get('max_position_size'), 0.0)
+                # Legacy configs may store a fraction such as 0.02 rather than a USDT cap.
+                max_position_size_usdt = legacy_max_position_size if legacy_max_position_size > 1.0 else 0.0
+            if max_position_size_usdt > 0:
+                position_amount_usdt = min(position_amount_usdt, max_position_size_usdt)
+
+            # Apply leverage effect after all allocation adjustments.
+            leveraged_position_usdt = position_amount_usdt * leverage
             
             # Calculate position size in base currency
             position_size = position_amount_usdt / current_price
@@ -288,7 +355,23 @@ class AllocationService:
                 'volatility_multiplier': 0.75 if volatility > 0.03 else (1.15 if volatility < 0.01 else 1.0),
                 'take_profit_pct': risk_per_trade * 3,
                 'leverage': leverage,
-                'risk_per_trade': risk_per_trade
+                'risk_per_trade': risk_per_trade,
+                'allocation_context': {
+                    'confidence_multiplier': round(confidence_multiplier, 6),
+                    'regime_multiplier': round(regime_multiplier, 6),
+                    'trend_multiplier': round(trend_multiplier, 6),
+                    'volume_multiplier': round(volume_multiplier, 6),
+                    'exposure_multiplier': round(exposure_multiplier, 6),
+                    'performance_multiplier': round(performance_multiplier, 6),
+                    'quality_multiplier': round(quality_multiplier, 6),
+                    'market_regime': market_regime,
+                    'signal_side': signal_side,
+                    'trend_strength': trend_strength,
+                    'volume_ratio': volume_ratio,
+                    'active_position_count': active_position_count,
+                    'max_open_positions': max_open_positions,
+                    'symbol_performance': performance
+                }
             }
             
         except Exception as e:

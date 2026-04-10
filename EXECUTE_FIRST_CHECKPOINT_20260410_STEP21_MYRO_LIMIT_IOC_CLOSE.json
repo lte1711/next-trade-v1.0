@@ -1,0 +1,103 @@
+{
+  "started_at": "2026-04-10T11:19:57.055617+09:00",
+  "finished_at": "2026-04-10T11:20:20.843843+09:00",
+  "duration_sec": 23.788,
+  "mode": "myrousdt_limit_ioc_quality_close",
+  "active_symbols_before": [
+    "HIPPOUSDT",
+    "MYROUSDT",
+    "NEIROUSDT",
+    "REIUSDT",
+    "ZRCUSDT"
+  ],
+  "position_before": {
+    "symbol": "MYROUSDT",
+    "amount": -11690.0,
+    "entry_price": 0.00379,
+    "mark_price": 0.0,
+    "current_price": 0.00379,
+    "unrealized_pnl": 0.0,
+    "percentage": 0.0,
+    "side": "SHORT",
+    "strategy": "ma_trend_follow",
+    "entry_time": 1775783163815,
+    "signal_confidence": 0.6,
+    "stop_loss_pct": 0.03,
+    "take_profit_pct": 0.045,
+    "partial_tp_state": {},
+    "managed_stop_price": 0.0039,
+    "last_sync": 1775787618563
+  },
+  "attempt": {
+    "params": {
+      "symbol": "MYROUSDT",
+      "side": "BUY",
+      "type": "LIMIT",
+      "timeInForce": "IOC",
+      "quantity": "11690",
+      "price": "0.0038200",
+      "reduceOnly": "true",
+      "timestamp": 1775787617706,
+      "recvWindow": 5000
+    },
+    "status_code": 400,
+    "response_text": "{\"code\":-4016,\"msg\":\"Limit price can't be higher than 0.0037909.\"}"
+  },
+  "result_payload": null,
+  "processed": null,
+  "active_symbols_after": [
+    "HIPPOUSDT",
+    "MYROUSDT",
+    "NEIROUSDT",
+    "REIUSDT",
+    "ZRCUSDT"
+  ],
+  "pending_orders": [
+    {
+      "symbol": "AKEUSDT",
+      "side": "SELL",
+      "status": "NEW",
+      "order_id": 129031414,
+      "reduce_only": true,
+      "executed_qty": 0.0,
+      "quantity": 876.0,
+      "exit_reason": "partial_tp_level_1"
+    },
+    {
+      "symbol": "AKEUSDT",
+      "side": "SELL",
+      "status": "NEW",
+      "order_id": 129031417,
+      "reduce_only": true,
+      "executed_qty": 0.0,
+      "quantity": 1753.0,
+      "exit_reason": "partial_tp_level_2"
+    },
+    {
+      "symbol": "AKEUSDT",
+      "side": "SELL",
+      "status": "NEW",
+      "order_id": 129031422,
+      "reduce_only": true,
+      "executed_qty": 0.0,
+      "quantity": 2629.0,
+      "exit_reason": "partial_tp_level_3"
+    },
+    {
+      "symbol": "FUNUSDT",
+      "side": "SELL",
+      "status": "NEW",
+      "order_id": 188542146,
+      "reduce_only": true,
+      "executed_qty": 0.0,
+      "quantity": 53624.0,
+      "exit_reason": "ema21_trailing"
+    }
+  ],
+  "system_errors_before": 0,
+  "system_errors_after": 0,
+  "new_system_errors": [],
+  "realized_pnl_journal_count_before": 21,
+  "realized_pnl_journal_count_after": 21,
+  "new_realized_pnl_events": []
+}

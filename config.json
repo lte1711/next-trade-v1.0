@@ -7,7 +7,7 @@
   "binance_execution_mode": "testnet",
   "binance_probe_mode": "enabled",
   "trading_config": {
-    "max_open_positions": 5,
+    "max_open_positions": 10,
     "fast_entry_enabled": true,
     "partial_tp1_pct": 0.8,
     "fast_tp1_pct": 0.5,

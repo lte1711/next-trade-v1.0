@@ -1,0 +1,156 @@
+{
+  "generated_at": "2026-04-09T15:38:29.837687+09:00",
+  "environment": "https://demo-fapi.binance.com",
+  "success": true,
+  "failed_phases": [],
+  "phases": [
+    {
+      "name": "initialization",
+      "status": "passed",
+      "started_at": "2026-04-09T15:38:29.837687+09:00",
+      "finished_at": "2026-04-09T15:38:49.614266+09:00",
+      "summary": "Runtime initialized successfully.",
+      "details": {
+        "initialized": true,
+        "base_url": "https://demo-fapi.binance.com",
+        "capital": 8547.51692817,
+        "valid_symbol_count": 50,
+        "active_strategies": [
+          "ma_trend_follow",
+          "ema_crossover"
+        ],
+        "system_errors": 0
+      },
+      "errors": []
+    },
+    {
+      "name": "trading_cycle",
+      "status": "passed",
+      "started_at": "2026-04-09T15:38:49.614266+09:00",
+      "finished_at": "2026-04-09T15:39:07.506555+09:00",
+      "summary": "Cycle completed with 20 signals and 0 trades.",
+      "details": {
+        "start_time": 1775716729614,
+        "symbols_analyzed": 10,
+        "strategies_active": 2,
+        "signals_generated": 20,
+        "trades_executed": 0,
+        "errors": [],
+        "diagnostics": [],
+        "diagnostic_summary": {
+          "total_signals": 20,
+          "buy_signals": 0,
+          "sell_signals": 0,
+          "hold_signals": 20,
+          "high_confidence_signals": 0,
+          "average_confidence": 0.0,
+          "regime_distribution": {
+            "HIGH_VOLATILITY": 4,
+            "RANGING": 14,
+            "BEAR_TREND": 2
+          },
+          "top_candidates": []
+        },
+        "end_time": 1775716747504,
+        "duration_ms": 17890
+      },
+      "errors": []
+    },
+    {
+      "name": "order_status_polling",
+      "status": "passed",
+      "started_at": "2026-04-09T15:39:07.506555+09:00",
+      "finished_at": "2026-04-09T15:39:11.036545+09:00",
+      "summary": "Known order polling and cancel flow succeeded.",
+      "details": {
+        "symbol": "BTCUSDT",
+        "order_id": 13025416726,
+        "placement_status": "NEW",
+        "polled_status": "NEW",
+        "cancelled": true,
+        "final_status": "CANCELED"
+      },
+      "errors": []
+    },
+    {
+      "name": "protective_orders_and_reduce_only_close",
+      "status": "passed",
+      "started_at": "2026-04-09T15:39:11.036545+09:00",
+      "finished_at": "2026-04-09T15:39:22.672568+09:00",
+      "summary": "Protective algo orders and reduce-only close path succeeded.",
+      "details": {
+        "cleanup_before": {
+          "had_position": false,
+          "closed": true
+        },
+        "entry_order_id": 13025416750,
+        "entry_status": "FILLED",
+        "stop_algo_id": 1000000044927799,
+        "take_algo_id": 1000000044927809,
+        "open_algo_order_count": 2,
+        "close_order_id": 13025416791,
+        "close_status": "FILLED",
+        "reduce_only_recorded": true,
+        "remaining_open_algo_orders": 0
+      },
+      "errors": []
+    },
+    {
+      "name": "background_probe",
+      "status": "passed",
+      "started_at": "2026-04-09T15:39:26.028656+09:00",
+      "finished_at": "2026-04-09T15:44:46.157679+09:00",
+      "summary": "Background probe completed 3 cycles with no phase errors.",
+      "details": {
+        "started_at": "2026-04-09T15:39:26.362918+09:00",
+        "pid": 5152,
+        "status": "completed",
+        "cycles": [
+          {
+            "cycle_no": 1,
+            "duration_sec": 91.285,
+            "signals_generated": 20,
+            "trades_executed": 0,
+            "errors": []
+          },
+          {
+            "cycle_no": 2,
+            "duration_sec": 93.841,
+            "signals_generated": 20,
+            "trades_executed": 0,
+            "errors": []
+          },
+          {
+            "cycle_no": 3,
+            "duration_sec": 93.473,
+            "signals_generated": 20,
+            "trades_executed": 0,
+            "errors": []
+          }
+        ],
+        "errors": [],
+        "initialized": true,
+        "base_url": "https://demo-fapi.binance.com",
+        "valid_symbol_count": 50,
+        "active_strategies": [
+          "ma_trend_follow",
+          "ema_crossover"
+        ],
+        "completed_at": "2026-04-09T15:44:44.585405+09:00",
+        "system_errors": 0,
+        "active_positions": 0,
+        "pending_trades": 0,
+        "real_orders": 0
+      },
+      "errors": []
+    }
+  ],
+  "next_evolution_targets": [
+    "Run a longer supervised demo session to capture multi-hour runtime behavior.",
+    "Exercise more real non-HOLD trading scenarios to validate broader strategy behavior.",
+    "Unify partial take profit stop tracking with trading_results managed_stop_prices."
+  ],
+  "notes": [
+    "Final system_errors count during suite runtime: 0"
+  ]
+}

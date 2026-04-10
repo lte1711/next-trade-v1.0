@@ -1,0 +1,349 @@
+{
+  "started_at": "2026-04-10T10:59:40.936941+09:00",
+  "finished_at": "2026-04-10T11:01:57.738048+09:00",
+  "duration_sec": 136.801,
+  "evolution_step": "dynamic_risk_allocation_v1",
+  "signals_generated": 20,
+  "trades_executed": 0,
+  "errors": [],
+  "skips": [
+    "Candidate skipped for AKEUSDT: already active or pending",
+    "Candidate skipped for HIPPOUSDT: already active or pending",
+    "Candidate skipped for ZRCUSDT: already active or pending",
+    "Candidate skipped for REIUSDT: already active or pending",
+    "Candidate skipped for NEIROUSDT: already active or pending",
+    "Candidate skipped for FUNUSDT: already active or pending"
+  ],
+  "system_errors_before": 0,
+  "system_errors_after": 0,
+  "new_system_errors": [],
+  "available_balance_before": 8530.46992462,
+  "available_balance_after": 8530.46992462,
+  "total_balance_before": 2989.92216025,
+  "total_balance_after": 2989.92216025,
+  "active_symbols_before": [
+    "AKEUSDT",
+    "FUNUSDT",
+    "HIPPOUSDT",
+    "MYROUSDT",
+    "NEIROUSDT",
+    "REIUSDT",
+    "ZRCUSDT"
+  ],
+  "active_symbols_after": [
+    "AKEUSDT",
+    "HIPPOUSDT",
+    "MYROUSDT",
+    "NEIROUSDT",
+    "REIUSDT",
+    "ZRCUSDT"
+  ],
+  "active_position_count_before": 7,
+  "active_position_count_after": 6,
+  "new_position_contexts": {},
+  "new_order_allocation_metadata": [
+    {
+      "symbol": "AKEUSDT",
+      "side": "SELL",
+      "status": "NEW",
+      "order_id": 129029599,
+      "reduce_only": true,
+      "position_amount_usdt": null,
+      "risk_amount_usdt": null,
+      "allocation_context": null
+    },
+    {
+      "symbol": "FUNUSDT",
+      "side": "SELL",
+      "status": "NEW",
+      "order_id": 188540258,
+      "reduce_only": true,
+      "position_amount_usdt": null,
+      "risk_amount_usdt": null,
+      "allocation_context": null
+    }
+  ],
+  "pending_after": [
+    {
+      "symbol": "AKEUSDT",
+      "side": "SELL",
+      "status": "NEW",
+      "order_id": 129029599,
+      "reduce_only": true,
+      "executed_qty": 0.0,
+      "quantity": 4674.0,
+      "exit_reason": "partial_tp_level_1"
+    },
+    {
+      "symbol": "FUNUSDT",
+      "side": "SELL",
+      "status": "NEW",
+      "order_id": 188540258,
+      "reduce_only": true,
+      "executed_qty": 0.0,
+      "quantity": 32629.0,
+      "exit_reason": "ema21_trailing"
+    }
+  ],
+  "coverage_after": {
+    "HIPPOUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1,
+      "orders": [
+        [
+          null,
+          "STOP_MARKET",
+          "BUY",
+          null,
+          "0.0002010"
+        ],
+        [
+          null,
+          "TAKE_PROFIT_MARKET",
+          "BUY",
+          null,
+          "0.0001890"
+        ]
+      ]
+    },
+    "AKEUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1,
+      "orders": [
+        [
+          null,
+          "STOP_MARKET",
+          "SELL",
+          null,
+          "0.0003478"
+        ],
+        [
+          null,
+          "TAKE_PROFIT_MARKET",
+          "SELL",
+          null,
+          "0.0004252"
+        ]
+      ]
+    },
+    "NEIROUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1,
+      "orders": [
+        [
+          null,
+          "STOP_MARKET",
+          "BUY",
+          null,
+          "0.00006440"
+        ],
+        [
+          null,
+          "TAKE_PROFIT_MARKET",
+          "BUY",
+          null,
+          "0.00005260"
+        ]
+      ]
+    },
+    "REIUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1,
+      "orders": [
+        [
+          null,
+          "STOP_MARKET",
+          "SELL",
+          null,
+          "0.0035900"
+        ],
+        [
+          null,
+          "TAKE_PROFIT_MARKET",
+          "SELL",
+          null,
+          "0.0043800"
+        ]
+      ]
+    },
+    "ZRCUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1,
+      "orders": [
+        [
+          null,
+          "STOP_MARKET",
+          "SELL",
+          null,
+          "0.0016200"
+        ],
+        [
+          null,
+          "TAKE_PROFIT_MARKET",
+          "SELL",
+          null,
+          "0.0019800"
+        ]
+      ]
+    },
+    "MYROUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1,
+      "orders": [
+        [
+          null,
+          "STOP_MARKET",
+          "BUY",
+          null,
+          "0.0038700"
+        ],
+        [
+          null,
+          "TAKE_PROFIT_MARKET",
+          "BUY",
+          null,
+          "0.0036300"
+        ]
+      ]
+    }
+  },
+  "unprotected_symbols": [],
+  "realized_pnl_journal_count_before": 15,
+  "realized_pnl_journal_count_after": 17,
+  "new_realized_pnl_events": [
+    {
+      "timestamp": "2026-04-10T10:51:58.642009",
+      "order_id": 129027422,
+      "symbol": "AKEUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0003872,
+      "exit_price": 0.0003983,
+      "executed_qty": 18694.0,
+      "realized_pnl": 0.20750339999999998,
+      "exit_reason": "partial_tp_level_1"
+    },
+    {
+      "timestamp": "2026-04-10T10:52:00.356480",
+      "order_id": 129027427,
+      "symbol": "AKEUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0003872,
+      "exit_price": 0.0003983,
+      "executed_qty": 37389.0,
+      "realized_pnl": 0.41501789999999994,
+      "exit_reason": "partial_tp_level_2"
+    }
+  ],
+  "diagnostic_summary": {
+    "total_signals": 20,
+    "buy_signals": 8,
+    "sell_signals": 4,
+    "hold_signals": 8,
+    "high_confidence_signals": 8,
+    "average_confidence": 0.46746999999999994,
+    "regime_distribution": {
+      "RANGING": 16,
+      "BULL_TREND": 4
+    },
+    "top_candidates": [
+      {
+        "symbol": "AKEUSDT",
+        "signal": "BUY",
+        "confidence": 0.9137,
+        "reason": "Price 5.66% above SMA with volume and volume present",
+        "market_regime": "BULL_TREND",
+        "trend_strength": 54.55343810596956,
+        "volume_ratio": 2.1709451491873284
+      },
+      {
+        "symbol": "FUNUSDT",
+        "signal": "BUY",
+        "confidence": 0.8993,
+        "reason": "Price 2.38% above SMA with volume and volume present",
+        "market_regime": "BULL_TREND",
+        "trend_strength": 50.37922459970086,
+        "volume_ratio": 0.00035079493746982006
+      },
+      {
+        "symbol": "NEIROUSDT",
+        "signal": "SELL",
+        "confidence": 0.8761,
+        "reason": "Price -1.15% below SMA with volume and volume present",
+        "market_regime": "RANGING",
+        "trend_strength": 18.092256697019177,
+        "volume_ratio": 1.4515171900527604
+      },
+      {
+        "symbol": "HIPPOUSDT",
+        "signal": "SELL",
+        "confidence": 0.84,
+        "reason": "Price -1.35% below SMA with volume and volume present",
+        "market_regime": "RANGING",
+        "trend_strength": 23.36095543820739,
+        "volume_ratio": 6.7147839798772204e-06
+      }
+    ],
+    "hold_reasons": {
+      "No signal conditions met": 8
+    },
+    "closest_to_entry": [
+      {
+        "symbol": "EPTUSDT",
+        "signal": "HOLD",
+        "confidence": 0.0,
+        "reason": "No signal conditions met",
+        "price_vs_sma_pct": -0.07858987313349851,
+        "distance_to_entry_pct": 0.021410126866501497,
+        "market_regime": "RANGING",
+        "trend_strength": 6.975955358704698,
+        "volume_ratio": 0.0070015997799277585
+      },
+      {
+        "symbol": "REIUSDT",
+        "signal": "BUY",
+        "confidence": 0.5619,
+        "reason": "Price 0.15% above SMA with volume and volume present",
+        "price_vs_sma_pct": 0.15060240963855245,
+        "distance_to_entry_pct": 0.05060240963855245,
+        "market_regime": "RANGING",
+        "trend_strength": 9.18198960894409,
+        "volume_ratio": 0.018820758809987223
+      },
+      {
+        "symbol": "PORT3USDT",
+        "signal": "HOLD",
+        "confidence": 0.0,
+        "reason": "No signal conditions met",
+        "price_vs_sma_pct": 0.026961445133451035,
+        "distance_to_entry_pct": 0.07303855486654898,
+        "market_regime": "RANGING",
+        "trend_strength": 6.138154991913962,
+        "volume_ratio": 0.01893272318942431
+      },
+      {
+        "symbol": "MYROUSDT",
+        "signal": "HOLD",
+        "confidence": 0.0,
+        "reason": "No signal conditions met",
+        "price_vs_sma_pct": -1.1442766991931444e-14,
+        "distance_to_entry_pct": 0.09999999999998856,
+        "market_regime": "RANGING",
+        "trend_strength": 7.667605140298804,
+        "volume_ratio": 0.020293347239571522
+      },
+      {
+        "symbol": "DMCUSDT",
+        "signal": "HOLD",
+        "confidence": 0.0,
+        "reason": "No signal conditions met",
+        "price_vs_sma_pct": 0.0,
+        "distance_to_entry_pct": 0.1,
+        "market_regime": "RANGING",
+        "trend_strength": 0.0,
+        "volume_ratio": 0.9837015960294964
+      }
+    ]
+  }
+}

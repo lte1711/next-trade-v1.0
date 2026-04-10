@@ -1,0 +1,61 @@
+{
+  "started_at": "2026-04-09T14:54:41.317047+09:00",
+  "completed_at": "2026-04-09T15:11:52.786491+09:00",
+  "status": "completed",
+  "runs": [
+    {
+      "command": "binance_testnet_validation_suite.py",
+      "started_at": "2026-04-09T14:54:41.317047+09:00",
+      "completed_at": "2026-04-09T15:00:58.549509+09:00",
+      "exit_code": 0,
+      "status": "passed",
+      "duration_sec": 377.232,
+      "stdout_tail": "en_algo_order_count\": 2,\n        \"close_order_id\": 13025394601,\n        \"close_status\": \"FILLED\",\n        \"reduce_only_recorded\": true,\n        \"remaining_open_algo_orders\": 0\n      },\n      \"errors\": []\n    },\n    {\n      \"name\": \"background_probe\",\n      \"status\": \"passed\",\n      \"started_at\": \"2026-04-09T14:55:38.375752+09:00\",\n      \"finished_at\": \"2026-04-09T15:00:58.523139+09:00\",\n      \"summary\": \"Background probe completed 3 cycles with no phase errors.\",\n      \"details\": {\n        \"started_at\": \"2026-04-09T14:55:38.707748+09:00\",\n        \"pid\": 3552,\n        \"status\": \"completed\",\n        \"cycles\": [\n          {\n            \"cycle_no\": 1,\n            \"duration_sec\": 91.202,\n            \"signals_generated\": 20,\n            \"trades_executed\": 0,\n            \"errors\": []\n          },\n          {\n            \"cycle_no\": 2,\n            \"duration_sec\": 93.796,\n            \"signals_generated\": 20,\n            \"trades_executed\": 0,\n            \"errors\": []\n          },\n          {\n            \"cycle_no\": 3,\n            \"duration_sec\": 93.651,\n            \"signals_generated\": 20,\n            \"trades_executed\": 0,\n            \"errors\": []\n          }\n        ],\n        \"errors\": [],\n        \"initialized\": true,\n        \"base_url\": \"https://demo-fapi.binance.com\",\n        \"valid_symbol_count\": 50,\n        \"active_strategies\": [\n          \"ma_trend_follow\",\n          \"ema_crossover\"\n        ],\n        \"completed_at\": \"2026-04-09T15:00:57.257076+09:00\",\n        \"system_errors\": 0,\n        \"active_positions\": 0,\n        \"pending_trades\": 0,\n        \"real_orders\": 0\n      },\n      \"errors\": []\n    }\n  ],\n  \"next_evolution_targets\": [\n    \"Run a longer supervised demo session to capture multi-hour runtime behavior.\",\n    \"Exercise more real non-HOLD trading scenarios to validate broader strategy behavior.\",\n    \"Unify partial take profit stop tracking with trading_results managed_stop_prices.\"\n  ],\n  \"notes\": [\n    \"Final system_errors count during suite runtime: 0\"\n  ]\n}\n"
+    },
+    {
+      "command": "supervised_long_session.py --cycles 4 --sleep-seconds 5",
+      "started_at": "2026-04-09T15:00:58.549509+09:00",
+      "completed_at": "2026-04-09T15:07:46.242223+09:00",
+      "exit_code": 0,
+      "status": "passed",
+      "duration_sec": 407.693,
+      "stdout_tail": "ty\": 0.015634300721920083,\n  \"volume\": 31658731.0,\n  \"ma_alignment\": {\n    \"fast_above_slow\": false,\n    \"ma_trend\": false\n  }\n}\n[SIGNAL_DIAGNOSTIC] {\n  \"timestamp\": 1775714866183,\n  \"symbol\": \"REIUSDT\",\n  \"strategy\": \"ema_crossover\",\n  \"signal\": \"HOLD\",\n  \"confidence\": 0.0,\n  \"reason\": \"Confidence below minimal threshold\",\n  \"current_price\": 0.00398,\n  \"market_regime\": \"RANGING\",\n  \"trend_strength\": 7.848722361634741,\n  \"volatility\": 0.0010030090270812028,\n  \"volume\": 11360423823.0,\n  \"ma_alignment\": {\n    \"fast_above_slow\": false,\n    \"ma_trend\": false\n  }\n}\n[SIGNAL_DIAGNOSTIC] {\n  \"timestamp\": 1775714866183,\n  \"symbol\": \"MYROUSDT\",\n  \"strategy\": \"ema_crossover\",\n  \"signal\": \"HOLD\",\n  \"confidence\": 0.0,\n  \"reason\": \"Confidence below minimal threshold\",\n  \"current_price\": 0.00379,\n  \"market_regime\": \"RANGING\",\n  \"trend_strength\": 10.904296667662601,\n  \"volatility\": 0.0010559662090813124,\n  \"volume\": 10395853929.0,\n  \"ma_alignment\": {\n    \"fast_above_slow\": false,\n    \"ma_trend\": false\n  }\n}\n[SIGNAL_DIAGNOSTIC] {\n  \"timestamp\": 1775714866186,\n  \"symbol\": \"TOSHIUSDT\",\n  \"strategy\": \"ema_crossover\",\n  \"signal\": \"HOLD\",\n  \"confidence\": 0.0,\n  \"reason\": \"Confidence below minimal threshold\",\n  \"current_price\": 0.0001748,\n  \"market_regime\": \"HIGH_VOLATILITY\",\n  \"trend_strength\": 23.346702528191337,\n  \"volatility\": 0.021116105742486152,\n  \"volume\": 8354649.0,\n  \"ma_alignment\": {\n    \"fast_above_slow\": false,\n    \"ma_trend\": false\n  }\n}\n[SIGNAL_DIAGNOSTIC] {\n  \"timestamp\": 1775714866187,\n  \"symbol\": \"AKEUSDT\",\n  \"strategy\": \"ema_crossover\",\n  \"signal\": \"HOLD\",\n  \"confidence\": 0.0,\n  \"reason\": \"Confidence below minimal threshold\",\n  \"current_price\": 0.0002377,\n  \"market_regime\": \"HIGH_VOLATILITY\",\n  \"trend_strength\": 23.892670208351014,\n  \"volatility\": 0.020517365983585882,\n  \"volume\": 641945870.0,\n  \"ma_alignment\": {\n    \"fast_above_slow\": false,\n    \"ma_trend\": false\n  }\n}\n[INFO] Cycle completed - Signals: 20, Trades: 0, Errors: 0\n[CYCLE] Signals: 20, Trades: 0, Errors: 0\n"
+    },
+    {
+      "command": "scenario_forced_entry_validation.py",
+      "started_at": "2026-04-09T15:07:46.243224+09:00",
+      "completed_at": "2026-04-09T15:08:43.763898+09:00",
+      "exit_code": 0,
+      "status": "passed",
+      "duration_sec": 57.521,
+      "stdout_tail": "[INFO] Loaded 50 dynamic symbols\n[INFO] Active strategies: ['ma_trend_follow', 'ema_crossover']\n[INFO] Trading system initialized\n[TRACE] PROTECTIVE_ORDER_SUBMIT | BTCUSDT | STOP_MARKET | price=69594.406\n[TRACE] PROTECTIVE_ORDER_SUBMIT | BTCUSDT | TAKE_PROFIT_MARKET | price=73855.288\n[CLOSE] ma_trend_follow | BTCUSDT | SELL | 0.0008 | NEW\n[INFO] Partial position closed for BTCUSDT: 50.0% (scenario_partial_close)\n[TRACE] PENDING_TO_FILLED | BTCUSDT | old=NEW | new=FILLED\n[TRACE] PROTECTIVE_ORDER_SUBMIT | BTCUSDT | STOP_MARKET | price=69594.406\n[TRACE] PROTECTIVE_ORDER_SUBMIT | BTCUSDT | TAKE_PROFIT_MARKET | price=73855.288\n[TRACE] PARTIAL_EXIT_CONFIRMED | BTCUSDT | remaining=0.0008\n[CLOSE] ma_trend_follow | BTCUSDT | SELL | 0.0008 | NEW\n[INFO] Position closed for BTCUSDT: scenario_final_cleanup\n[TRACE] FULL_EXIT_CONFIRMED | BTCUSDT\n"
+    },
+    {
+      "command": "multi_symbol_forced_lifecycle.py",
+      "started_at": "2026-04-09T15:08:43.763898+09:00",
+      "completed_at": "2026-04-09T15:10:40.699234+09:00",
+      "exit_code": 0,
+      "status": "passed",
+      "duration_sec": 116.935,
+      "stdout_tail": "DT | SELL | 0.0008 | NEW\n[INFO] Partial position closed for BTCUSDT: 50.0% (multi_symbol_partial_close)\n[TRACE] PENDING_TO_FILLED | BTCUSDT | old=NEW | new=FILLED\n[TRACE] PROTECTIVE_ORDER_SUBMIT | BTCUSDT | STOP_MARKET | price=69594.406\n[TRACE] PROTECTIVE_ORDER_SUBMIT | BTCUSDT | TAKE_PROFIT_MARKET | price=73855.288\n[TRACE] PARTIAL_EXIT_CONFIRMED | BTCUSDT | remaining=0.0008\n[CLOSE] ma_trend_follow | BTCUSDT | SELL | 0.0008 | NEW\n[INFO] Position closed for BTCUSDT: multi_symbol_final_cleanup\n[TRACE] FULL_EXIT_CONFIRMED | BTCUSDT\n[TRACE] PROTECTIVE_ORDER_SUBMIT | ETHUSDT | STOP_MARKET | price=2139.8594000000003\n[TRACE] PROTECTIVE_ORDER_SUBMIT | ETHUSDT | TAKE_PROFIT_MARKET | price=2270.8712000000005\n[CLOSE] ma_trend_follow | ETHUSDT | SELL | 0.005 | NEW\n[INFO] Partial position closed for ETHUSDT: 50.0% (multi_symbol_partial_close)\n[TRACE] PENDING_TO_FILLED | ETHUSDT | old=NEW | new=FILLED\n[TRACE] PROTECTIVE_ORDER_SUBMIT | ETHUSDT | STOP_MARKET | price=2139.8594000000003\n[TRACE] PROTECTIVE_ORDER_SUBMIT | ETHUSDT | TAKE_PROFIT_MARKET | price=2270.8712000000005\n[TRACE] PARTIAL_EXIT_CONFIRMED | ETHUSDT | remaining=0.006\n[CLOSE] ma_trend_follow | ETHUSDT | SELL | 0.006 | NEW\n[INFO] Position closed for ETHUSDT: multi_symbol_final_cleanup\n[TRACE] FULL_EXIT_CONFIRMED | ETHUSDT\n[TRACE] PROTECTIVE_ORDER_SUBMIT | BNBUSDT | STOP_MARKET | price=589.3524\n[TRACE] PROTECTIVE_ORDER_SUBMIT | BNBUSDT | TAKE_PROFIT_MARKET | price=625.4352\n[CLOSE] ma_trend_follow | BNBUSDT | SELL | 0.01 | NEW\n[INFO] Partial position closed for BNBUSDT: 50.0% (multi_symbol_partial_close)\n[TRACE] PENDING_TO_FILLED | BNBUSDT | old=NEW | new=FILLED\n[TRACE] PROTECTIVE_ORDER_SUBMIT | BNBUSDT | STOP_MARKET | price=589.3524\n[TRACE] PROTECTIVE_ORDER_SUBMIT | BNBUSDT | TAKE_PROFIT_MARKET | price=625.4352\n[TRACE] PARTIAL_EXIT_CONFIRMED | BNBUSDT | remaining=0.01\n[CLOSE] ma_trend_follow | BNBUSDT | SELL | 0.01 | NEW\n[INFO] Position closed for BNBUSDT: multi_symbol_final_cleanup\n[TRACE] FULL_EXIT_CONFIRMED | BNBUSDT\n"
+    },
+    {
+      "command": "short_bias_and_partial_tp_probe.py",
+      "started_at": "2026-04-09T15:10:40.700234+09:00",
+      "completed_at": "2026-04-09T15:11:32.452708+09:00",
+      "exit_code": 0,
+      "status": "passed",
+      "duration_sec": 51.752,
+      "stdout_tail": "[INFO] Loaded 50 dynamic symbols\n[INFO] Active strategies: ['ma_trend_follow', 'ema_crossover']\n[INFO] Trading system initialized\n[TRACE] PROTECTIVE_ORDER_SUBMIT | BTCUSDT | STOP_MARKET | price=72406.63799999999\n[TRACE] PROTECTIVE_ORDER_SUBMIT | BTCUSDT | TAKE_PROFIT_MARKET | price=68147.424\n[CLOSE] ma_trend_follow | BTCUSDT | BUY | 0.0008 | NEW\n[INFO] Partial position closed for BTCUSDT: 50.0% (short_bias_partial_close)\n[TRACE] PENDING_TO_FILLED | BTCUSDT | old=NEW | new=FILLED\n[TRACE] PROTECTIVE_ORDER_SUBMIT | BTCUSDT | STOP_MARKET | price=72406.63799999999\n[TRACE] PROTECTIVE_ORDER_SUBMIT | BTCUSDT | TAKE_PROFIT_MARKET | price=68147.424\n[TRACE] PARTIAL_EXIT_CONFIRMED | BTCUSDT | remaining=-0.0008\n[CLOSE] ma_trend_follow | BTCUSDT | BUY | 0.0008 | NEW\n[INFO] Position closed for BTCUSDT: short_bias_final_cleanup\n[TRACE] FULL_EXIT_CONFIRMED | BTCUSDT\n[PARTIAL_CLOSE] SIM_LONG_A | TP1 | SELL | 1.0 | ratio=0.5\n[PARTIAL_CLOSE] SIM_LONG_FAST | FAST_TP1 | SELL | 1.0 | ratio=0.5\n[PARTIAL_CLOSE] SIM_SHORT_A | TP1 | BUY | 1.5 | ratio=0.5\n[PARTIAL_CLOSE] SIM_SHORT_FAST | FAST_TP1 | BUY | 1.5 | ratio=0.5\n"
+    },
+    {
+      "command": "trailing_stop_probe.py",
+      "started_at": "2026-04-09T15:11:32.453707+09:00",
+      "completed_at": "2026-04-09T15:11:52.785492+09:00",
+      "exit_code": 0,
+      "status": "passed",
+      "duration_sec": 20.332,
+      "stdout_tail": "[INFO] Loaded 50 dynamic symbols\n[INFO] Active strategies: ['ma_trend_follow', 'ema_crossover']\n[INFO] Trading system initialized\n[TRAILING_STOP] TRAIL_LONG | LONG | 101.97\n[TRAILING_STOP] TRAIL_SHORT | SHORT | 97.97\n"
+    }
+  ]
+}

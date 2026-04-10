@@ -1,0 +1,174 @@
+{
+  "started_at": "2026-04-10T11:39:40.742287+09:00",
+  "finished_at": "2026-04-10T11:40:07.491926+09:00",
+  "duration_sec": 26.75,
+  "mode": "step26_reduce_only_fill_reconciliation",
+  "source_path": "EXECUTE_FIRST_CHECKPOINT_20260410_STEP26_STRICT_HOLD_CLOSE_ALL.json",
+  "injected_order_count": 2,
+  "injected_orders": [
+    {
+      "strategy": "ma_trend_follow",
+      "symbol": "NEIROUSDT",
+      "side": "BUY",
+      "quantity": 657812.0,
+      "price": 5.87e-05,
+      "status": "FILLED",
+      "order_id": 75877349,
+      "executed_qty": 657812.0,
+      "timestamp": "2026-04-10T11:34:05.451750+09:00",
+      "type": "ACTUAL_TRADE",
+      "market_regime": {},
+      "strategy_signal": "BUY",
+      "position_type": "LONG",
+      "reduce_only": true,
+      "entry_price": 5.84e-05,
+      "exit_reason": "strict_hold_quality_filter",
+      "reconciliation_source": "EXECUTE_FIRST_CHECKPOINT_20260410_STEP26_STRICT_HOLD_CLOSE_ALL.json",
+      "exchange_update_time": 1775788426435,
+      "realized_pnl": -0.19734359999999587
+    },
+    {
+      "strategy": "ma_trend_follow",
+      "symbol": "ZRCUSDT",
+      "side": "SELL",
+      "quantity": 24549.0,
+      "price": 0.00179,
+      "status": "FILLED",
+      "order_id": 97201739,
+      "executed_qty": 24549.0,
+      "timestamp": "2026-04-10T11:34:05.451750+09:00",
+      "type": "ACTUAL_TRADE",
+      "market_regime": {},
+      "strategy_signal": "SELL",
+      "position_type": "SHORT",
+      "reduce_only": true,
+      "entry_price": 0.0018,
+      "exit_reason": "strict_hold_quality_filter",
+      "reconciliation_source": "EXECUTE_FIRST_CHECKPOINT_20260410_STEP26_STRICT_HOLD_CLOSE_ALL.json",
+      "exchange_update_time": 1775788428979,
+      "realized_pnl": -0.24549000000000065
+    }
+  ],
+  "reconciliation_summary": {
+    "checked": 6,
+    "filled": 6,
+    "terminal": 0,
+    "errors": [],
+    "updated_orders": [
+      {
+        "symbol": "AKEUSDT",
+        "order_id": 129031414,
+        "status": "FILLED",
+        "realized_pnl": 0.024440400000000025
+      },
+      {
+        "symbol": "AKEUSDT",
+        "order_id": 129031417,
+        "status": "FILLED",
+        "realized_pnl": 0.04890870000000005
+      },
+      {
+        "symbol": "AKEUSDT",
+        "order_id": 129031422,
+        "status": "FILLED",
+        "realized_pnl": 0.024468300000000023
+      },
+      {
+        "symbol": "FUNUSDT",
+        "order_id": 188542146,
+        "status": "FILLED",
+        "realized_pnl": 0.4289919999999988
+      },
+      {
+        "symbol": "NEIROUSDT",
+        "order_id": 75877349,
+        "status": "FILLED",
+        "realized_pnl": -0.19734359999999587
+      },
+      {
+        "symbol": "ZRCUSDT",
+        "order_id": 97201739,
+        "status": "FILLED",
+        "realized_pnl": -0.24549000000000065
+      }
+    ]
+  },
+  "active_symbols_after_sync": [],
+  "realized_pnl_journal_count_before": 21,
+  "realized_pnl_journal_count_after": 27,
+  "new_realized_pnl_events": [
+    {
+      "timestamp": "2026-04-10T11:12:30.946711",
+      "order_id": 129031414,
+      "symbol": "AKEUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0003872,
+      "exit_price": 0.0004151,
+      "executed_qty": 876.0,
+      "realized_pnl": 0.024440400000000025,
+      "exit_reason": "partial_tp_level_1"
+    },
+    {
+      "timestamp": "2026-04-10T11:12:32.722989",
+      "order_id": 129031417,
+      "symbol": "AKEUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0003872,
+      "exit_price": 0.0004151,
+      "executed_qty": 1753.0,
+      "realized_pnl": 0.04890870000000005,
+      "exit_reason": "partial_tp_level_2"
+    },
+    {
+      "timestamp": "2026-04-10T11:12:34.362015",
+      "order_id": 129031422,
+      "symbol": "AKEUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0003872,
+      "exit_price": 0.0004151,
+      "executed_qty": 877.0,
+      "realized_pnl": 0.024468300000000023,
+      "exit_reason": "partial_tp_level_3"
+    },
+    {
+      "timestamp": "2026-04-10T11:12:36.138564",
+      "order_id": 188542146,
+      "symbol": "FUNUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.000887,
+      "exit_price": 0.000895,
+      "executed_qty": 53624.0,
+      "realized_pnl": 0.4289919999999988,
+      "exit_reason": "ema21_trailing"
+    },
+    {
+      "timestamp": "2026-04-10T11:34:05.451750+09:00",
+      "order_id": 75877349,
+      "symbol": "NEIROUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "BUY",
+      "entry_price": 5.84e-05,
+      "exit_price": 5.87e-05,
+      "executed_qty": 657812.0,
+      "realized_pnl": -0.19734359999999587,
+      "exit_reason": "strict_hold_quality_filter"
+    },
+    {
+      "timestamp": "2026-04-10T11:34:05.451750+09:00",
+      "order_id": 97201739,
+      "symbol": "ZRCUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 0.0018,
+      "exit_price": 0.00179,
+      "executed_qty": 24549.0,
+      "realized_pnl": -0.24549000000000065,
+      "exit_reason": "strict_hold_quality_filter"
+    }
+  ],
+  "system_errors": []
+}

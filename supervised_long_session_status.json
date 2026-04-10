@@ -1,0 +1,90 @@
+{
+  "started_at": "2026-04-09T15:44:46.498978+09:00",
+  "completed_at": "2026-04-09T15:51:41.588423+09:00",
+  "pid": 12976,
+  "status": "completed",
+  "requested_cycles": 4,
+  "completed_cycles": 4,
+  "sleep_seconds": 5,
+  "errors": [],
+  "cycles": [
+    {
+      "cycle_no": 1,
+      "started_at": "2026-04-09T15:45:06.470072+09:00",
+      "finished_at": "2026-04-09T15:46:36.782273+09:00",
+      "duration_sec": 90.312,
+      "signals_generated": 20,
+      "trades_executed": 0,
+      "errors": [],
+      "available_balance": 8547.47136124,
+      "active_positions": 0,
+      "pending_trades": 0,
+      "real_orders": 0,
+      "system_errors": 0
+    },
+    {
+      "cycle_no": 2,
+      "started_at": "2026-04-09T15:46:41.783199+09:00",
+      "finished_at": "2026-04-09T15:48:15.003160+09:00",
+      "duration_sec": 93.22,
+      "signals_generated": 20,
+      "trades_executed": 0,
+      "errors": [],
+      "available_balance": 8547.60040333,
+      "active_positions": 0,
+      "pending_trades": 0,
+      "real_orders": 0,
+      "system_errors": 0
+    },
+    {
+      "cycle_no": 3,
+      "started_at": "2026-04-09T15:48:20.004107+09:00",
+      "finished_at": "2026-04-09T15:49:52.731117+09:00",
+      "duration_sec": 92.727,
+      "signals_generated": 20,
+      "trades_executed": 0,
+      "errors": [],
+      "available_balance": 8547.67258542,
+      "active_positions": 0,
+      "pending_trades": 0,
+      "real_orders": 0,
+      "system_errors": 0
+    },
+    {
+      "cycle_no": 4,
+      "started_at": "2026-04-09T15:49:57.732239+09:00",
+      "finished_at": "2026-04-09T15:51:41.588423+09:00",
+      "duration_sec": 103.856,
+      "signals_generated": 20,
+      "trades_executed": 0,
+      "errors": [],
+      "available_balance": 8547.66256645,
+      "active_positions": 0,
+      "pending_trades": 0,
+      "real_orders": 0,
+      "system_errors": 0
+    }
+  ],
+  "aggregate": {
+    "signals_generated": 80,
+    "trades_executed": 0,
+    "cycles_with_errors": 0,
+    "max_active_positions": 0,
+    "max_pending_trades": 0
+  },
+  "next_evolution_targets": [
+    "Extend to a multi-hour supervised session with the same evidence format.",
+    "Induce more real non-HOLD trading scenarios to validate entry/exit diversity.",
+    "Add targeted scenario tests that force active position state transitions."
+  ],
+  "initialized": true,
+  "base_url": "https://demo-fapi.binance.com",
+  "valid_symbol_count": 50,
+  "active_strategies": [
+    "ma_trend_follow",
+    "ema_crossover"
+  ],
+  "starting_balance": 8547.47136124,
+  "ending_balance": 8547.66256645,
+  "system_errors": 0
+}

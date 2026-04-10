@@ -1,5 +1,23 @@
 # Main Runtime Live Deployment Checklist
 
+Status Snapshot Date: 2026-04-09
+Validated Environment: `https://demo-fapi.binance.com`
+
+## Current Status
+- `PASS` Configuration validation
+- `PASS` Startup validation
+- `PASS` Connectivity validation
+- `PASS` Strategy safety validation
+- `PASS` Position safety validation
+- `PASS` Operational logging validation
+- `PASS` Short supervised smoke run
+- `PASS` Background supervised probe
+- `PASS` Known order status polling
+- `PASS` Protective algo order placement
+- `PASS` Reduce-only close path
+- `PASS` Monitor/stop helper script repair
+- `GO` for supervised demo-environment operation
+
 ## Configuration
 - Verify `.env` or `config.json` contains valid Binance API credentials.
 - Confirm `base_url` matches the intended environment.
@@ -45,3 +63,7 @@
 ## Go / No-Go
 - Go live only if startup validation, connectivity, strategy safety, and smoke run all pass.
 - Do not go live if runtime initialization fails, account sync fails, or order status polling is inconsistent.
+
+## Result
+- Current result on 2026-04-09: `GO` for supervised demo runtime.
+- Current result on 2026-04-09: production futures endpoint was not validated in this checklist.

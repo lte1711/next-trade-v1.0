@@ -1,0 +1,192 @@
+{
+  "symbol": "BNBUSDT",
+  "status": "passed",
+  "started_at": "2026-04-09T15:54:03.466816+09:00",
+  "steps": [
+    {
+      "name": "entry_fill",
+      "status": "passed",
+      "summary": "Entry order filled.",
+      "details": {},
+      "errors": [],
+      "timestamp": "2026-04-09T15:54:09.619413+09:00"
+    },
+    {
+      "name": "protective_orders",
+      "status": "passed",
+      "summary": "Protective orders placed.",
+      "details": {},
+      "errors": [],
+      "timestamp": "2026-04-09T15:54:15.053823+09:00"
+    },
+    {
+      "name": "partial_state_mark",
+      "status": "passed",
+      "summary": "Partial TP state marked.",
+      "details": {},
+      "errors": [],
+      "timestamp": "2026-04-09T15:54:16.435512+09:00"
+    },
+    {
+      "name": "partial_close",
+      "status": "passed",
+      "summary": "Partial close completed.",
+      "details": {},
+      "errors": [],
+      "timestamp": "2026-04-09T15:54:28.022197+09:00"
+    },
+    {
+      "name": "full_close",
+      "status": "passed",
+      "summary": "Final close completed.",
+      "details": {},
+      "errors": [],
+      "timestamp": "2026-04-09T15:54:34.009305+09:00"
+    }
+  ],
+  "snapshots": [
+    {
+      "label": "before_entry",
+      "timestamp": "2026-04-09T15:54:06.131207+09:00",
+      "has_active_position": false,
+      "active_amount": 0.0,
+      "entry_price": 0.0,
+      "mark_price": 0.0,
+      "position_entry_time": null,
+      "managed_stop_price": null,
+      "open_algo_order_count": 0,
+      "open_algo_orders": [],
+      "partial_take_profit_state": {},
+      "pending_trade_count": 0,
+      "recently_closed": false
+    },
+    {
+      "label": "after_entry_fill",
+      "timestamp": "2026-04-09T15:54:10.921842+09:00",
+      "has_active_position": true,
+      "active_amount": 0.02,
+      "entry_price": 600.49,
+      "mark_price": 0.0,
+      "position_entry_time": "2026-04-09T15:54:08.967666+09:00",
+      "managed_stop_price": null,
+      "open_algo_order_count": 0,
+      "open_algo_orders": [],
+      "partial_take_profit_state": {},
+      "pending_trade_count": 0,
+      "recently_closed": false
+    },
+    {
+      "label": "after_protective_orders",
+      "timestamp": "2026-04-09T15:54:15.052824+09:00",
+      "has_active_position": true,
+      "active_amount": 0.02,
+      "entry_price": 600.49,
+      "mark_price": 0.0,
+      "position_entry_time": "2026-04-09T15:54:08.967666+09:00",
+      "managed_stop_price": 588.4802,
+      "open_algo_order_count": 2,
+      "open_algo_orders": [
+        {
+          "algoId": 1000000044933473,
+          "orderType": "STOP_MARKET",
+          "triggerPrice": "588.480"
+        },
+        {
+          "algoId": 1000000044933478,
+          "orderType": "TAKE_PROFIT_MARKET",
+          "triggerPrice": "624.510"
+        }
+      ],
+      "partial_take_profit_state": {},
+      "pending_trade_count": 0,
+      "recently_closed": false
+    },
+    {
+      "label": "after_partial_state_mark",
+      "timestamp": "2026-04-09T15:54:16.435512+09:00",
+      "has_active_position": true,
+      "active_amount": 0.02,
+      "entry_price": 600.49,
+      "mark_price": 0.0,
+      "position_entry_time": "2026-04-09T15:54:08.967666+09:00",
+      "managed_stop_price": 588.4802,
+      "open_algo_order_count": 2,
+      "open_algo_orders": [
+        {
+          "algoId": 1000000044933473,
+          "orderType": "STOP_MARKET",
+          "triggerPrice": "588.480"
+        },
+        {
+          "algoId": 1000000044933478,
+          "orderType": "TAKE_PROFIT_MARKET",
+          "triggerPrice": "624.510"
+        }
+      ],
+      "partial_take_profit_state": {
+        "tp1_done": true,
+        "tp2_done": false,
+        "fast_tp1_done": false,
+        "fast_tp2_done": false,
+        "last_partial_close_at": "2026-04-09T15:54:15.053823+09:00"
+      },
+      "pending_trade_count": 0,
+      "recently_closed": false
+    },
+    {
+      "label": "after_partial_close",
+      "timestamp": "2026-04-09T15:54:28.022197+09:00",
+      "has_active_position": true,
+      "active_amount": 0.01,
+      "entry_price": 600.49,
+      "mark_price": 0.0,
+      "position_entry_time": "2026-04-09T15:54:08.275416",
+      "managed_stop_price": 588.4802,
+      "open_algo_order_count": 2,
+      "open_algo_orders": [
+        {
+          "algoId": 1000000044933547,
+          "orderType": "STOP_MARKET",
+          "triggerPrice": "588.480"
+        },
+        {
+          "algoId": 1000000044933554,
+          "orderType": "TAKE_PROFIT_MARKET",
+          "triggerPrice": "624.510"
+        }
+      ],
+      "partial_take_profit_state": {
+        "tp1_done": true,
+        "tp2_done": false,
+        "fast_tp1_done": false,
+        "fast_tp2_done": false,
+        "last_partial_close_at": "2026-04-09T15:54:15.053823+09:00"
+      },
+      "pending_trade_count": 0,
+      "recently_closed": false
+    },
+    {
+      "label": "after_full_close",
+      "timestamp": "2026-04-09T15:54:34.009305+09:00",
+      "has_active_position": false,
+      "active_amount": 0.0,
+      "entry_price": 0.0,
+      "mark_price": 0.0,
+      "position_entry_time": null,
+      "managed_stop_price": null,
+      "open_algo_order_count": 0,
+      "open_algo_orders": [],
+      "partial_take_profit_state": {},
+      "pending_trade_count": 0,
+      "recently_closed": true
+    }
+  ],
+  "entry_order_id": 1334650208,
+  "partial_close_order_id": 1334650288,
+  "partial_close_status": "FILLED",
+  "final_close_order_id": 1334650319,
+  "final_close_status": "FILLED",
+  "recently_closed_after_full_close": true,
+  "protective_orders_after_entry": 2,
+  "completed_at": "2026-04-09T15:54:34.009305+09:00"
+}

@@ -1,0 +1,159 @@
+{
+  "started_at": "2026-04-10T11:21:03.267591+09:00",
+  "finished_at": "2026-04-10T11:21:38.981936+09:00",
+  "duration_sec": 35.714,
+  "mode": "myrousdt_limit_gtc_quality_close_order",
+  "active_symbols_before": [
+    "HIPPOUSDT",
+    "MYROUSDT",
+    "NEIROUSDT",
+    "REIUSDT",
+    "ZRCUSDT"
+  ],
+  "position_before": {
+    "symbol": "MYROUSDT",
+    "amount": -11690.0,
+    "entry_price": 0.00379,
+    "mark_price": 0.0,
+    "current_price": 0.00379,
+    "unrealized_pnl": 0.0,
+    "percentage": 0.0,
+    "side": "SHORT",
+    "strategy": "ma_trend_follow",
+    "entry_time": 1775783163815,
+    "signal_confidence": 0.6,
+    "stop_loss_pct": 0.03,
+    "take_profit_pct": 0.045,
+    "partial_tp_state": {},
+    "managed_stop_price": 0.0039,
+    "last_sync": 1775787691229
+  },
+  "attempt": {
+    "mark_price": 0.00361038,
+    "upper_bound": 0.003790899,
+    "params": {
+      "symbol": "MYROUSDT",
+      "side": "BUY",
+      "type": "LIMIT",
+      "timeInForce": "GTC",
+      "quantity": "11690",
+      "price": "0.0037900",
+      "reduceOnly": "true",
+      "timestamp": 1775787691163,
+      "recvWindow": 5000
+    },
+    "status_code": 200,
+    "response_text": "{\"orderId\":146485486,\"symbol\":\"MYROUSDT\",\"status\":\"NEW\",\"clientOrderId\":\"7fpS4SJP14DBpbDqIEtfXo\",\"price\":\"0.0037900\",\"avgPrice\":\"0.00\",\"origQty\":\"11690\",\"executedQty\":\"0\",\"cumQty\":\"0\",\"cumQuote\":\"0.0000000\",\"timeInForce\":\"GTC\",\"type\":\"LIMIT\",\"reduceOnly\":true,\"closePosition\":false,\"side\":\"BUY\",\"positionSide\":\"BOTH\",\"stopPrice\":\"0.0000000\",\"workingType\":\"CONTRACT_PRICE\",\"priceProtect\":false,\"origType\":\"LIMIT\",\"priceMatch\":\"NONE\",\"selfTradePreventionMode\":\"EXPIRE_MAKER\",\"goodTillDate\":0,\"updateTime\":1775787691607}"
+  },
+  "result_payload": {
+    "orderId": 146485486,
+    "symbol": "MYROUSDT",
+    "status": "NEW",
+    "clientOrderId": "7fpS4SJP14DBpbDqIEtfXo",
+    "price": "0.0037900",
+    "avgPrice": "0.00",
+    "origQty": "11690",
+    "executedQty": "0",
+    "cumQty": "0",
+    "cumQuote": "0.0000000",
+    "timeInForce": "GTC",
+    "type": "LIMIT",
+    "reduceOnly": true,
+    "closePosition": false,
+    "side": "BUY",
+    "positionSide": "BOTH",
+    "stopPrice": "0.0000000",
+    "workingType": "CONTRACT_PRICE",
+    "priceProtect": false,
+    "origType": "LIMIT",
+    "priceMatch": "NONE",
+    "selfTradePreventionMode": "EXPIRE_MAKER",
+    "goodTillDate": 0,
+    "updateTime": 1775787691607
+  },
+  "processed": {
+    "orderId": 146485486,
+    "symbol": "MYROUSDT",
+    "status": "NEW",
+    "clientOrderId": "7fpS4SJP14DBpbDqIEtfXo",
+    "price": "0.0037900",
+    "avgPrice": "0.00",
+    "origQty": "11690",
+    "executedQty": "0",
+    "cumQty": "0",
+    "cumQuote": "0.0000000",
+    "timeInForce": "GTC",
+    "type": "LIMIT",
+    "reduceOnly": true,
+    "closePosition": false,
+    "side": "BUY",
+    "positionSide": "BOTH",
+    "stopPrice": "0.0000000",
+    "workingType": "CONTRACT_PRICE",
+    "priceProtect": false,
+    "origType": "LIMIT",
+    "priceMatch": "NONE",
+    "selfTradePreventionMode": "EXPIRE_MAKER",
+    "goodTillDate": 0,
+    "updateTime": 1775787691607
+  },
+  "new_orders": [
+    {
+      "symbol": "MYROUSDT",
+      "side": "BUY",
+      "status": "NEW",
+      "order_id": 146485486,
+      "reduce_only": true,
+      "quantity": 11690.0,
+      "executed_qty": 0.0,
+      "exit_reason": "symbol_quality_filter_limit_gtc"
+    }
+  ],
+  "active_symbols_after": [
+    "HIPPOUSDT",
+    "MYROUSDT",
+    "NEIROUSDT",
+    "REIUSDT",
+    "ZRCUSDT"
+  ],
+  "pending_orders": [
+    {
+      "symbol": "MYROUSDT",
+      "side": "BUY",
+      "status": "NEW",
+      "order_id": 146485486,
+      "reduce_only": true,
+      "executed_qty": 0.0,
+      "quantity": 11690.0,
+      "exit_reason": "symbol_quality_filter_limit_gtc"
+    }
+  ],
+  "coverage": {
+    "HIPPOUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    },
+    "MYROUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    },
+    "NEIROUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    },
+    "REIUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    },
+    "ZRCUSDT": {
+      "stop_count": 1,
+      "take_profit_count": 1
+    }
+  },
+  "unprotected_symbols": [],
+  "system_errors_count": 0,
+  "recent_system_errors": [],
+  "realized_pnl_journal_count_before": 25,
+  "realized_pnl_journal_count_after": 25,
+  "new_realized_pnl_events": []
+}

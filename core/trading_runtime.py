@@ -58,7 +58,7 @@ class TradingRuntime:
         
         # Load trading configuration
         trading_config = config.get("trading_config", {})
-        self.max_open_positions = trading_config.get("max_open_positions", 5)
+        self.max_open_positions = trading_config.get("max_open_positions", 10)
         self.position_sync_interval = trading_config.get("position_sync_interval", 5)
         self.position_limit_check = trading_config.get("position_limit_check", True)
         self.excess_position_close = trading_config.get("excess_position_close", True)
@@ -325,6 +325,10 @@ class TradingRuntime:
     def get_order_status(self, symbol, order_id):
         """Get order status"""
         return self.order_executor.get_order_status(symbol, order_id)
+
+    def cancel_order(self, symbol, order_id):
+        """Cancel a standard futures order"""
+        return self.order_executor.cancel_order(symbol, order_id)
     
     def clear_position_management_state(self, symbol):
         """Clear position management state"""
@@ -335,6 +339,8 @@ class TradingRuntime:
                 del self.trading_results["managed_stop_prices"][symbol]
             if symbol in self.position_entry_times:
                 del self.position_entry_times[symbol]
+            if hasattr(self, "partial_take_profit_manager"):
+                self.partial_take_profit_manager.clear_position_management_state(symbol)
         except Exception as e:
             self.log_system_error("clear_position_state", str(e))
     

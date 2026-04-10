@@ -1,0 +1,178 @@
+{
+  "started_at": "2026-04-09T18:32:25.576276+09:00",
+  "finished_at": "2026-04-09T18:34:40.569404+09:00",
+  "duration_sec": 134.993,
+  "initialized": true,
+  "base_url": "https://demo-fapi.binance.com",
+  "signals_generated": 20,
+  "trades_executed": 1,
+  "errors": [],
+  "skips": [
+    "Trade skipped for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+    "Trade skipped for AKEUSDT: Duplicate entry prevented: AKEUSDT already has active or pending trade"
+  ],
+  "system_errors": 0,
+  "available_balance_before": 8537.15941843,
+  "available_balance_after": 8537.15941843,
+  "active_symbols_before": [
+    "HIPPOUSDT",
+    "AKEUSDT",
+    "NEIROUSDT"
+  ],
+  "active_symbols_after": [
+    "AKEUSDT",
+    "HIPPOUSDT",
+    "NEIROUSDT",
+    "QUICKUSDT"
+  ],
+  "realized_pnl_journal_count_before": 2,
+  "realized_pnl_journal_count_after": 3,
+  "new_realized_pnl_events": [
+    {
+      "timestamp": "2026-04-09T18:21:38.172602",
+      "order_id": 75724877,
+      "symbol": "NEIROUSDT",
+      "strategy": "ma_trend_follow",
+      "side": "SELL",
+      "entry_price": 5.75e-05,
+      "exit_price": 5.75e-05,
+      "executed_qty": 668155.0,
+      "realized_pnl": 0.0,
+      "exit_reason": "ema21_trailing"
+    }
+  ],
+  "symbol_performance_before": {
+    "NEIROUSDT": {
+      "trade_count": 2,
+      "win_count": 0,
+      "loss_count": 1,
+      "net_realized_pnl": -0.5957577,
+      "last_realized_pnl": 0.0,
+      "last_strategy": "ma_trend_follow",
+      "last_updated": "2026-04-09T18:21:38.172602"
+    },
+    "ZRCUSDT": {
+      "trade_count": 1,
+      "win_count": 0,
+      "loss_count": 1,
+      "net_realized_pnl": -0.2468,
+      "last_realized_pnl": -0.24680000000000066,
+      "last_strategy": "ma_trend_follow",
+      "last_updated": "2026-04-09T18:04:14.593819"
+    }
+  },
+  "symbol_performance_after": {
+    "NEIROUSDT": {
+      "trade_count": 2,
+      "win_count": 0,
+      "loss_count": 1,
+      "net_realized_pnl": -0.5957577,
+      "last_realized_pnl": 0.0,
+      "last_strategy": "ma_trend_follow",
+      "last_updated": "2026-04-09T18:21:38.172602"
+    },
+    "ZRCUSDT": {
+      "trade_count": 1,
+      "win_count": 0,
+      "loss_count": 1,
+      "net_realized_pnl": -0.2468,
+      "last_realized_pnl": -0.24680000000000066,
+      "last_strategy": "ma_trend_follow",
+      "last_updated": "2026-04-09T18:04:14.593819"
+    }
+  },
+  "diagnostic_summary": {
+    "total_signals": 20,
+    "buy_signals": 8,
+    "sell_signals": 4,
+    "hold_signals": 8,
+    "high_confidence_signals": 0,
+    "average_confidence": 0.35999999999999993,
+    "regime_distribution": {
+      "RANGING": 16,
+      "BEAR_TREND": 2,
+      "BULL_TREND": 2
+    },
+    "top_candidates": [
+      {
+        "symbol": "HIPPOUSDT",
+        "signal": "SELL",
+        "confidence": 0.6,
+        "reason": "Price -2.26% below SMA with volume and volume present"
+      },
+      {
+        "symbol": "HIPPOUSDT",
+        "signal": "SELL",
+        "confidence": 0.6,
+        "reason": "Price -2.26% below SMA with volume and volume present",
+        "price_vs_sma_pct": -2.2628791526239667,
+        "distance_to_entry_pct": 2.1628791526239666
+      },
+      {
+        "symbol": "ZRCUSDT",
+        "signal": "BUY",
+        "confidence": 0.6,
+        "reason": "Price 0.17% above SMA with volume and volume present"
+      },
+      {
+        "symbol": "ZRCUSDT",
+        "signal": "BUY",
+        "confidence": 0.6,
+        "reason": "Price 0.17% above SMA with volume and volume present",
+        "price_vs_sma_pct": 0.16694490818029853,
+        "distance_to_entry_pct": 0.06694490818029852
+      },
+      {
+        "symbol": "NEIROUSDT",
+        "signal": "BUY",
+        "confidence": 0.6,
+        "reason": "Price 0.98% above SMA with volume and volume present"
+      }
+    ],
+    "hold_reasons": {
+      "No signal conditions met": 8
+    },
+    "closest_to_entry": [
+      {
+        "symbol": "PORT3USDT",
+        "signal": "HOLD",
+        "confidence": 0.0,
+        "reason": "No signal conditions met",
+        "price_vs_sma_pct": 0.08092797410305903,
+        "distance_to_entry_pct": 0.019072025896940972
+      },
+      {
+        "symbol": "PORT3USDT",
+        "signal": "HOLD",
+        "confidence": 0.0,
+        "reason": "No signal conditions met",
+        "price_vs_sma_pct": 0.08092797410305903,
+        "distance_to_entry_pct": 0.019072025896940972
+      },
+      {
+        "symbol": "EPTUSDT",
+        "signal": "HOLD",
+        "confidence": 0.0,
+        "reason": "No signal conditions met",
+        "price_vs_sma_pct": 0.03368137420006209,
+        "distance_to_entry_pct": 0.06631862579993791
+      },
+      {
+        "symbol": "EPTUSDT",
+        "signal": "HOLD",
+        "confidence": 0.0,
+        "reason": "No signal conditions met",
+        "price_vs_sma_pct": 0.03368137420006209,
+        "distance_to_entry_pct": 0.06631862579993791
+      },
+      {
+        "symbol": "ZRCUSDT",
+        "signal": "BUY",
+        "confidence": 0.6,
+        "reason": "Price 0.17% above SMA with volume and volume present",
+        "price_vs_sma_pct": 0.16694490818029853,
+        "distance_to_entry_pct": 0.06694490818029852
+      }
+    ]
+  }
+}

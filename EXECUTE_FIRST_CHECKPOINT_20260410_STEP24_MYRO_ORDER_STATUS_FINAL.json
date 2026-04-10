@@ -1,0 +1,39 @@
+{
+  "started_at": "2026-04-10T11:23:24.513494+09:00",
+  "finished_at": "2026-04-10T11:23:47.332748+09:00",
+  "mode": "myrousdt_exchange_order_status_final",
+  "status_code": 200,
+  "response": {
+    "orderId": 146485486,
+    "symbol": "MYROUSDT",
+    "status": "FILLED",
+    "clientOrderId": "7fpS4SJP14DBpbDqIEtfXo",
+    "price": "0.0037900",
+    "avgPrice": "0.0037900",
+    "origQty": "11690",
+    "executedQty": "11690",
+    "cumQuote": "44.3051000",
+    "timeInForce": "GTC",
+    "type": "LIMIT",
+    "reduceOnly": true,
+    "closePosition": false,
+    "side": "BUY",
+    "positionSide": "BOTH",
+    "stopPrice": "0.0000000",
+    "workingType": "CONTRACT_PRICE",
+    "priceProtect": false,
+    "origType": "LIMIT",
+    "priceMatch": "NONE",
+    "selfTradePreventionMode": "EXPIRE_MAKER",
+    "goodTillDate": 0,
+    "time": 1775787691599,
+    "updateTime": 1775787697511
+  },
+  "active_symbols": [
+    "HIPPOUSDT",
+    "NEIROUSDT",
+    "REIUSDT",
+    "ZRCUSDT"
+  ],
+  "myrousdt_active": false
+}

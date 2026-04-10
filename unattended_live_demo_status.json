@@ -1,0 +1,252 @@
+{
+  "started_at": "2026-04-09T17:05:32.370344+09:00",
+  "completed_at": null,
+  "pid": 1964,
+  "status": "running",
+  "requested_cycles": 36,
+  "completed_cycles": 13,
+  "sleep_seconds": 10,
+  "errors": [],
+  "cycles": [
+    {
+      "cycle_no": 1,
+      "started_at": "2026-04-09T17:05:54.275444+09:00",
+      "finished_at": "2026-04-09T17:07:45.738075+09:00",
+      "duration_sec": 111.463,
+      "signals_generated": 20,
+      "trades_executed": 3,
+      "errors": [],
+      "available_balance": 8546.54320412,
+      "active_positions": 3,
+      "pending_trades": 0,
+      "real_orders": 3,
+      "system_errors": 0
+    },
+    {
+      "cycle_no": 2,
+      "started_at": "2026-04-09T17:07:55.742678+09:00",
+      "finished_at": "2026-04-09T17:09:57.076968+09:00",
+      "duration_sec": 121.334,
+      "signals_generated": 20,
+      "trades_executed": 0,
+      "errors": [
+        "Trade failed for 1000WHYUSDT: Duplicate entry prevented: 1000WHYUSDT already has active or pending trade",
+        "Trade failed for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+        "Trade failed for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade"
+      ],
+      "available_balance": 8538.85866919,
+      "active_positions": 3,
+      "pending_trades": 0,
+      "real_orders": 3,
+      "system_errors": 0
+    },
+    {
+      "cycle_no": 3,
+      "started_at": "2026-04-09T17:10:07.078379+09:00",
+      "finished_at": "2026-04-09T17:11:48.309185+09:00",
+      "duration_sec": 101.231,
+      "signals_generated": 20,
+      "trades_executed": 1,
+      "errors": [
+        "Trade failed for 1000WHYUSDT: Duplicate entry prevented: 1000WHYUSDT already has active or pending trade",
+        "Trade failed for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade"
+      ],
+      "available_balance": 8538.55583896,
+      "active_positions": 4,
+      "pending_trades": 0,
+      "real_orders": 4,
+      "system_errors": 0
+    },
+    {
+      "cycle_no": 4,
+      "started_at": "2026-04-09T17:11:58.314585+09:00",
+      "finished_at": "2026-04-09T17:13:42.197518+09:00",
+      "duration_sec": 103.883,
+      "signals_generated": 20,
+      "trades_executed": 0,
+      "errors": [
+        "Trade failed for 1000WHYUSDT: Duplicate entry prevented: 1000WHYUSDT already has active or pending trade",
+        "Trade failed for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+        "Trade failed for ZRCUSDT: Duplicate entry prevented: ZRCUSDT already has active or pending trade"
+      ],
+      "available_balance": 8535.54708559,
+      "active_positions": 4,
+      "pending_trades": 0,
+      "real_orders": 4,
+      "system_errors": 0
+    },
+    {
+      "cycle_no": 5,
+      "started_at": "2026-04-09T17:13:52.199320+09:00",
+      "finished_at": "2026-04-09T17:15:32.364887+09:00",
+      "duration_sec": 100.166,
+      "signals_generated": 20,
+      "trades_executed": 0,
+      "errors": [
+        "Trade failed for 1000WHYUSDT: Duplicate entry prevented: 1000WHYUSDT already has active or pending trade",
+        "Trade failed for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+        "Trade failed for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade"
+      ],
+      "available_balance": 8535.8430295,
+      "active_positions": 2,
+      "pending_trades": 0,
+      "real_orders": 6,
+      "system_errors": 0
+    },
+    {
+      "cycle_no": 6,
+      "started_at": "2026-04-09T17:15:42.372930+09:00",
+      "finished_at": "2026-04-09T17:17:25.050196+09:00",
+      "duration_sec": 102.677,
+      "signals_generated": 20,
+      "trades_executed": 1,
+      "errors": [
+        "Trade failed for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+        "Trade failed for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade"
+      ],
+      "available_balance": 8538.87714145,
+      "active_positions": 3,
+      "pending_trades": 0,
+      "real_orders": 7,
+      "system_errors": 0
+    },
+    {
+      "cycle_no": 7,
+      "started_at": "2026-04-09T17:17:35.050922+09:00",
+      "finished_at": "2026-04-09T17:19:19.787997+09:00",
+      "duration_sec": 104.737,
+      "signals_generated": 20,
+      "trades_executed": 0,
+      "errors": [
+        "Trade failed for 1000WHYUSDT: Duplicate entry prevented: 1000WHYUSDT already has active or pending trade",
+        "Trade failed for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+        "Trade failed for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade"
+      ],
+      "available_balance": 8535.91256824,
+      "active_positions": 2,
+      "pending_trades": 0,
+      "real_orders": 8,
+      "system_errors": 0
+    },
+    {
+      "cycle_no": 8,
+      "started_at": "2026-04-09T17:19:29.795134+09:00",
+      "finished_at": "2026-04-09T17:21:08.847777+09:00",
+      "duration_sec": 99.053,
+      "signals_generated": 20,
+      "trades_executed": 0,
+      "errors": [
+        "Trade failed for 1000WHYUSDT: Order failed",
+        "Trade failed for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+        "Trade failed for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade"
+      ],
+      "available_balance": 8537.6351914,
+      "active_positions": 2,
+      "pending_trades": 0,
+      "real_orders": 8,
+      "system_errors": 1
+    },
+    {
+      "cycle_no": 9,
+      "started_at": "2026-04-09T17:21:18.851448+09:00",
+      "finished_at": "2026-04-09T17:23:00.042964+09:00",
+      "duration_sec": 101.192,
+      "signals_generated": 20,
+      "trades_executed": 1,
+      "errors": [
+        "Trade failed for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+        "Trade failed for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade"
+      ],
+      "available_balance": 8537.35771341,
+      "active_positions": 3,
+      "pending_trades": 0,
+      "real_orders": 9,
+      "system_errors": 1
+    },
+    {
+      "cycle_no": 10,
+      "started_at": "2026-04-09T17:23:10.044642+09:00",
+      "finished_at": "2026-04-09T17:24:59.184689+09:00",
+      "duration_sec": 109.14,
+      "signals_generated": 20,
+      "trades_executed": 1,
+      "errors": [
+        "Trade failed for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+        "Trade failed for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade"
+      ],
+      "available_balance": 8534.83573764,
+      "active_positions": 3,
+      "pending_trades": 0,
+      "real_orders": 11,
+      "system_errors": 1
+    },
+    {
+      "cycle_no": 11,
+      "started_at": "2026-04-09T17:25:09.186019+09:00",
+      "finished_at": "2026-04-09T17:26:58.548415+09:00",
+      "duration_sec": 109.362,
+      "signals_generated": 20,
+      "trades_executed": 1,
+      "errors": [
+        "Trade failed for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade",
+        "Trade failed for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade"
+      ],
+      "available_balance": 8537.21769366,
+      "active_positions": 2,
+      "pending_trades": 0,
+      "real_orders": 13,
+      "system_errors": 1
+    },
+    {
+      "cycle_no": 12,
+      "started_at": "2026-04-09T17:27:08.551634+09:00",
+      "finished_at": "2026-04-09T17:29:02.479615+09:00",
+      "duration_sec": 113.928,
+      "signals_generated": 20,
+      "trades_executed": 1,
+      "errors": [
+        "Trade failed for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+        "Trade failed for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade"
+      ],
+      "available_balance": 8535.92232231,
+      "active_positions": 3,
+      "pending_trades": 0,
+      "real_orders": 14,
+      "system_errors": 1
+    },
+    {
+      "cycle_no": 13,
+      "started_at": "2026-04-09T17:29:12.481761+09:00",
+      "finished_at": "2026-04-09T17:31:05.273738+09:00",
+      "duration_sec": 112.792,
+      "signals_generated": 20,
+      "trades_executed": 1,
+      "errors": [
+        "Trade failed for HIPPOUSDT: Duplicate entry prevented: HIPPOUSDT already has active or pending trade",
+        "Trade failed for NEIROUSDT: Duplicate entry prevented: NEIROUSDT already has active or pending trade"
+      ],
+      "available_balance": 8533.98269042,
+      "active_positions": 3,
+      "pending_trades": 0,
+      "real_orders": 16,
+      "system_errors": 1
+    }
+  ],
+  "aggregate": {
+    "signals_generated": 260,
+    "trades_executed": 10,
+    "cycles_with_errors": 12,
+    "max_active_positions": 4,
+    "max_pending_trades": 0
+  },
+  "next_evolution_targets": [],
+  "initialized": true,
+  "base_url": "https://demo-fapi.binance.com",
+  "valid_symbol_count": 50,
+  "active_strategies": [
+    "ma_trend_follow",
+    "ema_crossover"
+  ],
+  "starting_balance": 8546.54320412,
+  "ending_balance": 8533.98269042
+}

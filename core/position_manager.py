@@ -99,10 +99,6 @@ class PositionManager:
             if symbol in self.position_entry_times:
                 del self.position_entry_times[symbol]
 
-            recently_closed = self.trading_results.get("recently_closed_symbols", {})
-            if symbol in recently_closed:
-                del recently_closed[symbol]
-                
         except Exception as e:
             self.log_error("position_state_clear", str(e))
     
@@ -347,6 +343,13 @@ class PositionManager:
             
             position = self.trading_results.get("active_positions", {}).get(symbol, {})
             amount = position.get("amount", 0.0)
+            state = self.get_position_management_state(symbol)
+            pnl_pct = state.get("pnl_pct", 0.0)
+            hold_seconds = state.get("hold_seconds", 0)
+            # EMA trailing is a profit-protection tool. Avoid converting normal
+            # post-entry noise into immediate realized losses.
+            if pnl_pct < 0.003 or hold_seconds < 300:
+                return False
             
             if amount > 0:  # Long position - trail EMA21, exit when price closes below
                 return current_price < current_ema21
