@@ -1,0 +1,77 @@
+{
+  "binance_testnet": {
+    "api_key": "ESxY6e4Lh17aUVe5lsGFQz0nXZaVdbwbwD15apjTGTWPMXyTvq0n2GPEqZiLrplY",
+    "api_secret": "ll6wie0zfs8uNcL1Ch4lHGiuGlTo54koEqoAZPlmUxkmLgRZIFZcsPUE1vY2jVTU",
+    "base_url": "https://demo-fapi.binance.com"
+  },
+  "binance_execution_mode": "testnet",
+  "binance_probe_mode": "enabled",
+  "trading_config": {
+    "max_open_positions": 10,
+    "fast_entry_enabled": true,
+    "partial_tp1_pct": 0.8,
+    "fast_tp1_pct": 0.5,
+    "fast_tp2_pct": 1.2,
+    "partial_tp2_pct": 2.0,
+    "stop_loss_pct": 0.02,
+    "take_profit_pct": 0.04,
+    "position_hold_minutes": 30,
+    "max_position_size_usdt": 1000.0,
+    "position_sync_interval": 5,
+    "position_limit_check": true,
+    "excess_position_close": true,
+    "force_close_before_funding": true,
+    "funding_close_lead_minutes": 10,
+    "funding_rate_threshold_long": -0.001,
+    "funding_rate_threshold_short": 0.001,
+    "funding_hours": [
+      0,
+      8,
+      16
+    ],
+    "funding_countdown_enabled": true,
+    "funding_monitoring_enabled": true,
+    "symbol_config": {
+      "symbol_source": "expanded_list",
+      "total_symbols": 20,
+      "symbol_list": [
+        "BTCUSDT",
+        "ETHUSDT",
+        "BNBUSDT",
+        "DOGEUSDT",
+        "XRPUSDT",
+        "ADAUSDT",
+        "DOTUSDT",
+        "LINKUSDT",
+        "SOLUSDT",
+        "MATICUSDT",
+        "AVAXUSDT",
+        "ATOMUSDT",
+        "LTCUSDT",
+        "UNIUSDT",
+        "FILUSDT",
+        "ETCUSDT",
+        "XLMUSDT",
+        "VETUSDT",
+        "THETAUSDT",
+        "ICPUSDT"
+      ],
+      "last_updated": "2026-04-08T20:17:14.422983",
+      "dynamic_loading": false,
+      "future_dynamic": true
+    }
+  },
+  "api_config": {
+    "recv_window": 5000,
+    "min_volume_threshold": 1000000
+  },
+  "binance": {
+    "api_key": "test_api_key_for_demo",
+    "api_secret": "test_api_secret_for_demo",
+    "testnet": true
+  },
+  "real_time_mode": true,
+  "all_virtual_tests_disabled": true,
+  "force_real_exchange": true,
+  "simulation_mode": false
+}
